@@ -28,24 +28,24 @@
 
 ### API Access
 
-- [ ] **API-01**: POST /v1/chat/completions accepts Bearer token and proxies to Ollama
-- [ ] **API-02**: Credits deducted per request (1x local, 2x cloud)
-- [ ] **API-03**: Service returns 402 with message when credits exhausted
-- [ ] **API-04**: Streaming response support for real-time token generation
-- [ ] **API-05**: GET /v1/models returns list of accessible models per tier
+- [x] **API-01**: POST /v1/chat/completions accepts Bearer token and proxies to Ollama
+- [x] **API-02**: Credits deducted per request (1x local, 2x cloud)
+- [x] **API-03**: Service returns 402 with message when credits exhausted
+- [x] **API-04**: Streaming response support for real-time token generation
+- [x] **API-05**: GET /v1/models returns list of accessible models per tier
 
 ### Rate Limiting
 
-- [ ] **RATE-01**: Basic tier: 10 requests per minute
-- [ ] **RATE-02**: Pro tier: 30 requests per minute
-- [ ] **RATE-03**: Enterprise tier: 60 requests per minute
+- [x] **RATE-01**: Basic tier: 10 requests per minute
+- [x] **RATE-02**: Pro tier: 30 requests per minute
+- [x] **RATE-03**: Enterprise tier: 60 requests per minute
 
 ### Cloud Failover
 
-- [ ] **QUEUE-01**: Queue depth checked before each request
-- [ ] **QUEUE-02**: Auto-failover to :cloud model when local queue > 3
-- [ ] **CLOUD-01**: Daily cloud budget tracking with 500 request cap
-- [ ] **CLOUD-02**: Cloud disabled at 500 requests/day
+- [x] **QUEUE-01**: Queue depth checked before each request
+- [x] **QUEUE-02**: Auto-failover to :cloud model when local queue > 3
+- [x] **CLOUD-01**: Daily cloud budget tracking with 500 request cap
+- [x] **CLOUD-02**: Cloud disabled at 500 requests/day
 
 ### WhatsApp Notifications (Bilingual Arabic/English)
 
@@ -78,10 +78,10 @@
 
 ### Model Access Control
 
-- [ ] **MODEL-01**: Basic tier: llama3.2:3b, smollm2:135m, qwen2.5-coder:14b, mistral-small3.2:24b
-- [ ] **MODEL-02**: Pro tier: all Basic models + qwen3-30b-40k, Qwen3-VL-32B, qwen3.5:cloud, deepseek-v3.2:cloud, gpt-oss:20b
-- [ ] **MODEL-03**: Enterprise tier: all Pro models + priority queue
-- [ ] **MODEL-04**: Never expose glm-4.7-flash, bge-m3, nomic-embed-text
+- [x] **MODEL-01**: Basic tier: llama3.2:3b, smollm2:135m, qwen2.5-coder:14b, mistral-small3.2:24b
+- [x] **MODEL-02**: Pro tier: all Basic models + qwen3-30b-40k, Qwen3-VL-32B, qwen3.5:cloud, deepseek-v3.2:cloud, gpt-oss:20b
+- [x] **MODEL-03**: Enterprise tier: all Pro models + priority queue
+- [x] **MODEL-04**: Never expose glm-4.7-flash, bge-m3, nomic-embed-text
 
 ### Team Management (Enterprise Only)
 
@@ -158,22 +158,22 @@
 | SUB-03 | Phase 2 | Complete |
 | TOP-01 | Phase 2 | Complete |
 | TOP-02 | Phase 2 | Complete |
-| API-01 | Phase 3 | Pending |
-| API-02 | Phase 3 | Pending |
-| API-03 | Phase 3 | Pending |
-| API-04 | Phase 3 | Pending |
-| API-05 | Phase 3 | Pending |
-| RATE-01 | Phase 3 | Pending |
-| RATE-02 | Phase 3 | Pending |
-| RATE-03 | Phase 3 | Pending |
-| QUEUE-01 | Phase 3 | Pending |
-| QUEUE-02 | Phase 3 | Pending |
-| CLOUD-01 | Phase 3 | Pending |
-| CLOUD-02 | Phase 3 | Pending |
-| MODEL-01 | Phase 3 | Pending |
-| MODEL-02 | Phase 3 | Pending |
-| MODEL-03 | Phase 3 | Pending |
-| MODEL-04 | Phase 3 | Pending |
+| API-01 | Phase 3 | Complete |
+| API-02 | Phase 3 | Complete |
+| API-03 | Phase 3 | Complete |
+| API-04 | Phase 3 | Complete |
+| API-05 | Phase 3 | Complete |
+| RATE-01 | Phase 3 | Complete |
+| RATE-02 | Phase 3 | Complete |
+| RATE-03 | Phase 3 | Complete |
+| QUEUE-01 | Phase 3 | Complete |
+| QUEUE-02 | Phase 3 | Complete |
+| CLOUD-01 | Phase 3 | Complete |
+| CLOUD-02 | Phase 3 | Complete |
+| MODEL-01 | Phase 3 | Complete |
+| MODEL-02 | Phase 3 | Complete |
+| MODEL-03 | Phase 3 | Complete |
+| MODEL-04 | Phase 3 | Complete |
 | NOTIF-01 | Phase 4 | Pending |
 | NOTIF-02 | Phase 4 | Pending |
 | NOTIF-03 | Phase 4 | Pending |
