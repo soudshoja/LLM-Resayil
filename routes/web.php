@@ -7,6 +7,7 @@ use App\Http\Controllers\ApiKeysController;
 use App\Http\Controllers\Billing\PaymentController;
 use App\Http\Controllers\Billing\WebhookController;
 use App\Http\Controllers\TeamMemberController;
+use App\Http\Controllers\Admin\ApiSettingsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -54,6 +55,12 @@ Route::middleware('auth')->group(function () {
 // Home route
 Route::get('/', function () {
     return view('welcome');
+});
+
+// Admin routes
+Route::middleware(['auth'])->prefix('admin')->group(function () {
+    Route::get('/api-settings', [ApiSettingsController::class, 'index'])->name('admin.api-settings');
+    Route::put('/api-settings', [ApiSettingsController::class, 'update'])->name('admin.api-settings.update');
 });
 
 // Team routes (Enterprise only)

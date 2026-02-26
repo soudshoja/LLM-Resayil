@@ -4,6 +4,14 @@
   "parallelization": true,
   "commit_docs": true,
   "model_profile": "balanced",
+  "model_overrides": {
+    "gsd-phase-researcher": "haiku",
+    "gsd-project-researcher": "haiku",
+    "gsd-research-synthesizer": "haiku",
+    "gsd-verifier": "haiku",
+    "gsd-plan-checker": "haiku",
+    "gsd-integration-checker": "haiku"
+  },
   "workflow": {
     "research": false,
     "plan_check": true,
