@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\ApiKeysController;
 use App\Http\Controllers\Billing\PaymentController;
 use App\Http\Controllers\Billing\WebhookController;
+use App\Http\Controllers\TeamMemberController;
 
 /*
 |--------------------------------------------------------------------------
@@ -53,4 +54,11 @@ Route::middleware('auth')->group(function () {
 // Home route
 Route::get('/', function () {
     return view('welcome');
+});
+
+// Team routes (Enterprise only)
+Route::middleware(['auth', 'enterprise'])->prefix('teams')->group(function () {
+    Route::get('/', [TeamMemberController::class, 'index'])->name('teams.index');
+    Route::post('/members', [TeamMemberController::class, 'store'])->name('teams.members.store');
+    Route::delete('/members/{id}', [TeamMemberController::class, 'destroy'])->name('teams.members.destroy');
 });
