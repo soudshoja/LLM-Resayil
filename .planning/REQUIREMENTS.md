@@ -62,19 +62,19 @@
 
 ### User Dashboard
 
-- [ ] **DASH-01**: Credits remaining and total displayed
-- [ ] **DASH-02**: Usage chart (requests over time)
-- [ ] **DASH-03**: API keys list with quick actions
-- [ ] **DASH-04**: Quick top-up button visible
-- [ ] **DASH-05**: Usage table with model breakdown
+- [x] **DASH-01**: Credits remaining and total displayed
+- [x] **DASH-02**: Usage chart (requests over time)
+- [x] **DASH-03**: API keys list with quick actions
+- [x] **DASH-04**: Quick top-up button visible
+- [x] **DASH-05**: Usage table with model breakdown
 
 ### Admin Dashboard
 
-- [ ] **ADMIN-01**: Platform overview (total users, revenue, usage)
-- [ ] **ADMIN-02**: User management table
-- [ ] **ADMIN-03**: Admin can manually adjust user credits
-- [ ] **ADMIN-04**: Revenue by tier dashboard
-- [ ] **ADMIN-05**: Cloud budget status display
+- [x] **ADMIN-01**: Platform overview (total users, revenue, usage)
+- [x] **ADMIN-02**: User management table
+- [x] **ADMIN-03**: Admin can manually adjust user credits
+- [x] **ADMIN-04**: Revenue by tier dashboard
+- [x] **ADMIN-05**: Cloud budget status display
 
 ### Model Access Control
 
@@ -85,19 +85,19 @@
 
 ### Team Management (Enterprise Only)
 
-- [ ] **TEAM-01**: Team members can be added by owner
-- [ ] **TEAM-02**: Roles: admin vs member
-- [ ] **TEAM-03**: Members can be removed by admin
-- [ ] **TEAM-04**: Team dashboard accessible to Enterprise users
+- [x] **TEAM-01**: Team members can be added by owner
+- [x] **TEAM-02**: Roles: admin vs member
+- [x] **TEAM-03**: Members can be removed by admin
+- [x] **TEAM-04**: Team dashboard accessible to Enterprise users
 
 ### Landing Page
 
-- [ ] **LP-01**: Hero section with value proposition
-- [ ] **LP-02**: How it works (3-4 step explanation)
-- [ ] **LP-03**: Pricing section with 3 tiers
-- [ ] **LP-04**: Model list section
-- [ ] **LP-05**: API code example section
-- [ ] **LP-06**: Sign-up CTA with redirect to registration
+- [x] **LP-01**: Hero section with value proposition
+- [x] **LP-02**: How it works (3-4 step explanation)
+- [x] **LP-03**: Pricing section with 3 tiers
+- [x] **LP-04**: Model list section
+- [x] **LP-05**: API code example section
+- [x] **LP-06**: Sign-up CTA with redirect to registration
 
 ## v2 Requirements
 
@@ -184,26 +184,26 @@
 | NOTIF-08 | Phase 4 | Pending |
 | NOTIF-09 | Phase 4 | Pending |
 | NOTIF-10 | Phase 4 | Pending |
-| DASH-01 | Phase 5 | Pending |
-| DASH-02 | Phase 5 | Pending |
-| DASH-03 | Phase 5 | Pending |
-| DASH-04 | Phase 5 | Pending |
-| DASH-05 | Phase 5 | Pending |
-| ADMIN-01 | Phase 5 | Pending |
-| ADMIN-02 | Phase 5 | Pending |
-| ADMIN-03 | Phase 5 | Pending |
-| ADMIN-04 | Phase 5 | Pending |
-| ADMIN-05 | Phase 5 | Pending |
-| TEAM-01 | Phase 5 | Pending |
-| TEAM-02 | Phase 5 | Pending |
-| TEAM-03 | Phase 5 | Pending |
-| TEAM-04 | Phase 5 | Pending |
-| LP-01 | Phase 5 | Pending |
-| LP-02 | Phase 5 | Pending |
-| LP-03 | Phase 5 | Pending |
-| LP-04 | Phase 5 | Pending |
-| LP-05 | Phase 5 | Pending |
-| LP-06 | Phase 5 | Pending |
+| DASH-01 | Phase 5 | Complete |
+| DASH-02 | Phase 5 | Complete |
+| DASH-03 | Phase 5 | Complete |
+| DASH-04 | Phase 5 | Complete |
+| DASH-05 | Phase 5 | Complete |
+| ADMIN-01 | Phase 5 | Complete |
+| ADMIN-02 | Phase 5 | Complete |
+| ADMIN-03 | Phase 5 | Complete |
+| ADMIN-04 | Phase 5 | Complete |
+| ADMIN-05 | Phase 5 | Complete |
+| TEAM-01 | Phase 5 | Complete |
+| TEAM-02 | Phase 5 | Complete |
+| TEAM-03 | Phase 5 | Complete |
+| TEAM-04 | Phase 5 | Complete |
+| LP-01 | Phase 5 | Complete |
+| LP-02 | Phase 5 | Complete |
+| LP-03 | Phase 5 | Complete |
+| LP-04 | Phase 5 | Complete |
+| LP-05 | Phase 5 | Complete |
+| LP-06 | Phase 5 | Complete |
 
 **Coverage:**
 - v1 requirements: 64 total
@@ -214,4 +214,4 @@
 ---
 
 *Requirements defined: 2026-02-26*
-*Last updated: 2026-02-26 after roadmap creation*
+*Last updated: 2026-02-26 - Phase 5 Plans 01-03 complete (Landing, User/Admin Dashboards, Team Management)*
