@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\ApiKeysController;
+use App\Http\Controllers\Billing\PaymentController;
+use App\Http\Controllers\Billing\WebhookController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,6 +36,19 @@ Route::get('/dashboard', function () {
 Route::get('/api-keys', [ApiKeysController::class, 'index'])->middleware('auth');
 Route::post('/api-keys', [ApiKeysController::class, 'store'])->middleware('auth');
 Route::delete('/api-keys/{id}', [ApiKeysController::class, 'destroy'])->middleware('auth');
+
+// Billing routes (protected)
+Route::middleware('auth')->group(function () {
+    // Subscription plans page
+    Route::get('/billing/plans', [PaymentController::class, 'index']);
+
+    // Payment initiation
+    Route::post('/billing/payment/subscription', [PaymentController::class, 'initiateSubscriptionPayment']);
+    Route::post('/billing/payment/topup', [PaymentController::class, 'initiateTopupPayment']);
+
+    // Webhook handler (public, but verified by MyFatoorah)
+    Route::post('/billing/webhook', [WebhookController::class, 'handleWebhook']);
+});
 
 // Home route
 Route::get('/', function () {
