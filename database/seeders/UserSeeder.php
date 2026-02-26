@@ -18,10 +18,10 @@ class UserSeeder extends Seeder
             'email' => 'admin@llm.resayil.io',
             'phone' => '96500000000',
             'password' => Hash::make('password'),
-            'plan' => 'enterprise',
-            'credits_remaining' => 100000,
-            'credits_total' => 100000,
-            'is_active' => true,
+            'subscription_tier' => 'enterprise',
+            'subscription_expiry' => now()->addYear(),
+            'credits' => 100000,
+            'email_verified_at' => now(),
         ]);
     }
 }
