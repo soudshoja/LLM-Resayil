@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ApiKeysController;
 use App\Http\Controllers\Admin\NotificationController;
 use App\Http\Controllers\Billing\BillingController;
+use App\Http\Controllers\Api\ChatCompletionsController;
+use App\Http\Controllers\Api\ModelsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,10 +27,10 @@ Route::middleware(['auth:sanctum', 'api.key.auth'])->group(function () {
     // API Keys routes
     Route::apiResource('api-keys', ApiKeysController::class);
 
-    // Placeholder for future LLM API routes
-    Route::post('/chat/completions', function () {
-        return response()->json(['message' => 'LLM API endpoint - to be implemented']);
-    });
+    // LLM API - OpenAI-compatible
+    Route::post('/chat/completions', [ChatCompletionsController::class, 'store']);
+    Route::post('/chat/completions/stream', [ChatCompletionsController::class, 'stream']);
+    Route::get('/models', [ModelsController::class, 'index']);
 
     // Admin notification endpoints
     Route::prefix('admin/notifications')->group(function () {
