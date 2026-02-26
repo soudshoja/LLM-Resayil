@@ -10,6 +10,7 @@
 - [x] **Phase 3: API Access** - OpenAI-compatible proxy with rate limiting, model access control, and cloud failover
 - [x] **Phase 4: Notifications** - WhatsApp notification system for all user and admin events
 - [x] **Phase 5: Dashboards** - User dashboard, admin dashboard, landing page, and enterprise team management
+- [ ] **Phase 6: MySQL Production Setup** - Database migrations, environment configuration, and production deployment
 
 ## Phase Details
 
@@ -151,7 +152,7 @@
 12. Enterprise team members can be added with admin/member roles
 13. Team dashboard accessible to Enterprise users
 
-**Plans:** 3/5 plans complete
+**Plans:** 3/3 plans complete
 - Plan 01: Landing page and user dashboard (LP-01 through LP-06, DASH-01 through DASH-05)
 - Plan 02: Admin dashboard (ADMIN-01 through ADMIN-05)
 - Plan 03: Enterprise team management (TEAM-01 through TEAM-04)
@@ -169,6 +170,35 @@
 
 ---
 
+### Phase 6: MySQL Production Setup
+
+**Goal:** Run all database migrations, seed initial data, and configure the production environment so the Laravel app is fully operational on the production MySQL server (resayili_llm_resayil on cPanel/WHM at llm.resayil.io)
+
+**Depends on:** Phase 5
+
+**Requirements:** None (operational phase for deployment)
+
+**Success Criteria:**
+1. Queue jobs table migration generated locally with php artisan queue:table
+2. Production .env file configured with all required credentials (DB, Redis, MyFatoorah, WhatsApp, Cloud Ollama)
+3. APP_KEY generated on production with php artisan key:generate
+4. All 10 database migrations executed on production (9 existing + jobs table)
+5. All seeders executed (SubscriptionPlanSeeder, NotificationTemplateSeeder, UserSeeder)
+6. Production database contains all required seed data (3 tiers, 20+ templates, 1 admin user)
+7. Application loads at https://llm.resayil.io without errors
+8. Admin can log in with seeded credentials
+
+**Plans:** 1 plan (Plan 01 - MySQL Production Setup & Deployment)
+
+Plan 01 covers:
+- Generate queue jobs table migration locally
+- Configure production .env with all credentials
+- Run all 10 migrations on production
+- Execute all seeders with initial data
+- Verify production application is operational
+
+---
+
 ## Progress
 
 | Phase | Plans Complete | Status | Completed |
@@ -178,8 +208,9 @@
 | 3 - API Access | 1/1 | Complete | 2026-02-26 |
 | 4 - Notifications | 1/1 | Complete | Plan 01 completed |
 | 5 - Dashboards | 3/3 | Complete | Plans 01-03 completed |
+| 6 - MySQL Production Setup | 1/1 | Planned | Plan 01 ready for execution |
 
 ---
 
 *Roadmap defined: 2026-02-26*
-*Last updated: 2026-02-26 - Phase 2 Plan 01 completed, Phase 3 Plan 01 completed, Phase 4 Plan 01 completed, Phase 5 Plans 01-03 completed*
+*Last updated: 2026-02-26 - Phase 6 Plan 01 created (MySQL Production Setup & Deployment)*
