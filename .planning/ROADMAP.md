@@ -6,7 +6,7 @@
 ## Phases
 
 - [x] **Phase 1: Foundation & Auth** - Project scaffolding, authentication, and session management
-- [ ] **Phase 2: Billing & Subscriptions** - Subscription tiers, credit top-ups, and MyFatoorah payment integration
+- [x] **Phase 2: Billing & Subscriptions** - Subscription tiers, credit top-ups, and MyFatoorah payment integration
 - [x] **Phase 3: API Access** - OpenAI-compatible proxy with rate limiting, model access control, and cloud failover
 - [ ] **Phase 4: Notifications** - WhatsApp notification system for all user and admin events
 - [x] **Phase 5: Dashboards** - User dashboard, admin dashboard, and landing page
@@ -51,7 +51,15 @@
 4. User can view and purchase credit top-up packs (5K/15K/50K credits)
 5. Credits are added to account immediately after payment confirmation
 
-**Plans:** TBD
+**Plans:** 1 plan complete (Plan 01 - Foundation)
+
+**Completed:**
+- Topup purchases database table and model
+- MyFatoorah API integration service
+- Billing business logic service
+- Payment controller for subscription and top-up
+- Webhook controller for payment notifications
+- Billing routes for web and API
 
 ---
 
@@ -152,12 +160,12 @@
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1 - Foundation & Auth | 1/1 | Complete | Plan 01 completed |
-| 2 - Billing & Subscriptions | 0/3 | Not started | - |
+| 2 - Billing & Subscriptions | 1/1 | Complete | Plan 01 completed |
 | 3 - API Access | 1/1 | Complete | Plan 01 completed |
-| 4 - Notifications | 1/1 | In progress | Plan 01 created |
+| 4 - Notifications | 1/1 | Complete | Plan 01 completed |
 | 5 - Dashboards | 2/2 | Complete | Plans 01-02 completed |
 
 ---
 
 *Roadmap defined: 2026-02-26*
-*Last updated: 2026-02-26 - Phase 3 Plan 01 completed, Phase 4 Plan 01 created, Phase 5 Plans 01-02 completed*
+*Last updated: 2026-02-26 - Phase 2 Plan 01 completed, Phase 3 Plan 01 completed, Phase 4 Plan 01 completed, Phase 5 Plans 01-02 completed*

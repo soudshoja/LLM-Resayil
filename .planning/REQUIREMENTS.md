@@ -20,11 +20,11 @@
 
 ### Billing & Subscriptions
 
-- [ ] **SUB-01**: User can view available subscription tiers (Basic/Pro/Enterprise)
-- [ ] **SUB-02**: User can select a plan and initiate MyFatoorah payment
-- [ ] **SUB-03**: User sees current plan status and expiry date on dashboard
-- [ ] **TOP-01**: User can view and purchase credit top-up packs (5K/15K/50K)
-- [ ] **TOP-02**: Top-up credits added to account immediately after payment
+- [x] **SUB-01**: User can view available subscription tiers (Basic/Pro/Enterprise)
+- [x] **SUB-02**: User can select a plan and initiate MyFatoorah payment
+- [x] **SUB-03**: User sees current plan status and expiry date on dashboard
+- [x] **TOP-01**: User can view and purchase credit top-up packs (5K/15K/50K)
+- [x] **TOP-02**: Top-up credits added to account immediately after payment
 
 ### API Access
 
@@ -153,11 +153,11 @@
 | KEY-02 | Phase 1 | Pending |
 | KEY-03 | Phase 1 | Pending |
 | KEY-04 | Phase 1 | Pending |
-| SUB-01 | Phase 2 | Pending |
-| SUB-02 | Phase 2 | Pending |
-| SUB-03 | Phase 2 | Pending |
-| TOP-01 | Phase 2 | Pending |
-| TOP-02 | Phase 2 | Pending |
+| SUB-01 | Phase 2 | Complete |
+| SUB-02 | Phase 2 | Complete |
+| SUB-03 | Phase 2 | Complete |
+| TOP-01 | Phase 2 | Complete |
+| TOP-02 | Phase 2 | Complete |
 | API-01 | Phase 3 | Pending |
 | API-02 | Phase 3 | Pending |
 | API-03 | Phase 3 | Pending |
