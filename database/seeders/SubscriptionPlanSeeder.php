@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use App\Models\User;
 
 class SubscriptionPlanSeeder extends Seeder
 {
@@ -12,10 +13,18 @@ class SubscriptionPlanSeeder extends Seeder
      */
     public function run(): void
     {
+        // Get the admin user created by UserSeeder
+        $adminUser = User::where('email', 'admin@llm.resayil.io')->first();
+
+        if (!$adminUser) {
+            $this->command->error('Admin user not found. Please run UserSeeder first.');
+            return;
+        }
+
         $plans = [
             [
                 'id' => \Illuminate\Support\Str::uuid(),
-                'user_id' => \Illuminate\Support\Str::uuid(),
+                'user_id' => $adminUser->id,
                 'tier' => 'basic',
                 'status' => 'active',
                 'MyFatoorah_invoice_id' => null,
