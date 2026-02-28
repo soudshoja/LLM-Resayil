@@ -1,3 +1,9 @@
+# Disable directory listing
+Options -Indexes
+
+# Enable directory index
+DirectoryIndex index.php
+
 RewriteEngine On
 
 # Redirect all requests to Laravel's index.php
