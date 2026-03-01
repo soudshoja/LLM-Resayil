@@ -59,6 +59,7 @@ Route::get('/', function () {
 
 // Admin routes
 Route::middleware(['auth'])->prefix('admin')->group(function () {
+    Route::get('/', function () { return view('admin.dashboard'); })->name('admin.dashboard');
     Route::get('/api-settings', [ApiSettingsController::class, 'index'])->name('admin.api-settings');
     Route::put('/api-settings', [ApiSettingsController::class, 'update'])->name('admin.api-settings.update');
 });
