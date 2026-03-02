@@ -14,18 +14,53 @@ class TeamMemberController extends Controller
      * Display a listing of the user's team members.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\JsonResponse
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\View\View
      */
-    public function index(Request $request): JsonResponse
+    public function index(Request $request)
     {
-        $user = $request->user();
+        if ($request->wantsJson()) {
+            $user = $request->user();
 
+            $teamMembers = TeamMember::forOwner($user->id)
+                ->with(['member', 'addedBy'])
+                ->orderBy('created_at', 'desc')
+                ->paginate(15);
+
+            // Transform team members to include member details and role
+            $teamMembers->getCollection()->transform(function ($teamMember) {
+                return [
+                    'id' => $teamMember->id,
+                    'member' => [
+                        'id' => $teamMember->member->id,
+                        'name' => $teamMember->member->name,
+                        'email' => $teamMember->member->email,
+                        'phone' => $teamMember->member->phone,
+                    ],
+                    'role' => $teamMember->role,
+                    'is_admin' => $teamMember->isAdmin(),
+                    'is_member' => $teamMember->isMember(),
+                    'added_by' => $teamMember->addedBy ? [
+                        'id' => $teamMember->addedBy->id,
+                        'name' => $teamMember->addedBy->name,
+                        'email' => $teamMember->addedBy->email,
+                    ] : null,
+                    'joined_at' => $teamMember->joined_at?->toISOString(),
+                    'created_at' => $teamMember->created_at->toISOString(),
+                    'updated_at' => $teamMember->updated_at->toISOString(),
+                ];
+            });
+
+            return response()->json([
+                'data' => $teamMembers,
+            ]);
+        }
+
+        $user = $request->user();
         $teamMembers = TeamMember::forOwner($user->id)
             ->with(['member', 'addedBy'])
             ->orderBy('created_at', 'desc')
             ->paginate(15);
 
-        // Transform team members to include member details and role
         $teamMembers->getCollection()->transform(function ($teamMember) {
             return [
                 'id' => $teamMember->id,
@@ -49,9 +84,7 @@ class TeamMemberController extends Controller
             ];
         });
 
-        return response()->json([
-            'data' => $teamMembers,
-        ]);
+        return view('teams.dashboard', ['teamMembers' => $teamMembers]);
     }
 
     /**
