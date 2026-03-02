@@ -44,6 +44,12 @@ class Kernel extends ConsoleKernel
             }
         })->dailyAt('09:00');
 
+        // Trial Day-6 reminders — send at 10am daily
+        $schedule->command('trial:send-reminders')->dailyAt('10:00');
+
+        // Trial Day-7 auto-charge — run at 9am daily
+        $schedule->command('trial:process-charges')->dailyAt('09:00');
+
         // Failed notifications retry - every 15 minutes
         $schedule->command('notifications:retry-failed')->everyFifteenMinutes();
 
