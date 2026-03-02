@@ -16,28 +16,24 @@ class ApiKeysController extends Controller
      */
     public function index(Request $request)
     {
-        $user = $request->user();
+        if ($request->wantsJson()) {
+            $user = $request->user();
+            $apiKeys = $user->apiKeys()->orderBy('created_at', 'desc')->paginate(15);
+            $apiKeys->getCollection()->transform(function ($apiKey) {
+                return [
+                    'id' => $apiKey->id,
+                    'name' => $apiKey->name,
+                    'prefix' => $apiKey->prefix,
+                    'permissions' => $apiKey->permissions,
+                    'last_used_at' => $apiKey->last_used_at,
+                    'created_at' => $apiKey->created_at->toISOString(),
+                    'updated_at' => $apiKey->updated_at->toISOString(),
+                ];
+            });
+            return response()->json(['data' => $apiKeys]);
+        }
 
-        $apiKeys = $user->apiKeys()
-            ->orderBy('created_at', 'desc')
-            ->paginate(15);
-
-        // Transform keys to show prefix instead of full key
-        $apiKeys->getCollection()->transform(function ($apiKey) {
-            return [
-                'id' => $apiKey->id,
-                'name' => $apiKey->name,
-                'prefix' => $apiKey->prefix,
-                'permissions' => $apiKey->permissions,
-                'last_used_at' => $apiKey->last_used_at,
-                'created_at' => $apiKey->created_at->toISOString(),
-                'updated_at' => $apiKey->updated_at->toISOString(),
-            ];
-        });
-
-        return response()->json([
-            'data' => $apiKeys,
-        ]);
+        return redirect('/dashboard');
     }
 
     /**
