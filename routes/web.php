@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\ApiKeysController;
 use App\Http\Controllers\Billing\PaymentController;
+use App\Http\Controllers\Billing\PaymentMethodsController;
 use App\Http\Controllers\Billing\WebhookController;
 use App\Http\Controllers\TeamMemberController;
 use App\Http\Controllers\Admin\ApiSettingsController;
@@ -55,6 +56,11 @@ Route::delete('/api-keys/{id}', [ApiKeysController::class, 'destroy'])->middlewa
 Route::middleware('auth')->group(function () {
     // Subscription plans page
     Route::get('/billing/plans', [PaymentController::class, 'index']);
+
+    // Payment methods page
+    Route::get('/billing/payment-methods', [PaymentMethodsController::class, 'index'])->name('billing.payment-methods');
+    Route::post('/billing/payment-methods', [PaymentMethodsController::class, 'store'])->name('billing.payment-methods.store');
+    Route::delete('/billing/payment-methods/{id}', [PaymentMethodsController::class, 'destroy'])->name('billing.payment-methods.destroy');
 
     // Payment initiation
     Route::post('/billing/payment/subscription', [PaymentController::class, 'initiateSubscriptionPayment']);
