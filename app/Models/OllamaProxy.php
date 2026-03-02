@@ -11,7 +11,7 @@ class OllamaProxy
 {
     protected Client $client;
 
-    protected string $localUrl = 'http://208.110.93.90:11434';
+    protected string $localUrl;
 
     protected ?string $cloudUrl;
 
@@ -29,6 +29,7 @@ class OllamaProxy
             'connect_timeout' => 10,
         ]);
 
+        $this->localUrl = env('OLLAMA_GPU_URL', 'http://208.110.93.90:11434');
         $this->cloudUrl = env('OLLAMA_CLOUD_URL');
         $this->cloudApiKey = env('CLOUD_API_KEY');
         $this->model = $model_name ?? 'local';
