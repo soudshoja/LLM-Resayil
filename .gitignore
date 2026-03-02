@@ -1,0 +1,40 @@
+# Laravel
+/bootstrap/
+/config/cache.php
+/storage/
+/vendor/
+.phpunit.result.cache
+Homestead.json
+Homestead.json.twig
+.env
+.env-.env
+node_modules/
+npm-debug.log
+yarn-error.log
+.prettierrc
+.prettierrc.twig
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Worktrees
+.worktrees/
+worktrees/
+
+# Logs
+storage/logs/laravel.log
+
+# Testing
+coverage/
+.npc/
+
+# Playwright
+.playwright-mcp/
