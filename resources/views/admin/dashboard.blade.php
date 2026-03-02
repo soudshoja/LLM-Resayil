@@ -25,9 +25,9 @@
     @php
         $totalUsers = \App\Models\User::count();
         $activeSubscriptions = \App\Models\Subscriptions::where('status', 'active')->count();
-        $totalRevenue = \App\Models\TopupPurchase::where('status', 'paid')->sum('amount_kwd') + \App\Models\Subscriptions::where('status', 'active')->count() * 10;
+        $totalRevenue = \App\Models\TopupPurchase::where('status', 'completed')->sum('price');
         $totalApiCalls = \App\Models\UsageLog::count();
-        $cloudBudget = \App\Models\CloudBudget::orderByDesc('created_at')->first();
+        $cloudBudget = \App\Models\CloudBudget::orderByDesc('date')->first();
     @endphp
 
     <div class="stats-grid">
@@ -45,7 +45,7 @@
         </div>
         <div class="stat-card">
             <div class="stat-label">Cloud Budget Used</div>
-            <div class="stat-value">{{ $cloudBudget ? $cloudBudget->daily_requests : 0 }}/500</div>
+            <div class="stat-value">{{ $cloudBudget ? $cloudBudget->requests_today : 0 }}/{{ $cloudBudget ? $cloudBudget->daily_limit : 500 }}</div>
         </div>
     </div>
 

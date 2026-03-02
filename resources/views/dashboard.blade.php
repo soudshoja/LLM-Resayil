@@ -61,7 +61,7 @@
         <div class="stat-card">
             <div class="stat-label">Credits Used (30d)</div>
             <div class="stat-value">
-                {{ number_format(\App\Models\UsageLog::where('user_id', auth()->user()->id)->where('created_at', '>=', now()->subDays(30))->sum('credits_used')) }}
+                {{ number_format(\App\Models\UsageLog::where('user_id', auth()->user()->id)->where('created_at', '>=', now()->subDays(30))->sum('credits_deducted')) }}
             </div>
             <div class="stat-sub">Last 30 days</div>
         </div>
@@ -142,8 +142,8 @@
             @if($purchases->count())
                 @foreach($purchases as $p)
                 <div class="flex justify-between items-center text-sm" style="padding:0.4rem 0;border-bottom:1px solid var(--border)">
-                    <span>+{{ number_format($p->credits_purchased) }} credits</span>
-                    <span class="badge badge-green">{{ $p->amount_kwd }} KWD</span>
+                    <span>+{{ number_format($p->credits) }} credits</span>
+                    <span class="badge badge-green">{{ $p->price }} KWD</span>
                 </div>
                 @endforeach
             @else
@@ -164,8 +164,8 @@
             <tr>
                 <td style="font-family:monospace;font-size:0.8rem">{{ $log->model }}</td>
                 <td>{{ number_format($log->tokens_used) }}</td>
-                <td class="text-gold">{{ $log->credits_used }}</td>
-                <td><span class="badge {{ $log->is_cloud ? 'badge-gold' : 'badge-green' }}">{{ $log->is_cloud ? 'Cloud' : 'Local' }}</span></td>
+                <td class="text-gold">{{ $log->credits_deducted }}</td>
+                <td><span class="badge {{ $log->provider === 'cloud' ? 'badge-gold' : 'badge-green' }}">{{ ucfirst($log->provider) }}</span></td>
                 <td class="text-muted">{{ $log->created_at->diffForHumans() }}</td>
             </tr>
             @endforeach
