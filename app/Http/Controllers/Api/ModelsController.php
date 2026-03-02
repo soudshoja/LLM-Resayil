@@ -287,6 +287,13 @@ class ModelsController extends Controller
     {
         $lower = strtolower($displayId);
 
+        // Handle HuggingFace-style paths like "hf.co/Org/Model" or "user/Model"
+        // Use only the last path segment for inference
+        if (str_contains($lower, '/')) {
+            $segments = explode('/', $lower);
+            $lower = end($segments);
+        }
+
         // Extract the first part before : or -
         $prefix = explode(':', $lower)[0];
         $prefix = explode('-', $prefix)[0];
@@ -330,8 +337,8 @@ class ModelsController extends Controller
             }
         }
 
-        // Fallback: capitalize first part
-        return ucfirst(explode(':', $displayId)[0]);
+        // Fallback: capitalize first word of the last path segment
+        return ucfirst(explode(':', $lower)[0]);
     }
 
     /**
