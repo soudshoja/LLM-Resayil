@@ -27,19 +27,55 @@ class MyFatoorahService
     }
 
     /**
+     * Call InitiatePayment to get valid PaymentMethodId for the given amount.
+     * Returns the first non-direct payment method (i.e. the checkout page).
+     */
+    public function getPaymentMethodId(float $amount): int
+    {
+        $response = Http::withHeaders([
+            'Authorization' => 'Bearer ' . $this->apiKey,
+            'Content-Type'  => 'application/json',
+        ])->post($this->baseUrl . '/v2/InitiatePayment', [
+            'InvoiceAmount' => $amount,
+            'CurrencyIso'   => 'KWD',
+        ]);
+
+        if ($response->failed()) {
+            Log::warning('MyFatoorah InitiatePayment failed, falling back to method 0', [
+                'status' => $response->status(),
+            ]);
+            return 0;
+        }
+
+        $methods = $response->json('Data.PaymentMethods', []);
+
+        // Prefer non-direct (checkout page) — first available
+        foreach ($methods as $method) {
+            if (!($method['IsDirectPayment'] ?? true)) {
+                return (int) $method['PaymentMethodId'];
+            }
+        }
+
+        // Fallback: first method
+        return (int) ($methods[0]['PaymentMethodId'] ?? 0);
+    }
+
+    /**
      * Create payment via ExecutePayment and return invoice URL.
-     * PaymentMethodId 0 = all payment methods shown to user.
      */
     public function createInvoice(array $data): array
     {
         $this->validateApiKey();
 
+        $amount = $data['amount'];
+        $paymentMethodId = $data['payment_method_id'] ?? $this->getPaymentMethodId((float) $amount);
+
         $response = Http::withHeaders([
             'Authorization' => 'Bearer ' . $this->apiKey,
             'Content-Type'  => 'application/json',
         ])->post($this->baseUrl . '/v2/ExecutePayment', [
-            'PaymentMethodId'    => $data['payment_method_id'] ?? 0,
-            'InvoiceValue'       => $data['amount'],
+            'PaymentMethodId'    => $paymentMethodId,
+            'InvoiceValue'       => $amount,
             'DisplayCurrencyIso' => 'KWD',
             'CallBackUrl'        => $data['callback_url'],
             'ErrorUrl'           => $data['error_callback_url'],
