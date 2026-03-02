@@ -182,7 +182,7 @@ from openai import OpenAI
 
 client = OpenAI(
     <span class="key">api_key</span>=<span class="string">"sk-resayil-your-key-here"</span>,
-    <span class="key">base_url</span>=<span class="string">"https://llm.resayil.io/v1"</span>
+    <span class="key">base_url</span>=<span class="string">"https://llm.resayil.io/api/v1"</span>
 )
 
 response = client.chat.completions.create(
