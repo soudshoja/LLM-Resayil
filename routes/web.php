@@ -55,7 +55,7 @@ Route::delete('/api-keys/{id}', [ApiKeysController::class, 'destroy'])->middlewa
 // Billing routes (protected)
 Route::middleware('auth')->group(function () {
     // Subscription plans page
-    Route::get('/billing/plans', [PaymentController::class, 'index']);
+    Route::get('/billing/plans', [PaymentController::class, 'index'])->name('billing.plans');
 
     // Trial payment routes
     Route::post('/billing/trial/start', [PaymentController::class, 'initiateTrialPayment'])->name('billing.trial.start');
