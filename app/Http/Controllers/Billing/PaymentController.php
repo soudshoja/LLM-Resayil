@@ -37,8 +37,9 @@ class PaymentController extends Controller
     {
         $tiers = $this->billingService->getSubscriptionTiers();
         $topupPacks = $this->billingService->getCreditPacks();
+        $paymentMethods = $this->myfatoorahService->getAvailablePaymentMethods();
 
-        return view('billing.plans', compact('tiers', 'topupPacks'));
+        return view('billing.plans', compact('tiers', 'topupPacks', 'paymentMethods'));
     }
 
     /**
@@ -51,6 +52,7 @@ class PaymentController extends Controller
     {
         $validated = $request->validate([
             'tier' => 'required|in:starter,basic,pro,enterprise',
+            'payment_method_id' => 'required|integer',
         ]);
 
         $user = Auth::user();
@@ -70,6 +72,7 @@ class PaymentController extends Controller
                 'customer_email' => $user->email,
                 'callback_url' => $callbackUrl,
                 'error_callback_url' => $errorCallbackUrl,
+                'payment_method_id' => $validated['payment_method_id'],
             ];
 
             $invoice = $this->myfatoorahService->createInvoice($invoiceData);
@@ -102,6 +105,7 @@ class PaymentController extends Controller
     {
         $validated = $request->validate([
             'credits' => 'required|in:500,1100,3000',
+            'payment_method_id' => 'required|integer',
         ]);
 
         $user = Auth::user();
@@ -124,6 +128,7 @@ class PaymentController extends Controller
                 'customer_email' => $user->email,
                 'callback_url' => $callbackUrl,
                 'error_callback_url' => $errorCallbackUrl,
+                'payment_method_id' => $validated['payment_method_id'],
             ];
 
             $invoice = $this->myfatoorahService->createInvoice($invoiceData);
@@ -171,6 +176,10 @@ class PaymentController extends Controller
      */
     public function initiateTrialPayment(Request $request)
     {
+        $validated = $request->validate([
+            'payment_method_id' => 'required|integer',
+        ]);
+
         $user = Auth::user();
 
         if ($user->trial_started_at) {
@@ -188,6 +197,7 @@ class PaymentController extends Controller
                 'tier'               => 'starter',
                 'callback_url'       => route('billing.trial.callback'),
                 'error_callback_url' => url('/billing/plans?error=payment_failed'),
+                'payment_method_id'  => $validated['payment_method_id'],
             ]);
 
             Session::put('pending_trial', [

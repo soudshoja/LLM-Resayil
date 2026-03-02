@@ -61,6 +61,30 @@ class MyFatoorahService
     }
 
     /**
+     * Get all available payment methods for a given amount (cached 1 hour).
+     */
+    public function getAvailablePaymentMethods(float $amount = 1.000): array
+    {
+        $cacheKey = 'myfatoorah_payment_methods_' . $amount;
+
+        return \Illuminate\Support\Facades\Cache::remember($cacheKey, 3600, function () use ($amount) {
+            $response = Http::withHeaders([
+                'Authorization' => 'Bearer ' . $this->apiKey,
+                'Content-Type'  => 'application/json',
+            ])->post($this->baseUrl . '/v2/InitiatePayment', [
+                'InvoiceAmount' => $amount,
+                'CurrencyIso'   => 'KWD',
+            ]);
+
+            if ($response->failed()) {
+                return [];
+            }
+
+            return $response->json('Data.PaymentMethods', []);
+        });
+    }
+
+    /**
      * Create payment via ExecutePayment and return invoice URL.
      */
     public function createInvoice(array $data): array
