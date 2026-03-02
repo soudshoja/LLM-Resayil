@@ -73,7 +73,7 @@ progress:
 
 ---
 
-### Plan 02: Model Selection + Monitoring 🔄 IN PROGRESS
+### Plan 02: Model Selection + Monitoring ✅ COMPLETE
 
 **Completed:**
 - ✅ Dashboard: model catalog section added (per-tier, click to copy model ID)
@@ -81,18 +81,40 @@ progress:
 - ✅ `ModelsController`: returns tier-filtered model list, no `:cloud` aliases visible
 - ✅ Admin monitoring page at `/admin/monitoring` (per-user calls/tokens/credits, top models, recent calls)
 - ✅ "Monitor" nav link added for admin
+- ✅ Cloud model clean names exposed, OllamaProxy remaps clean → internal `:cloud` names
+- ✅ All 4 cloud models verified working end-to-end (authenticated Ollama with ollama.com)
+- ✅ All 30 ollama.com cloud proxy models pulled to GPU server (30 cloud + 15 local = 45 total)
 
-**In progress (agents running):**
-- 🔄 Cloud model clean names exposed in catalog (Enterprise: deepseek-v3.1:671b, qwen3.5:397b, etc.)
-- 🔄 `OllamaProxy` + `ChatCompletionsController` remap clean names → internal `:cloud` names
+---
 
-**Cloud model mapping (internal → client-facing):**
-| Client name | Ollama internal |
-|---|---|
-| `qwen3.5:397b` | `qwen3.5:cloud` |
-| `devstral-2:123b` | `devstral-2:123b-cloud` |
-| `deepseek-v3.1:671b` | `deepseek-v3.1:671b-cloud` |
-| `deepseek-v3.2` | `deepseek-v3.2:cloud` |
+### Plan 03: Full Model Catalog + Admin Model Panel ⏳ READY TO EXECUTE
+
+**Plan doc:** `docs/plans/2026-03-02-model-catalog-admin-panel.md`
+
+**Agent 1 — Model Registry + API Backend:**
+- Create `database/migrations/..._create_models_table.php` (model_id PK, is_active, credit_multiplier_override)
+- Create `app/Models/ModelConfig.php` (Eloquent model)
+- Create `config/models.php` (41 models with full metadata + Ollama name mapping)
+- Rewrite `app/Http/Controllers/Api/ModelsController.php` (serve all from registry, no tier filter)
+- Update `app/Http/Controllers/Api/ChatCompletionsController.php` (remove tier gating, add admin bypass, registry-based model resolution)
+
+**Agent 2 — Searchable Dashboard UI (parallel with Agent 1):**
+- Replace hardcoded model grid in `resources/views/dashboard.blade.php`
+- Dynamic JS fetch from `/api/v1/models` using user's API key
+- Filters: family dropdown, type (local/cloud), size (small/medium/large), text search
+- Click model → detail panel with curl + Python + n8n snippets
+
+**Agent 3 — Admin Model Panel (after Agent 1 deployed):**
+- Create `app/Http/Controllers/AdminModelController.php`
+- Create `resources/views/admin/models.blade.php` (toggle enable/disable, edit credit multiplier)
+- Extend `AdminController`: create API keys for users, set exact credits, set tier, set expiry
+- New routes: `/admin/models`, `/admin/users/{user}/keys`, credit/tier/expiry POST endpoints
+
+**Decisions:**
+- All models available to all tiers — tiers only affect rate limits + credit costs
+- Models disabled by admin disappear from API + dashboard instantly
+- Admin (`admin@llm.resayil.io`) bypasses rate limits, credit checks, model access checks
+- Cloud models 2× credits, local 1× — enforced per model in registry (DB-overridable)
 
 ---
 
@@ -101,7 +123,7 @@ progress:
 | Service | Status | Notes |
 |---------|--------|-------|
 | Web app | ✅ Live | https://llm.resayil.io |
-| Ollama GPU | ✅ Running | 208.110.93.90:11434 — 17 models |
+| Ollama GPU | ✅ Running | 208.110.93.90:11434 — 45 models (15 local + 30 cloud proxy) |
 | Queue worker | ✅ Cron | every minute, --stop-when-empty |
 | Redis | ⚪ N/A | Shared hosting — using DB queue + file cache |
 | API endpoint | ✅ Working | /api/v1/chat/completions verified |
@@ -122,9 +144,10 @@ progress:
 
 ## Next Actions
 
-1. ⏳ Wait for cloud model remapping agents to finish → deploy + test `deepseek-v3.1:671b` call
-2. Test MyFatoorah payment flow (KWD subscription + top-up)
-3. Test enterprise team management flow
+1. 🔄 Dispatch Agent 1 (model registry) + Agent 2 (dashboard UI) in parallel
+2. 🔄 Dispatch Agent 3 (admin model panel) after Agent 1 completes
+3. ⏳ Test MyFatoorah payment flow (KWD subscription + top-up)
+4. ⏳ Test enterprise team management flow
 
 ---
 
