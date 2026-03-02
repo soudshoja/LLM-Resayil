@@ -252,9 +252,6 @@
                 <div class="pm-method" onclick="selectPaymentMethod({{ $method['PaymentMethodId'] }})">
                     <img src="{{ $method['ImageUrl'] }}" alt="{{ $method['PaymentMethodEn'] }}" onerror="this.style.display='none'">
                     <span>{{ $method['PaymentMethodEn'] }}</span>
-                    @if($method['ServiceCharge'] > 0)
-                    <small>+{{ $method['ServiceCharge'] }} KWD fee</small>
-                    @endif
                 </div>
                 @empty
                 <p style="color:var(--text-muted); font-size:0.85rem;">Loading payment methods...</p>
