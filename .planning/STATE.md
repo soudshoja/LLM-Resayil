@@ -2,25 +2,25 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: completed
-last_updated: "2026-02-26T07:38:16Z"
+status: in_progress
+last_updated: "2026-03-02T12:00:00Z"
 progress:
-  total_phases: 5
-  completed_phases: 5
-  total_plans: 5
-  completed_plans: 11
-  percent: 100
+  total_phases: 7
+  completed_phases: 7
+  total_plans: 13
+  completed_plans: 12
+  percent: 92
 ---
 
 # State: LLM Resayil Portal
 
-**Last Updated:** 2026-03-02 (Phase 6 COMPLETE - Site live, all views working)
+**Last Updated:** 2026-03-02 (Phase 7 Plan 02 in progress — cloud models + monitoring)
 
 ## Project Reference
 
 **Core Value:** Users can access powerful LLMs via a simple OpenAI-compatible API with pay-per-use credits, no infrastructure management, and automatic failover to cloud models when local capacity is exceeded.
 
-**Current Focus:** Phase 7 Plan 01 - Fix API Endpoint (4 bugs: missing configs, ThrottleRequests, OllamaProxy, welcome URL)
+**Current Focus:** Phase 7 Plan 02 — Cloud model names + admin monitoring + model catalog
 
 **Project Context:**
 - Laravel SaaS for OpenAI-compatible LLM API access
@@ -31,162 +31,105 @@ progress:
 - Credit-based billing system
 - Enterprise team management
 
+---
+
 ## Current Position
 
 **Phase:** Phase 7 - Backend Services
-**Plan:** 01 - Fix API Endpoint
-**Status:** API returns 500 — 4 bugs identified, plan written, agents dispatched to fix
-**Progress:** All 6 phases complete, Phase 7 Plan 01 in progress
+**Plan:** 02 - Model Selection + Monitoring
+**Status:** Plan 01 COMPLETE (API working). Plan 02 in progress (cloud model remapping + monitoring page)
+**Progress:** All 6 original phases complete + Phase 7 Plan 01 complete
 **Active Requirements:** None
-**Completed Requirements:** AUTH-01, AUTH-02, AUTH-03, KEY-01, KEY-02, KEY-03, KEY-04, LP-01 through LP-06, DASH-01 through DASH-05, ADMIN-01 through ADMIN-05, NOTIF-01 through NOTIF-10, SUB-01, SUB-02, SUB-03, TOP-01, TOP-02, API-01 through API-05, RATE-01 through RATE-03, QUEUE-01, QUEUE-02, CLOUD-01, CLOUD-02, MODEL-01 through MODEL-04, TEAM-01, TEAM-02, TEAM-03, TEAM-04
-
-## Performance Metrics
-
-- **Total v1 Requirements:** 64
-- **Requirements Mapped:** 64
-- **Requirements Completed:** 64
-- **Requirements Remaining:** 0
-- **Phases Completed:** 5
-- **Phases Remaining:** 0
-
-- **Phase 5 Plan 03 (2026-02-26):**
-  - Duration: ~15 minutes
-  - Tasks: 6
-  - Files: 10
-  - Commits: 6
-
-- **Phase 3 Plan 01 (2026-02-26):**
-  - Duration: ~5 minutes
-  - Tasks: 10
-  - Files: 13
-  - Commits: 10
-
-- **Phase 2 Plan 01 (2026-02-26):**
-  - Duration: ~45 minutes
-  - Tasks: 7
-  - Files: 12
-  - Commits: 7
-
-- **Phase 1 (2026-02-26):**
-  - Duration: ~30 minutes
-  - Tasks: 8
-  - Files: 10
-  - Commits: 8
-
-## Accumulated Context
-
-### Roadmap Evolution
-- Phase 6 added: MySQL Production Setup
-
-### Decisions
-1. Laravel on cPanel - matches existing collect.resayil.io stack
-2. MyFatoorah for payments - standard in Kuwait/Gulf, supports KWD
-3. Resayil WhatsApp for notifications - existing integration pattern
-4. OpenAI-compatible API - standard format, users can use existing clients
-5. Credit-based billing - simpler than pure per-request
-6. Auto-failover to cloud - ensures availability during local queue congestion
-7. Dark Luxury design system - Gulf B2B professional aesthetic with gold accents
-8. Bilingual Arabic/English - Arabic-first with RTL support
-- [Phase 04-notifications]:  WhatsApp notification system implementation using Resayil API integration
-- [Phase 02]: UUID Primary Keys - All models use UUIDs instead of auto-increment for better security and distributed system compatibility
-- [Phase 02]: HMAC Validation - Webhook uses HMAC signature verification for payment confirmation security
-- [Phase 02]: Service Container Binding - MyFatoorahService and BillingService bound as singletons for consistent state
-- [Phase 02]: Session Storage - Pending transactions stored in Laravel session for tracking until webhook confirmation
-- [Phase 02]: Database Transactions - All billing operations use transactions for atomicity
-- [Phase 03]: Streaming Support - Implemented via response()->stream() for real-time token generation
-- [Phase 03]: Fail-Open Rate Limiting - If Redis fails, requests are allowed (can be modified for stricter behavior)
-- [Phase 03]: Credit Deduction Timing - Deducted after streaming completes to ensure accurate token counts
-- [Phase 03]: Model Naming - Cloud models use :cloud suffix for easy routing
-- [Phase 03]: RESTful Design - Follows OpenAI API format for user compatibility
-- [Phase 03-api-access]: Streaming Support - Implemented via response()->stream() for real-time token generation
-- [Phase 03-api-access]: Fail-Open Rate Limiting - If Redis fails, requests are allowed (can be modified for stricter behavior)
-- [Phase 03-api-access]: Credit Deduction Timing - Deducted after streaming completes to ensure accurate token counts
-- [Phase 03-api-access]: Model Naming - Cloud models use :cloud suffix for easy routing
-- [Phase 03-api-access]: RESTful Design - Follows OpenAI API format for user compatibility
-- [Phase 05-dashboards-03]: UUID Primary Keys - TeamMember uses UUID primary key for consistency
-- [Phase 05-dashboards-03]: Role-based Scopes - Admin and Member scopes for easy filtering
-- [Phase 05-dashboards-03]: Cascade Delete - Foreign keys configured with cascade delete for data integrity
-- [Phase 05-dashboards-03]: Duplicate Prevention - Unique constraint on (team_owner_id, member_user_id)
-- [Phase 05-dashboards-03]: Self-Add Prevention - Controller validates user is not adding themselves
-
-### Todos
-- [ ] Write Phase 1 plans (02, 03)
-- [ ] Write Phase 2 plans
-- [ ] Write Phase 3 plans
-- [ ] Write Phase 4 plans
-- [ ] Write Phase 1 plans (02, 03)
-- [ ] Write Phase 2 plans
-
-### Blockers
-- None
-
-### Phase 7 Progress
-- ✅ Ollama running at 208.110.93.90:11434 (17 models: llama3.2:3b, glm-4.7-flash, qwen3-30b, etc.)
-- ✅ Queue worker cron added: `* * * * * php artisan queue:work --stop-when-empty --max-time=55`
-- ✅ Redis not available (shared hosting) — already using QUEUE_CONNECTION=database, CACHE_DRIVER=file
-- ✅ Migration added: api_keys.status column (default 'active')
-- ✅ ApiKeyAuth middleware fixed: setUserResolver() so $request->user() works
-- ✅ API routes fixed: /api/v1/ prefix, removed auth:sanctum
-- ❌ API still returns 500 — ThrottleRequests middleware hits non-existent `cache` DB table
-- ❌ Config files (cache.php, session.php, etc.) copied to server but NOT in git
-
-### Next Actions (Phase 7 Plan 01)
-1. **Task 1**: Pull missing config files from server → commit to git
-2. **Task 2**: Remove ThrottleRequests from api middleware group in Kernel.php
-3. **Task 3**: Fix OllamaProxy to read OLLAMA_GPU_URL from env
-4. **Task 4**: Fix welcome page base URL (/api/v1 not /v1)
-5. **Task 5**: Deploy and test end-to-end API call
-
----
-**Session: 2026-03-02**
-
-**Phase 6 COMPLETED. All bugs fixed and deployed:**
-
-**Bugs Fixed:**
-- `bootstrap/app.php` was returning Console Kernel instead of Application — fixed
-- `RouteServiceProvider` missing — created and registered
-- `public/index.php` had wrong paths (`/../llm.resayil.io/...`) — fixed to `/../...`
-- User model missing `$keyType = 'string'` and `$incrementing = false` — UUID IDs now work
-- Auth controllers missing `create()` methods for HTML forms — added
-- Auth controller missing `User` and `Hash` imports — added
-- Dashboard using wrong column names (`credits_used` → `credits_deducted`, `is_cloud` → `provider`) — fixed
-- cPanel document root pointed to `public.` (empty) — symlinked index.php and .htaccess
-- All blade views were missing — created from scratch
-
-**Views Created:**
-- `resources/views/layouts/app.blade.php` — Dark Luxury layout
-- `resources/views/welcome.blade.php` — Landing page (hero, how-it-works, pricing, models, code)
-- `resources/views/auth/login.blade.php` — Login form (AJAX)
-- `resources/views/auth/register.blade.php` — Register form (AJAX)
-- `resources/views/dashboard.blade.php` — User dashboard (credits, API keys, usage, top-up)
-- `resources/views/admin/dashboard.blade.php` — Admin dashboard (users, stats)
-
-**Production Status (verified in Chrome):**
-- Homepage: ✅ https://llm.resayil.io
-- Login: ✅ Works with admin@llm.resayil.io / password
-- Dashboard: ✅ Shows 100,000 credits, Enterprise plan, API key creation
-- Admin Panel: ✅ /admin shows 1 user, 1 active subscription, 0/500 cloud budget
-
-**Database Status:**
-- 10 migrations: all ran
-- Users: 1 (admin@llm.resayil.io)
-- Subscriptions: 1 (Enterprise, expires Feb 2027)
-- Notification templates: 10
-- API keys: 0 (admin hasn't created any yet)
 
 ---
 
-**Last Session:**
-2026-02-26T07:38:16Z
-- **Duration:** ~15 minutes
-- **Files Created:**
-  - Phase 5-03: 10 files for Enterprise Team Management (migration, model, controller, middleware, 4 views, routes)
-  - Phase 3: 13 files for API Access (migrations, models, services, controllers, middleware, routes)
-  - Phase 4: 34 files for WhatsApp notification system
-  - Phase 2: 12 files for Billing & Subscriptions (migration, models, services, controllers, routes)
-  - Phase 1: 10 files for Foundation & Auth
+## Phase 7 — Complete Log
+
+### Plan 01: Fix API Endpoint ✅ COMPLETE
+
+**Bugs fixed:**
+- `config/cache.php` and other config files missing from git → pulled from server, committed
+- `ThrottleRequests` in api middleware group hit non-existent `cache` DB table → removed
+- `OllamaProxy` hardcoded GPU URL → reads from `OLLAMA_GPU_URL` env
+- Welcome page showed `/v1` base URL → fixed to `/api/v1`
+- `ApiKeyAuth` middleware used `$request->merge()` → fixed to `setUserResolver()`
+- `api_keys` table missing `status` column → migration added (default 'active')
+- API routes used `auth:sanctum` → removed, use `api.key.auth` only
+- `ChatCompletionsController` return type mismatch `Response` vs `JsonResponse` → fixed
+- `OllamaProxy::proxyChatCompletions()` used `Str::of()->count()` (doesn't exist) → `mb_strlen()`
+- `UsageLog` model missing UUID booted hook + `$incrementing=false` → fixed
+- `ModelAccessControl` closure missing `$tier` in `use()` → fixed
+- `CACHE_STORE=file` missing from `.env` (was `CACHE_DRIVER`) → added on server
+
+**Verified working:**
+- `POST /api/v1/chat/completions` with `llama3.2:3b` → returns "Hello." ✅
+- `GET /api/v1/models` → returns model list ✅
+
+**Additional page fixes (from Chrome audit):**
+- `/api-keys` was returning raw JSON → now redirects to dashboard
+- `/billing/plans` was 500 (missing view) → created `billing/plans.blade.php`
+- `/teams` was returning raw JSON → now returns `teams.dashboard` Blade view
+- Queue worker cron added: every minute, `--stop-when-empty --max-time=55`
 
 ---
 
-*State file created: 2026-02-26*
-*Last updated: 2026-03-01 - Domain root changed, pending seeder execution*
+### Plan 02: Model Selection + Monitoring 🔄 IN PROGRESS
+
+**Completed:**
+- ✅ Dashboard: model catalog section added (per-tier, click to copy model ID)
+- ✅ Dashboard: local/cloud provider badge removed from usage table
+- ✅ `ModelsController`: returns tier-filtered model list, no `:cloud` aliases visible
+- ✅ Admin monitoring page at `/admin/monitoring` (per-user calls/tokens/credits, top models, recent calls)
+- ✅ "Monitor" nav link added for admin
+
+**In progress (agents running):**
+- 🔄 Cloud model clean names exposed in catalog (Enterprise: deepseek-v3.1:671b, qwen3.5:397b, etc.)
+- 🔄 `OllamaProxy` + `ChatCompletionsController` remap clean names → internal `:cloud` names
+
+**Cloud model mapping (internal → client-facing):**
+| Client name | Ollama internal |
+|---|---|
+| `qwen3.5:397b` | `qwen3.5:cloud` |
+| `devstral-2:123b` | `devstral-2:123b-cloud` |
+| `deepseek-v3.1:671b` | `deepseek-v3.1:671b-cloud` |
+| `deepseek-v3.2` | `deepseek-v3.2:cloud` |
+
+---
+
+## Infrastructure Status
+
+| Service | Status | Notes |
+|---------|--------|-------|
+| Web app | ✅ Live | https://llm.resayil.io |
+| Ollama GPU | ✅ Running | 208.110.93.90:11434 — 17 models |
+| Queue worker | ✅ Cron | every minute, --stop-when-empty |
+| Redis | ⚪ N/A | Shared hosting — using DB queue + file cache |
+| API endpoint | ✅ Working | /api/v1/chat/completions verified |
+| Admin monitoring | ✅ Live | /admin/monitoring |
+
+---
+
+## Decisions (this session)
+
+- [Phase 07-01]: Removed `ThrottleRequests` from api middleware — custom `RateLimiter` service handles this
+- [Phase 07-01]: `setUserResolver()` over `$request->merge()` for API key auth — makes `$request->user()` work natively
+- [Phase 07-01]: `QUEUE_CONNECTION=database` + `CACHE_DRIVER=file` — Redis not available on shared hosting, fail-open acceptable for now
+- [Phase 07-02]: Cloud models exposed with clean names, no `:cloud` suffix — clients don't need routing details
+- [Phase 07-02]: Enterprise tier gets cloud models (deepseek 671B, qwen 397B) — Basic/Pro local models only
+- [Phase 07-02]: Provider badge removed from client dashboard — local/cloud routing is internal
+
+---
+
+## Next Actions
+
+1. ⏳ Wait for cloud model remapping agents to finish → deploy + test `deepseek-v3.1:671b` call
+2. Test MyFatoorah payment flow (KWD subscription + top-up)
+3. Test enterprise team management flow
+
+---
+
+## Completed Requirements
+
+AUTH-01, AUTH-02, AUTH-03, KEY-01, KEY-02, KEY-03, KEY-04, LP-01 through LP-06, DASH-01 through DASH-05, ADMIN-01 through ADMIN-05, NOTIF-01 through NOTIF-10, SUB-01, SUB-02, SUB-03, TOP-01, TOP-02, API-01 through API-05, RATE-01 through RATE-03, QUEUE-01, QUEUE-02, CLOUD-01, CLOUD-02, MODEL-01 through MODEL-04, TEAM-01, TEAM-02, TEAM-03, TEAM-04
+
+*State file last updated: 2026-03-02 — Phase 7 Plan 01 complete, Plan 02 in progress*
