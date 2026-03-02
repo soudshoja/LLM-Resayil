@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\OllamaProxy;
 use App\Services\RateLimiter;
 use App\Services\CloudFailover;
-use App\Services\ModelAccessControl;
 use App\Services\CreditService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -21,8 +20,6 @@ class ChatCompletionsController extends Controller
 
     protected CloudFailover $cloudFailover;
 
-    protected ModelAccessControl $modelAccess;
-
     protected CreditService $creditService;
 
     /**
@@ -33,7 +30,6 @@ class ChatCompletionsController extends Controller
         $this->proxy = new OllamaProxy();
         $this->rateLimiter = new RateLimiter();
         $this->cloudFailover = new CloudFailover();
-        $this->modelAccess = new ModelAccessControl();
         $this->creditService = new CreditService();
     }
 
@@ -68,55 +64,76 @@ class ChatCompletionsController extends Controller
             ], 401);
         }
 
-        // Check rate limit
-        $tier = $user->subscription_tier ?? 'basic';
-        $rateLimit = $this->rateLimiter->checkRateLimit($user->id, $tier);
+        // Admin bypass: admin@llm.resayil.io bypasses rate limits, credit checks, and model access
+        $isAdmin = auth()->user()->email === 'admin@llm.resayil.io';
 
-        if (!$rateLimit['allowed']) {
-            return response()->json([
-                'error' => [
-                    'message' => 'Rate limit exceeded',
-                    'code' => 429,
-                ],
-                'retry_after' => 60 - now()->format('s'),
-            ], 429, [
-                'X-RateLimit-Limit' => $rateLimit['limit'],
-                'X-RateLimit-Remaining' => 0,
-                'X-RateLimit-Reset' => now()->addMinute()->timestamp,
-            ]);
+        // Check rate limit (bypass for admin)
+        if (!$isAdmin) {
+            $tier = $user->subscription_tier ?? 'basic';
+            $rateLimit = $this->rateLimiter->checkRateLimit($user->id, $tier);
+
+            if (!$rateLimit['allowed']) {
+                return response()->json([
+                    'error' => [
+                        'message' => 'Rate limit exceeded',
+                        'code' => 429,
+                    ],
+                    'retry_after' => 60 - now()->format('s'),
+                ], 429, [
+                    'X-RateLimit-Limit' => $rateLimit['limit'],
+                    'X-RateLimit-Remaining' => 0,
+                    'X-RateLimit-Reset' => now()->addMinute()->timestamp,
+                ]);
+            }
         }
 
-        // Check credits
-        $estimatedCost = $this->creditService->calculateCost(100, 'local'); // Estimate 100 tokens
-        $creditsCheck = $this->creditService->checkCredits($user, $estimatedCost);
+        // Check credits (bypass for admin)
+        if (!$isAdmin) {
+            $estimatedCost = $this->creditService->calculateCost(100, 'local'); // Estimate 100 tokens
+            $creditsCheck = $this->creditService->checkCredits($user, $estimatedCost);
 
-        if (!$creditsCheck['hasEnough']) {
-            return response()->json($this->creditService->handleCreditExhausted($user), 402);
+            if (!$creditsCheck['hasEnough']) {
+                return response()->json($this->creditService->handleCreditExhausted($user), 402);
+            }
         }
 
-        // Get model access control
-        $allowedModels = $this->modelAccess->getAllowedModels($tier);
+        // Use model registry to resolve model name and get model info
+        $models = config('models.models');
+        $modelId = $validated['model'];
 
-        if (!$this->modelAccess->isModelAllowed($validated['model'], $tier)) {
-            return response()->json([
-                'error' => [
-                    'message' => 'Model not accessible for your tier',
-                    'code' => 403,
-                ],
-                'available_models' => $allowedModels,
-            ], 403);
+        if (!isset($models[$modelId])) {
+            // Check if the modelId is an ollama_name that needs to be resolved
+            $resolvedModelId = $this->resolveModelFromRegistry($modelId, $models);
+            if ($resolvedModelId === null) {
+                return response()->json([
+                    'error' => [
+                        'message' => "Model '{$modelId}' not found.",
+                        'code' => 404,
+                    ],
+                ], 404);
+            }
+            $modelId = $resolvedModelId;
         }
+
+        $modelConfig = $models[$modelId];
+        $isCloudModel = ($modelConfig['type'] ?? 'local') === 'cloud';
+        $creditMultiplier = $modelConfig['credit_multiplier'] ?? 1.0;
+        $ollamaName = $modelConfig['ollama_name'] ?? $modelId;
 
         // Determine provider (local or cloud)
-        $provider = $this->cloudFailover->shouldUseCloud($user) ? 'cloud' : 'local';
-        $modelName = $provider === 'cloud' ? $this->cloudFailover->getCloudModelName($validated['model']) : $validated['model'];
-        $modelName = $this->proxy->resolveModelName($modelName);
+        $provider = $isCloudModel ? 'cloud' : 'local';
 
-        // Update rate limit counter
-        $this->rateLimiter->incrementRateLimit($user->id, $tier);
+        // Use resolved ollama name for proxy request
+        $modelName = $ollamaName;
 
-        // Record cloud usage if applicable
-        if ($provider === 'cloud') {
+        // Update rate limit counter (bypass for admin)
+        if (!$isAdmin) {
+            $tier = $user->subscription_tier ?? 'basic';
+            $this->rateLimiter->incrementRateLimit($user->id, $tier);
+        }
+
+        // Record cloud usage if applicable (bypass for admin)
+        if ($provider === 'cloud' && !$isAdmin) {
             if (!$this->cloudFailover->recordCloudRequest($user)) {
                 // Fall back to local if cloud limit exceeded
                 $provider = 'local';
@@ -126,14 +143,14 @@ class ChatCompletionsController extends Controller
         // Forward request to Ollama
         $response = $this->proxy->proxyChatCompletions($request, $provider, $modelName);
 
-        // Deduct credits on successful response
-        if ($response->getStatusCode() === 200) {
+        // Deduct credits on successful response (bypass for admin)
+        if ($response->getStatusCode() === 200 && !$isAdmin) {
             $content = json_decode($response->getContent(), true);
             $tokensUsed = $this->estimateTokens($content);
             $cost = $this->creditService->calculateCost($tokensUsed, $provider);
 
             if ($cost > 0) {
-                $this->creditService->deductCredits($user, $tokensUsed, $provider, $validated['model']);
+                $this->creditService->deductCredits($user, $tokensUsed, $provider, $modelId);
             }
         }
 
@@ -171,62 +188,120 @@ class ChatCompletionsController extends Controller
             ], 401);
         }
 
-        // Check rate limit
-        $tier = $user->subscription_tier ?? 'basic';
-        $rateLimit = $this->rateLimiter->checkRateLimit($user->id, $tier);
+        // Admin bypass: admin@llm.resayil.io bypasses rate limits, credit checks, and model access
+        $isAdmin = auth()->user()->email === 'admin@llm.resayil.io';
 
-        if (!$rateLimit['allowed']) {
-            return response()->json([
-                'error' => [
-                    'message' => 'Rate limit exceeded',
-                    'code' => 429,
-                ],
-            ], 429);
+        // Check rate limit (bypass for admin)
+        if (!$isAdmin) {
+            $tier = $user->subscription_tier ?? 'basic';
+            $rateLimit = $this->rateLimiter->checkRateLimit($user->id, $tier);
+
+            if (!$rateLimit['allowed']) {
+                return response()->json([
+                    'error' => [
+                        'message' => 'Rate limit exceeded',
+                        'code' => 429,
+                    ],
+                ], 429);
+            }
         }
 
-        // Check credits
-        $estimatedCost = $this->creditService->calculateCost(100, 'local');
-        $creditsCheck = $this->creditService->checkCredits($user, $estimatedCost);
+        // Check credits (bypass for admin)
+        if (!$isAdmin) {
+            $estimatedCost = $this->creditService->calculateCost(100, 'local');
+            $creditsCheck = $this->creditService->checkCredits($user, $estimatedCost);
 
-        if (!$creditsCheck['hasEnough']) {
-            return response()->json($this->creditService->handleCreditExhausted($user), 402);
+            if (!$creditsCheck['hasEnough']) {
+                return response()->json($this->creditService->handleCreditExhausted($user), 402);
+            }
         }
 
-        // Get model access control
-        if (!$this->modelAccess->isModelAllowed($validated['model'], $tier)) {
-            return response()->json([
-                'error' => [
-                    'message' => 'Model not accessible for your tier',
-                    'code' => 403,
-                ],
-            ], 403);
+        // Use model registry to resolve model name and get model info
+        $models = config('models.models');
+        $modelId = $validated['model'];
+
+        if (!isset($models[$modelId])) {
+            // Check if the modelId is an ollama_name that needs to be resolved
+            $resolvedModelId = $this->resolveModelFromRegistry($modelId, $models);
+            if ($resolvedModelId === null) {
+                return response()->json([
+                    'error' => [
+                        'message' => "Model '{$modelId}' not found.",
+                        'code' => 404,
+                    ],
+                ], 404);
+            }
+            $modelId = $resolvedModelId;
         }
+
+        $modelConfig = $models[$modelId];
+        $isCloudModel = ($modelConfig['type'] ?? 'local') === 'cloud';
+        $creditMultiplier = $modelConfig['credit_multiplier'] ?? 1.0;
+        $ollamaName = $modelConfig['ollama_name'] ?? $modelId;
 
         // Determine provider
-        $provider = $this->cloudFailover->shouldUseCloud($user) ? 'cloud' : 'local';
-        $modelName = $provider === 'cloud' ? $this->cloudFailover->getCloudModelName($validated['model']) : $validated['model'];
-        $modelName = $this->proxy->resolveModelName($modelName);
+        $provider = $isCloudModel ? 'cloud' : 'local';
 
-        // Update rate limit counter
-        $this->rateLimiter->incrementRateLimit($user->id, $tier);
+        // Use resolved ollama name for proxy request
+        $modelName = $ollamaName;
 
-        // Record cloud usage if applicable
-        if ($provider === 'cloud') {
+        // Update rate limit counter (bypass for admin)
+        if (!$isAdmin) {
+            $tier = $user->subscription_tier ?? 'basic';
+            $this->rateLimiter->incrementRateLimit($user->id, $tier);
+        }
+
+        // Record cloud usage if applicable (bypass for admin)
+        if ($provider === 'cloud' && !$isAdmin) {
             if (!$this->cloudFailover->recordCloudRequest($user)) {
                 $provider = 'local';
             }
         }
 
         // Return streaming response
-        return response()->stream(function () use ($request, $provider, $modelName, $user, $validated) {
+        return response()->stream(function () use ($request, $provider, $modelName, $user, $validated, $modelId) {
             $response = $this->proxy->proxyChatCompletions($request, $provider, $modelName);
 
             // Stream the response
             echo $response->getContent();
+
+            // Deduct credits on successful response (bypass for admin)
+            if ($response->getStatusCode() === 200 && !$isAdmin) {
+                $content = json_decode($response->getContent(), true);
+                $tokensUsed = $this->estimateTokens($content);
+                // Use the provider determined before the request (cloud vs local)
+                $cost = $this->creditService->calculateCost($tokensUsed, $provider);
+
+                if ($cost > 0) {
+                    $this->creditService->deductCredits($user, $tokensUsed, $provider, $modelId);
+                }
+            }
         }, 200, [
             'Content-Type' => 'text/event-stream',
             'X-Accel-Buffering' => 'no',
         ]);
+    }
+
+    /**
+     * Resolve a client-facing model name or ollama_name to the model registry ID.
+     *
+     * @param string $modelId The model identifier to resolve
+     * @param array $models The model registry
+     * @return string|null The registry model ID if found, null otherwise
+     */
+    protected function resolveModelFromRegistry(string $modelId, array $models): ?string
+    {
+        foreach ($models as $registryId => $modelConfig) {
+            // Check if the model_id matches
+            if ($registryId === $modelId) {
+                return $registryId;
+            }
+            // Check if the ollama_name matches
+            if (($modelConfig['ollama_name'] ?? '') === $modelId) {
+                return $registryId;
+            }
+        }
+        return null;
     }
 
     /**
@@ -239,7 +314,7 @@ class ChatCompletionsController extends Controller
         }
 
         // Estimate tokens from content (rough approximation: 3 chars = 1 token)
-        $content = $response['message']['content'];
+        $content = $response['message']['content'] ?? '';
         $tokenEstimate = (int) (mb_strlen($content) / 3);
 
         // Add prompt tokens if available

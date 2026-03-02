@@ -87,6 +87,7 @@
             @if(auth()->user()->email === 'admin@llm.resayil.io')
             <a href="/admin" style="color:var(--gold)">Admin</a>
             <a href="/admin/monitoring" style="color:var(--gold)">Monitor</a>
+            <a href="/admin/models" style="color:var(--gold)">Models</a>
             @endif
             <form method="POST" action="/logout" style="display:inline">
                 @csrf

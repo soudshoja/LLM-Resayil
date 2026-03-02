@@ -3,77 +3,27 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\OllamaProxy;
+use App\Models\ModelConfig;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class ModelsController extends Controller
 {
-    protected OllamaProxy $proxy;
-
-    /**
-     * Models available per subscription tier.
-     *
-     * Cloud models (Enterprise only) are listed using their clean client-facing
-     * names. The $cloudModelMap below translates them to the internal Ollama
-     * names at request time, so clients never see the `:cloud` suffix.
-     */
-    protected array $tierModels = [
-        'basic' => [
-            'llama3.2:3b',
-            'smollm2:135m',
-        ],
-        'pro' => [
-            'llama3.2:3b',
-            'smollm2:135m',
-            'qwen2.5-coder:14b',
-            'mistral-small3.2:24b-instruct-2506-q4_K_M',
-        ],
-        'enterprise' => [
-            'llama3.2:3b',
-            'smollm2:135m',
-            'qwen2.5-coder:14b',
-            'mistral-small3.2:24b-instruct-2506-q4_K_M',
-            'glm-4.7-flash:latest',
-            'qwen3-30b-40k:latest',
-            'gpt-oss:20b',
-            'hf.co/Qwen/Qwen3-VL-32B-Instruct-GGUF:Q4_K_M',
-            // cloud models (Enterprise only) — proxied to ollama.com
-            'qwen3.5:397b',
-            'devstral-2:123b',
-            'deepseek-v3.1:671b',
-            'deepseek-v3.2',
-        ],
-    ];
-
-    /**
-     * Map clean client-facing model names to their internal Ollama names.
-     *
-     * Cloud-proxy models on the Ollama server use a `:cloud` naming convention.
-     * This map is used by resolveModelName() so that upstream routing is
-     * transparent to API clients.
-     */
-    protected array $cloudModelMap = [
-        'qwen3.5:397b'       => 'qwen3.5:cloud',
-        'devstral-2:123b'    => 'devstral-2:123b-cloud',
-        'deepseek-v3.1:671b' => 'deepseek-v3.1:671b-cloud',
-        'deepseek-v3.2'      => 'deepseek-v3.2:cloud',
-    ];
-
     /**
      * Constructor.
      */
     public function __construct()
     {
-        $this->proxy = new OllamaProxy();
+        // No external dependencies needed - all data from config/models.php
     }
 
     /**
-     * Return the OpenAI-compatible model list for the authenticated user's tier.
+     * Return the OpenAI-compatible model list for the authenticated user.
      *
-     * The catalog is driven entirely by $tierModels — no Ollama round-trip is
-     * needed here. Cloud models are included for Enterprise users and are
-     * exposed with their clean client-facing names (no `:cloud` suffix).
+     * All 45 models are now exposed to all users. Tiers only affect rate limits
+     * and credit costs (cloud models cost 2x credits).
+     *
+     * Disabled models (is_active = false) are excluded from the list.
      */
     public function index(Request $request): JsonResponse
     {
@@ -88,19 +38,66 @@ class ModelsController extends Controller
             ], 401);
         }
 
-        $tier   = $user->subscription_tier ?? 'basic';
-        $models = $this->tierModels[$tier] ?? $this->tierModels['basic'];
+        // Get all active models from the registry
+        $models = config('models.models');
 
-        $data = array_map(fn(string $id) => [
-            'id'       => $id,
-            'object'   => 'model',
-            'created'  => 1740000000,
-            'owned_by' => 'llm-resayil',
-        ], $models);
+        // Filter to only active models
+        $activeModels = array_filter($models, fn($model) => $model['is_active'] ?? true);
+
+        $data = array_map(function (string $modelId, array $modelData) {
+            return [
+                'id'       => $modelId,
+                'object'   => 'model',
+                'created'  => 1740000000,
+                'owned_by' => 'llm-resayil',
+                'family'   => $modelData['family'] ?? null,
+                'type'     => $modelData['type'] ?? null,
+                'size'     => $modelData['size'] ?? null,
+            ];
+        }, array_keys($activeModels), $activeModels);
 
         return response()->json([
             'object' => 'list',
             'data'   => $data,
+        ]);
+    }
+
+    /**
+     * Return detailed information about a specific model.
+     *
+     * This endpoint provides comprehensive metadata about a model including
+     * context window, parameters, quantization, and pricing.
+     */
+    public function show(Request $request, string $modelId): JsonResponse
+    {
+        $models = config('models.models');
+
+        if (!isset($models[$modelId])) {
+            return response()->json([
+                'error' => [
+                    'message' => "Model '{$modelId}' not found.",
+                    'code'    => 404,
+                ],
+            ], 404);
+        }
+
+        $model = $models[$modelId];
+
+        return response()->json([
+            'id'       => $modelId,
+            'object'   => 'model',
+            'created'  => 1740000000,
+            'owned_by' => 'llm-resayil',
+            'name'     => $model['name'] ?? $modelId,
+            'family'   => $model['family'] ?? null,
+            'type'     => $model['type'] ?? null,
+            'size'     => $model['size'] ?? null,
+            'context_window' => $model['context_window'] ?? null,
+            'description' => $model['description'] ?? null,
+            'license'  => $model['license'] ?? null,
+            'params'   => $model['params'] ?? null,
+            'quantization' => $model['quantization'] ?? null,
+            'credit_multiplier' => $model['credit_multiplier'] ?? 1.0,
         ]);
     }
 
@@ -110,9 +107,17 @@ class ModelsController extends Controller
      * For regular models the name passes through unchanged. For cloud-proxy
      * models the clean name is translated to the `:cloud`-suffixed variant
      * that the Ollama server understands.
+     *
+     * This method reads the mapping from config/models.php for consistency.
      */
     public function resolveModelName(string $clientName): string
     {
-        return $this->cloudModelMap[$clientName] ?? $clientName;
+        $models = config('models.models');
+
+        if (isset($models[$clientName])) {
+            return $models[$clientName]['ollama_name'] ?? $clientName;
+        }
+
+        return $clientName;
     }
 }

@@ -8,6 +8,8 @@ use App\Http\Controllers\Billing\PaymentController;
 use App\Http\Controllers\Billing\WebhookController;
 use App\Http\Controllers\TeamMemberController;
 use App\Http\Controllers\Admin\ApiSettingsController;
+use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\AdminModelController;
 
 /*
 |--------------------------------------------------------------------------
@@ -63,6 +65,16 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
     Route::get('/api-settings', [ApiSettingsController::class, 'index'])->name('admin.api-settings');
     Route::put('/api-settings', [ApiSettingsController::class, 'update'])->name('admin.api-settings.update');
     Route::get('/monitoring', function () { return view('admin.monitoring'); })->name('admin.monitoring');
+
+    // Model management routes
+    Route::get('/models', [AdminModelController::class, 'index'])->name('admin.models');
+    Route::put('/models/{id}', [AdminModelController::class, 'update'])->name('admin.models.update');
+
+    // User management routes
+    Route::post('/users/{user}/keys', [AdminController::class, 'createApiKeyForUser'])->name('admin.users.keys.create');
+    Route::post('/users/{user}/credits', [AdminController::class, 'setUserCredits'])->name('admin.users.credits.set');
+    Route::post('/users/{user}/tier', [AdminController::class, 'setUserTier'])->name('admin.users.tier.set');
+    Route::post('/users/{user}/expiry', [AdminController::class, 'setUserExpiry'])->name('admin.users.expiry.set');
 });
 
 // Team routes (Enterprise only)

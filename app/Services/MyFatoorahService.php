@@ -15,7 +15,7 @@ class MyFatoorahService
     /**
      * MyFatoorah API key.
      */
-    protected string $apiKey;
+    protected ?string $apiKey = null;
 
     /**
      * Create a new MyFatoorah service instance.
@@ -23,7 +23,7 @@ class MyFatoorahService
     public function __construct()
     {
         $this->baseUrl = env('MYFATOORAH_BASE_URL', 'https://apitest.myfatoorah.com');
-        $this->apiKey = env('MYFATOORAH_API_KEY');
+        $this->apiKey = env('MYFATOORAH_API_KEY') ?: null;
     }
 
     /**
