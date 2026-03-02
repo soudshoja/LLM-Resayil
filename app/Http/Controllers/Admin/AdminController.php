@@ -27,15 +27,17 @@ class AdminController extends Controller
 
         $keyName = $request->input('key_name', 'Admin Created Key');
 
-        // Generate API key
+        // Generate API key (raw hex, same as ApiKeysController)
         $apiKey = bin2hex(random_bytes(32));
-        $hashedKey = hash('sha256', $apiKey);
+        $prefix = substr($apiKey, 0, 12);
 
         ApiKeys::create([
-            'user_id' => $user->id,
-            'name' => $keyName,
-            'key' => $hashedKey,
-            'permissions' => 'read,write',
+            'user_id'     => $user->id,
+            'name'        => $keyName,
+            'key'         => $apiKey,
+            'prefix'      => $prefix,
+            'permissions' => ['read', 'write'],
+            'status'      => 'active',
         ]);
 
         return response()->json(['success' => true, 'message' => $apiKey]);
