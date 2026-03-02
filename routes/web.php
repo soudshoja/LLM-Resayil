@@ -36,6 +36,13 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware('auth');
 
+// Profile (protected)
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [App\Http\Controllers\ProfileController::class, 'show'])->name('profile');
+    Route::post('/profile', [App\Http\Controllers\ProfileController::class, 'update'])->name('profile.update');
+    Route::post('/profile/password', [App\Http\Controllers\ProfileController::class, 'updatePassword'])->name('profile.password');
+});
+
 // API Keys routes (web interface)
 Route::get('/api-keys', [ApiKeysController::class, 'index'])->middleware('auth');
 Route::post('/api-keys', [ApiKeysController::class, 'store'])->middleware('auth');

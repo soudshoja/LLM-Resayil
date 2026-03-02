@@ -89,6 +89,7 @@
             <a href="/admin/monitoring" style="color:var(--gold)">Monitor</a>
             <a href="/admin/models" style="color:var(--gold)">Models</a>
             @endif
+            <a href="/profile">Profile</a>
             <form method="POST" action="/logout" style="display:inline">
                 @csrf
                 <button type="submit" class="btn btn-outline" style="padding:0.4rem 0.8rem">Logout</button>
