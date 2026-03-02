@@ -67,6 +67,29 @@
         </div>
     </div>
 
+    <!-- Available Models -->
+    <div class="card" style="margin-bottom:1.5rem">
+        <h2 style="font-size:1rem;font-weight:600;margin-bottom:0.75rem">Available Models</h2>
+        <p class="text-secondary text-sm" style="margin-bottom:1rem">Use these model IDs in your API requests. Your <span class="badge badge-gold">{{ ucfirst(auth()->user()->subscription_tier) }}</span> plan includes:</p>
+        @php
+        $tierModels = [
+            'basic'      => [['id'=>'llama3.2:3b','desc'=>'Fast · 3B · General'],['id'=>'smollm2:135m','desc'=>'Ultra-fast · 135M']],
+            'pro'        => [['id'=>'llama3.2:3b','desc'=>'Fast · 3B · General'],['id'=>'smollm2:135m','desc'=>'Ultra-fast · 135M'],['id'=>'qwen2.5-coder:14b','desc'=>'Code · 14B'],['id'=>'mistral-small3.2:24b-instruct-2506-q4_K_M','desc'=>'Balanced · 24B']],
+            'enterprise' => [['id'=>'llama3.2:3b','desc'=>'Fast · 3B · General'],['id'=>'smollm2:135m','desc'=>'Ultra-fast · 135M'],['id'=>'qwen2.5-coder:14b','desc'=>'Code · 14B'],['id'=>'mistral-small3.2:24b-instruct-2506-q4_K_M','desc'=>'Balanced · 24B'],['id'=>'glm-4.7-flash:latest','desc'=>'High quality · 30B'],['id'=>'qwen3-30b-40k:latest','desc'=>'Long context 40K · 30B'],['id'=>'gpt-oss:20b','desc'=>'OpenAI OSS · 20B'],['id'=>'hf.co/Qwen/Qwen3-VL-32B-Instruct-GGUF:Q4_K_M','desc'=>'Vision + text · 32B']],
+        ];
+        $models = $tierModels[auth()->user()->subscription_tier] ?? $tierModels['basic'];
+        @endphp
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:0.75rem">
+            @foreach($models as $m)
+            <div style="background:var(--bg-secondary);border:1px solid var(--border);border-radius:8px;padding:0.75rem;cursor:pointer" onclick="navigator.clipboard.writeText('{{ $m['id'] }}').then(()=>alert('Copied: {{ $m['id'] }}'))">
+                <div style="font-family:monospace;font-size:0.78rem;color:var(--gold);margin-bottom:0.25rem">{{ $m['id'] }}</div>
+                <div class="text-xs text-muted">{{ $m['desc'] }}</div>
+            </div>
+            @endforeach
+        </div>
+        <p class="text-xs text-muted" style="margin-top:0.75rem">Click any model to copy its ID to clipboard.</p>
+    </div>
+
     <div class="section-grid">
         <!-- API Keys -->
         <div class="card">
@@ -158,14 +181,13 @@
         @php $logs = \App\Models\UsageLog::where('user_id', auth()->user()->id)->orderByDesc('created_at')->take(10)->get(); @endphp
         @if($logs->count())
         <table class="keys-table">
-            <thead><tr><th>Model</th><th>Tokens</th><th>Credits Used</th><th>Type</th><th>Time</th></tr></thead>
+            <thead><tr><th>Model</th><th>Tokens</th><th>Credits Used</th><th>Time</th></tr></thead>
             <tbody>
             @foreach($logs as $log)
             <tr>
                 <td style="font-family:monospace;font-size:0.8rem">{{ $log->model }}</td>
                 <td>{{ number_format($log->tokens_used) }}</td>
                 <td class="text-gold">{{ $log->credits_deducted }}</td>
-                <td><span class="badge {{ $log->provider === 'cloud' ? 'badge-gold' : 'badge-green' }}">{{ ucfirst($log->provider) }}</span></td>
                 <td class="text-muted">{{ $log->created_at->diffForHumans() }}</td>
             </tr>
             @endforeach
