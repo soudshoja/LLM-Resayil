@@ -136,7 +136,7 @@ class ModelsController extends Controller
      * Returns array keyed by display_id (client-facing name) with inferred metadata.
      * Returns null on error.
      */
-    protected function fetchModelsFromOllama(): ?array
+    public function fetchModelsFromOllama(): ?array
     {
         $ollamaUrl = env('OLLAMA_GPU_URL', 'http://localhost:11434');
 
@@ -396,7 +396,7 @@ class ModelsController extends Controller
     /**
      * Fallback to config/models.php when Ollama is unreachable.
      */
-    protected function fallbackToConfig(): array
+    public function fallbackToConfig(): array
     {
         $models = config('models.models');
 

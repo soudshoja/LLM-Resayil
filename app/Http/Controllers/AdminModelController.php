@@ -17,29 +17,30 @@ class AdminModelController extends Controller
      */
     public function index()
     {
-        $models = config('models.models');
+        $mc = app(\App\Http\Controllers\Api\ModelsController::class);
+        $models = $mc->fetchModelsFromOllama() ?? $mc->fallbackToConfig();
 
         // Get current settings from database
-        $modelConfigs = ModelConfig::pluck('is_active', 'model_id')
-            ->toArray();
+        $modelConfigs = ModelConfig::pluck('is_active', 'model_id')->toArray();
         $multipliers = ModelConfig::whereNotNull('credit_multiplier_override')
             ->pluck('credit_multiplier_override', 'model_id')
             ->toArray();
 
-        // Merge config with database overrides
-        $modelList = array_map(function ($modelId, $modelData) use ($modelConfigs, $multipliers) {
-            return [
-                'model_id' => $modelId,
-                'name' => $modelData['name'] ?? $modelId,
-                'family' => $modelData['family'] ?? 'unknown',
-                'type' => $modelData['type'] ?? 'local',
-                'size' => $modelData['size'] ?? 'unknown',
-                'is_active' => $modelConfigs[$modelId] ?? ($modelData['is_active'] ?? true),
-                'credit_multiplier' => $modelData['credit_multiplier'] ?? 1.0,
+        $modelList = [];
+        foreach ($models as $modelId => $modelData) {
+            $modelList[] = [
+                'model_id'                  => $modelId,
+                'name'                      => $modelData['name'] ?? $modelId,
+                'family'                    => $modelData['family'] ?? 'Unknown',
+                'type'                      => $modelData['type'] ?? 'local',
+                'category'                  => $modelData['category'] ?? 'chat',
+                'size'                      => $modelData['size'] ?? 'medium',
+                'is_active'                 => $modelConfigs[$modelId] ?? true,
+                'credit_multiplier'         => $modelData['credit_multiplier'] ?? 1.0,
                 'credit_multiplier_override' => $multipliers[$modelId] ?? null,
-                'ollama_name' => $modelData['ollama_name'] ?? $modelId,
+                'ollama_name'               => $modelData['ollama_name'] ?? $modelId,
             ];
-        }, array_keys($models), $models);
+        }
 
         return view('admin.models', compact('modelList'));
     }

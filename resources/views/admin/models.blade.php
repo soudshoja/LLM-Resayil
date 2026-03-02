@@ -53,21 +53,62 @@
         </div>
     </div>
 
-    <!-- Actions Bar -->
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem">
+    <!-- Filter & Actions Bar -->
+    <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:1rem;margin-bottom:1rem">
+        <div style="display:flex;flex-wrap:wrap;gap:0.75rem;align-items:center;margin-bottom:0.75rem">
+            <div style="display:flex;align-items:center;gap:0.4rem">
+                <span style="font-size:0.75rem;color:var(--text-muted);font-weight:600;text-transform:uppercase;letter-spacing:0.05em">Family:</span>
+                <select id="filterFamily" onchange="applyFilters()" style="background:var(--bg-secondary);border:1px solid var(--border);border-radius:6px;padding:0.35rem 0.6rem;color:var(--text);font-size:0.8rem">
+                    <option value="">All</option>
+                    @foreach(array_unique(array_column($modelList, 'family')) as $fam)
+                    <option value="{{ $fam }}">{{ $fam }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div style="display:flex;align-items:center;gap:0.4rem">
+                <span style="font-size:0.75rem;color:var(--text-muted);font-weight:600;text-transform:uppercase;letter-spacing:0.05em">Category:</span>
+                <select id="filterCategory" onchange="applyFilters()" style="background:var(--bg-secondary);border:1px solid var(--border);border-radius:6px;padding:0.35rem 0.6rem;color:var(--text);font-size:0.8rem">
+                    <option value="">All</option>
+                    <option value="chat">Chat</option>
+                    <option value="code">Code</option>
+                    <option value="embedding">Embedding</option>
+                    <option value="vision">Vision</option>
+                    <option value="thinking">Thinking</option>
+                    <option value="tools">Tools</option>
+                </select>
+            </div>
+            <div style="display:flex;align-items:center;gap:0.4rem">
+                <span style="font-size:0.75rem;color:var(--text-muted);font-weight:600;text-transform:uppercase;letter-spacing:0.05em">Type:</span>
+                <select id="filterType" onchange="applyFilters()" style="background:var(--bg-secondary);border:1px solid var(--border);border-radius:6px;padding:0.35rem 0.6rem;color:var(--text);font-size:0.8rem">
+                    <option value="">All</option>
+                    <option value="local">Local</option>
+                    <option value="cloud">Cloud</option>
+                </select>
+            </div>
+            <div style="display:flex;align-items:center;gap:0.4rem">
+                <span style="font-size:0.75rem;color:var(--text-muted);font-weight:600;text-transform:uppercase;letter-spacing:0.05em">Size:</span>
+                <select id="filterSize" onchange="applyFilters()" style="background:var(--bg-secondary);border:1px solid var(--border);border-radius:6px;padding:0.35rem 0.6rem;color:var(--text);font-size:0.8rem">
+                    <option value="">All</option>
+                    <option value="small">Small</option>
+                    <option value="medium">Medium</option>
+                    <option value="large">Large</option>
+                </select>
+            </div>
+            <div style="position:relative;flex:1;min-width:200px">
+                <input type="text" id="searchInput" oninput="applyFilters()" placeholder="Search models..." style="width:100%;background:var(--bg-secondary);border:1px solid var(--border);border-radius:6px;padding:0.35rem 0.75rem 0.35rem 2.25rem;color:var(--text);font-size:0.8rem;box-sizing:border-box">
+                <svg style="position:absolute;left:0.6rem;top:50%;transform:translateY(-50%);width:0.9rem;height:0.9rem;color:var(--text-muted)" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+            </div>
+        </div>
         <div style="display:flex;gap:0.5rem">
-            <button type="button" onclick="bulkUpdate('enable')" style="background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:0.5rem 1rem;color:var(--text-muted);cursor:pointer;transition:all 0.2s" title="Enable selected models">
-                <svg style="width:1rem;height:1rem;vertical-align:middle" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+            <button type="button" onclick="bulkUpdate('enable')" style="background:var(--bg-secondary);border:1px solid var(--border);border-radius:6px;padding:0.35rem 0.75rem;color:var(--text-muted);cursor:pointer;font-size:0.8rem">
+                <svg style="width:0.85rem;height:0.85rem;vertical-align:middle" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
                 Enable
             </button>
-            <button type="button" onclick="bulkUpdate('disable')" style="background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:0.5rem 1rem;color:var(--text-muted);cursor:pointer;transition:all 0.2s" title="Disable selected models">
-                <svg style="width:1rem;height:1rem;vertical-align:middle" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+            <button type="button" onclick="bulkUpdate('disable')" style="background:var(--bg-secondary);border:1px solid var(--border);border-radius:6px;padding:0.35rem 0.75rem;color:var(--text-muted);cursor:pointer;font-size:0.8rem">
+                <svg style="width:0.85rem;height:0.85rem;vertical-align:middle" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
                 Disable
             </button>
-        </div>
-        <div style="position:relative">
-            <input type="text" id="searchInput" placeholder="Search models..." style="background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:0.5rem 1rem 0.5rem 2.5rem;color:var(--text);min-width:250px">
-            <svg style="position:absolute;left:0.75rem;top:50%;transform:translateY(-50%);width:1rem;height:1rem;color:var(--text-muted)" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+            <span id="visibleCount" style="font-size:0.75rem;color:var(--text-muted);align-self:center;margin-left:0.5rem"></span>
         </div>
     </div>
 
@@ -80,6 +121,7 @@
                         <th style="width:40px"><input type="checkbox" onclick="toggleAll(this)"></th>
                         <th>Model ID</th>
                         <th>Family</th>
+                        <th>Category</th>
                         <th>Type</th>
                         <th>Size</th>
                         <th>Multiplier</th>
@@ -89,7 +131,13 @@
                 </thead>
                 <tbody id="modelsTableBody">
                     @foreach($modelList as $model)
-                    <tr class="model-row" data-model-id="{{ $model['model_id'] }}" data-search="{{ $model['name'] }} {{ $model['model_id'] }} {{ $model['family'] }}">
+                    <tr class="model-row"
+                        data-model-id="{{ $model['model_id'] }}"
+                        data-search="{{ $model['name'] }} {{ $model['model_id'] }} {{ $model['family'] }}"
+                        data-family="{{ $model['family'] }}"
+                        data-category="{{ $model['category'] }}"
+                        data-type="{{ $model['type'] }}"
+                        data-size="{{ $model['size'] }}">
                         <td><input type="checkbox" class="model-checkbox" value="{{ $model['model_id'] }}"></td>
                         <td>
                             <div class="model-id">{{ $model['model_id'] }}</div>
@@ -98,6 +146,12 @@
                             @endif
                         </td>
                         <td>{{ $model['family'] }}</td>
+                        <td>
+                            @php
+                                $catEmoji = ['chat'=>'💬','code'=>'💻','embedding'=>'🔗','vision'=>'👁','thinking'=>'🧠','tools'=>'🔧'];
+                            @endphp
+                            <span class="badge" style="background:rgba(212,175,55,0.12);color:var(--gold);border:1px solid rgba(212,175,55,0.25)">{{ ($catEmoji[$model['category']] ?? '') }} {{ $model['category'] }}</span>
+                        </td>
                         <td>
                             <span class="badge badge-{{ $model['type'] }}">{{ $model['type'] }}</span>
                         </td>
@@ -164,15 +218,30 @@
 </main>
 
 <script>
-// Search functionality
-document.getElementById('searchInput').addEventListener('input', function(e) {
-    const term = e.target.value.toLowerCase();
-    const rows = document.querySelectorAll('.model-row');
-    rows.forEach(row => {
-        const searchContent = row.dataset.search.toLowerCase();
-        row.style.display = searchContent.includes(term) ? '' : 'none';
+// Filter functionality
+function applyFilters() {
+    const search   = document.getElementById('searchInput').value.toLowerCase();
+    const family   = document.getElementById('filterFamily').value.toLowerCase();
+    const category = document.getElementById('filterCategory').value.toLowerCase();
+    const type     = document.getElementById('filterType').value.toLowerCase();
+    const size     = document.getElementById('filterSize').value.toLowerCase();
+
+    let visible = 0;
+    document.querySelectorAll('.model-row').forEach(row => {
+        const matches =
+            (!search   || row.dataset.search.toLowerCase().includes(search)) &&
+            (!family   || row.dataset.family.toLowerCase() === family) &&
+            (!category || row.dataset.category.toLowerCase() === category) &&
+            (!type     || row.dataset.type.toLowerCase() === type) &&
+            (!size     || row.dataset.size.toLowerCase() === size);
+        row.style.display = matches ? '' : 'none';
+        if (matches) visible++;
     });
-});
+
+    const total = document.querySelectorAll('.model-row').length;
+    document.getElementById('visibleCount').textContent = visible < total ? `Showing ${visible} of ${total}` : `${total} models`;
+}
+applyFilters();
 
 // Toggle single model status
 function toggleModelStatus(modelId, isActive) {
