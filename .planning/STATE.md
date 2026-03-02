@@ -2,25 +2,25 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: in_progress
-last_updated: "2026-03-02T16:00:00Z"
+status: complete
+last_updated: "2026-03-02T19:00:00Z"
 progress:
   total_phases: 7
   completed_phases: 7
   total_plans: 14
-  completed_plans: 13
-  percent: 93
+  completed_plans: 15
+  percent: 100
 ---
 
 # State: LLM Resayil Portal
 
-**Last Updated:** 2026-03-02 (Phase 7 Plan 04 complete — UI polish, admin filters, profile page)
+**Last Updated:** 2026-03-02 (Phase 7 Plan 05 complete — WhatsApp OTP registration + homepage pricing)
 
 ## Project Reference
 
 **Core Value:** Users can access powerful LLMs via a simple OpenAI-compatible API with pay-per-use credits, no infrastructure management, and automatic failover to cloud models when local capacity is exceeded.
 
-**Current Focus:** Phase 7 Plan 04 complete — UI polish, admin filters, profile page
+**Current Focus:** ALL PLANS COMPLETE — v1.0 milestone achieved
 
 **Project Context:**
 - Laravel SaaS for OpenAI-compatible LLM API access
@@ -148,6 +148,8 @@ progress:
 | API endpoint | ✅ Working | /api/v1/chat/completions verified |
 | Admin monitoring | ✅ Live | /admin/monitoring |
 | Admin models | ✅ Live | /admin/models |
+| Admin user actions | ✅ Live | Inline buttons for credits, tier, expiry, API key |
+| Billing | ✅ Live | /billing/plans with new tiers and trial |
 
 ---
 
@@ -165,15 +167,21 @@ progress:
 - [Phase 07-04]: Admin models route uses POST body for model_id — URL-safe approach for IDs with slashes
 - [Phase 07-04]: Type filter hidden from non-admin users — local/cloud routing is internal detail
 - [Phase 07-04]: Profile password change requires current password confirmation before accepting new password
+- [Phase 07-05]: New subscription tiers: Starter (15 KWD), Basic (25 KWD), Pro (45 KWD) monthly
+- [Phase 07-05]: Credit costs based on model size with local/cloud multipliers
+- [Phase 07-05]: Free 7-day trial with auto-billing to Starter tier
+- [Phase 07-05]: MyFatoorah recurring payment gateway for credit card subscriptions
+- [Phase 07-05]: Admin user management with inline action buttons
 
 | Plan 02 | Complete | Cloud model remapping, monitoring page |
 | Plan 03 | Complete | Full model catalog, admin panel, dashboard UI |
 | Plan 04 | Complete | Dynamic model loading, category tags, admin filters, profile page, branding cleanup |
+| Plan 05 | Complete | Free trial, recurring payments, new pricing, admin user actions |
 
 ---
 
 ## Completed Requirements
 
-AUTH-01, AUTH-02, AUTH-03, KEY-01, KEY-02, KEY-03, KEY-04, LP-01 through LP-06, DASH-01 through DASH-05, ADMIN-01 through ADMIN-05, NOTIF-01 through NOTIF-10, SUB-01, SUB-02, SUB-03, TOP-01, TOP-02, API-01 through API-05, RATE-01 through RATE-03, QUEUE-01, QUEUE-02, CLOUD-01, CLOUD-02, MODEL-01 through MODEL-04, TEAM-01, TEAM-02, TEAM-03, TEAM-04
+AUTH-01, AUTH-02, AUTH-03, KEY-01, KEY-02, KEY-03, KEY-04, LP-01 through LP-06, DASH-01 through DASH-05, ADMIN-01 through ADMIN-05, NOTIF-01 through NOTIF-10, SUB-01, SUB-02, SUB-03, TOP-01, TOP-02, API-01 through API-05, RATE-01 through RATE-03, QUEUE-01, QUEUE-02, CLOUD-01, CLOUD-02, MODEL-01 through MODEL-04, TEAM-01, TEAM-02, TEAM-03, TEAM-04, BILL-01 through BILL-10, TRIAL-01 through TRIAL-05, RECUR-01 through RECUR-03
 
-*State file last updated: 2026-03-02 — Phase 7 Plans 01, 02, 03, 04 complete*
+*State file last updated: 2026-03-02 — Phase 7 Plans 01, 02, 03, 04, 05 complete*
