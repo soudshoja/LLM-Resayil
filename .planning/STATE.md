@@ -3,24 +3,24 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: in_progress
-last_updated: "2026-03-02T12:00:00Z"
+last_updated: "2026-03-02T16:00:00Z"
 progress:
   total_phases: 7
   completed_phases: 7
-  total_plans: 13
-  completed_plans: 12
-  percent: 92
+  total_plans: 14
+  completed_plans: 13
+  percent: 93
 ---
 
 # State: LLM Resayil Portal
 
-**Last Updated:** 2026-03-02 (Phase 7 Plan 02 in progress — cloud models + monitoring)
+**Last Updated:** 2026-03-02 (Phase 7 Plan 04 complete — UI polish, admin filters, profile page)
 
 ## Project Reference
 
 **Core Value:** Users can access powerful LLMs via a simple OpenAI-compatible API with pay-per-use credits, no infrastructure management, and automatic failover to cloud models when local capacity is exceeded.
 
-**Current Focus:** Phase 7 Plan 02 — Cloud model names + admin monitoring + model catalog
+**Current Focus:** Phase 7 Plan 04 complete — UI polish, admin filters, profile page
 
 **Project Context:**
 - Laravel SaaS for OpenAI-compatible LLM API access
@@ -36,9 +36,9 @@ progress:
 ## Current Position
 
 **Phase:** Phase 7 - Backend Services
-**Plan:** 02 - Model Selection + Monitoring
-**Status:** Plan 01 COMPLETE (API working). Plan 02 in progress (cloud model remapping + monitoring page)
-**Progress:** All 6 original phases complete + Phase 7 Plan 01 complete
+**Plan:** 04 - UI/Admin/Profile Improvements
+**Status:** COMPLETE - Dynamic model loading, category tags, admin filters, profile page, branding cleanup
+**Progress:** All 6 original phases + Phase 7 Plans 01, 02, 03, 04 complete
 **Active Requirements:** None
 
 ---
@@ -87,34 +87,53 @@ progress:
 
 ---
 
-### Plan 03: Full Model Catalog + Admin Model Panel ⏳ READY TO EXECUTE
+### Plan 03: Full Model Catalog + Admin Model Panel ✅ COMPLETE
 
-**Plan doc:** `docs/plans/2026-03-02-model-catalog-admin-panel.md`
+**Completed:**
+- ✅ **Agent 1 - Model Registry:**
+  - Created `database/migrations/2026_03_02_032411_create_models_table.php` (model_id PK, is_active, credit_multiplier_override)
+  - Created `app/Models/ModelConfig.php` (Eloquent model with UUID hook)
+  - Created `config/models.php` (45 models with full metadata + Ollama name mapping)
+  - Rewrote `app/Http/Controllers/Api/ModelsController.php` (all models, no tier filter)
+  - Updated `app/Http/Controllers/Api/ChatCompletionsController.php` (registry-based resolution, admin bypass, tier removal)
 
-**Agent 1 — Model Registry + API Backend:**
-- Create `database/migrations/..._create_models_table.php` (model_id PK, is_active, credit_multiplier_override)
-- Create `app/Models/ModelConfig.php` (Eloquent model)
-- Create `config/models.php` (41 models with full metadata + Ollama name mapping)
-- Rewrite `app/Http/Controllers/Api/ModelsController.php` (serve all from registry, no tier filter)
-- Update `app/Http/Controllers/Api/ChatCompletionsController.php` (remove tier gating, add admin bypass, registry-based model resolution)
+- ✅ **Agent 2 - Searchable Dashboard UI:**
+  - Replaced hardcoded model grid with dynamic JS fetch from `/api/v1/models`
+  - Added filters: family dropdown, type (local/cloud), size (small/medium/large), text search
+  - Click model → detail panel with curl + Python + n8n snippets
+  - Dark luxury theme maintained with Inter + Tajawal fonts
 
-**Agent 2 — Searchable Dashboard UI (parallel with Agent 1):**
-- Replace hardcoded model grid in `resources/views/dashboard.blade.php`
-- Dynamic JS fetch from `/api/v1/models` using user's API key
-- Filters: family dropdown, type (local/cloud), size (small/medium/large), text search
-- Click model → detail panel with curl + Python + n8n snippets
-
-**Agent 3 — Admin Model Panel (after Agent 1 deployed):**
-- Create `app/Http/Controllers/AdminModelController.php`
-- Create `resources/views/admin/models.blade.php` (toggle enable/disable, edit credit multiplier)
-- Extend `AdminController`: create API keys for users, set exact credits, set tier, set expiry
-- New routes: `/admin/models`, `/admin/users/{user}/keys`, credit/tier/expiry POST endpoints
+- ✅ **Agent 3 - Admin Model Panel:**
+  - Created `app/Http/Controllers/AdminModelController.php` (index, update, createApiKey, setCredits, setTier, setExpiry)
+  - Created `resources/views/admin/models.blade.php` (model list, toggle, edit modal)
+  - Extended `AdminController` with user management methods
+  - Added routes: `/admin/models`, `/admin/users/{user}/keys`, credits/tier/expiry POST endpoints
 
 **Decisions:**
-- All models available to all tiers — tiers only affect rate limits + credit costs
+- All 45 models (15 local + 30 cloud) available to all tiers — tiers only affect rate limits + credit costs
 - Models disabled by admin disappear from API + dashboard instantly
 - Admin (`admin@llm.resayil.io`) bypasses rate limits, credit checks, model access checks
-- Cloud models 2× credits, local 1× — enforced per model in registry (DB-overridable)
+- Cloud models cost 2x credits, local models cost 1x — enforced per model in registry (DB-overridable)
+
+---
+
+### Plan 04: UI/Admin/Profile Improvements COMPLETE
+
+**Completed:**
+- Dynamic Ollama model loading: `ModelsController` queries `GET {OLLAMA_GPU_URL}/api/tags` live; falls back to `config/models.php` on error
+- `ChatCompletionsController` updated to use `resolveModelDynamically()` instead of static registry
+- Category tags with emoji badges (chat/code/embedding/vision/thinking/tools) added to dashboard model catalog
+- Type filter (Local/Cloud) hidden from regular users — admin-only visibility
+- Admin models page (`/admin/models`) fully rewritten: live Ollama load, Family/Category/Type/Size/Search filters, category column with emoji badges
+- Admin models routing fix: `PUT /admin/models/{id}` → `POST /admin/models/update` with `model_id` in body (avoids slash-in-ID routing failures)
+- Profile page: `GET/POST /profile` + `POST /profile/password`, `ProfileController`, `profile.blade.php`, nav link added
+- MyFatoorah branding removed from welcome, billing/plans, and dashboard — replaced with "KNET / credit card"
+- HuggingFace family inference fix: `inferFamily()` extracts last path segment for names containing `/`
+
+**Decisions:**
+- [Phase 07-04]: Admin models route uses POST body for model_id — URL-safe approach for IDs with slashes
+- [Phase 07-04]: Type filter hidden from non-admin users — local/cloud routing is internal detail
+- [Phase 07-04]: Profile password change requires current password confirmation before accepting new password
 
 ---
 
@@ -128,6 +147,7 @@ progress:
 | Redis | ⚪ N/A | Shared hosting — using DB queue + file cache |
 | API endpoint | ✅ Working | /api/v1/chat/completions verified |
 | Admin monitoring | ✅ Live | /admin/monitoring |
+| Admin models | ✅ Live | /admin/models |
 
 ---
 
@@ -139,15 +159,16 @@ progress:
 - [Phase 07-02]: Cloud models exposed with clean names, no `:cloud` suffix — clients don't need routing details
 - [Phase 07-02]: Enterprise tier gets cloud models (deepseek 671B, qwen 397B) — Basic/Pro local models only
 - [Phase 07-02]: Provider badge removed from client dashboard — local/cloud routing is internal
+- [Phase 07-03]: All 45 models available to all tiers — only rate limits and credit costs vary by tier
+- [Phase 07-03]: Admin bypasses all restrictions — rate limits, credit checks, model access
+- [Phase 07-03]: Cloud models cost 2× credits, local 1× — enforced from registry
+- [Phase 07-04]: Admin models route uses POST body for model_id — URL-safe approach for IDs with slashes
+- [Phase 07-04]: Type filter hidden from non-admin users — local/cloud routing is internal detail
+- [Phase 07-04]: Profile password change requires current password confirmation before accepting new password
 
----
-
-## Next Actions
-
-1. 🔄 Dispatch Agent 1 (model registry) + Agent 2 (dashboard UI) in parallel
-2. 🔄 Dispatch Agent 3 (admin model panel) after Agent 1 completes
-3. ⏳ Test MyFatoorah payment flow (KWD subscription + top-up)
-4. ⏳ Test enterprise team management flow
+| Plan 02 | Complete | Cloud model remapping, monitoring page |
+| Plan 03 | Complete | Full model catalog, admin panel, dashboard UI |
+| Plan 04 | Complete | Dynamic model loading, category tags, admin filters, profile page, branding cleanup |
 
 ---
 
@@ -155,4 +176,4 @@ progress:
 
 AUTH-01, AUTH-02, AUTH-03, KEY-01, KEY-02, KEY-03, KEY-04, LP-01 through LP-06, DASH-01 through DASH-05, ADMIN-01 through ADMIN-05, NOTIF-01 through NOTIF-10, SUB-01, SUB-02, SUB-03, TOP-01, TOP-02, API-01 through API-05, RATE-01 through RATE-03, QUEUE-01, QUEUE-02, CLOUD-01, CLOUD-02, MODEL-01 through MODEL-04, TEAM-01, TEAM-02, TEAM-03, TEAM-04
 
-*State file last updated: 2026-03-02 — Phase 7 Plan 01 complete, Plan 02 in progress*
+*State file last updated: 2026-03-02 — Phase 7 Plans 01, 02, 03, 04 complete*
