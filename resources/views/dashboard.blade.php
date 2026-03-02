@@ -356,20 +356,20 @@ response = requests.post(
         <div class="card">
             <h2 style="font-size:1rem;font-weight:600;margin-bottom:1rem">Top Up Credits</h2>
             <div class="topup-grid">
-                <div class="topup-card" onclick="topup('5k')">
-                    <div class="topup-credits">5,000</div>
-                    <div class="topup-price">2 KWD</div>
-                </div>
-                <div class="topup-card" onclick="topup('15k')">
-                    <div class="topup-credits">15,000</div>
+                <div class="topup-card" onclick="topup(500)">
+                    <div class="topup-credits">500</div>
                     <div class="topup-price">5 KWD</div>
                 </div>
-                <div class="topup-card" onclick="topup('50k')">
-                    <div class="topup-credits">50,000</div>
-                    <div class="topup-price">15 KWD</div>
+                <div class="topup-card" onclick="topup(1100)">
+                    <div class="topup-credits">1,100</div>
+                    <div class="topup-price">10 KWD</div>
+                </div>
+                <div class="topup-card" onclick="topup(3000)">
+                    <div class="topup-credits">3,000</div>
+                    <div class="topup-price">25 KWD</div>
                 </div>
             </div>
-            <p class="text-xs text-muted mt-4">Payments processed securely via KNET / credit card</p>
+            <p class="text-xs text-muted mt-4">Payments processed securely via KNET / credit card · <a href="/billing/plans" style="color:var(--gold)">View subscription plans →</a></p>
 
             <hr style="margin:1.25rem 0;border-color:var(--border)">
             <h3 style="font-size:0.875rem;font-weight:600;margin-bottom:0.75rem">Recent Purchases</h3>
@@ -701,14 +701,8 @@ async function submitKey() {
     }
 }
 
-async function topup(pack) {
-    const res = await fetch('/billing/payment/topup', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': '{{ csrf_token() }}' },
-        body: JSON.stringify({ pack })
-    });
-    const json = await res.json();
-    if (json.payment_url) window.location.href = json.payment_url;
+function topup(credits) {
+    window.location.href = '/billing/plans';
 }
 </script>
 @endpush

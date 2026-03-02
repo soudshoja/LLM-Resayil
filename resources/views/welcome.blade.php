@@ -29,9 +29,18 @@
     .plan-name { font-size: 0.875rem; font-weight: 600; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem; }
     .plan-price { font-size: 2.5rem; font-weight: 700; color: var(--gold); margin-bottom: 0.25rem; }
     .plan-price span { font-size: 1rem; color: var(--text-secondary); font-weight: 400; }
-    .plan-features { list-style: none; margin: 1.25rem 0 1.75rem; display: flex; flex-direction: column; gap: 0.6rem; }
+    .plan-billing { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1.25rem; }
+    .plan-features { list-style: none; margin: 0 0 1.75rem; display: flex; flex-direction: column; gap: 0.6rem; }
     .plan-features li { font-size: 0.875rem; color: var(--text-secondary); display: flex; align-items: center; gap: 0.5rem; }
     .plan-features li::before { content: '✓'; color: var(--gold); font-weight: 700; }
+    .trial-banner { background: linear-gradient(135deg, rgba(5,150,105,0.12) 0%, rgba(5,150,105,0.05) 100%); border: 1px solid rgba(5,150,105,0.3); border-radius: 12px; padding: 1.25rem 1.75rem; margin-bottom: 2.5rem; display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; justify-content: space-between; }
+    .trial-banner-text { font-size: 0.95rem; color: #6ee7b7; }
+    .trial-banner-text strong { color: #a7f3d0; }
+    .addon-box { background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 10px; padding: 1.25rem 1.5rem; margin-top: 2rem; }
+    .addon-box h4 { font-size: 0.875rem; font-weight: 600; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.75rem; }
+    .addon-row { display: flex; justify-content: space-between; font-size: 0.85rem; padding: 0.35rem 0; border-bottom: 1px solid var(--border); color: var(--text-secondary); }
+    .addon-row:last-child { border-bottom: none; }
+    .addon-row span:last-child { color: var(--gold); font-weight: 600; }
     .code-block { background: #0a0d14; border: 1px solid var(--border); border-radius: 10px; padding: 1.5rem; overflow-x: auto; font-family: monospace; font-size: 0.85rem; line-height: 1.7; color: #e0e5ec; }
     .code-block .comment { color: #4b5563; }
     .code-block .string { color: #86efac; }
@@ -42,7 +51,7 @@
     .model-meta { font-size: 0.75rem; color: var(--text-muted); }
     .divider { border: none; border-top: 1px solid var(--border); margin: 0; }
     .cta-section { text-align: center; padding: 5rem 2rem; background: linear-gradient(135deg, rgba(212,175,55,0.05) 0%, transparent 100%); border-top: 1px solid var(--border); }
-    @media(max-width: 768px) { .hero h1 { font-size: 2rem; } .steps, .pricing-grid { grid-template-columns: 1fr; } }
+    @media(max-width: 768px) { .hero h1 { font-size: 2rem; } .steps, .pricing-grid { grid-template-columns: 1fr; } .trial-banner { flex-direction: column; gap: 0.75rem; } }
 </style>
 @endpush
 
@@ -90,44 +99,72 @@
 <section class="section" id="pricing">
     <div class="section-title">
         <h2>Simple, Transparent Pricing</h2>
-        <p>All prices in Kuwaiti Dinar. Billed annually. Credits roll over month-to-month.</p>
+        <p>All prices in Kuwaiti Dinar. Billed monthly. No hidden fees.</p>
     </div>
+
+    <!-- Free Trial Banner -->
+    <div class="trial-banner">
+        <div class="trial-banner-text">
+            🎁 <strong>7-Day Free Trial</strong> — Try any plan free for 7 days. Card required, cancel anytime.
+        </div>
+        <a href="/register" class="btn btn-gold" style="padding:0.5rem 1.5rem;font-size:0.9rem">Start Free Trial</a>
+    </div>
+
     <div class="pricing-grid">
+        <!-- Starter -->
         <div class="pricing-card">
-            <div class="plan-name">Basic</div>
-            <div class="plan-price">99 <span>KWD/yr</span></div>
+            <div class="plan-name">Starter</div>
+            <div class="plan-price">15 <span>KWD</span></div>
+            <div class="plan-billing">per month · billed monthly</div>
             <ul class="plan-features">
-                <li>10,000 credits/month</li>
-                <li>llama3.2:3b &amp; smollm2:135m</li>
-                <li>10 requests/minute</li>
-                <li>API key access</li>
+                <li>1,000 credits / month</li>
+                <li>All 45 models (local + cloud)</li>
+                <li>10 requests / minute</li>
+                <li>1 free API key</li>
+                <li>Extra keys: +5 KWD (2nd), +10 KWD (3rd)</li>
             </ul>
             <a href="/register" class="btn btn-outline" style="width:100%;justify-content:center">Get Started</a>
         </div>
+
+        <!-- Basic (Most Popular) -->
         <div class="pricing-card featured">
-            <div class="plan-name">Pro</div>
-            <div class="plan-price">299 <span>KWD/yr</span></div>
+            <div class="plan-name">Basic</div>
+            <div class="plan-price">25 <span>KWD</span></div>
+            <div class="plan-billing">per month · billed monthly</div>
             <ul class="plan-features">
-                <li>50,000 credits/month</li>
-                <li>+ qwen2.5-coder:14b &amp; mistral-small3.2:24b</li>
-                <li>30 requests/minute</li>
-                <li>Priority queue</li>
-                <li>API key access</li>
+                <li>3,000 credits / month</li>
+                <li>All 45 models (local + cloud)</li>
+                <li>30 requests / minute</li>
+                <li>1 free API key</li>
+                <li>Extra keys: +3 KWD (2nd), +7 KWD (3rd)</li>
             </ul>
             <a href="/register" class="btn btn-gold" style="width:100%;justify-content:center">Get Started</a>
         </div>
+
+        <!-- Pro -->
         <div class="pricing-card">
-            <div class="plan-name">Enterprise</div>
-            <div class="plan-price">999 <span>KWD/yr</span></div>
+            <div class="plan-name">Pro</div>
+            <div class="plan-price">45 <span>KWD</span></div>
+            <div class="plan-billing">per month · billed monthly</div>
             <ul class="plan-features">
-                <li>Unlimited credits</li>
-                <li>All models incl. cloud (deepseek-v3, qwen3.5)</li>
-                <li>60 requests/minute</li>
-                <li>Team management</li>
-                <li>Priority queue + dedicated support</li>
+                <li>10,000 credits / month</li>
+                <li>All 45 models (local + cloud)</li>
+                <li>60 requests / minute</li>
+                <li>2 free API keys</li>
+                <li>Extra keys: +2 KWD (3rd), +5 KWD (4th)</li>
+                <li>Priority cloud queue</li>
             </ul>
-            <a href="/register" class="btn btn-outline" style="width:100%;justify-content:center">Contact Sales</a>
+            <a href="/register" class="btn btn-outline" style="width:100%;justify-content:center">Get Started</a>
         </div>
+    </div>
+
+    <!-- Credit top-up & addons info -->
+    <div class="addon-box">
+        <h4>Credit Top-Ups &amp; Add-Ons</h4>
+        <div class="addon-row"><span>500 extra credits</span><span>5 KWD</span></div>
+        <div class="addon-row"><span>1,100 extra credits</span><span>10 KWD</span></div>
+        <div class="addon-row"><span>3,000 extra credits</span><span>25 KWD</span></div>
+        <div class="addon-row"><span>Cloud model cost</span><span>2× credits per token (local = 1×)</span></div>
     </div>
 </section>
 
