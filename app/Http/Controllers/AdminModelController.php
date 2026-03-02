@@ -52,8 +52,10 @@ class AdminModelController extends Controller
      * @param  string  $id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
+        $id = $request->input('model_id');
+
         $validated = $request->validate([
             'is_active' => 'nullable|boolean',
             'credit_multiplier_override' => 'nullable|numeric|min:0',

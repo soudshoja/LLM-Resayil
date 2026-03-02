@@ -160,10 +160,10 @@
                         </td>
                         <td>{{ $model['credit_multiplier_override'] ?? $model['credit_multiplier'] }}</td>
                         <td>
-                            <div class="toggle-btn {{ $model['is_active'] ? 'active' : '' }}" onclick="toggleModelStatus('{{ $model['model_id'] }}', {{ $model['is_active'] ? 'true' : 'false' }})" data-model-id="{{ $model['model_id'] }}"></div>
-                            <form id="form-{{ $model['model_id'] }}" method="POST" action="{{ url('/admin/models/' . $model['model_id']) }}" style="display:none">
+                            <div class="toggle-btn {{ $model['is_active'] ? 'active' : '' }}" onclick="toggleModelStatus({{ $loop->index }}, {{ $model['is_active'] ? 'true' : 'false' }})" data-model-id="{{ $model['model_id'] }}"></div>
+                            <form id="form-{{ $loop->index }}" method="POST" action="{{ route('admin.models.update') }}" style="display:none">
                                 @csrf
-                                @method('PUT')
+                                <input type="hidden" name="model_id" value="{{ $model['model_id'] }}">
                                 <input type="hidden" name="is_active" value="{{ $model['is_active'] ? '0' : '1' }}">
                             </form>
                         </td>
@@ -186,9 +186,8 @@
                     <svg style="width:1.5rem;height:1.5rem" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
                 </button>
             </div>
-            <form id="editForm" method="POST" style="padding:1.5rem">
+            <form id="editForm" method="POST" action="{{ route('admin.models.update') }}" style="padding:1.5rem">
                 @csrf
-                @method('PUT')
                 <input type="hidden" name="model_id" id="editModelId">
                 <div style="margin-bottom:1.5rem">
                     <label style="display:block;font-size:0.875rem;font-weight:500;margin-bottom:0.5rem">Credit Multiplier Override</label>
@@ -243,19 +242,17 @@ function applyFilters() {
 }
 applyFilters();
 
-// Toggle single model status
-function toggleModelStatus(modelId, isActive) {
-    // Update visual state
-    const btn = document.querySelector(`.toggle-btn[data-model-id="${modelId}"]`);
-    if (btn) {
-        btn.classList.toggle('active', !isActive);
-    }
+// Toggle single model status (uses loop index to avoid slash issues in IDs)
+function toggleModelStatus(index, isActive) {
+    const form = document.getElementById(`form-${index}`);
+    if (!form) return;
 
-    // Submit form
-    const form = document.getElementById(`form-${modelId}`);
-    if (form) {
-        form.submit();
-    }
+    // Update visual state
+    const modelId = form.querySelector('input[name="model_id"]').value;
+    const btn = document.querySelector(`.toggle-btn[data-model-id="${CSS.escape(modelId)}"]`);
+    if (btn) btn.classList.toggle('active', !isActive);
+
+    form.submit();
 }
 
 // Toggle all checkboxes
@@ -278,9 +275,11 @@ function bulkUpdate(action) {
         return;
     }
 
-    // Submit forms for each checked model
+    // Submit forms for each checked model (find form by model_id in hidden input)
     checked.forEach(checkbox => {
-        const form = document.getElementById(`form-${checkbox.value}`);
+        const form = Array.from(document.querySelectorAll('form[id^="form-"]')).find(
+            f => f.querySelector('input[name="model_id"]')?.value === checkbox.value
+        );
         if (form) {
             form.querySelector('input[name="is_active"]').value = action === 'enable' ? '1' : '0';
             form.submit();
@@ -292,7 +291,6 @@ function bulkUpdate(action) {
 function openEditModal(modelId, modelName, defaultMultiplier, currentOverride) {
     document.getElementById('editModelId').value = modelId;
     document.getElementById('editMultiplier').value = currentOverride;
-    document.getElementById('editForm').action = `/admin/models/${modelId}`;
     document.getElementById('editModal').style.display = 'flex';
 }
 

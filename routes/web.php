@@ -71,7 +71,7 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
 
     // Model management routes
     Route::get('/models', [AdminModelController::class, 'index'])->name('admin.models');
-    Route::put('/models/{id}', [AdminModelController::class, 'update'])->name('admin.models.update');
+    Route::post('/models/update', [AdminModelController::class, 'update'])->name('admin.models.update');
 
     // User management routes
     Route::post('/users/{user}/keys', [AdminController::class, 'createApiKeyForUser'])->name('admin.users.keys.create');
