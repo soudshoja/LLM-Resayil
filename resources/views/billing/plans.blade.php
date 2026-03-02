@@ -42,8 +42,23 @@
     .topup-credits { font-size: 1.35rem; font-weight: 700; color: var(--gold); }
     .topup-price { font-size: 0.875rem; color: var(--text-secondary); margin-top: 0.2rem; }
     .topup-bonus { display: inline-block; margin-top: 0.25rem; font-size: 0.75rem; color: #28a745; }
-    .topup-buy { display: inline-block; margin-top: 0.75rem; font-size: 0.78rem; font-weight: 600; color: var(--gold); border: 1px solid var(--gold-muted); padding: 0.25rem 0.75rem; border-radius: 6px; }
+    .topup-buy { display: inline-block; margin-top: 0.75rem; font-size: 0.78rem; font-weight: 600; color: var(--gold); border: 1px solid var(--gold-muted); padding: 0.25rem 0.75rem; border-radius: 6px; background: transparent; cursor: pointer; }
     @media(max-width: 900px) { .trial-grid { grid-template-columns: 1fr; } .plans-grid { grid-template-columns: 1fr; } .topup-grid { grid-template-columns: 1fr; } }
+
+    /* Payment Method Modal */
+    .pm-modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(4px); z-index: 100; align-items: center; justify-content: center; }
+    .pm-modal-overlay.active { display: flex; }
+    .pm-modal { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 2rem; width: 100%; max-width: 480px; box-shadow: 0 24px 64px rgba(0,0,0,0.5); }
+    .pm-modal h3 { font-size: 1.1rem; font-weight: 600; margin-bottom: 0.35rem; }
+    .pm-modal p { font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1.5rem; }
+    .pm-methods { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 1rem; }
+    .pm-method { border: 2px solid var(--border); border-radius: 10px; padding: 1.25rem 1rem; text-align: center; cursor: pointer; transition: all 0.2s; background: var(--bg-secondary); }
+    .pm-method:hover { border-color: var(--gold); background: rgba(212,175,55,0.05); transform: translateY(-2px); }
+    .pm-method img { height: 36px; object-fit: contain; margin-bottom: 0.6rem; display: block; margin-left: auto; margin-right: auto; }
+    .pm-method span { font-size: 0.8rem; font-weight: 600; color: var(--text-primary); display: block; }
+    .pm-method small { font-size: 0.7rem; color: var(--text-muted); }
+    .pm-cancel { display: block; text-align: center; margin-top: 1.25rem; font-size: 0.85rem; color: var(--text-muted); cursor: pointer; }
+    .pm-cancel:hover { color: var(--text-primary); }
 </style>
 @endpush
 
@@ -107,10 +122,7 @@
                     <p style="margin: 0.25rem 0;">Credit card signup required</p>
                     <p style="margin: 0.25rem 0;">Cancel anytime during trial</p>
                 </div>
-                <form method="POST" action="{{ route('billing.trial.start') }}" style="width: 100%;">
-                    @csrf
-                    <button type="submit" class="plan-cta plan-cta-gold" style="width: 100%;">Start Free Trial — Card Required</button>
-                </form>
+                <button type="button" class="plan-cta plan-cta-gold" style="width: 100%;" onclick="openPaymentModal('trial')">Start Free Trial — Card Required</button>
             </div>
         </div>
         <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 1rem; text-align: center;">
@@ -144,11 +156,7 @@
                     Small models only
                 </li>
             </ul>
-            <form method="POST" action="/billing/payment/subscription">
-                @csrf
-                <input type="hidden" name="tier" value="starter">
-                <button type="submit" class="plan-cta plan-cta-outline">Start Monthly Plan</button>
-            </form>
+            <button type="button" class="plan-cta plan-cta-outline" onclick="openPaymentModal('subscription', 'starter')">Start Monthly Plan</button>
         </div>
 
         {{-- Basic Tier (featured) --}}
@@ -176,11 +184,7 @@
                     All model sizes
                 </li>
             </ul>
-            <form method="POST" action="/billing/payment/subscription">
-                @csrf
-                <input type="hidden" name="tier" value="basic">
-                <button type="submit" class="plan-cta plan-cta-gold">Start Monthly Plan</button>
-            </form>
+            <button type="button" class="plan-cta plan-cta-gold" onclick="openPaymentModal('subscription', 'basic')">Start Monthly Plan</button>
         </div>
 
         {{-- Pro Tier --}}
@@ -207,11 +211,7 @@
                     Priority cloud failover
                 </li>
             </ul>
-            <form method="POST" action="/billing/payment/subscription">
-                @csrf
-                <input type="hidden" name="tier" value="pro">
-                <button type="submit" class="plan-cta plan-cta-outline">Start Monthly Plan</button>
-            </form>
+            <button type="button" class="plan-cta plan-cta-outline" onclick="openPaymentModal('subscription', 'pro')">Start Monthly Plan</button>
         </div>
     </div>
 
@@ -224,34 +224,107 @@
                 <div class="topup-credits">500</div>
                 <div class="topup-price">credits</div>
                 <div class="topup-bonus">No bonus</div>
-                <form method="POST" action="/billing/payment/topup" style="display:inline">
-                    @csrf
-                    <input type="hidden" name="credits" value="500">
-                    <button type="submit" class="topup-buy">5 KWD</button>
-                </form>
+                <button type="button" class="topup-buy" onclick="openPaymentModal('topup', '500')">5 KWD</button>
             </div>
             <div class="topup-card">
                 <div class="topup-credits">1,100</div>
                 <div class="topup-price">credits</div>
                 <div class="topup-bonus">+10% bonus</div>
-                <form method="POST" action="/billing/payment/topup" style="display:inline">
-                    @csrf
-                    <input type="hidden" name="credits" value="1100">
-                    <button type="submit" class="topup-buy">10 KWD</button>
-                </form>
+                <button type="button" class="topup-buy" onclick="openPaymentModal('topup', '1100')">10 KWD</button>
             </div>
             <div class="topup-card">
                 <div class="topup-credits">3,000</div>
                 <div class="topup-price">credits</div>
                 <div class="topup-bonus">+20% bonus</div>
-                <form method="POST" action="/billing/payment/topup" style="display:inline">
-                    @csrf
-                    <input type="hidden" name="credits" value="3000">
-                    <button type="submit" class="topup-buy">25 KWD</button>
-                </form>
+                <button type="button" class="topup-buy" onclick="openPaymentModal('topup', '3000')">25 KWD</button>
             </div>
         </div>
         <p class="text-xs text-muted mt-4">Payments processed securely via KNET / credit card</p>
     </div>
+
+    {{-- Payment Method Modal --}}
+    <div class="pm-modal-overlay" id="pmModal">
+        <div class="pm-modal">
+            <h3>Choose Payment Method</h3>
+            <p id="pmModalDesc">Select how you'd like to pay</p>
+            <div class="pm-methods" id="pmMethods">
+                @forelse($paymentMethods as $method)
+                <div class="pm-method" onclick="selectPaymentMethod({{ $method['PaymentMethodId'] }})">
+                    <img src="{{ $method['ImageUrl'] }}" alt="{{ $method['PaymentMethodEn'] }}" onerror="this.style.display='none'">
+                    <span>{{ $method['PaymentMethodEn'] }}</span>
+                    @if($method['ServiceCharge'] > 0)
+                    <small>+{{ $method['ServiceCharge'] }} KWD fee</small>
+                    @endif
+                </div>
+                @empty
+                <p style="color:var(--text-muted); font-size:0.85rem;">Loading payment methods...</p>
+                @endforelse
+            </div>
+            <span class="pm-cancel" onclick="closePaymentModal()">Cancel</span>
+        </div>
+    </div>
+
+    {{-- Hidden forms submitted by JS --}}
+    <form id="formTrial" method="POST" action="{{ route('billing.trial.start') }}" style="display:none">
+        @csrf
+        <input type="hidden" name="payment_method_id" id="trialMethodId">
+    </form>
+    <form id="formSubscription" method="POST" action="/billing/payment/subscription" style="display:none">
+        @csrf
+        <input type="hidden" name="tier" id="subTier">
+        <input type="hidden" name="payment_method_id" id="subMethodId">
+    </form>
+    <form id="formTopup" method="POST" action="/billing/payment/topup" style="display:none">
+        @csrf
+        <input type="hidden" name="credits" id="topupCredits">
+        <input type="hidden" name="payment_method_id" id="topupMethodId">
+    </form>
 </main>
+
+@push('scripts')
+<script>
+let pendingType = null;
+let pendingValue = null;
+
+function openPaymentModal(type, value) {
+    pendingType = type;
+    pendingValue = value || null;
+
+    const descs = {
+        trial: 'Starting your 7-day free trial (0.100 KWD card verification)',
+        subscription: 'Starting your monthly subscription',
+        topup: 'Purchasing a credit top-up pack',
+    };
+    document.getElementById('pmModalDesc').textContent = descs[type] || '';
+    document.getElementById('pmModal').classList.add('active');
+}
+
+function closePaymentModal() {
+    document.getElementById('pmModal').classList.remove('active');
+    pendingType = null;
+    pendingValue = null;
+}
+
+function selectPaymentMethod(methodId) {
+    if (pendingType === 'trial') {
+        document.getElementById('trialMethodId').value = methodId;
+        document.getElementById('formTrial').submit();
+    } else if (pendingType === 'subscription') {
+        document.getElementById('subTier').value = pendingValue;
+        document.getElementById('subMethodId').value = methodId;
+        document.getElementById('formSubscription').submit();
+    } else if (pendingType === 'topup') {
+        document.getElementById('topupCredits').value = pendingValue;
+        document.getElementById('topupMethodId').value = methodId;
+        document.getElementById('formTopup').submit();
+    }
+    closePaymentModal();
+}
+
+// Close modal on overlay click
+document.getElementById('pmModal').addEventListener('click', function(e) {
+    if (e.target === this) closePaymentModal();
+});
+</script>
+@endpush
 @endsection
