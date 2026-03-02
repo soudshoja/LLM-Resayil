@@ -15,14 +15,14 @@ class AdminController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  string  $userId
-     * @return \Illuminate\Http\RedirectResponse
+     * @return \Illuminate\Http\JsonResponse
      */
     public function createApiKeyForUser(Request $request, $userId)
     {
         $user = User::find($userId);
 
         if (!$user) {
-            return redirect()->back()->with('error', 'User not found.');
+            return response()->json(['success' => false, 'message' => 'User not found.'], 404);
         }
 
         $keyName = $request->input('key_name', 'Admin Created Key');
@@ -38,8 +38,7 @@ class AdminController extends Controller
             'permissions' => 'read,write',
         ]);
 
-        // Return the raw key for user to copy (only shown once)
-        return redirect()->back()->with('success', "API key created successfully. Copy this key - it won't be shown again:\n\n$apiKey");
+        return response()->json(['success' => true, 'message' => $apiKey]);
     }
 
     /**
@@ -47,26 +46,26 @@ class AdminController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  string  $userId
-     * @return \Illuminate\Http\RedirectResponse
+     * @return \Illuminate\Http\JsonResponse
      */
     public function setUserCredits(Request $request, $userId)
     {
         $user = User::find($userId);
 
         if (!$user) {
-            return redirect()->back()->with('error', 'User not found.');
+            return response()->json(['success' => false, 'message' => 'User not found.'], 404);
         }
 
         $credits = $request->input('credits');
 
-        if ($credits === null || $credits < 0) {
-            return redirect()->back()->with('error', 'Credits must be a non-negative number.');
+        if ($credits === null || (int)$credits < 0) {
+            return response()->json(['success' => false, 'message' => 'Credits must be a non-negative number.'], 422);
         }
 
-        $user->credits = $credits;
+        $user->credits = (int) $credits;
         $user->save();
 
-        return redirect()->back()->with('success', "User credits updated to {$credits}.");
+        return response()->json(['success' => true, 'message' => "Credits updated to {$credits}."]);
     }
 
     /**
@@ -74,26 +73,26 @@ class AdminController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  string  $userId
-     * @return \Illuminate\Http\RedirectResponse
+     * @return \Illuminate\Http\JsonResponse
      */
     public function setUserTier(Request $request, $userId)
     {
         $user = User::find($userId);
 
         if (!$user) {
-            return redirect()->back()->with('error', 'User not found.');
+            return response()->json(['success' => false, 'message' => 'User not found.'], 404);
         }
 
         $tier = $request->input('tier');
 
-        if (!in_array($tier, ['basic', 'pro', 'enterprise'])) {
-            return redirect()->back()->with('error', 'Invalid tier. Must be basic, pro, or enterprise.');
+        if (!in_array($tier, ['starter', 'basic', 'pro', 'enterprise'])) {
+            return response()->json(['success' => false, 'message' => 'Invalid tier.'], 422);
         }
 
         $user->subscription_tier = $tier;
         $user->save();
 
-        return redirect()->back()->with('success', "User tier updated to {$tier}.");
+        return response()->json(['success' => true, 'message' => "Tier updated to {$tier}."]);
     }
 
     /**
@@ -101,14 +100,14 @@ class AdminController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  string  $userId
-     * @return \Illuminate\Http\RedirectResponse
+     * @return \Illuminate\Http\JsonResponse
      */
     public function setUserExpiry(Request $request, $userId)
     {
         $user = User::find($userId);
 
         if (!$user) {
-            return redirect()->back()->with('error', 'User not found.');
+            return response()->json(['success' => false, 'message' => 'User not found.'], 404);
         }
 
         $expiry = $request->input('expiry');
@@ -119,12 +118,12 @@ class AdminController extends Controller
             try {
                 $user->subscription_expiry = \Carbon\Carbon::parse($expiry);
             } catch (\Exception $e) {
-                return redirect()->back()->with('error', 'Invalid date format. Use YYYY-MM-DD or relative dates.');
+                return response()->json(['success' => false, 'message' => 'Invalid date format.'], 422);
             }
         }
 
         $user->save();
 
-        return redirect()->back()->with('success', 'Subscription expiry updated successfully.');
+        return response()->json(['success' => true, 'message' => 'Expiry updated.']);
     }
 }

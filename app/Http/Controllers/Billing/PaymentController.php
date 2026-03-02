@@ -50,7 +50,7 @@ class PaymentController extends Controller
     public function initiateSubscriptionPayment(Request $request)
     {
         $validated = $request->validate([
-            'tier' => 'required|in:basic,pro,enterprise',
+            'tier' => 'required|in:starter,basic,pro,enterprise',
         ]);
 
         $user = Auth::user();
@@ -101,7 +101,7 @@ class PaymentController extends Controller
     public function initiateTopupPayment(Request $request)
     {
         $validated = $request->validate([
-            'credits' => 'required|in:5000,15000,50000',
+            'credits' => 'required|in:500,1100,3000',
         ]);
 
         $user = Auth::user();
@@ -164,5 +164,91 @@ class PaymentController extends Controller
         return redirect()
             ->route('billing.plans')
             ->with('error', 'Payment was not successful.');
+    }
+
+    /**
+     * Start free trial — charge 0.100 KWD to capture card, then activate trial on callback.
+     */
+    public function initiateTrialPayment(Request $request)
+    {
+        $user = Auth::user();
+
+        if ($user->trial_started_at) {
+            return redirect()->route('billing.plans')->with('error', 'Trial already activated.');
+        }
+
+        try {
+            $invoice = $this->myfatoorahService->createInvoice([
+                'user_id'            => $user->id,
+                'amount'             => 0.100,
+                'customer_name'      => $user->name,
+                'customer_email'     => $user->email,
+                'item_name'          => 'LLM Resayil — Card Verification',
+                'type'               => 'trial',
+                'tier'               => 'starter',
+                'callback_url'       => route('billing.trial.callback'),
+                'error_callback_url' => url('/billing/plans?error=payment_failed'),
+            ]);
+
+            Session::put('pending_trial', [
+                'user_id'    => $user->id,
+                'invoice_id' => $invoice['invoice_id'],
+                'created_at' => now()->toDateTimeString(),
+            ]);
+
+            return redirect()->away($invoice['invoice_url']);
+
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Failed to initiate trial: ' . $e->getMessage());
+        }
+    }
+
+    /**
+     * Trial callback — MyFatoorah redirects here after card entry.
+     * Activate trial: set trial_started_at, grant 1000 credits, queue Day-1 WhatsApp.
+     */
+    public function handleTrialCallback(Request $request)
+    {
+        $paymentId = $request->get('paymentId');
+
+        if (!$paymentId) {
+            return redirect()->route('billing.plans')->with('error', 'Invalid callback. No payment ID.');
+        }
+
+        try {
+            $status = $this->myfatoorahService->verifyPayment($paymentId);
+
+            if ($status['payment_status'] !== 'Paid') {
+                return redirect()->route('billing.plans')->with('error', 'Card verification failed. Please try again.');
+            }
+
+            $user = Auth::user();
+            $pending = Session::get('pending_trial');
+
+            if (!$pending || $pending['user_id'] !== $user->id) {
+                return redirect()->route('billing.plans')->with('error', 'Session mismatch. Try again.');
+            }
+
+            Session::forget('pending_trial');
+
+            // Activate trial
+            $user->trial_started_at = now();
+            $user->subscription_tier = 'starter';
+            $user->subscription_expiry = now()->addDays(7);
+            $user->myfatoorah_payment_profile_id = $status['transaction_id'];
+            $user->save();
+
+            // Grant 1000 trial credits
+            $this->billingService->grantTrialCredits($user->id);
+
+            // Queue Day-1 WhatsApp welcome (1 min delay for queue processing)
+            dispatch(new \App\Jobs\SendTrialWelcome($user->id))->delay(now()->addMinutes(1));
+
+            return redirect()->route('billing.plans')
+                ->with('success', 'Free trial activated! 1,000 credits added. Welcome to LLM Resayil.');
+
+        } catch (\Exception $e) {
+            return redirect()->route('billing.plans')->with('error', 'Trial activation failed: ' . $e->getMessage());
+        }
     }
 }

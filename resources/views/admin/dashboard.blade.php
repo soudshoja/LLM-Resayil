@@ -227,6 +227,7 @@
             </div>
             <div class="modal-footer">
                 <button class="btn-save btn-save-secondary" onclick="closeModal('keyModal')">Close</button>
+                <button class="btn-save btn-save-primary" id="createKeyBtn" onclick="saveKey()">Create Key</button>
             </div>
         </div>
     </div>
@@ -382,6 +383,7 @@ function saveKey() {
         if (data.success) {
             document.getElementById('keyResult').textContent = data.message;
             document.getElementById('keySuccess').style.display = 'block';
+            document.getElementById('createKeyBtn').style.display = 'none';
         } else {
             alert('Error: ' + (data.message || 'Failed to create API key'));
         }
