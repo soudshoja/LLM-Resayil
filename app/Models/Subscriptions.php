@@ -32,6 +32,9 @@ class Subscriptions extends Model
         'credits_purchased',
         'credits_used',
         'auto_renew',
+        'is_trial',
+        'trial_started_at',
+        'trial_expiry_at',
     ];
 
     /**
@@ -42,6 +45,9 @@ class Subscriptions extends Model
     protected $casts = [
         'starts_at' => 'datetime',
         'ends_at' => 'datetime',
+        'trial_started_at' => 'datetime',
+        'trial_expiry_at' => 'datetime',
+        'auto_renew' => 'boolean',
     ];
 
     /**
@@ -60,5 +66,29 @@ class Subscriptions extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    /**
+     * Scope a query to only include trial subscriptions.
+     */
+    public function scopeTrial($query)
+    {
+        return $query->where('is_trial', true);
+    }
+
+    /**
+     * Scope a query to only include active subscriptions.
+     */
+    public function scopeActive($query)
+    {
+        return $query->where('status', 'active');
+    }
+
+    /**
+     * Scope a query to only include recurring subscriptions.
+     */
+    public function scopeRecurring($query)
+    {
+        return $query->where('auto_renew', true);
     }
 }

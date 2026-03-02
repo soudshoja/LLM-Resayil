@@ -28,6 +28,9 @@ class User extends Authenticatable
         'credits',
         'subscription_tier',
         'subscription_expiry',
+        'trial_started_at',
+        'trial_credits_remaining',
+        'auto_billed',
     ];
 
     /**
@@ -49,6 +52,9 @@ class User extends Authenticatable
         'credits' => 'integer',
         'email_verified_at' => 'datetime',
         'subscription_expiry' => 'datetime',
+        'trial_started_at' => 'datetime',
+        'trial_credits_remaining' => 'integer',
+        'auto_billed' => 'boolean',
     ];
 
     /**
@@ -75,5 +81,21 @@ class User extends Authenticatable
     public function subscriptions()
     {
         return $this->hasMany(Subscriptions::class);
+    }
+
+    /**
+     * Get trial subscription for the user.
+     */
+    public function trialSubscription()
+    {
+        return $this->hasOne(Subscriptions::class)->where('is_trial', true);
+    }
+
+    /**
+     * Get the user's recurring payment methods.
+     */
+    public function paymentMethods()
+    {
+        return $this->hasMany(PaymentMethod::class);
     }
 }
