@@ -52,6 +52,7 @@ class ModelsController extends Controller
                 'owned_by' => 'llm-resayil',
                 'family'   => $modelData['family'] ?? null,
                 'type'     => $modelData['type'] ?? null,
+                'category' => $modelData['category'] ?? 'chat',
                 'size'     => $modelData['size'] ?? null,
             ];
         }, array_keys($activeModels), $activeModels);
@@ -91,6 +92,7 @@ class ModelsController extends Controller
             'name'     => $model['name'] ?? $modelId,
             'family'   => $model['family'] ?? null,
             'type'     => $model['type'] ?? null,
+            'category' => $model['category'] ?? 'chat',
             'size'     => $model['size'] ?? null,
             'context_window' => $model['context_window'] ?? null,
             'description' => $model['description'] ?? null,

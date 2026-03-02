@@ -69,7 +69,7 @@
         <div class="step">
             <div class="step-num">1</div>
             <h3>Register & Top Up</h3>
-            <p>Create an account, choose a subscription tier, and top up with credits via MyFatoorah (KNET/card).</p>
+            <p>Create an account, choose a subscription tier, and top up with credits via KNET or credit card.</p>
         </div>
         <div class="step">
             <div class="step-num">2</div>

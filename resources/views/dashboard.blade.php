@@ -163,6 +163,19 @@
                     </select>
                 </div>
                 <div class="filter-group">
+                    <span class="filter-label">Category:</span>
+                    <select id="filter-category" class="filter-select">
+                        <option value="">All Categories</option>
+                        <option value="chat">Chat</option>
+                        <option value="code">Code</option>
+                        <option value="embedding">Embedding</option>
+                        <option value="vision">Vision</option>
+                        <option value="thinking">Thinking</option>
+                        <option value="tools">Tools</option>
+                    </select>
+                </div>
+                @if(auth()->user()->email === 'admin@llm.resayil.io')
+                <div class="filter-group">
                     <span class="filter-label">Type:</span>
                     <select id="filter-type" class="filter-select">
                         <option value="">All Types</option>
@@ -170,6 +183,9 @@
                         <option value="cloud">Cloud</option>
                     </select>
                 </div>
+                @else
+                <select id="filter-type" style="display:none"><option value="">All Types</option></select>
+                @endif
                 <div class="filter-group">
                     <span class="filter-label">Size:</span>
                     <select id="filter-size" class="filter-select">
@@ -201,7 +217,7 @@
                     <div class="detail-section">
                         <h4>Model Info</h4>
                         <p><span class="detail-label">Family:</span><span id="detail-family">-</span></p>
-                        <p><span class="detail-label">Type:</span><span id="detail-type">-</span></p>
+                        <p><span class="detail-label">Category:</span><span id="detail-category">-</span></p>
                         <p><span class="detail-label">Size:</span><span id="detail-size">-</span></p>
                     </div>
                     <div class="detail-section">
@@ -353,7 +369,7 @@ response = requests.post(
                     <div class="topup-price">15 KWD</div>
                 </div>
             </div>
-            <p class="text-xs text-muted mt-4">Payments processed securely via MyFatoorah (KNET/credit card)</p>
+            <p class="text-xs text-muted mt-4">Payments processed securely via KNET / credit card</p>
 
             <hr style="margin:1.25rem 0;border-color:var(--border)">
             <h3 style="font-size:0.875rem;font-weight:600;margin-bottom:0.75rem">Recent Purchases</h3>
@@ -408,6 +424,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Filter event listeners
     document.getElementById('filter-family').addEventListener('change', renderModels);
+    document.getElementById('filter-category').addEventListener('change', renderModels);
     document.getElementById('filter-type').addEventListener('change', renderModels);
     document.getElementById('filter-size').addEventListener('change', renderModels);
     document.getElementById('search-models').addEventListener('input', renderModels);
@@ -455,23 +472,17 @@ function renderModels() {
     if (allModels.length === 0) return;
 
     const familyFilter = document.getElementById('filter-family').value;
+    const categoryFilter = document.getElementById('filter-category').value;
     const typeFilter = document.getElementById('filter-type').value;
     const sizeFilter = document.getElementById('filter-size').value;
     const searchQuery = document.getElementById('search-models').value.toLowerCase();
 
     const filtered = allModels.filter(model => {
-        // Family filter
         if (familyFilter && model.family !== familyFilter) return false;
-
-        // Type filter
+        if (categoryFilter && model.category !== categoryFilter) return false;
         if (typeFilter && model.type !== typeFilter) return false;
-
-        // Size filter
         if (sizeFilter && model.size !== sizeFilter) return false;
-
-        // Search filter
-        if (searchQuery && !model.id.toLowerCase().includes(searchQuery)) return false;
-
+        if (searchQuery && !model.id.toLowerCase().includes(searchQuery) && !(model.name||'').toLowerCase().includes(searchQuery)) return false;
         return true;
     });
 
@@ -487,15 +498,17 @@ function renderModelGrid(models) {
         return;
     }
 
+    const categoryIcons = { chat:'💬', code:'💻', embedding:'🔗', vision:'👁', thinking:'🧠', tools:'🔧' };
     const html = models.map(model => {
-        const typeClass = model.type === 'cloud' ? 'model-badge-cloud' : 'model-badge-local';
         const sizeClass = `model-badge-${model.size || 'medium'}`;
+        const cat = model.category || 'chat';
+        const icon = categoryIcons[cat] || '';
 
         return `
             <div class="model-card" onclick="showModelDetail('${encodeURIComponent(model.id)}')">
                 <div class="model-name">${escapeHtml(model.id)}</div>
                 <div class="model-meta">
-                    <span class="model-badge ${typeClass}">${escapeHtml(model.type || 'unknown')}</span>
+                    <span class="model-badge model-badge-local">${icon} ${escapeHtml(cat)}</span>
                     <span class="model-badge ${sizeClass}">${escapeHtml(model.size || 'unknown')}</span>
                     <span class="model-badge">${escapeHtml(model.family || 'unknown')}</span>
                 </div>
@@ -537,7 +550,7 @@ async function showModelDetail(modelId) {
     document.getElementById('detail-name').textContent = selectedModel.name || selectedModel.id;
     document.getElementById('detail-id').textContent = selectedModel.id;
     document.getElementById('detail-family').textContent = selectedModel.family || '-';
-    document.getElementById('detail-type').textContent = selectedModel.type || '-';
+    document.getElementById('detail-category').textContent = selectedModel.category || '-';
     document.getElementById('detail-size').textContent = selectedModel.size || '-';
     document.getElementById('detail-context').textContent = selectedModel.context_window ? `${selectedModel.context_window.toLocaleString()} tokens` : '-';
     document.getElementById('detail-params').textContent = selectedModel.params || '-';

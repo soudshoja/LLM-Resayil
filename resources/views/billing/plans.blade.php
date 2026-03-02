@@ -164,7 +164,7 @@
             </div>
             @endforeach
         </div>
-        <p class="text-xs text-muted mt-4">Payments processed securely via MyFatoorah (KNET / credit card)</p>
+        <p class="text-xs text-muted mt-4">Payments processed securely via KNET / credit card</p>
     </div>
 </main>
 @endsection
