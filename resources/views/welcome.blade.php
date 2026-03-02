@@ -90,42 +90,41 @@
 <section class="section" id="pricing">
     <div class="section-title">
         <h2>Simple, Transparent Pricing</h2>
-        <p>All prices in Kuwaiti Dinar. Credits roll over month-to-month.</p>
+        <p>All prices in Kuwaiti Dinar. Billed annually. Credits roll over month-to-month.</p>
     </div>
     <div class="pricing-grid">
         <div class="pricing-card">
             <div class="plan-name">Basic</div>
-            <div class="plan-price">10 <span>KWD/mo</span></div>
+            <div class="plan-price">99 <span>KWD/yr</span></div>
             <ul class="plan-features">
-                <li>15,000 credits/month</li>
-                <li>Small & medium models</li>
+                <li>10,000 credits/month</li>
+                <li>llama3.2:3b &amp; smollm2:135m</li>
                 <li>10 requests/minute</li>
-                <li>Standard queue priority</li>
-                <li>API key management</li>
+                <li>API key access</li>
             </ul>
             <a href="/register" class="btn btn-outline" style="width:100%;justify-content:center">Get Started</a>
         </div>
         <div class="pricing-card featured">
             <div class="plan-name">Pro</div>
-            <div class="plan-price">50 <span>KWD/mo</span></div>
+            <div class="plan-price">299 <span>KWD/yr</span></div>
             <ul class="plan-features">
-                <li>75,000 credits/month</li>
-                <li>All models + cloud access</li>
+                <li>50,000 credits/month</li>
+                <li>+ qwen2.5-coder:14b &amp; mistral-small3.2:24b</li>
                 <li>30 requests/minute</li>
                 <li>Priority queue</li>
-                <li>Cloud failover (2x credits)</li>
+                <li>API key access</li>
             </ul>
             <a href="/register" class="btn btn-gold" style="width:100%;justify-content:center">Get Started</a>
         </div>
         <div class="pricing-card">
             <div class="plan-name">Enterprise</div>
-            <div class="plan-price">200 <span>KWD/mo</span></div>
+            <div class="plan-price">999 <span>KWD/yr</span></div>
             <ul class="plan-features">
-                <li>300,000 credits/month</li>
-                <li>All models, highest priority</li>
+                <li>Unlimited credits</li>
+                <li>All models incl. cloud (deepseek-v3, qwen3.5)</li>
                 <li>60 requests/minute</li>
-                <li>Team management (10 seats)</li>
-                <li>Dedicated support</li>
+                <li>Team management</li>
+                <li>Priority queue + dedicated support</li>
             </ul>
             <a href="/register" class="btn btn-outline" style="width:100%;justify-content:center">Contact Sales</a>
         </div>

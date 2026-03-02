@@ -24,6 +24,7 @@ use App\Http\Controllers\AdminModelController;
 
 // Auth routes - web interface
 Route::get('/register', [RegisteredUserController::class, 'create'])->middleware('guest');
+Route::post('/register/otp', [App\Http\Controllers\Auth\RegisteredUserController::class, 'sendOtp'])->middleware('guest');
 Route::post('/register', [RegisteredUserController::class, 'store'])->middleware('guest');
 
 Route::get('/login', [AuthenticatedSessionController::class, 'create'])->middleware('guest')->name('login');
@@ -41,6 +42,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [App\Http\Controllers\ProfileController::class, 'show'])->name('profile');
     Route::post('/profile', [App\Http\Controllers\ProfileController::class, 'update'])->name('profile.update');
     Route::post('/profile/password', [App\Http\Controllers\ProfileController::class, 'updatePassword'])->name('profile.password');
+    Route::post('/profile/phone/otp', [App\Http\Controllers\OtpController::class, 'sendPhoneOtp'])->name('profile.phone.otp');
+    Route::post('/profile/phone/verify', [App\Http\Controllers\OtpController::class, 'verifyPhoneOtp'])->name('profile.phone.verify');
 });
 
 // API Keys routes (web interface)
