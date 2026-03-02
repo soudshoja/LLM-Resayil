@@ -97,28 +97,22 @@ class ChatCompletionsController extends Controller
             }
         }
 
-        // Use model registry to resolve model name and get model info
-        $models = config('models.models');
-        $modelId = $validated['model'];
+        // Resolve model name dynamically from Ollama
+        $modelResolution = $this->resolveModelDynamically($validated['model']);
 
-        if (!isset($models[$modelId])) {
-            // Check if the modelId is an ollama_name that needs to be resolved
-            $resolvedModelId = $this->resolveModelFromRegistry($modelId, $models);
-            if ($resolvedModelId === null) {
-                return response()->json([
-                    'error' => [
-                        'message' => "Model '{$modelId}' not found.",
-                        'code' => 404,
-                    ],
-                ], 404);
-            }
-            $modelId = $resolvedModelId;
+        if ($modelResolution === null) {
+            return response()->json([
+                'error' => [
+                    'message' => "Model '{$validated['model']}' not found.",
+                    'code' => 404,
+                ],
+            ], 404);
         }
 
-        $modelConfig = $models[$modelId];
-        $isCloudModel = ($modelConfig['type'] ?? 'local') === 'cloud';
-        $creditMultiplier = $modelConfig['credit_multiplier'] ?? 1.0;
-        $ollamaName = $modelConfig['ollama_name'] ?? $modelId;
+        $modelId = $modelResolution['display_id'];
+        $ollamaName = $modelResolution['ollama_name'];
+        $isCloudModel = $modelResolution['type'] === 'cloud';
+        $creditMultiplier = $modelResolution['credit_multiplier'];
 
         // Determine provider (local or cloud)
         $provider = $isCloudModel ? 'cloud' : 'local';
@@ -216,28 +210,22 @@ class ChatCompletionsController extends Controller
             }
         }
 
-        // Use model registry to resolve model name and get model info
-        $models = config('models.models');
-        $modelId = $validated['model'];
+        // Resolve model name dynamically from Ollama
+        $modelResolution = $this->resolveModelDynamically($validated['model']);
 
-        if (!isset($models[$modelId])) {
-            // Check if the modelId is an ollama_name that needs to be resolved
-            $resolvedModelId = $this->resolveModelFromRegistry($modelId, $models);
-            if ($resolvedModelId === null) {
-                return response()->json([
-                    'error' => [
-                        'message' => "Model '{$modelId}' not found.",
-                        'code' => 404,
-                    ],
-                ], 404);
-            }
-            $modelId = $resolvedModelId;
+        if ($modelResolution === null) {
+            return response()->json([
+                'error' => [
+                    'message' => "Model '{$validated['model']}' not found.",
+                    'code' => 404,
+                ],
+            ], 404);
         }
 
-        $modelConfig = $models[$modelId];
-        $isCloudModel = ($modelConfig['type'] ?? 'local') === 'cloud';
-        $creditMultiplier = $modelConfig['credit_multiplier'] ?? 1.0;
-        $ollamaName = $modelConfig['ollama_name'] ?? $modelId;
+        $modelId = $modelResolution['display_id'];
+        $ollamaName = $modelResolution['ollama_name'];
+        $isCloudModel = $modelResolution['type'] === 'cloud';
+        $creditMultiplier = $modelResolution['credit_multiplier'];
 
         // Determine provider
         $provider = $isCloudModel ? 'cloud' : 'local';
@@ -283,25 +271,284 @@ class ChatCompletionsController extends Controller
     }
 
     /**
-     * Resolve a client-facing model name or ollama_name to the model registry ID.
+     * Resolve a client-facing model name to Ollama model info dynamically.
      *
-     * @param string $modelId The model identifier to resolve
-     * @param array $models The model registry
-     * @return string|null The registry model ID if found, null otherwise
+     * Queries Ollama for the full model list and returns resolution info including
+     * the ollama_name, display_id, type, and credit_multiplier.
+     *
+     * Falls back to config/models.php if Ollama is unreachable.
+     *
+     * @param string $clientModel The client-facing model name
+     * @return array|null Array with keys: display_id, ollama_name, type, credit_multiplier
      */
-    protected function resolveModelFromRegistry(string $modelId, array $models): ?string
+    protected function resolveModelDynamically(string $clientModel): ?array
     {
-        foreach ($models as $registryId => $modelConfig) {
-            // Check if the model_id matches
-            if ($registryId === $modelId) {
-                return $registryId;
-            }
-            // Check if the ollama_name matches
-            if (($modelConfig['ollama_name'] ?? '') === $modelId) {
-                return $registryId;
+        // Try to fetch from Ollama
+        $models = $this->fetchModelsFromOllama();
+
+        if ($models === null) {
+            // Fallback to config
+            $models = $this->fallbackToConfig();
+        }
+
+        // Check if client model matches a display_id
+        if (isset($models[$clientModel])) {
+            return [
+                'display_id' => $clientModel,
+                'ollama_name' => $models[$clientModel]['ollama_name'],
+                'type' => $models[$clientModel]['type'],
+                'credit_multiplier' => $models[$clientModel]['credit_multiplier'],
+            ];
+        }
+
+        // Try to find by ollama_name (for backward compatibility)
+        foreach ($models as $displayId => $modelData) {
+            if (($modelData['ollama_name'] ?? '') === $clientModel) {
+                return [
+                    'display_id' => $displayId,
+                    'ollama_name' => $modelData['ollama_name'],
+                    'type' => $modelData['type'],
+                    'credit_multiplier' => $modelData['credit_multiplier'],
+                ];
             }
         }
+
         return null;
+    }
+
+    /**
+     * Fetch models from Ollama GPU server and infer metadata (mirrors ModelsController).
+     */
+    protected function fetchModelsFromOllama(): ?array
+    {
+        $ollamaUrl = env('OLLAMA_GPU_URL', 'http://localhost:11434');
+
+        try {
+            $response = \Illuminate\Support\Facades\Http::timeout(5)->get($ollamaUrl . '/api/tags');
+
+            if (!$response->successful()) {
+                return null;
+            }
+
+            $data = $response->json();
+
+            if (!isset($data['models']) || !is_array($data['models'])) {
+                return null;
+            }
+
+            $models = [];
+
+            foreach ($data['models'] as $model) {
+                $ollamaName = $model['name'] ?? null;
+
+                if (!$ollamaName) {
+                    continue;
+                }
+
+                $displayId = $this->getDisplayId($ollamaName);
+                $size = $model['size'] ?? 0;
+
+                $metadata = [
+                    'ollama_name' => $ollamaName,
+                    'type' => $this->inferType($ollamaName),
+                    'category' => $this->inferCategory($displayId),
+                    'family' => $this->inferFamily($displayId),
+                    'size' => $this->inferSize($displayId, $size),
+                    'credit_multiplier' => str_ends_with($ollamaName, ':cloud') || str_contains($ollamaName, '-cloud') ? 2.0 : 1.0,
+                    'name' => $this->formatDisplayName($displayId),
+                ];
+
+                // Merge with config overrides if they exist
+                $configOverride = config('models.models.' . $displayId);
+                if ($configOverride) {
+                    $metadata = array_merge($metadata, array_filter([
+                        'description' => $configOverride['description'] ?? null,
+                        'context_window' => $configOverride['context_window'] ?? null,
+                        'params' => $configOverride['params'] ?? null,
+                        'quantization' => $configOverride['quantization'] ?? null,
+                        'license' => $configOverride['license'] ?? null,
+                        'credit_multiplier' => $configOverride['credit_multiplier'] ?? $metadata['credit_multiplier'],
+                    ]));
+                }
+
+                $models[$displayId] = $metadata;
+            }
+
+            return $models;
+        } catch (\Exception $e) {
+            return null;
+        }
+    }
+
+    /**
+     * Get the display ID (client-facing name) by stripping cloud suffixes.
+     */
+    protected function getDisplayId(string $ollamaName): string
+    {
+        if (str_ends_with($ollamaName, ':cloud')) {
+            return substr($ollamaName, 0, -6);
+        }
+
+        if (str_ends_with($ollamaName, '-cloud')) {
+            return substr($ollamaName, 0, -6);
+        }
+
+        return $ollamaName;
+    }
+
+    /**
+     * Infer model type (local or cloud) from ollama name.
+     */
+    protected function inferType(string $ollamaName): string
+    {
+        if (str_ends_with($ollamaName, ':cloud') || str_contains($ollamaName, '-cloud')) {
+            return 'cloud';
+        }
+
+        return 'local';
+    }
+
+    /**
+     * Infer model category based on display_id.
+     */
+    protected function inferCategory(string $displayId): string
+    {
+        $lower = strtolower($displayId);
+
+        if (str_contains($lower, 'embed') || str_contains($lower, 'nomic-embed') ||
+            str_contains($lower, 'bge') || str_contains($lower, 'minilm') ||
+            str_contains($lower, 'gte') || str_contains($lower, 'e5-') ||
+            str_contains($lower, 'arctic-embed') || str_contains($lower, 'nvidia-embed')) {
+            return 'embedding';
+        }
+
+        if (str_contains($lower, 'coder') || str_contains($lower, 'starcoder') ||
+            str_contains($lower, 'codellama') || str_contains($lower, 'codestral') ||
+            str_contains($lower, 'devstral')) {
+            return 'code';
+        }
+
+        if ((str_contains($lower, 'vl') || str_contains($lower, '-vision') ||
+            (str_contains($lower, 'glm-') && (str_contains($lower, 'flash') || str_contains($lower, '4.7') || str_contains($lower, '5'))))) {
+            return 'vision';
+        }
+
+        if (str_contains($lower, 'kimi-k2-thinking') || str_contains($lower, 'deepseek-r') ||
+            str_contains($lower, 'qwen3') || str_contains($lower, 'kimi-k2')) {
+            return 'thinking';
+        }
+
+        if (str_contains($lower, 'command-r') || str_contains($lower, 'firefunction')) {
+            return 'tools';
+        }
+
+        return 'chat';
+    }
+
+    /**
+     * Infer model family from display_id.
+     */
+    protected function inferFamily(string $displayId): string
+    {
+        $lower = strtolower($displayId);
+
+        $prefix = explode(':', $lower)[0];
+        $prefix = explode('-', $prefix)[0];
+
+        $familyMap = [
+            'llama' => 'Llama',
+            'qwen' => 'Qwen',
+            'mistral' => 'Mistral',
+            'mixtral' => 'Mixtral',
+            'ministral' => 'Mistral',
+            'codestral' => 'Mistral',
+            'deepseek' => 'DeepSeek',
+            'gemma' => 'Gemma',
+            'phi' => 'Phi',
+            'glm' => 'GLM',
+            'kimi' => 'Kimi',
+            'minimax' => 'MiniMax',
+            'gemini' => 'Gemini',
+            'cogito' => 'Cogito',
+            'nemotron' => 'Nvidia',
+            'rnj' => 'RNJ',
+            'nomic' => 'Nomic',
+            'bge' => 'BGE',
+            'all-minilm' => 'All-MiniLM',
+            'minilm' => 'MiniLM',
+            'snowflake' => 'Snowflake',
+            'e5' => 'E5',
+            'gte' => 'GTE',
+            'starcoder' => 'StarCoder',
+            'codellama' => 'CodeLlama',
+            'devstral' => 'Devstral',
+            'command' => 'Cohere',
+            'firefunction' => 'Fireworks',
+            'gpt' => 'GPT',
+            'yi' => 'Yi',
+        ];
+
+        foreach ($familyMap as $key => $family) {
+            if (str_starts_with($prefix, $key)) {
+                return $family;
+            }
+        }
+
+        return ucfirst(explode(':', $displayId)[0]);
+    }
+
+    /**
+     * Infer model size based on display_id and byte size.
+     */
+    protected function inferSize(string $displayId, int $bytes): string
+    {
+        $lower = strtolower($displayId);
+
+        if ($bytes < 500000000) {
+            if (str_contains($lower, '3b') || str_contains($lower, '7b') || str_contains($lower, '8b') ||
+                str_contains($lower, 'mini') || str_contains($lower, 'nano') ||
+                str_contains($lower, 'small') || str_contains($lower, 'flash')) {
+                return 'small';
+            }
+            if (str_contains($lower, '70b') || str_contains($lower, '671b') || str_contains($lower, '405b') ||
+                str_contains($lower, '397b') || str_contains($lower, '104b') || str_contains($lower, '123b')) {
+                return 'large';
+            }
+            return 'medium';
+        }
+
+        if ($bytes < 2_000_000_000) {
+            return 'small';
+        }
+        if ($bytes < 15_000_000_000) {
+            return 'medium';
+        }
+
+        return 'large';
+    }
+
+    /**
+     * Format display name from display_id.
+     */
+    protected function formatDisplayName(string $displayId): string
+    {
+        $name = str_replace([':', '-'], ' ', $displayId);
+        $name = ucwords($name);
+        $name = preg_replace_callback('/\b([a-z]+[0-9]+[bm])\b/i', function ($matches) {
+            return strtoupper($matches[1]);
+        }, $name);
+
+        return $name;
+    }
+
+    /**
+     * Fallback to config/models.php when Ollama is unreachable.
+     */
+    protected function fallbackToConfig(): array
+    {
+        $models = config('models.models');
+
+        return array_filter($models, fn($model) => $model['is_active'] ?? true);
     }
 
     /**
