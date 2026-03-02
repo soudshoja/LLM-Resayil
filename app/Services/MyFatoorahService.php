@@ -27,18 +27,8 @@ class MyFatoorahService
     }
 
     /**
-     * Create an invoice in MyFatoorah.
-     *
-     * @param array $data Invoice data including:
-     *   - user_id: User identifier
-     *   - amount: Payment amount in KWD
-     *   - currency_code: Currency code (KWD)
-     *   - invoice_expiry: Expiry date for the invoice
-     *   - customer_name: Customer name
-     *   - customer_email: Customer email
-     *   - callback_url: URL to redirect after payment
-     *   - error_callback_url: URL to redirect on payment error
-     * @return array Invoice response with invoice_id, invoice_url, status
+     * Create payment via ExecutePayment and return invoice URL.
+     * PaymentMethodId 0 = all payment methods shown to user.
      */
     public function createInvoice(array $data): array
     {
@@ -46,75 +36,82 @@ class MyFatoorahService
 
         $response = Http::withHeaders([
             'Authorization' => 'Bearer ' . $this->apiKey,
-            'Content-Type' => 'application/json',
-        ])->post($this->baseUrl . '/v2/createInvoice', [
-            'CustomerName' => $data['customer_name'] ?? 'Customer',
-            'InvoiceValue' => $data['amount'],
-            'CustomerEmail' => $data['customer_email'] ?? '',
-            'CountryCode' => 'KWD',
+            'Content-Type'  => 'application/json',
+        ])->post($this->baseUrl . '/v2/ExecutePayment', [
+            'PaymentMethodId'    => $data['payment_method_id'] ?? 0,
+            'InvoiceValue'       => $data['amount'],
             'DisplayCurrencyIso' => 'KWD',
-            'CallbackUrl' => $data['callback_url'] ?? route('billing.webhook'),
-            'ErrorUrl' => $data['error_callback_url'] ?? route('billing.webhook'),
-            'ExpiryDate' => $data['invoice_expiry'] ?? now()->addDays(7)->toDateTimeString(),
-            'Language' => 'en',
-            'CustomerReference' => $data['user_id'] ?? '',
-            'CustomerCivilId' => '',
+            'CallBackUrl'        => $data['callback_url'],
+            'ErrorUrl'           => $data['error_callback_url'],
+            'Language'           => 'en',
+            'CustomerName'       => $data['customer_name'] ?? 'Customer',
+            'CustomerEmail'      => $data['customer_email'] ?? '',
+            'CustomerReference'  => $data['user_id'] ?? '',
+            'InvoiceItems'       => [[
+                'ItemName'  => $data['item_name'] ?? 'LLM Resayil Subscription',
+                'Quantity'  => 1,
+                'UnitPrice' => $data['amount'],
+            ]],
+            'UserDefinedField'   => json_encode([
+                'user_id' => $data['user_id'] ?? '',
+                'type'    => $data['type'] ?? 'subscription',
+                'tier'    => $data['tier'] ?? '',
+            ]),
         ]);
 
         if ($response->failed()) {
-            Log::error('MyFatoorah createInvoice failed', [
+            Log::error('MyFatoorah ExecutePayment failed', [
                 'status' => $response->status(),
-                'body' => $response->body(),
-                'data' => $data,
+                'body'   => $response->body(),
             ]);
-
-            throw new \Exception('Failed to create invoice: ' . $response->status() . ' ' . $response->body());
+            throw new \Exception('Failed to create payment: ' . $response->status());
         }
 
         $result = $response->json();
 
+        if (!($result['IsSuccess'] ?? false)) {
+            throw new \Exception('MyFatoorah error: ' . ($result['Message'] ?? 'Unknown error'));
+        }
+
         return [
-            'invoice_id' => $result['InvoiceId'] ?? null,
-            'invoice_url' => $result['InvoiceUrl'] ?? null,
-            'status' => $result['PaymentStatus'] ?? 'pending',
+            'invoice_id'  => $result['Data']['InvoiceId'] ?? null,
+            'invoice_url' => $result['Data']['PaymentURL'] ?? null,
+            'status'      => 'pending',
         ];
     }
 
     /**
-     * Verify payment status via invoice ID.
-     *
-     * @param string $invoiceId MyFatoorah invoice ID
-     * @return array Payment verification result with payment_status, transaction_id, amount, customer_name
+     * Verify payment status using PaymentId (from callback querystring ?paymentId=xxx).
      */
-    public function verifyPayment(string $invoiceId): array
+    public function verifyPayment(string $paymentId): array
     {
         $this->validateApiKey();
 
         $response = Http::withHeaders([
             'Authorization' => 'Bearer ' . $this->apiKey,
-            'Content-Type' => 'application/json',
-        ])->get($this->baseUrl . '/v2/getPaymentStatus', [
-            'invoiceId' => $invoiceId,
+            'Content-Type'  => 'application/json',
+        ])->post($this->baseUrl . '/v2/getPaymentStatus', [
+            'Key'     => $paymentId,
+            'KeyType' => 'PaymentId',
         ]);
 
         if ($response->failed()) {
             Log::error('MyFatoorah verifyPayment failed', [
-                'status' => $response->status(),
-                'body' => $response->body(),
-                'invoiceId' => $invoiceId,
+                'status'    => $response->status(),
+                'body'      => $response->body(),
+                'paymentId' => $paymentId,
             ]);
-
             throw new \Exception('Failed to verify payment: ' . $response->status());
         }
 
         $result = $response->json();
 
         return [
-            'payment_status' => $result['PaymentStatus'] ?? 'unknown',
-            'transaction_id' => $result['TransactionId'] ?? null,
-            'amount' => $result['InvoiceValue'] ?? 0,
-            'customer_name' => $result['CustomerName'] ?? '',
-            'customer_email' => $result['CustomerEmail'] ?? '',
+            'payment_status' => $result['Data']['InvoiceStatus'] ?? 'unknown',
+            'transaction_id' => $result['Data']['InvoiceTransactions'][0]['PaymentId'] ?? null,
+            'amount'         => $result['Data']['InvoiceValue'] ?? 0,
+            'customer_name'  => $result['Data']['CustomerName'] ?? '',
+            'customer_email' => $result['Data']['CustomerEmail'] ?? '',
         ];
     }
 

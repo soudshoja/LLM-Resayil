@@ -57,6 +57,10 @@ Route::middleware('auth')->group(function () {
     // Subscription plans page
     Route::get('/billing/plans', [PaymentController::class, 'index']);
 
+    // Trial payment routes
+    Route::post('/billing/trial/start', [PaymentController::class, 'initiateTrialPayment'])->name('billing.trial.start');
+    Route::get('/billing/trial/callback', [PaymentController::class, 'handleTrialCallback'])->name('billing.trial.callback');
+
     // Payment methods page
     Route::get('/billing/payment-methods', [PaymentMethodsController::class, 'index'])->name('billing.payment-methods');
     Route::post('/billing/payment-methods', [PaymentMethodsController::class, 'store'])->name('billing.payment-methods.store');

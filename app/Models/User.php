@@ -31,6 +31,8 @@ class User extends Authenticatable
         'trial_started_at',
         'trial_credits_remaining',
         'auto_billed',
+        'myfatoorah_payment_profile_id',
+        'myfatoorah_subscription_id',
     ];
 
     /**
