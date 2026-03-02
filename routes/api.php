@@ -18,36 +18,25 @@ use App\Http\Controllers\Api\ModelsController;
 |
 */
 
-// Protected API endpoints
-Route::middleware(['auth:sanctum', 'api.key.auth'])->group(function () {
-    Route::get('/user', function (Illuminate\Http\Request $request) {
-        return $request->user();
-    });
-
-    // API Keys routes
-    Route::apiResource('api-keys', ApiKeysController::class);
-
-    // LLM API - OpenAI-compatible
+// OpenAI-compatible LLM API — /v1/... (API key auth only)
+Route::prefix('v1')->middleware('api.key.auth')->group(function () {
     Route::post('/chat/completions', [ChatCompletionsController::class, 'store']);
-    Route::post('/chat/completions/stream', [ChatCompletionsController::class, 'stream']);
     Route::get('/models', [ModelsController::class, 'index']);
+});
+
+// Internal protected endpoints (API key auth)
+Route::middleware('api.key.auth')->group(function () {
+    // Billing API endpoints
+    Route::prefix('billing')->group(function () {
+        Route::get('/subscription', [BillingController::class, 'getSubscription']);
+        Route::get('/topup-packs', [BillingController::class, 'getTopupPacks']);
+        Route::get('/topup-history', [BillingController::class, 'getTopupHistory']);
+    });
 
     // Admin notification endpoints
     Route::prefix('admin/notifications')->group(function () {
         Route::get('/', [NotificationController::class, 'index']);
         Route::post('/send', [NotificationController::class, 'sendManual']);
         Route::post('/test', [NotificationController::class, 'testTemplate']);
-    });
-
-    // Billing API endpoints
-    Route::prefix('billing')->group(function () {
-        // Get user's subscription status
-        Route::get('/subscription', [BillingController::class, 'getSubscription']);
-
-        // Get available top-up packs
-        Route::get('/topup-packs', [BillingController::class, 'getTopupPacks']);
-
-        // Get user's top-up history
-        Route::get('/topup-history', [BillingController::class, 'getTopupHistory']);
     });
 });

@@ -46,14 +46,6 @@ class ApiKeyAuth
             ], 401);
         }
 
-        // Check key status is 'active'
-        if ($apiKey->status !== 'active') {
-            return response()->json([
-                'message' => 'Unauthenticated.',
-                'error' => 'API key is not active.',
-            ], 401);
-        }
-
         // Check permissions include required scope
         if ($scope) {
             $permissions = $apiKey->permissions;
@@ -68,8 +60,11 @@ class ApiKeyAuth
         // Update last_used_at timestamp
         $apiKey->update(['last_used_at' => now()]);
 
-        // Attach user to request
-        $request->merge(['user' => $apiKey->user]);
+        // Set authenticated user so $request->user() works in controllers
+        $user = $apiKey->user;
+        $request->setUserResolver(function () use ($user) {
+            return $user;
+        });
 
         return $next($request);
     }

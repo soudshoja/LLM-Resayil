@@ -22,11 +22,15 @@ class ApiKeys extends Model
      *
      * @var list<string>
      */
+    public $incrementing = false;
+    protected $keyType = 'string';
+
     protected $fillable = [
         'user_id',
         'name',
         'key',
         'prefix',
+        'status',
         'permissions',
         'last_used_at',
     ];
