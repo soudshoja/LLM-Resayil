@@ -436,17 +436,8 @@ async function loadModels() {
     container.innerHTML = '<div class="empty-state">Loading models...</div>';
 
     try {
-        const apiKey = localStorage.getItem('llm_api_key');
-        if (!apiKey) {
-            container.innerHTML = '<div class="empty-state">Please enter your API key first to view models.</div>';
-            return;
-        }
-
-        const res = await fetch('/api/v1/models', {
-            headers: {
-                'Authorization': `Bearer ${apiKey}`,
-                'Content-Type': 'application/json'
-            }
+        const res = await fetch('/models/catalog', {
+            headers: { 'X-Requested-With': 'XMLHttpRequest' }
         });
 
         if (!res.ok) {
@@ -528,9 +519,8 @@ async function showModelDetail(modelId) {
     if (!selectedModel) {
         // Try to get from API if not found
         try {
-            const apiKey = localStorage.getItem('llm_api_key');
-            const res = await fetch(`/api/v1/models/${encodeURIComponent(id)}`, {
-                headers: { 'Authorization': `Bearer ${apiKey}` }
+            const res = await fetch(`/models/catalog`, {
+                headers: { 'X-Requested-With': 'XMLHttpRequest' }
             });
             if (res.ok) {
                 const data = await res.json();

@@ -59,6 +59,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+// Model catalog for dashboard (session auth, no API key required)
+Route::get('/models/catalog', [App\Http\Controllers\Api\ModelsController::class, 'index'])->middleware('auth');
+
 // Admin routes
 Route::middleware(['auth'])->prefix('admin')->group(function () {
     Route::get('/', function () { return view('admin.dashboard'); })->name('admin.dashboard');
