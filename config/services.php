@@ -20,7 +20,7 @@ return [
     ],
 
     'whatsapp' => [
-        'api_url' => env('RESAYIL_API_URL', 'https://wa.resayil.io/api/v1/messages/send'),
+        'api_url' => env('RESAYIL_API_URL', 'https://api.resayil.io/v1/messages'),
         'api_key' => env('RESAYIL_API_KEY'),
     ],
 

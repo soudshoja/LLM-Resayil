@@ -3,18 +3,13 @@
 namespace App\Services;
 
 use App\Models\OtpCode;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 class OtpService
 {
-    private WhatsAppNotificationService $whatsapp;
-
-    public function __construct()
-    {
-        $this->whatsapp = new WhatsAppNotificationService();
-    }
-
     /**
-     * Generate a 6-digit OTP, persist it, and send via WhatsApp.
+     * Generate a 6-digit OTP, persist it, and send via Resayil WhatsApp API.
      * Invalidates any previous unused OTPs for the same phone.
      *
      * @throws \Exception if WhatsApp sending fails
@@ -36,9 +31,21 @@ class OtpService
         ]);
 
         $message = $this->buildOTPMessage($code, 10);
-        $result = $this->whatsapp->send($phone, $message);
 
-        if (($result['status'] ?? 'error') !== 'success') {
+        $response = Http::withHeaders([
+            'Token'        => config('services.whatsapp.api_key'),
+            'Content-Type' => 'application/json',
+        ])->timeout(15)->post(config('services.whatsapp.api_url'), [
+            'phone'   => $phone,
+            'message' => $message,
+        ]);
+
+        if (!$response->successful() || isset($response->json()['error'])) {
+            Log::error('OtpService: WhatsApp send failed', [
+                'phone'    => $phone,
+                'status'   => $response->status(),
+                'response' => $response->body(),
+            ]);
             throw new \Exception('Failed to send verification message. Please check your phone number and try again.');
         }
     }
