@@ -82,6 +82,7 @@
             <a href="/dashboard">Dashboard</a>
             <a href="/api-keys">API Keys</a>
             <a href="/billing/plans" style="color:var(--gold)">Billing</a>
+            <a href="/billing/payment-methods">Payment Methods</a>
             @if(auth()->user()->subscription_tier === 'enterprise')
             <a href="/teams">Team</a>
             @endif

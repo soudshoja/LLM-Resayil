@@ -94,36 +94,39 @@
     </div>
     @else
     <div class="card" style="text-align: center; padding: 3rem;">
-        <div style="font-size: 3rem; margin-bottom: 1rem;">💳</div>
+        <div style="display: flex; gap: 1rem; justify-content: center; margin-bottom: 1.5rem; flex-wrap: wrap;">
+            <div style="background: #0055a5; color: white; font-weight: 700; padding: 0.5rem 1.25rem; border-radius: 8px; font-size: 0.9rem; letter-spacing: 0.05em;">KNET</div>
+            <div style="background: #1a1f71; color: white; font-weight: 700; padding: 0.5rem 1.25rem; border-radius: 8px; font-size: 0.9rem; font-style: italic;">VISA</div>
+            <div style="background: #eb001b; color: white; font-weight: 700; padding: 0.5rem 1.25rem; border-radius: 8px; font-size: 0.9rem;">Mastercard</div>
+        </div>
         <h2 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 0.5rem;">No payment methods saved</h2>
-        <p class="text-secondary text-sm" style="margin-bottom: 1.5rem;">Add a payment method to set up recurring subscriptions</p>
+        <p class="text-secondary text-sm" style="margin-bottom: 1.5rem;">
+            Add a card below to enable recurring subscriptions and auto-billing.
+        </p>
     </div>
     @endif
 
     <div class="add-method-section">
-        <h2 class="add-method-title">Add New Payment Method</h2>
+        <h2 class="add-method-title">Add Payment Method</h2>
+        <p class="text-secondary text-sm" style="margin-bottom: 1.5rem;">
+            You'll be redirected to our secure payment page. We accept:
+        </p>
+        <div style="display: flex; gap: 1rem; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap;">
+            <div style="background: #0055a5; color: white; font-weight: 700; padding: 0.5rem 1rem; border-radius: 6px; font-size: 0.9rem; letter-spacing: 0.05em;">KNET</div>
+            <div style="background: #1a1f71; color: white; font-weight: 700; padding: 0.5rem 1rem; border-radius: 6px; font-size: 0.9rem; font-style: italic;">VISA</div>
+            <div style="background: #eb001b; color: white; font-weight: 700; padding: 0.5rem 1rem; border-radius: 6px; font-size: 0.9rem;">Mastercard</div>
+        </div>
         <form method="POST" action="{{ route('billing.payment-methods.store') }}">
             @csrf
-            <div class="form-group">
-                <label class="form-label" for="customer_name">Cardholder Name</label>
-                <input type="text" name="customer_name" id="customer_name" class="form-input" value="{{ auth()->user()->name }}" required>
-            </div>
-            <div class="form-group">
-                <label class="form-label" for="customer_email">Email Address</label>
-                <input type="email" name="customer_email" id="customer_email" class="form-input" value="{{ auth()->user()->email }}" required>
-            </div>
-            <div class="form-group">
-                <label class="form-label">Accepted Payment Methods</label>
-                <div class="card-icons">
-                    <span class="card-icon visa" title="Visa">V</span>
-                    <span class="card-icon mastercard" title="Mastercard">M</span>
-                    <span class="card-icon knet" title="KNET">K</span>
-                </div>
-            </div>
+            <input type="hidden" name="customer_name" value="{{ auth()->user()->name }}">
+            <input type="hidden" name="customer_email" value="{{ auth()->user()->email }}">
             <button type="submit" class="btn-add btn-add-primary">
-                Add Payment Method
+                Add Card via Secure Checkout →
             </button>
         </form>
+        <p class="text-xs text-muted" style="margin-top: 0.75rem;">
+            A 0.100 KWD card verification charge is used to tokenize your card. It will be credited back.
+        </p>
     </div>
 
     <div style="margin-top: 2rem; padding: 1.5rem; background: var(--bg-card); border-radius: 12px; border: 1px solid var(--border);">

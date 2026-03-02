@@ -48,6 +48,18 @@
 @endpush
 
 @section('content')
+@if(auth()->user()->trial_started_at && !auth()->user()->myfatoorah_subscription_id)
+    @php $trialExpiry = auth()->user()->trial_started_at->addDays(7); @endphp
+    <div style="background: rgba(5,150,105,0.1); border: 1px solid rgba(5,150,105,0.3); border-radius: 8px; padding: 0.75rem 1.25rem; max-width: 1200px; margin: 1rem auto; font-size: 0.875rem; color: #6ee7b7; display: flex; align-items: center; gap: 0.5rem;">
+        ✅ <strong>Free trial active</strong> — expires {{ $trialExpiry->format('d M Y') }}
+        ({{ $trialExpiry->diffForHumans() }})
+    </div>
+@elseif(auth()->user()->subscription_expiry)
+    <div style="background: rgba(212,175,55,0.1); border: 1px solid rgba(212,175,55,0.3); border-radius: 8px; padding: 0.75rem 1.25rem; max-width: 1200px; margin: 1rem auto; font-size: 0.875rem; color: var(--gold); display: flex; align-items: center; gap: 0.5rem;">
+        ⚡ <strong>Current plan:</strong> {{ ucfirst(auth()->user()->subscription_tier) }}
+        — renews {{ auth()->user()->subscription_expiry->format('d M Y') }}
+    </div>
+@endif
 <main>
     @if(session('error'))
     <div class="alert alert-error mb-4">{{ session('error') }}</div>
@@ -95,10 +107,9 @@
                     <p style="margin: 0.25rem 0;">Credit card signup required</p>
                     <p style="margin: 0.25rem 0;">Cancel anytime during trial</p>
                 </div>
-                <form method="POST" action="/billing/payment/subscription" style="width: 100%;">
+                <form method="POST" action="{{ route('billing.trial.start') }}" style="width: 100%;">
                     @csrf
-                    <input type="hidden" name="tier" value="starter">
-                    <button type="submit" class="plan-cta plan-cta-gold" style="width: 100%;">Start Free Trial</button>
+                    <button type="submit" class="plan-cta plan-cta-gold" style="width: 100%;">Start Free Trial — Card Required</button>
                 </form>
             </div>
         </div>
