@@ -110,6 +110,7 @@ class ChatCompletionsController extends Controller
         // Determine provider (local or cloud)
         $provider = $this->cloudFailover->shouldUseCloud($user) ? 'cloud' : 'local';
         $modelName = $provider === 'cloud' ? $this->cloudFailover->getCloudModelName($validated['model']) : $validated['model'];
+        $modelName = $this->proxy->resolveModelName($modelName);
 
         // Update rate limit counter
         $this->rateLimiter->incrementRateLimit($user->id, $tier);
@@ -204,6 +205,7 @@ class ChatCompletionsController extends Controller
         // Determine provider
         $provider = $this->cloudFailover->shouldUseCloud($user) ? 'cloud' : 'local';
         $modelName = $provider === 'cloud' ? $this->cloudFailover->getCloudModelName($validated['model']) : $validated['model'];
+        $modelName = $this->proxy->resolveModelName($modelName);
 
         // Update rate limit counter
         $this->rateLimiter->incrementRateLimit($user->id, $tier);

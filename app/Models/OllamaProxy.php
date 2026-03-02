@@ -13,6 +13,18 @@ class OllamaProxy
 
     protected string $localUrl;
 
+    protected array $cloudModelMap = [
+        'qwen3.5:397b'       => 'qwen3.5:cloud',
+        'devstral-2:123b'    => 'devstral-2:123b-cloud',
+        'deepseek-v3.1:671b' => 'deepseek-v3.1:671b-cloud',
+        'deepseek-v3.2'      => 'deepseek-v3.2:cloud',
+    ];
+
+    public function resolveModelName(string $clientName): string
+    {
+        return $this->cloudModelMap[$clientName] ?? $clientName;
+    }
+
     protected ?string $cloudUrl;
 
     protected ?string $cloudApiKey;
@@ -70,7 +82,7 @@ class OllamaProxy
         $headers = $this->getAuthHeaders($provider);
 
         $body = [
-            'model' => $model,
+            'model' => $this->resolveModelName($model),
             'messages' => $request->input('messages', []),
             'stream' => $request->input('stream', false),
         ];

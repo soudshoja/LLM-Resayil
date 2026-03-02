@@ -44,6 +44,10 @@ class ModelAccessControl
             'qwen3.5:cloud',
             'deepseek-v3.2:cloud',
             'gpt-oss:20b',
+            'qwen3.5:397b',
+            'devstral-2:123b',
+            'deepseek-v3.1:671b',
+            'deepseek-v3.2',
         ],
     ];
 
