@@ -8,8 +8,10 @@ use App\Services\RateLimiter;
 use App\Services\CloudFailover;
 use App\Services\ModelAccessControl;
 use App\Services\CreditService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
 
 class ChatCompletionsController extends Controller
 {
@@ -38,7 +40,7 @@ class ChatCompletionsController extends Controller
     /**
      * Handle chat completions request (non-streaming).
      */
-    public function store(Request $request): Response
+    public function store(Request $request): Response|JsonResponse
     {
         // Validate request
         $validated = $request->validate([
@@ -140,7 +142,7 @@ class ChatCompletionsController extends Controller
     /**
      * Handle chat completions request (streaming).
      */
-    public function stream(Request $request): Response
+    public function stream(Request $request): Response|JsonResponse
     {
         // Validate request
         $validated = $request->validate([

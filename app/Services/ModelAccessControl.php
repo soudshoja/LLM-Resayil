@@ -103,7 +103,7 @@ class ModelAccessControl
     {
         $allowedModels = $this->getAllowedModels($tier);
 
-        return array_filter($models, function ($model) use ($allowedModels) {
+        return array_filter($models, function ($model) use ($allowedModels, $tier) {
             $modelName = is_string($model) ? $model : ($model['id'] ?? $model['name'] ?? '');
 
             return $this->isModelAllowed($modelName, $tier);

@@ -159,7 +159,7 @@ class OllamaProxy
                 $totalTokens += $body['eval_count'];
             }
             if (isset($body['message']['content'])) {
-                $totalTokens += Str::of($body['message']['content'])->count() / 3;
+                $totalTokens += (int) (mb_strlen($body['message']['content']) / 3);
             }
 
             $this->logUsage($request->user(), $request->input('api_key_id'), $model, $totalTokens, $provider, $responseTime, $response->getStatusCode());

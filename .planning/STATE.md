@@ -20,7 +20,7 @@ progress:
 
 **Core Value:** Users can access powerful LLMs via a simple OpenAI-compatible API with pay-per-use credits, no infrastructure management, and automatic failover to cloud models when local capacity is exceeded.
 
-**Current Focus:** Phase 7 - Backend Server Setup (Ollama GPU server + Redis + Queue worker)
+**Current Focus:** Phase 7 Plan 01 - Fix API Endpoint (4 bugs: missing configs, ThrottleRequests, OllamaProxy, welcome URL)
 
 **Project Context:**
 - Laravel SaaS for OpenAI-compatible LLM API access
@@ -33,10 +33,10 @@ progress:
 
 ## Current Position
 
-**Phase:** Phase 7 - Backend Server Setup
-**Plan:** 01 - Ollama + Redis + Queue Worker
-**Status:** Web app fully live at https://llm.resayil.io — pending backend services setup
-**Progress:** All 6 phases complete, Phase 7 (backend services) starting
+**Phase:** Phase 7 - Backend Services
+**Plan:** 01 - Fix API Endpoint
+**Status:** API returns 500 — 4 bugs identified, plan written, agents dispatched to fix
+**Progress:** All 6 phases complete, Phase 7 Plan 01 in progress
 **Active Requirements:** None
 **Completed Requirements:** AUTH-01, AUTH-02, AUTH-03, KEY-01, KEY-02, KEY-03, KEY-04, LP-01 through LP-06, DASH-01 through DASH-05, ADMIN-01 through ADMIN-05, NOTIF-01 through NOTIF-10, SUB-01, SUB-02, SUB-03, TOP-01, TOP-02, API-01 through API-05, RATE-01 through RATE-03, QUEUE-01, QUEUE-02, CLOUD-01, CLOUD-02, MODEL-01 through MODEL-04, TEAM-01, TEAM-02, TEAM-03, TEAM-04
 
@@ -120,12 +120,22 @@ progress:
 ### Blockers
 - None
 
-### Next Actions
-1. Check Ollama GPU server at 208.110.93.90:11434 — is it running? what models loaded?
-2. Configure Redis on production server for rate limiting
-3. Start queue worker: `php artisan queue:work --daemon` (via cron or process manager)
-4. Test end-to-end API call: register user → create API key → call /v1/chat/completions
-5. Test MyFatoorah payment flow
+### Phase 7 Progress
+- ✅ Ollama running at 208.110.93.90:11434 (17 models: llama3.2:3b, glm-4.7-flash, qwen3-30b, etc.)
+- ✅ Queue worker cron added: `* * * * * php artisan queue:work --stop-when-empty --max-time=55`
+- ✅ Redis not available (shared hosting) — already using QUEUE_CONNECTION=database, CACHE_DRIVER=file
+- ✅ Migration added: api_keys.status column (default 'active')
+- ✅ ApiKeyAuth middleware fixed: setUserResolver() so $request->user() works
+- ✅ API routes fixed: /api/v1/ prefix, removed auth:sanctum
+- ❌ API still returns 500 — ThrottleRequests middleware hits non-existent `cache` DB table
+- ❌ Config files (cache.php, session.php, etc.) copied to server but NOT in git
+
+### Next Actions (Phase 7 Plan 01)
+1. **Task 1**: Pull missing config files from server → commit to git
+2. **Task 2**: Remove ThrottleRequests from api middleware group in Kernel.php
+3. **Task 3**: Fix OllamaProxy to read OLLAMA_GPU_URL from env
+4. **Task 4**: Fix welcome page base URL (/api/v1 not /v1)
+5. **Task 5**: Deploy and test end-to-end API call
 
 ---
 **Session: 2026-03-02**

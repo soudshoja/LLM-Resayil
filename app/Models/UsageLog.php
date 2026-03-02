@@ -4,10 +4,21 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Ramsey\Uuid\Uuid;
 
 class UsageLog extends Model
 {
     use HasFactory;
+
+    public $incrementing = false;
+    protected $keyType = 'string';
+
+    protected static function booted(): void
+    {
+        static::creating(function ($usageLog) {
+            $usageLog->id = Uuid::uuid4()->toString();
+        });
+    }
 
     /**
      * The table associated with the model.
