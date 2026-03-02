@@ -70,9 +70,10 @@ Route::middleware('auth')->group(function () {
     Route::post('/billing/payment/subscription', [PaymentController::class, 'initiateSubscriptionPayment']);
     Route::post('/billing/payment/topup', [PaymentController::class, 'initiateTopupPayment']);
 
-    // Webhook handler (public, but verified by MyFatoorah)
-    Route::post('/billing/webhook', [WebhookController::class, 'handleWebhook']);
 });
+
+// Webhook handler (outside auth — MyFatoorah calls this without session)
+Route::post('/billing/webhook', [WebhookController::class, 'handleWebhook'])->name('billing.webhook');
 
 // Home route
 Route::get('/', function () {
