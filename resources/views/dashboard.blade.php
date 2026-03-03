@@ -400,7 +400,7 @@ response = requests.post(
             <tbody>
             @foreach($logs as $log)
             <tr>
-                <td style="font-family:monospace;font-size:0.8rem">{{ $log->model }}</td>
+                <td style="font-family:monospace;font-size:0.8rem">{{ str_replace(':cloud', '', $log->model) }}</td>
                 <td>{{ number_format($log->tokens_used) }}</td>
                 <td class="text-gold">{{ $log->credits_deducted }}</td>
                 <td class="text-muted">{{ $log->created_at->diffForHumans() }}</td>

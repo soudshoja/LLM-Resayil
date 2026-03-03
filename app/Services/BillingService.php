@@ -99,6 +99,12 @@ class BillingService
             3 => 2,   // 3rd key: 2 KWD
             4 => 5,   // 4th key: 5 KWD
         ],
+        'enterprise' => [
+            2 => 0,
+            3 => 0,
+            4 => 2,
+            5 => 5,
+        ],
     ];
 
     /**
@@ -346,6 +352,11 @@ class BillingService
      */
     public function getAdditionalApiKeyCost(string $tier, int $keyNumber): ?float
     {
+        // Admin has no key limit
+        if (auth()->check() && auth()->user()->email === 'admin@llm.resayil.io') {
+            return 0.0;
+        }
+
         if ($keyNumber < 2) {
             return 0.0; // First key is free
         }

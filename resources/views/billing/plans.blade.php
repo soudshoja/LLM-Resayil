@@ -263,6 +263,7 @@
         $nextKeyCost = app(\App\Services\BillingService::class)->getAdditionalApiKeyCost($userTier, $nextKeyNumber);
         $tierMaxKeys = ['starter' => 3, 'basic' => 3, 'pro' => 4];
         $maxKeys = $tierMaxKeys[$userTier] ?? 3;
+        $isAdmin = auth()->user()->email === 'admin@llm.resayil.io';
     @endphp
     <div class="card extra-key-section">
         <h2>Additional API Keys</h2>
@@ -270,14 +271,29 @@
         <div class="extra-key-card">
             <div class="extra-key-info">
                 <strong>Your Keys</strong>
+                @if($isAdmin)
+                <p>Unlimited keys available</p>
+                @else
                 <p>{{ $currentKeyCount }} of {{ $maxKeys }} keys used on your {{ ucfirst($userTier) }} plan</p>
+                @endif
             </div>
             @if($nextKeyCost !== null)
                 <div style="text-align: right;">
+                    @if($nextKeyCost == 0)
+                    <div class="extra-key-price">Free</div>
+                    <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.2rem;">included with plan</div>
+                    @else
                     <div class="extra-key-price">{{ number_format($nextKeyCost, 3) }} KWD</div>
                     <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.2rem;">one-time purchase</div>
+                    @endif
                 </div>
-                <button type="button" class="extra-key-buy" onclick="openPaymentModal('extra-key')">Buy Extra API Key &mdash; {{ number_format($nextKeyCost, 3) }} KWD</button>
+                <button type="button" class="extra-key-buy" onclick="openPaymentModal('extra-key')">
+                    @if($nextKeyCost == 0)
+                    Create Free API Key
+                    @else
+                    Buy Extra API Key &mdash; {{ number_format($nextKeyCost, 3) }} KWD
+                    @endif
+                </button>
             @else
                 <span class="extra-key-maxed">Maximum keys reached for your plan</span>
             @endif

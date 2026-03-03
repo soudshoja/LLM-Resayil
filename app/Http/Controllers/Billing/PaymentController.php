@@ -222,11 +222,23 @@ class PaymentController extends Controller
      */
     public function initiateExtraKeyPayment(Request $request)
     {
+        $user = Auth::user();
+
+        // Admin bypass: create key directly, no payment, no limit
+        if ($user->email === 'admin@llm.resayil.io') {
+            ApiKeys::create([
+                'user_id' => $user->id,
+                'name' => 'Admin Key ' . now()->format('Y-m-d H:i'),
+                'key' => 'sk-' . \Illuminate\Support\Str::random(48),
+                'is_active' => true,
+            ]);
+            return redirect()->back()->with('success', 'API key created.');
+        }
+
         $validated = $request->validate([
             'payment_method_id' => 'required|integer',
         ]);
 
-        $user = Auth::user();
         $tier = $user->subscription_tier ?? 'starter';
 
         // Count current active API keys
@@ -243,6 +255,23 @@ class PaymentController extends Controller
         }
 
         try {
+            // If cost is 0, create key directly without payment
+            if ($cost === 0.0) {
+                $key = bin2hex(random_bytes(32));
+                $prefix = substr($key, 0, 12);
+
+                ApiKeys::create([
+                    'user_id'     => $user->id,
+                    'name'        => 'API Key ' . $keyNumber,
+                    'key'         => $key,
+                    'prefix'      => $prefix,
+                    'permissions' => ['read', 'write'],
+                    'status'      => 'active',
+                ]);
+
+                return redirect('/api-keys')->with('success', 'Extra API key created successfully!');
+            }
+
             $invoice = $this->myfatoorahService->createInvoice([
                 'user_id'            => $user->id,
                 'amount'             => $cost,
