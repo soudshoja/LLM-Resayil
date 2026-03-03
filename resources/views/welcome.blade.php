@@ -199,6 +199,32 @@
     .contact-icon.email { background: rgba(212,175,55,0.1); color: var(--gold); }
     .contact-icon.phone { background: rgba(5,150,105,0.1); color: #6ee7b7; }
     .contact-icon.message { background: rgba(59,130,246,0.1); color: #60a5fa; }
+    .site-footer {
+        background: var(--bg-card, #13161d);
+        border-top: 1px solid var(--border, #1e2330);
+        padding: 2rem 1.5rem;
+        margin-top: 4rem;
+        text-align: center;
+    }
+    .footer-inner { max-width: 900px; margin: 0 auto; }
+    .footer-links {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 0.5rem 1rem;
+        margin-bottom: 1rem;
+    }
+    .footer-links a {
+        color: var(--text-muted, #888);
+        text-decoration: none;
+        font-size: 0.875rem;
+        transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--gold, #d4af37); }
+    .footer-sep { color: var(--border, #333); font-size: 0.75rem; }
+    .footer-copy { color: var(--text-muted, #888); font-size: 0.8rem; margin: 0; }
+    [dir="rtl"] .footer-links { flex-direction: row-reverse; }
     .contact-info-item strong { color: var(--text-primary); font-weight: 600; }
     .contact-info-item span { color: var(--text-secondary); font-size: 0.925rem; }
     .contact-form-wrapper { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 2.5rem; }
@@ -738,27 +764,6 @@ print(response.choices[0].message.content)
                 </div>
             </div>
 
-            <div class="contact-info-item">
-                <div class="contact-icon phone">
-                    <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
-                </div>
-                <div>
-                    <strong>Phone</strong>
-                    <br>
-                    <span>Available on request</span>
-                </div>
-            </div>
-
-            <div class="contact-info-item">
-                <div class="contact-icon message">
-                    <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/></svg>
-                </div>
-                <div>
-                    <strong>Support</strong>
-                    <br>
-                    <span>We respond within 24 hours</span>
-                </div>
-            </div>
         </div>
 
         <div class="contact-form-wrapper">
@@ -778,10 +783,6 @@ print(response.choices[0].message.content)
                     <input type="email" id="email" name="email" class="form-input" placeholder="john@example.com" required>
                 </div>
                 <div class="form-group">
-                    <label for="mobile" class="form-label">Mobile Number</label>
-                    <input type="tel" id="mobile" name="mobile" class="form-input" placeholder="+965 1234 5678" required>
-                </div>
-                <div class="form-group">
                     <label for="message" class="form-label">Message</label>
                     <textarea id="message" name="message" class="form-textarea" placeholder="How can we help you?" required></textarea>
                 </div>
@@ -797,6 +798,23 @@ print(response.choices[0].message.content)
     <p style="color:var(--text-secondary);margin-bottom:2rem">Join developers already using LLM Resayil. Pay with KNET or credit card.</p>
     <a href="/register" class="btn btn-gold" style="padding:0.85rem 2.5rem;font-size:1.05rem">Create Free Account</a>
 </section>
+
+<footer class="site-footer">
+    <div class="footer-inner">
+        <div class="footer-links">
+            <a href="{{ route('about') }}">{{ __('navigation.about') }}</a>
+            <span class="footer-sep">·</span>
+            <a href="{{ route('privacy-policy') }}">{{ __('welcome.privacy_policy') }}</a>
+            <span class="footer-sep">·</span>
+            <a href="{{ route('terms-of-service') }}">{{ __('welcome.terms_of_service') }}</a>
+            <span class="footer-sep">·</span>
+            <a href="/docs">{{ __('navigation.docs') }}</a>
+            <span class="footer-sep">·</span>
+            <a href="/contact">{{ __('welcome.contact') }}</a>
+        </div>
+        <p class="footer-copy">© {{ date('Y') }} LLM Resayil. {{ __('welcome.all_rights_reserved') }}</p>
+    </div>
+</footer>
 
 @endsection
 

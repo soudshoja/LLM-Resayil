@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Dashboard')
+@section('title', __('dashboard.title'))
 
 @push('styles')
 <style>
@@ -107,11 +107,11 @@
 @section('content')
 <main>
     <div class="dash-header">
-        <h1>Welcome back, {{ auth()->user()->name ?: auth()->user()->email }}</h1>
+        <h1>{{ __('dashboard.welcome_back', ['name' => auth()->user()->name ?: auth()->user()->email]) }}</h1>
         <div class="text-secondary text-sm">
-            Plan: <span class="badge badge-gold">{{ ucfirst(auth()->user()->subscription_tier) }}</span>
+            {{ __('dashboard.plan') }}: <span class="badge badge-gold">{{ ucfirst(auth()->user()->subscription_tier) }}</span>
             @if(auth()->user()->subscription_expiry)
-            &nbsp;· Expires: {{ auth()->user()->subscription_expiry->format('d M Y') }}
+            &nbsp;· {{ __('dashboard.expires') }}: {{ auth()->user()->subscription_expiry->format('d M Y') }}
             @endif
         </div>
     </div>
@@ -119,40 +119,40 @@
     <!-- Stats -->
     <div class="stats-grid">
         <div class="stat-card">
-            <div class="stat-label">Credits Remaining</div>
+            <div class="stat-label">{{ __('dashboard.credits_remaining') }}</div>
             <div class="stat-value">{{ number_format(auth()->user()->credits) }}</div>
-            <div class="stat-sub">Available for API calls</div>
+            <div class="stat-sub">{{ __('dashboard.available_for_api') }}</div>
         </div>
         <div class="stat-card">
-            <div class="stat-label">API Keys</div>
+            <div class="stat-label">{{ __('dashboard.api_keys') }}</div>
             <div class="stat-value">{{ auth()->user()->apiKeys()->count() }}</div>
-            <div class="stat-sub">Active keys</div>
+            <div class="stat-sub">{{ __('dashboard.active_keys') }}</div>
         </div>
         <div class="stat-card">
-            <div class="stat-label">Requests (30d)</div>
+            <div class="stat-label">{{ __('dashboard.requests_30d') }}</div>
             <div class="stat-value">
                 {{ \App\Models\UsageLog::where('user_id', auth()->user()->id)->where('created_at', '>=', now()->subDays(30))->count() }}
             </div>
-            <div class="stat-sub">Last 30 days</div>
+            <div class="stat-sub">{{ __('dashboard.last_30_days') }}</div>
         </div>
         <div class="stat-card">
-            <div class="stat-label">Credits Used (30d)</div>
+            <div class="stat-label">{{ __('dashboard.credits_used_30d') }}</div>
             <div class="stat-value">
                 {{ number_format(\App\Models\UsageLog::where('user_id', auth()->user()->id)->where('created_at', '>=', now()->subDays(30))->sum('credits_deducted')) }}
             </div>
-            <div class="stat-sub">Last 30 days</div>
+            <div class="stat-sub">{{ __('dashboard.last_30_days') }}</div>
         </div>
     </div>
 
     <!-- Model Catalog -->
     <div class="model-catalog">
-        <h2 class="catalog-title">Model Catalog</h2>
+        <h2 class="catalog-title">{{ __('dashboard.model_catalog') }}</h2>
         <div class="card" style="margin-top:1rem">
             <div class="catalog-header">
                 <div class="filter-group">
-                    <span class="filter-label">Family:</span>
+                    <span class="filter-label">{{ __('dashboard.family') }}:</span>
                     <select id="filter-family" class="filter-select">
-                        <option value="">All Families</option>
+                        <option value="">{{ __('dashboard.all_families') }}</option>
                         <option value="Llama 3">Llama 3</option>
                         <option value="Qwen">Qwen</option>
                         <option value="Mistral">Mistral</option>
@@ -176,9 +176,9 @@
                     </select>
                 </div>
                 <div class="filter-group">
-                    <span class="filter-label">Category:</span>
+                    <span class="filter-label">{{ __('dashboard.category') }}:</span>
                     <select id="filter-category" class="filter-select">
-                        <option value="">All Categories</option>
+                        <option value="">{{ __('dashboard.all_categories') }}</option>
                         <option value="chat">Chat</option>
                         <option value="code">Code</option>
                         <option value="embedding">Embedding</option>
@@ -189,23 +189,23 @@
                 </div>
                 @if(auth()->user()->email === 'admin@llm.resayil.io')
                 <div class="filter-group">
-                    <span class="filter-label">Type:</span>
+                    <span class="filter-label">{{ __('dashboard.type') }}:</span>
                     <select id="filter-type" class="filter-select">
-                        <option value="">All Types</option>
+                        <option value="">{{ __('dashboard.all_types') }}</option>
                         <option value="local">Local</option>
                         <option value="cloud">Cloud</option>
                     </select>
                 </div>
                 @else
-                <select id="filter-type" style="display:none"><option value="">All Types</option></select>
+                <select id="filter-type" style="display:none"><option value="">{{ __('dashboard.all_types') }}</option></select>
                 @endif
                 <div class="filter-group" style="flex-grow:1">
-                    <input type="text" id="search-models" class="search-input" placeholder="Search models...">
+                    <input type="text" id="search-models" class="search-input" placeholder="{{ __('dashboard.search_models') }}">
                 </div>
             </div>
 
             <div id="models-container" class="model-grid">
-                <div class="empty-state">Loading models...</div>
+                <div class="empty-state">{{ __('dashboard.loading_models') }}</div>
             </div>
 
             <!-- Model Detail Panel -->
@@ -215,30 +215,30 @@
                         <h3 class="detail-title" id="detail-name">Model Name</h3>
                         <code class="detail-id" id="detail-id">model-id</code>
                     </div>
-                    <button class="detail-close" onclick="closeDetailPanel()">Close</button>
+                    <button class="detail-close" onclick="closeDetailPanel()">{{ __('dashboard.close') }}</button>
                 </div>
                 <div class="detail-grid">
                     <div class="detail-section">
-                        <h4>Model Info</h4>
-                        <p><span class="detail-label">Family:</span><span id="detail-family">-</span></p>
-                        <p><span class="detail-label">Category:</span><span id="detail-category">-</span></p>
-                        <p><span class="detail-label">Size:</span><span id="detail-size">-</span></p>
+                        <h4>{{ __('dashboard.model_info') }}</h4>
+                        <p><span class="detail-label">{{ __('dashboard.family') }}:</span><span id="detail-family">-</span></p>
+                        <p><span class="detail-label">{{ __('dashboard.category') }}:</span><span id="detail-category">-</span></p>
+                        <p><span class="detail-label">{{ __('dashboard.size') }}:</span><span id="detail-size">-</span></p>
                     </div>
                     <div class="detail-section">
-                        <h4>Technical</h4>
-                        <p><span class="detail-label">Context Window:</span><span id="detail-context">-</span></p>
-                        <p><span class="detail-label">Parameters:</span><span id="detail-params">-</span></p>
-                        <p><span class="detail-label">Quantization:</span><span id="detail-quant">-</span></p>
+                        <h4>{{ __('dashboard.technical') }}</h4>
+                        <p><span class="detail-label">{{ __('dashboard.context_window') }}:</span><span id="detail-context">-</span></p>
+                        <p><span class="detail-label">{{ __('dashboard.parameters') }}:</span><span id="detail-params">-</span></p>
+                        <p><span class="detail-label">{{ __('dashboard.quantization') }}:</span><span id="detail-quant">-</span></p>
                     </div>
                     <div class="detail-section">
-                        <h4>Pricing & License</h4>
-                        <p><span class="detail-label">Credits/Token:</span><span id="detail-credits">-</span></p>
-                        <p><span class="detail-label">License:</span><span id="detail-license">-</span></p>
-                        <p><span class="detail-label">Description:</span><span id="detail-desc">-</span></p>
+                        <h4>{{ __('dashboard.pricing_license') }}</h4>
+                        <p><span class="detail-label">{{ __('dashboard.credits_per_token') }}:</span><span id="detail-credits">-</span></p>
+                        <p><span class="detail-label">{{ __('dashboard.license') }}:</span><span id="detail-license">-</span></p>
+                        <p><span class="detail-label">{{ __('dashboard.description') }}:</span><span id="detail-desc">-</span></p>
                     </div>
                 </div>
                 <div class="detail-section">
-                    <h4>Usage Examples</h4>
+                    <h4>{{ __('dashboard.usage_examples') }}</h4>
                     <div class="code-tabs">
                         <button class="code-tab active" onclick="switchCodeTab('curl')">cURL</button>
                         <button class="code-tab" onclick="switchCodeTab('python')">Python</button>
@@ -255,7 +255,7 @@
     ]
   }</span></code></pre>
                         <div class="code-actions" style="margin-top:0.5rem">
-                            <button class="btn-copy" onclick="copyCode('curl')">Copy</button>
+                            <button class="btn-copy" onclick="copyCode('curl')">{{ __('dashboard.copy') }}</button>
                         </div>
                     </div>
                     <div id="code-python" class="code-block" style="display:none">
@@ -276,7 +276,7 @@ response = requests.post(
 )
 <span class="py-func">print</span>(response.json())</code></pre>
                         <div class="code-actions" style="margin-top:0.5rem">
-                            <button class="btn-copy" onclick="copyCode('python')">Copy</button>
+                            <button class="btn-copy" onclick="copyCode('python')">{{ __('dashboard.copy') }}</button>
                         </div>
                     </div>
                     <div id="code-n8n" class="code-block" style="display:none">
@@ -297,28 +297,28 @@ response = requests.post(
   <span class="n8n-kw">"version"</span>: <span class="n8n-num">1</span>
 }</code></pre>
                         <div class="code-actions" style="margin-top:0.5rem">
-                            <button class="btn-copy" onclick="copyCode('n8n')">Copy</button>
+                            <button class="btn-copy" onclick="copyCode('n8n')">{{ __('dashboard.copy') }}</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <p class="text-xs text-muted" style="margin-top:0.75rem">Click any model to view details and usage examples.</p>
+        <p class="text-xs text-muted" style="margin-top:0.75rem">{{ __('dashboard.click_model_hint') }}</p>
     </div>
 
     <div class="section-grid">
         <!-- API Keys -->
         <div class="card">
             <div class="flex items-center justify-between mb-4">
-                <h2 style="font-size:1rem;font-weight:600">API Keys</h2>
-                <button onclick="createKey()" class="btn btn-gold" style="padding:0.4rem 0.9rem;font-size:0.8rem">+ New Key</button>
+                <h2 style="font-size:1rem;font-weight:600">{{ __('dashboard.api_keys') }}</h2>
+                <button onclick="createKey()" class="btn btn-gold" style="padding:0.4rem 0.9rem;font-size:0.8rem">{{ __('dashboard.new_key') }}</button>
             </div>
             <div id="keys-list">
                 @php $keys = auth()->user()->apiKeys()->orderByDesc('created_at')->get(); @endphp
                 @if($keys->count())
                 <div class="keys-wrapper">
                     <table class="keys-table">
-                        <thead><tr><th>Name</th><th>Key</th><th>Created</th><th></th></tr></thead>
+                        <thead><tr><th>{{ __('dashboard.name') }}</th><th>{{ __('dashboard.key') }}</th><th>{{ __('dashboard.created') }}</th><th></th></tr></thead>
                         <tbody>
                         @foreach($keys as $key)
                         <tr>
@@ -326,9 +326,9 @@ response = requests.post(
                             <td><span class="key-prefix">{{ $key->prefix }}...****</span></td>
                             <td class="text-muted">{{ $key->created_at->format('d M Y') }}</td>
                             <td>
-                                <form method="POST" action="/api-keys/{{ $key->id }}" style="display:inline" onsubmit="return confirm('Delete this key?')">
+                                <form method="POST" action="/api-keys/{{ $key->id }}" style="display:inline" onsubmit="return confirm('{{ __('dashboard.delete_key_confirm') }}')">
                                     @csrf @method('DELETE')
-                                    <button type="submit" class="btn btn-danger" style="padding:0.25rem 0.6rem;font-size:0.75rem">Delete</button>
+                                    <button type="submit" class="btn btn-danger" style="padding:0.25rem 0.6rem;font-size:0.75rem">{{ __('dashboard.delete') }}</button>
                                 </form>
                             </td>
                         </tr>
@@ -337,30 +337,30 @@ response = requests.post(
                     </table>
                 </div>
                 @else
-                <div class="empty-state">No API keys yet. Create one to start making requests.</div>
+                <div class="empty-state">{{ __('dashboard.no_keys_yet') }}</div>
                 @endif
             </div>
 
             <!-- Create Key Form (hidden) -->
             <div id="create-key-form" style="display:none;margin-top:1rem;padding-top:1rem;border-top:1px solid var(--border)">
                 <div class="form-group">
-                    <label class="form-label">Key Name</label>
+                    <label class="form-label">{{ __('dashboard.key_name') }}</label>
                     <input type="text" id="key-name" class="form-input" placeholder="My App Key">
                 </div>
                 <div style="display:flex;gap:0.5rem">
-                    <button onclick="submitKey()" class="btn btn-gold" style="padding:0.5rem 1rem;font-size:0.85rem">Create</button>
-                    <button onclick="document.getElementById('create-key-form').style.display='none'" class="btn btn-outline" style="padding:0.5rem 1rem;font-size:0.85rem">Cancel</button>
+                    <button onclick="submitKey()" class="btn btn-gold" style="padding:0.5rem 1rem;font-size:0.85rem">{{ __('dashboard.create') }}</button>
+                    <button onclick="document.getElementById('create-key-form').style.display='none'" class="btn btn-outline" style="padding:0.5rem 1rem;font-size:0.85rem">{{ __('dashboard.cancel') }}</button>
                 </div>
                 <div id="new-key-display" style="margin-top:0.75rem;display:none">
                     <div class="alert alert-success" style="font-family:monospace;word-break:break-all" id="new-key-value"></div>
-                    <p class="text-xs text-muted mt-2">Copy this key now — it won't be shown again.</p>
+                    <p class="text-xs text-muted mt-2">{{ __('dashboard.copy_key_warning') }}</p>
                 </div>
             </div>
         </div>
 
         <!-- Top Up Credits -->
         <div class="card">
-            <h2 style="font-size:1rem;font-weight:600;margin-bottom:1rem">Top Up Credits</h2>
+            <h2 style="font-size:1rem;font-weight:600;margin-bottom:1rem">{{ __('dashboard.top_up_credits') }}</h2>
             <div class="topup-grid">
                 <div class="topup-card" onclick="topup(500)">
                     <div class="topup-credits">500</div>
@@ -369,18 +369,18 @@ response = requests.post(
                 <div class="topup-card" onclick="topup(1100)">
                     <div class="topup-credits">1,100</div>
                     <div class="topup-price">10 KWD</div>
-                    <div class="topup-bonus">+10% bonus</div>
+                    <div class="topup-bonus">{{ __('dashboard.bonus_10') }}</div>
                 </div>
                 <div class="topup-card" onclick="topup(3000)">
                     <div class="topup-credits">3,000</div>
                     <div class="topup-price">25 KWD</div>
-                    <div class="topup-bonus">+20% bonus</div>
+                    <div class="topup-bonus">{{ __('dashboard.bonus_20') }}</div>
                 </div>
             </div>
-            <p class="text-xs text-muted mt-4">Payments processed securely via KNET / credit card · <a href="/billing/plans" style="color:var(--gold)">View subscription plans →</a> · <a href="/credits" style="color:var(--gold)">How Credits Work</a></p>
+            <p class="text-xs text-muted mt-4">{{ __('dashboard.payments_secure') }} · <a href="/billing/plans" style="color:var(--gold)">{{ __('dashboard.view_plans') }} →</a> · <a href="/credits" style="color:var(--gold)">{{ __('dashboard.how_credits_work') }}</a></p>
 
             <hr style="margin:1.25rem 0;border-color:var(--border)">
-            <h3 style="font-size:0.875rem;font-weight:600;margin-bottom:0.75rem">Recent Purchases</h3>
+            <h3 style="font-size:0.875rem;font-weight:600;margin-bottom:0.75rem">{{ __('dashboard.recent_purchases') }}</h3>
             @php $purchases = \App\Models\TopupPurchase::where('user_id', auth()->user()->id)->orderByDesc('created_at')->take(3)->get(); @endphp
             @if($purchases->count())
                 @foreach($purchases as $p)
@@ -390,7 +390,7 @@ response = requests.post(
                 </div>
                 @endforeach
             @else
-                <div class="empty-state" style="padding:1rem">No purchases yet.</div>
+                <div class="empty-state" style="padding:1rem">{{ __('dashboard.no_purchases') }}</div>
             @endif
         </div>
     </div>
@@ -408,34 +408,34 @@ response = requests.post(
     <!-- Usage Summary Cards -->
     <div class="usage-summary-cards">
         <div class="stat-mini-card">
-            <div class="stat-mini-label">Tokens This Week</div>
+            <div class="stat-mini-label">{{ __('dashboard.tokens_this_week') }}</div>
             <div class="stat-mini-value">{{ number_format($weekTokens) }}</div>
-            <div class="weekly-sub">{{ $weekCount }} {{ $weekCount === 1 ? 'request' : 'requests' }}</div>
+            <div class="weekly-sub">{{ $weekCount }} {{ $weekCount === 1 ? __('dashboard.request') : __('dashboard.requests') }}</div>
         </div>
         <div class="stat-mini-card">
-            <div class="stat-mini-label">Credits This Week</div>
+            <div class="stat-mini-label">{{ __('dashboard.credits_this_week') }}</div>
             <div class="stat-mini-value">{{ number_format($weekCredits) }}</div>
-            <div class="weekly-sub">Last 7 days</div>
+            <div class="weekly-sub">{{ __('dashboard.last_7_days') }}</div>
         </div>
         <div class="stat-mini-card">
-            <div class="stat-mini-label">Avg Credits / Request</div>
+            <div class="stat-mini-label">{{ __('dashboard.avg_credits_req') }}</div>
             <div class="stat-mini-value">{{ $avgCredits }}</div>
-            <div class="weekly-sub">Weekly average</div>
+            <div class="weekly-sub">{{ __('dashboard.weekly_average') }}</div>
         </div>
     </div>
     <div class="card">
-        <h2 style="font-size:1rem;font-weight:600;margin-bottom:1rem">Recent API Usage</h2>
+        <h2 style="font-size:1rem;font-weight:600;margin-bottom:1rem">{{ __('dashboard.recent_api_usage') }}</h2>
         @if($logs->count())
         <div style="overflow-x:auto">
         <table class="keys-table usage-table">
             <thead>
                 <tr>
-                    <th>Model</th>
-                    <th>Type</th>
-                    <th style="text-align:right">Tokens</th>
-                    <th style="text-align:center">Multiplier</th>
-                    <th style="text-align:right">Credits</th>
-                    <th>Time</th>
+                    <th>{{ __('dashboard.model') }}</th>
+                    <th>{{ __('dashboard.type') }}</th>
+                    <th style="text-align:right">{{ __('dashboard.tokens_used') }}</th>
+                    <th style="text-align:center">{{ __('dashboard.multiplier') }}</th>
+                    <th style="text-align:right">{{ __('dashboard.credits_col') }}</th>
+                    <th>{{ __('dashboard.time') }}</th>
                 </tr>
             </thead>
             <tbody>
@@ -446,7 +446,7 @@ response = requests.post(
                 $multLabel = $isCloud ? '2×' : '1×';
                 $multClass = $isCloud ? 'cloud' : 'local';
                 $typeClass = $isCloud ? 'model-badge-cloud' : 'model-badge-local';
-                $typeLabel = $isCloud ? 'Cloud' : 'Local';
+                $typeLabel = $isCloud ? __('dashboard.cloud') : __('dashboard.local');
                 $cleanName = preg_replace('/(-cloud|:cloud)$/', '', $log->model);
             @endphp
             <tr>
@@ -462,7 +462,7 @@ response = requests.post(
         </table>
         </div>
         @else
-        <div class="empty-state">No API calls yet. Create an API key and make your first request!</div>
+        <div class="empty-state">{{ __('dashboard.no_api_calls') }}</div>
         @endif
     </div>
 </main>

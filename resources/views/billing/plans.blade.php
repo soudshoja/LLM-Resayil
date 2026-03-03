@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Subscription Plans')
+@section('title', __('billing.title'))
 
 @push('styles')
 <style>
@@ -78,13 +78,13 @@
 @if(auth()->user()->trial_started_at && !auth()->user()->myfatoorah_subscription_id)
     @php $trialExpiry = auth()->user()->trial_started_at->addDays(7); @endphp
     <div style="background: rgba(5,150,105,0.1); border: 1px solid rgba(5,150,105,0.3); border-radius: 8px; padding: 0.75rem 1.25rem; max-width: 1200px; margin: 1rem auto; font-size: 0.875rem; color: #6ee7b7; display: flex; align-items: center; gap: 0.5rem;">
-        ✅ <strong>Free trial active</strong> — expires {{ $trialExpiry->format('d M Y') }}
+        ✅ <strong>{{ __('billing.free_trial_active') }}</strong> — {{ __('billing.trial_expires', ['date' => $trialExpiry->format('d M Y')]) }}
         ({{ $trialExpiry->diffForHumans() }})
     </div>
 @elseif(auth()->user()->subscription_expiry)
     <div style="background: rgba(212,175,55,0.1); border: 1px solid rgba(212,175,55,0.3); border-radius: 8px; padding: 0.75rem 1.25rem; max-width: 1200px; margin: 1rem auto; font-size: 0.875rem; color: var(--gold); display: flex; align-items: center; gap: 0.5rem;">
-        ⚡ <strong>Current plan:</strong> {{ ucfirst(auth()->user()->subscription_tier) }}
-        — renews {{ auth()->user()->subscription_expiry->format('d M Y') }}
+        ⚡ <strong>{{ __('billing.current_plan_label') }}</strong> {{ ucfirst(auth()->user()->subscription_tier) }}
+        — {{ __('billing.renews_date', ['date' => auth()->user()->subscription_expiry->format('d M Y')]) }}
     </div>
 @endif
 <main>
@@ -92,12 +92,12 @@
     <div class="alert alert-error mb-4">{{ session('error') }}</div>
     @endif
     @if(request('error') === 'payment_failed')
-    <div class="alert alert-error mb-4">Payment was not successful. Please try again.</div>
+    <div class="alert alert-error mb-4">{{ __('billing.payment_not_successful') }}</div>
     @endif
 
     <div class="plans-header">
-        <h1>Choose Your <span class="text-gold">Plan</span></h1>
-        <p>Unlock the full power of LLM Resayil. Start with a free 7-day trial, no commitment.</p>
+        <h1>{{ __('billing.choose_plan') }} <span class="text-gold">{{ __('billing.plan') }}</span></h1>
+        <p>{{ __('billing.choose_plan_subtitle') }}</p>
     </div>
 
     {{-- Free Trial Card --}}

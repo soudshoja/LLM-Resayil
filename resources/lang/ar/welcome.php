@@ -95,4 +95,8 @@ return [
     'available_on_request' => 'متوفر حسب الطلب',
     'respond_24h' => 'نرد خلال 24 ساعة',
     'select_language' => 'اللغة',
+    'privacy_policy' => 'سياسة الخصوصية',
+    'terms_of_service' => 'شروط الخدمة',
+    'contact' => 'تواصل معنا',
+    'all_rights_reserved' => 'جميع الحقوق محفوظة.',
 ];

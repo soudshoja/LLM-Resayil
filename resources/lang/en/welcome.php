@@ -95,4 +95,8 @@ return [
     'available_on_request' => 'Available on request',
     'respond_24h' => 'We respond within 24 hours',
     'select_language' => 'Language',
+    'privacy_policy' => 'Privacy Policy',
+    'terms_of_service' => 'Terms of Service',
+    'contact' => 'Contact',
+    'all_rights_reserved' => 'All rights reserved.',
 ];
