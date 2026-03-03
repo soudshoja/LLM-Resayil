@@ -21,31 +21,45 @@
     .step-num { width: 44px; height: 44px; background: linear-gradient(135deg, var(--gold), var(--gold-light)); color: #0a0d14; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1.1rem; margin: 0 auto 1rem; }
     .step h3 { font-size: 1rem; font-weight: 600; margin-bottom: 0.5rem; }
     .step p { color: var(--text-secondary); font-size: 0.875rem; line-height: 1.6; }
-    /* ── Pricing cards (matches billing/plans style) ── */
+    /* ── Trial section ── */
+    .trial-section { margin-bottom: 2.5rem; padding: 2rem; background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px; position: relative; overflow: hidden; }
+    .trial-section::before { content: ''; position: absolute; top: 0; right: 0; width: 340px; height: 100%; background: radial-gradient(ellipse at 100% 50%, rgba(40,167,69,0.07) 0%, transparent 70%); pointer-events: none; }
+    .trial-badge { display: inline-block; background: linear-gradient(135deg, #28a745, #20c997); color: white; padding: 0.3rem 0.85rem; border-radius: 20px; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.85rem; }
+    .trial-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 2rem; }
+    .trial-card { background: var(--bg-secondary); border: 2px dashed rgba(40,167,69,0.3); border-radius: 12px; padding: 1.5rem; }
+    .trial-icon { font-size: 1.75rem; margin-bottom: 0.6rem; }
+    .trial-features { list-style: none; padding: 0; margin: 0; }
+    .trial-features li { display: flex; align-items: center; gap: 0.6rem; font-size: 0.875rem; color: var(--text-secondary); padding: 0.3rem 0; }
+    .trial-features li svg { flex-shrink: 0; color: #28a745; }
+    .trial-cta-col { display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; gap: 0.85rem; }
+    .trial-after-label { font-size: 0.68rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; }
+    .trial-after-plan { font-size: 1.35rem; font-weight: 700; color: var(--gold); }
+    .trial-after-details { font-size: 0.78rem; color: var(--text-muted); line-height: 1.65; }
+    .trial-cta-btn { display: block; width: 100%; padding: 0.8rem 1.5rem; border-radius: 8px; font-weight: 700; font-size: 0.9rem; text-align: center; text-decoration: none; background: linear-gradient(135deg, #28a745, #20c997); color: #fff; border: none; transition: all 0.2s; cursor: pointer; }
+    .trial-cta-btn:hover { opacity: 0.9; transform: translateY(-1px); box-shadow: 0 4px 18px rgba(40,167,69,0.4); color: #fff; }
+    .trial-footer { font-size: 0.72rem; color: var(--text-muted); text-align: center; margin-top: 1.25rem; }
+    /* ── Pricing cards ── */
     .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
-    .plan-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px; padding: 2rem; display: flex; flex-direction: column; position: relative; transition: border-color 0.2s, transform 0.2s; }
-    .plan-card:hover { border-color: var(--gold-muted); transform: translateY(-2px); }
-    .plan-card.featured { border-color: var(--gold-muted); box-shadow: 0 0 0 1px rgba(212,175,55,0.2), 0 8px 32px rgba(212,175,55,0.08); }
+    .plan-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px; padding: 2rem; display: flex; flex-direction: column; position: relative; transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s; }
+    .plan-card:hover { border-color: var(--gold-muted); transform: translateY(-3px); box-shadow: 0 8px 32px rgba(0,0,0,0.28); }
+    .plan-card.featured { border-color: var(--gold-muted); box-shadow: 0 0 0 1px rgba(212,175,55,0.2), 0 8px 32px rgba(212,175,55,0.1); }
     .plan-badge { position: absolute; top: -13px; left: 50%; transform: translateX(-50%); background: linear-gradient(135deg, var(--gold), var(--gold-light)); color: #0a0d14; font-size: 0.7rem; font-weight: 700; padding: 0.25rem 0.85rem; border-radius: 20px; text-transform: uppercase; letter-spacing: 0.05em; white-space: nowrap; }
-    .plan-name { font-size: 1rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-secondary); margin-bottom: 0.75rem; }
-    .plan-price { font-size: 2.5rem; font-weight: 700; color: var(--gold); line-height: 1; margin-bottom: 0.25rem; }
+    .plan-name { font-size: 0.95rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-secondary); margin-bottom: 0.75rem; }
+    .plan-price { font-size: 2.75rem; font-weight: 800; color: var(--gold); line-height: 1; margin-bottom: 0.2rem; letter-spacing: -0.02em; }
     .plan-price span { font-size: 1rem; font-weight: 500; color: var(--text-secondary); }
-    .plan-billing { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1.5rem; }
+    .plan-billing { font-size: 0.78rem; color: var(--text-muted); margin-bottom: 1.5rem; }
     .plan-divider { border: none; border-top: 1px solid var(--border); margin-bottom: 1.25rem; }
     .plan-features { list-style: none; flex: 1; margin-bottom: 1.75rem; padding: 0; }
-    .plan-features li { display: flex; align-items: center; gap: 0.6rem; font-size: 0.875rem; color: var(--text-secondary); padding: 0.35rem 0; }
+    .plan-features li { display: flex; align-items: center; gap: 0.6rem; font-size: 0.875rem; color: var(--text-secondary); padding: 0.4rem 0; }
     .plan-features li svg { flex-shrink: 0; color: var(--gold); }
-    .plan-cta { display: block; width: 100%; padding: 0.75rem 1.5rem; border-radius: 8px; font-weight: 600; font-size: 0.9rem; cursor: pointer; border: none; transition: all 0.2s; text-align: center; text-decoration: none; }
+    .plan-cta { display: block; width: 100%; padding: 0.8rem 1.5rem; border-radius: 8px; font-weight: 600; font-size: 0.9rem; cursor: pointer; border: none; transition: all 0.2s; text-align: center; text-decoration: none; }
     .plan-cta-gold { background: linear-gradient(135deg, var(--gold), var(--gold-light)); color: #0a0d14; }
-    .plan-cta-gold:hover { opacity: 0.9; transform: translateY(-1px); box-shadow: 0 4px 15px rgba(212,175,55,0.3); color: #0a0d14; }
+    .plan-cta-gold:hover { opacity: 0.9; transform: translateY(-1px); box-shadow: 0 4px 18px rgba(212,175,55,0.35); color: #0a0d14; }
     .plan-cta-outline { background: transparent; border: 1px solid var(--gold-muted); color: var(--gold); }
-    .plan-cta-outline:hover { background: rgba(212,175,55,0.1); color: var(--gold); }
-    .plan-cta-row { display: flex; gap: 0.75rem; }
-    .plan-cta-row .plan-cta { flex: 1; }
-    .trial-note { font-size: 0.75rem; color: var(--text-muted); text-align: center; margin-top: 1.25rem; }
+    .plan-cta-outline:hover { background: rgba(212,175,55,0.08); color: var(--gold); }
     .addon-box { background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 10px; padding: 1.25rem 1.5rem; margin-top: 2rem; }
-    .addon-box h4 { font-size: 0.875rem; font-weight: 600; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.75rem; }
-    .addon-row { display: flex; justify-content: space-between; font-size: 0.85rem; padding: 0.35rem 0; border-bottom: 1px solid var(--border); color: var(--text-secondary); }
+    .addon-box h4 { font-size: 0.78rem; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.09em; margin-bottom: 0.75rem; }
+    .addon-row { display: flex; justify-content: space-between; font-size: 0.85rem; padding: 0.4rem 0; border-bottom: 1px solid var(--border); color: var(--text-secondary); }
     .addon-row:last-child { border-bottom: none; }
     .addon-row span:last-child { color: var(--gold); font-weight: 600; }
     .code-block { background: #0a0d14; border: 1px solid var(--border); border-radius: 10px; padding: 1.5rem; overflow-x: auto; font-family: monospace; font-size: 0.85rem; line-height: 1.7; color: #e0e5ec; }
@@ -83,7 +97,7 @@
     @media(max-width: 900px) { .ml-grid { grid-template-columns: repeat(2, 1fr); } }
     @media(max-width: 560px) { .ml-grid { grid-template-columns: 1fr; } }
     .cta-section { text-align: center; padding: 5rem 2rem; background: linear-gradient(135deg, rgba(212,175,55,0.05) 0%, transparent 100%); border-top: 1px solid var(--border); }
-    @media(max-width: 900px) { .pricing-grid { grid-template-columns: 1fr; } }
+    @media(max-width: 900px) { .pricing-grid { grid-template-columns: 1fr; } .trial-grid { grid-template-columns: 1fr; } }
     @media(max-width: 768px) { .hero h1 { font-size: 2rem; } .steps { grid-template-columns: 1fr; } }
 </style>
 @endpush
@@ -131,8 +145,34 @@
 <!-- Pricing -->
 <section class="section" id="pricing">
     <div class="section-title">
-        <h2>Simple, Transparent Pricing</h2>
+        <h2>Simple, <span class="text-gold">Transparent</span> Pricing</h2>
         <p>All prices in Kuwaiti Dinar. Billed monthly. No hidden fees.</p>
+    </div>
+
+    {{-- Free Trial Box --}}
+    <div class="trial-section">
+        <div class="trial-badge">Free Trial</div>
+        <h2 style="font-size:1.2rem;font-weight:700;margin-bottom:1.5rem;">Try Before You Buy</h2>
+        <div class="trial-grid">
+            <div class="trial-card">
+                <div class="trial-icon">⚡</div>
+                <h3 style="font-size:1rem;font-weight:600;margin-bottom:0.85rem;">7-Day Free Trial</h3>
+                <ul class="trial-features">
+                    <li><svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>Full Starter tier features</li>
+                    <li><svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>1,000 credits included</li>
+                    <li><svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>Small models (3–14B)</li>
+                    <li><svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>1 free API key</li>
+                    <li><svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>Cancel anytime during trial</li>
+                </ul>
+            </div>
+            <div class="trial-cta-col">
+                <div class="trial-after-label">After Trial</div>
+                <div class="trial-after-plan">Auto-bill to Starter</div>
+                <div class="trial-after-details">15 KWD / month<br>Credit card required<br>Cancel anytime</div>
+                <a href="/register" class="trial-cta-btn">Start Free Trial — Card Required</a>
+            </div>
+        </div>
+        <p class="trial-footer">⚠️ Payments processed securely via KNET / credit card. Cancel anytime during the trial period.</p>
     </div>
 
     <div class="pricing-grid">
