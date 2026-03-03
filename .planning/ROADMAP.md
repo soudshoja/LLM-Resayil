@@ -13,6 +13,7 @@
 - [x] **Phase 6: MySQL Production Setup** - Database migrations, environment configuration, and production deployment
 - [x] **Phase 7: Backend Services** - Fix API endpoint (config files, throttle, OllamaProxy), verify end-to-end API flow
 - [ ] **Phase 8: User Documentation** - End-user API docs (markdown + in-portal /docs page) for API consumers
+- [ ] **Phase 9: User Profile Management** - Password change, email change, verified mobile number update with WhatsApp OTP
 
 ## Phase Details
 
@@ -201,6 +202,29 @@ Plan 01 covers:
 
 ---
 
+---
+
+### Phase 9: User Profile Management
+
+**Goal:** Users can update their password, email address, and verified mobile number from the profile page. Mobile number changes require WhatsApp OTP confirmation before the new number is saved.
+
+**Depends on:** Phase 1 (auth), Phase 4 (WhatsApp OTP infrastructure)
+
+**Requirements:**
+- Password change: current password required, new password min 8 chars with confirmation
+- Email change: unique validation, save directly (no email OTP needed)
+- Mobile change: two-step AJAX flow — send OTP to new number via WhatsApp, verify 6-digit code, then save
+- UI: dark luxury design system (cards, gold accents, Inter+Tajawal fonts), no inline styles
+- After phone OTP verification, "Verified" badge updates in-page without reload
+- Arabic translation support (`__()` wrapping) for all strings
+- Fix: `phone_verified_at` cast as datetime in User model
+- Fix: `email_verified_at` reset to null when email changes
+
+**Plans:** 1 plan
+- [ ] 09-01-PLAN.md — Backend fixes (model cast, email_verified_at reset, lang keys) + profile view redesign (CSS classes, __() wrapping, JS badge fix)
+
+---
+
 ## Progress
 
 | Phase | Plans Complete | Status | Completed |
@@ -213,8 +237,9 @@ Plan 01 covers:
 | 6 - MySQL Production Setup | 1/1 | Planned | Plan 01 ready for execution |
 | 7 - Backend Services | 7/7 | Complete | All plans deployed 2026-03-03 |
 | 8 - User Documentation | 0/1 | Pending | — |
+| 9 - User Profile Management | 0/1 | Pending | — |
 
 ---
 
 *Roadmap defined: 2026-02-26*
-*Last updated: 2026-02-26 - Phase 6 Plan 01 created (MySQL Production Setup & Deployment)*
+*Last updated: 2026-03-03 - Phase 9 plan created (User Profile Management)*
