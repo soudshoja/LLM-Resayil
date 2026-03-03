@@ -120,7 +120,7 @@ Route::group([], function () {
     Route::get('/models/catalog', [App\Http\Controllers\Api\ModelsController::class, 'index'])->middleware('auth');
 
     // Admin routes
-    Route::middleware(['auth'])->prefix('admin')->group(function () {
+    Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
         Route::get('/', function () { return view('admin.dashboard'); })->name('admin.dashboard');
         Route::get('/api-settings', [ApiSettingsController::class, 'index'])->name('admin.api-settings');
         Route::put('/api-settings', [ApiSettingsController::class, 'update'])->name('admin.api-settings.update');

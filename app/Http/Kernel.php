@@ -62,5 +62,6 @@ class Kernel extends HttpKernel
         'api.key.auth' => \App\Http\Middleware\ApiKeyAuth::class,
         'enterprise' => \App\Http\Middleware\EnterpriseMiddleware::class,
         'set.locale' => \App\Http\Middleware\SetLocale::class,
+        'admin' => \App\Http\Middleware\AdminMiddleware::class,
     ];
 }
