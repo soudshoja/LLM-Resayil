@@ -74,6 +74,10 @@ class AdminModelController extends Controller
 
         $modelConfig->save();
 
+        if ($request->wantsJson() || $request->ajax()) {
+            return response()->json(['success' => true]);
+        }
+
         return back()->with('success', 'Model settings updated successfully.');
     }
 

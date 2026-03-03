@@ -6,10 +6,11 @@
     .models-table th { font-size: 0.75rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; padding: 0.6rem 0.75rem; border-bottom: 1px solid var(--border); text-align: left; }
     .models-table td { padding: 0.75rem; border-bottom: 1px solid rgba(30,34,48,0.5); font-size: 0.875rem; }
     .models-table tr:last-child td { border-bottom: none; }
-    .toggle-btn { cursor: pointer; position: relative; width: 48px; height: 24px; background: #374151; border-radius: 9999px; transition: all 0.2s; }
+    .toggle-btn { cursor: pointer; position: relative; width: 48px; height: 24px; background: #374151; border-radius: 9999px; transition: all 0.2s; user-select: none; }
     .toggle-btn.active { background: #d4af37; }
     .toggle-btn::after { content: ''; position: absolute; top: 2px; left: 2px; width: 20px; height: 20px; background: white; border-radius: 50%; transition: all 0.2s; }
     .toggle-btn.active::after { left: 26px; }
+    .toggle-btn.loading { opacity: 0.5; pointer-events: none; }
     .badge-local { background: #1e3a8a; color: #93c5fd; }
     .badge-cloud { background: #7c2d12; color: #fdba74; }
     .badge-small { background: #1e293b; color: #94a3b8; }
@@ -41,7 +42,7 @@
         </div>
         <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:1.25rem">
             <div style="font-size:0.75rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:0.5rem">Active Models</div>
-            <div style="font-size:1.75rem;font-weight:700;color:var(--gold)">{{ $activeModels }}</div>
+            <div id="activeCount" style="font-size:1.75rem;font-weight:700;color:var(--gold)">{{ $activeModels }}</div>
         </div>
         <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:1.25rem">
             <div style="font-size:0.75rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:0.5rem">Local Models</div>
@@ -137,12 +138,13 @@
                         data-family="{{ $model['family'] }}"
                         data-category="{{ $model['category'] }}"
                         data-type="{{ $model['type'] }}"
-                        data-size="{{ $model['size'] }}">
+                        data-size="{{ $model['size'] }}"
+                        data-default-multiplier="{{ $model['credit_multiplier'] }}">
                         <td><input type="checkbox" class="model-checkbox" value="{{ $model['model_id'] }}"></td>
                         <td>
                             <div class="model-id">{{ $model['model_id'] }}</div>
                             @if($model['credit_multiplier_override'] !== null)
-                                <div style="font-size:0.65rem;color:#f59e0b">override: {{ $model['credit_multiplier_override'] }}</div>
+                                <div class="multiplier-override" style="font-size:0.65rem;color:#f59e0b">override: {{ $model['credit_multiplier_override'] }}</div>
                             @endif
                         </td>
                         <td>{{ $model['family'] }}</td>
@@ -158,17 +160,15 @@
                         <td>
                             <span class="badge badge-{{ $model['size'] }}">{{ $model['size'] }}</span>
                         </td>
-                        <td>{{ $model['credit_multiplier_override'] ?? $model['credit_multiplier'] }}</td>
+                        <td class="multiplier-cell">{{ $model['credit_multiplier_override'] ?? $model['credit_multiplier'] }}</td>
                         <td>
-                            <div class="toggle-btn {{ $model['is_active'] ? 'active' : '' }}" onclick="toggleModelStatus({{ $loop->index }}, {{ $model['is_active'] ? 'true' : 'false' }})" data-model-id="{{ $model['model_id'] }}"></div>
-                            <form id="form-{{ $loop->index }}" method="POST" action="{{ route('admin.models.update') }}" style="display:none">
-                                @csrf
-                                <input type="hidden" name="model_id" value="{{ $model['model_id'] }}">
-                                <input type="hidden" name="is_active" value="{{ $model['is_active'] ? '0' : '1' }}">
-                            </form>
+                            <div class="toggle-btn {{ $model['is_active'] ? 'active' : '' }}"
+                                 onclick="toggleModelStatus(this)"
+                                 data-model-id="{{ $model['model_id'] }}"
+                                 data-active="{{ $model['is_active'] ? '1' : '0' }}"></div>
                         </td>
                         <td>
-                            <button type="button" onclick="openEditModal('{{ $model['model_id'] }}', '{{ $model['name'] }}', {{ $model['credit_multiplier'] }}, '{{ $model['credit_multiplier_override'] ?? '' }}')" style="background:var(--bg-card);border:1px solid var(--border);border-radius:6px;padding:0.3rem 0.6rem;color:var(--text);font-size:0.75rem;cursor:pointer;transition:all 0.2s">Edit</button>
+                            <button type="button" onclick="openEditModal('{{ $model['model_id'] }}', '{{ $model['name'] }}', {{ $model['credit_multiplier'] }}, '{{ $model['credit_multiplier_override'] ?? '' }}', {{ $model['is_active'] ? '1' : '0' }})" style="background:var(--bg-card);border:1px solid var(--border);border-radius:6px;padding:0.3rem 0.6rem;color:var(--text);font-size:0.75rem;cursor:pointer;transition:all 0.2s">Edit</button>
                         </td>
                     </tr>
                     @endforeach
@@ -209,7 +209,7 @@
                 </div>
                 <div style="display:flex;justify-content:flex-end;gap:0.75rem">
                     <button type="button" onclick="closeEditModal()" style="background:var(--bg-secondary);border:1px solid var(--border);border-radius:8px;padding:0.5rem 1rem;color:var(--text);cursor:pointer">Cancel</button>
-                    <button type="submit" style="background:var(--gold);border:none;border-radius:8px;padding:0.5rem 1rem;color:#0f1115;font-weight:600;cursor:pointer">Save Changes</button>
+                    <button type="submit" id="editSaveBtn" style="background:var(--gold);border:none;border-radius:8px;padding:0.5rem 1rem;color:#0f1115;font-weight:600;cursor:pointer">Save Changes</button>
                 </div>
             </form>
         </div>
@@ -217,7 +217,132 @@
 </main>
 
 <script>
-// Filter functionality
+const UPDATE_URL = '{{ route("admin.models.update") }}';
+
+function getCsrf() {
+    return document.querySelector('meta[name="csrf-token"]')?.content
+        || document.querySelector('input[name="_token"]')?.value
+        || '';
+}
+
+// ── Toast notification ────────────────────────────────────────────────────────
+function showToast(msg, type = 'success') {
+    const toast = document.createElement('div');
+    toast.textContent = msg;
+    const bg     = type === 'success' ? '#166534' : '#7f1d1d';
+    const border = type === 'success' ? '#22c55e' : '#ef4444';
+    toast.style.cssText = `position:fixed;bottom:1.5rem;right:1.5rem;z-index:9999;
+        background:${bg};border:1px solid ${border};color:#fff;
+        padding:0.75rem 1.25rem;border-radius:8px;font-size:0.875rem;
+        opacity:0;transition:opacity 0.2s;max-width:320px;box-shadow:0 4px 12px rgba(0,0,0,0.4)`;
+    document.body.appendChild(toast);
+    requestAnimationFrame(() => toast.style.opacity = '1');
+    setTimeout(() => {
+        toast.style.opacity = '0';
+        setTimeout(() => toast.remove(), 200);
+    }, 3000);
+}
+
+// ── Active count stat updater ─────────────────────────────────────────────────
+function updateActiveCount(delta) {
+    const el = document.getElementById('activeCount');
+    if (el) el.textContent = Math.max(0, parseInt(el.textContent) + delta);
+}
+
+// ── Single toggle (no page reload) ───────────────────────────────────────────
+async function toggleModelStatus(btn) {
+    const modelId  = btn.dataset.modelId;
+    const wasActive = btn.dataset.active === '1';
+    const newActive = !wasActive;
+
+    // Optimistic UI update
+    btn.classList.toggle('active', newActive);
+    btn.dataset.active = newActive ? '1' : '0';
+    btn.classList.add('loading');
+
+    try {
+        const res = await fetch(UPDATE_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'Accept': 'application/json',
+                'X-CSRF-TOKEN': getCsrf(),
+            },
+            body: new URLSearchParams({
+                _token: getCsrf(),
+                model_id: modelId,
+                is_active: newActive ? '1' : '0',
+            }),
+        });
+
+        if (!res.ok) throw new Error('Server error');
+        showToast(newActive ? 'Model enabled.' : 'Model disabled.');
+        updateActiveCount(newActive ? 1 : -1);
+    } catch {
+        // Revert on failure
+        btn.classList.toggle('active', wasActive);
+        btn.dataset.active = wasActive ? '1' : '0';
+        showToast('Update failed. Please try again.', 'error');
+    } finally {
+        btn.classList.remove('loading');
+    }
+}
+
+// ── Bulk enable/disable (no page reload) ─────────────────────────────────────
+async function bulkUpdate(action) {
+    // Only act on checked rows that are currently visible
+    const checked = Array.from(document.querySelectorAll('.model-checkbox:checked'))
+        .filter(cb => cb.closest('.model-row').style.display !== 'none');
+
+    if (!checked.length) {
+        showToast('Please select models to update.', 'error');
+        return;
+    }
+    if (!confirm(`${action === 'enable' ? 'Enable' : 'Disable'} ${checked.length} model(s)?`)) return;
+
+    const newActive = action === 'enable';
+    const csrf = getCsrf();
+
+    const promises = checked.map(cb => {
+        const row = cb.closest('.model-row');
+        const btn = row.querySelector('.toggle-btn');
+        const wasActive = btn?.dataset.active === '1';
+        const modelId = cb.value;
+
+        btn?.classList.add('loading');
+
+        return fetch(UPDATE_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'Accept': 'application/json',
+                'X-CSRF-TOKEN': csrf,
+            },
+            body: new URLSearchParams({ _token: csrf, model_id: modelId, is_active: newActive ? '1' : '0' }),
+        })
+        .then(r => ({ modelId, ok: r.ok, wasActive, btn }))
+        .catch(() => ({ modelId, ok: false, wasActive, btn }));
+    });
+
+    const results = await Promise.all(promises);
+    let delta = 0;
+
+    results.forEach(({ ok, wasActive, btn }) => {
+        btn?.classList.remove('loading');
+        if (ok && btn) {
+            btn.classList.toggle('active', newActive);
+            btn.dataset.active = newActive ? '1' : '0';
+            if (newActive && !wasActive) delta++;
+            if (!newActive && wasActive) delta--;
+        }
+    });
+
+    const successCount = results.filter(r => r.ok).length;
+    updateActiveCount(delta);
+    showToast(`${successCount} model(s) ${action}d.`);
+}
+
+// ── Filter functionality ──────────────────────────────────────────────────────
 function applyFilters() {
     const search   = document.getElementById('searchInput').value.toLowerCase();
     const family   = document.getElementById('filterFamily').value.toLowerCase();
@@ -238,59 +363,21 @@ function applyFilters() {
     });
 
     const total = document.querySelectorAll('.model-row').length;
-    document.getElementById('visibleCount').textContent = visible < total ? `Showing ${visible} of ${total}` : `${total} models`;
+    document.getElementById('visibleCount').textContent =
+        visible < total ? `Showing ${visible} of ${total}` : `${total} models`;
 }
 applyFilters();
 
-// Toggle single model status (uses loop index to avoid slash issues in IDs)
-function toggleModelStatus(index, isActive) {
-    const form = document.getElementById(`form-${index}`);
-    if (!form) return;
-
-    // Update visual state
-    const modelId = form.querySelector('input[name="model_id"]').value;
-    const btn = document.querySelector(`.toggle-btn[data-model-id="${CSS.escape(modelId)}"]`);
-    if (btn) btn.classList.toggle('active', !isActive);
-
-    form.submit();
-}
-
-// Toggle all checkboxes
+// ── Toggle all checkboxes ─────────────────────────────────────────────────────
 function toggleAll(source) {
-    const checkboxes = document.querySelectorAll('.model-checkbox');
-    checkboxes.forEach(checkbox => {
-        checkbox.checked = source.checked;
-    });
+    document.querySelectorAll('.model-checkbox').forEach(cb => cb.checked = source.checked);
 }
 
-// Bulk update
-function bulkUpdate(action) {
-    const checked = Array.from(document.querySelectorAll('.model-checkbox:checked'));
-    if (checked.length === 0) {
-        alert('Please select models to update.');
-        return;
-    }
-
-    if (!confirm(`Are you sure you want to ${action} ${checked.length} model(s)?`)) {
-        return;
-    }
-
-    // Submit forms for each checked model (find form by model_id in hidden input)
-    checked.forEach(checkbox => {
-        const form = Array.from(document.querySelectorAll('form[id^="form-"]')).find(
-            f => f.querySelector('input[name="model_id"]')?.value === checkbox.value
-        );
-        if (form) {
-            form.querySelector('input[name="is_active"]').value = action === 'enable' ? '1' : '0';
-            form.submit();
-        }
-    });
-}
-
-// Edit modal functions
-function openEditModal(modelId, modelName, defaultMultiplier, currentOverride) {
+// ── Edit modal ────────────────────────────────────────────────────────────────
+function openEditModal(modelId, modelName, defaultMultiplier, currentOverride, isActive) {
     document.getElementById('editModelId').value = modelId;
     document.getElementById('editMultiplier').value = currentOverride;
+    document.querySelector(`#editForm input[name="is_active"][value="${isActive}"]`).checked = true;
     document.getElementById('editModal').style.display = 'flex';
 }
 
@@ -298,18 +385,88 @@ function closeEditModal() {
     document.getElementById('editModal').style.display = 'none';
 }
 
-// Close modal on outside click
-document.getElementById('editModal').addEventListener('click', function(e) {
-    if (e.target === this) {
+// Edit form: intercept submit → AJAX (preserves filters)
+document.getElementById('editForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+
+    const formData = new FormData(this);
+    const modelId    = formData.get('model_id');
+    const override   = formData.get('credit_multiplier_override');
+    const newActive  = formData.get('is_active') === '1';
+    const saveBtn    = document.getElementById('editSaveBtn');
+
+    saveBtn.disabled = true;
+    saveBtn.textContent = 'Saving…';
+
+    try {
+        const res = await fetch(this.action, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'Accept': 'application/json',
+                'X-CSRF-TOKEN': getCsrf(),
+            },
+            body: new URLSearchParams({
+                _token: getCsrf(),
+                model_id: modelId,
+                is_active: newActive ? '1' : '0',
+                credit_multiplier_override: override,
+            }),
+        });
+
+        if (!res.ok) throw new Error();
+
+        // Update the row in the table without reload
+        const row = document.querySelector(`.model-row[data-model-id="${CSS.escape(modelId)}"]`);
+        if (row) {
+            const toggleBtn = row.querySelector('.toggle-btn');
+            const wasActive = toggleBtn?.dataset.active === '1';
+
+            // Update toggle
+            if (toggleBtn) {
+                toggleBtn.classList.toggle('active', newActive);
+                toggleBtn.dataset.active = newActive ? '1' : '0';
+                if (newActive !== wasActive) updateActiveCount(newActive ? 1 : -1);
+            }
+
+            // Update multiplier cell
+            const defaultMult = row.dataset.defaultMultiplier;
+            row.querySelector('.multiplier-cell').textContent = override || defaultMult;
+
+            // Update override label under model ID
+            const overrideEl = row.querySelector('.multiplier-override');
+            if (override) {
+                if (overrideEl) {
+                    overrideEl.textContent = `override: ${override}`;
+                } else {
+                    const modelIdEl = row.querySelector('.model-id');
+                    const newEl = document.createElement('div');
+                    newEl.className = 'multiplier-override';
+                    newEl.style.cssText = 'font-size:0.65rem;color:#f59e0b';
+                    newEl.textContent = `override: ${override}`;
+                    modelIdEl.insertAdjacentElement('afterend', newEl);
+                }
+            } else if (overrideEl) {
+                overrideEl.remove();
+            }
+        }
+
         closeEditModal();
+        showToast('Model settings saved.');
+    } catch {
+        showToast('Failed to save. Please try again.', 'error');
+    } finally {
+        saveBtn.disabled = false;
+        saveBtn.textContent = 'Save Changes';
     }
 });
 
-// Keyboard escape to close
+document.getElementById('editModal').addEventListener('click', function(e) {
+    if (e.target === this) closeEditModal();
+});
+
 document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') {
-        closeEditModal();
-    }
+    if (e.key === 'Escape') closeEditModal();
 });
 </script>
 @endsection
