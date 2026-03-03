@@ -98,7 +98,8 @@
     .credits-cell { color: var(--gold, #d4af37); font-weight: 600; font-family: monospace; }
     .time-cell { color: var(--text-muted, #888); font-size: 0.82rem; white-space: nowrap; }
     .model-cell { font-family: monospace; font-size: 0.8rem; }
-    @media(max-width: 900px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } .section-grid { grid-template-columns: 1fr; } .detail-grid { grid-template-columns: 1fr; } }
+    @media(max-width: 900px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } .detail-grid { grid-template-columns: 1fr; } }
+    @media(max-width: 768px) { .section-grid { grid-template-columns: 1fr; } }
     @media(max-width: 768px) { .usage-summary-cards { grid-template-columns: 1fr; } }
     @media(max-width: 600px) { .stats-grid { grid-template-columns: 1fr; } .model-grid { grid-template-columns: 1fr; } .catalog-header { flex-direction: column; align-items: stretch; } .filter-group { flex-direction: column; align-items: stretch; } .weekly-summary { grid-template-columns: 1fr; } }
 </style>
