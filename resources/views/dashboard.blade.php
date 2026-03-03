@@ -12,6 +12,7 @@
     .stat-value { font-size: 1.75rem; font-weight: 700; color: var(--gold); }
     .stat-sub { font-size: 0.8rem; color: var(--text-muted); margin-top: 0.25rem; }
     .section-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2rem; }
+    .keys-wrapper { overflow-x: auto; }
     .keys-table { width: 100%; border-collapse: collapse; }
     .keys-table th { font-size: 0.75rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; padding: 0.6rem 0; border-bottom: 1px solid var(--border); text-align: left; }
     .keys-table td { padding: 0.75rem 0; border-bottom: 1px solid rgba(30,34,48,0.5); font-size: 0.875rem; }
@@ -313,24 +314,26 @@ response = requests.post(
             <div id="keys-list">
                 @php $keys = auth()->user()->apiKeys()->orderByDesc('created_at')->get(); @endphp
                 @if($keys->count())
-                <table class="keys-table">
-                    <thead><tr><th>Name</th><th>Key</th><th>Created</th><th></th></tr></thead>
-                    <tbody>
-                    @foreach($keys as $key)
-                    <tr>
-                        <td>{{ $key->name }}</td>
-                        <td><span class="key-prefix">{{ $key->prefix }}...****</span></td>
-                        <td class="text-muted">{{ $key->created_at->format('d M Y') }}</td>
-                        <td>
-                            <form method="POST" action="/api-keys/{{ $key->id }}" style="display:inline" onsubmit="return confirm('Delete this key?')">
-                                @csrf @method('DELETE')
-                                <button type="submit" class="btn btn-danger" style="padding:0.25rem 0.6rem;font-size:0.75rem">Delete</button>
-                            </form>
-                        </td>
-                    </tr>
-                    @endforeach
-                    </tbody>
-                </table>
+                <div class="keys-wrapper">
+                    <table class="keys-table">
+                        <thead><tr><th>Name</th><th>Key</th><th>Created</th><th></th></tr></thead>
+                        <tbody>
+                        @foreach($keys as $key)
+                        <tr>
+                            <td>{{ $key->name }}</td>
+                            <td><span class="key-prefix">{{ $key->prefix }}...****</span></td>
+                            <td class="text-muted">{{ $key->created_at->format('d M Y') }}</td>
+                            <td>
+                                <form method="POST" action="/api-keys/{{ $key->id }}" style="display:inline" onsubmit="return confirm('Delete this key?')">
+                                    @csrf @method('DELETE')
+                                    <button type="submit" class="btn btn-danger" style="padding:0.25rem 0.6rem;font-size:0.75rem">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+                </div>
                 @else
                 <div class="empty-state">No API keys yet. Create one to start making requests.</div>
                 @endif
