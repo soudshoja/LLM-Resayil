@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Billing;
 
 use App\Http\Controllers\Controller;
+use App\Models\ApiKeys;
 use App\Services\MyFatoorahService;
 use App\Services\BillingService;
 use Illuminate\Http\Request;
@@ -210,6 +211,115 @@ class PaymentController extends Controller
 
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Failed to initiate trial: ' . $e->getMessage());
+        }
+    }
+
+    /**
+     * Initiate extra API key payment via MyFatoorah.
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function initiateExtraKeyPayment(Request $request)
+    {
+        $validated = $request->validate([
+            'payment_method_id' => 'required|integer',
+        ]);
+
+        $user = Auth::user();
+        $tier = $user->subscription_tier ?? 'starter';
+
+        // Count current active API keys
+        $currentKeyCount = ApiKeys::where('user_id', $user->id)->where('status', 'active')->count();
+        $keyNumber = $currentKeyCount + 1;
+
+        // Get cost for next key
+        $cost = $this->billingService->getAdditionalApiKeyCost($tier, $keyNumber);
+
+        if ($cost === null) {
+            return redirect()
+                ->back()
+                ->with('error', 'Maximum API keys reached for your current plan.');
+        }
+
+        try {
+            $invoice = $this->myfatoorahService->createInvoice([
+                'user_id'            => $user->id,
+                'amount'             => $cost,
+                'customer_name'      => $user->name,
+                'customer_email'     => $user->email,
+                'item_name'          => 'Extra API Key — ' . ucfirst($tier) . ' plan',
+                'type'               => 'extra_key',
+                'callback_url'       => route('billing.extra-key.callback'),
+                'error_callback_url' => route('billing.plans') . '?error=payment_failed',
+                'payment_method_id'  => $validated['payment_method_id'],
+            ]);
+
+            Session::put('pending_extra_key', [
+                'user_id'    => $user->id,
+                'tier'       => $tier,
+                'key_number' => $keyNumber,
+                'cost'       => $cost,
+                'invoice_id' => $invoice['invoice_id'],
+                'created_at' => now()->toDateTimeString(),
+            ]);
+
+            return redirect()->away($invoice['invoice_url']);
+
+        } catch (\Exception $e) {
+            return redirect()
+                ->back()
+                ->with('error', 'Failed to create payment invoice: ' . $e->getMessage());
+        }
+    }
+
+    /**
+     * Handle extra API key payment callback from MyFatoorah.
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function handleExtraKeyCallback(Request $request)
+    {
+        $paymentId = $request->get('paymentId');
+
+        if (!$paymentId) {
+            return redirect()->route('billing.plans')->with('error', 'Invalid callback. No payment ID.');
+        }
+
+        try {
+            $status = $this->myfatoorahService->verifyPayment($paymentId);
+
+            if ($status['payment_status'] !== 'Paid') {
+                return redirect()->route('billing.plans')->with('error', 'Payment failed. Please try again.');
+            }
+
+            $user = Auth::user();
+            $pending = Session::get('pending_extra_key');
+
+            if (!$pending || $pending['user_id'] !== $user->id) {
+                return redirect()->route('billing.plans')->with('error', 'Session mismatch. Please try again.');
+            }
+
+            Session::forget('pending_extra_key');
+
+            // Create a new API key for the user
+            $key = bin2hex(random_bytes(32));
+            $prefix = substr($key, 0, 12);
+
+            ApiKeys::create([
+                'user_id'     => $user->id,
+                'name'        => 'API Key ' . $pending['key_number'],
+                'key'         => $key,
+                'prefix'      => $prefix,
+                'permissions' => ['read', 'write'],
+                'status'      => 'active',
+            ]);
+
+            return redirect('/api-keys')->with('success', 'Extra API key created successfully!');
+
+        } catch (\Exception $e) {
+            return redirect()->route('billing.plans')->with('error', 'Extra key activation failed: ' . $e->getMessage());
         }
     }
 

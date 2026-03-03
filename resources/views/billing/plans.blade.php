@@ -45,6 +45,18 @@
     .topup-buy { display: inline-block; margin-top: 0.75rem; font-size: 0.78rem; font-weight: 600; color: var(--gold); border: 1px solid var(--gold-muted); padding: 0.25rem 0.75rem; border-radius: 6px; background: transparent; cursor: pointer; }
     @media(max-width: 900px) { .trial-grid { grid-template-columns: 1fr; } .plans-grid { grid-template-columns: 1fr; } .topup-grid { grid-template-columns: 1fr; } }
 
+    /* Extra API Key section */
+    .extra-key-section { margin-bottom: 2rem; }
+    .extra-key-section h2 { font-size: 1.1rem; font-weight: 600; margin-bottom: 0.35rem; }
+    .extra-key-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; padding: 1.5rem; display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; flex-wrap: wrap; }
+    .extra-key-card:hover { border-color: var(--gold-muted); }
+    .extra-key-info { flex: 1; }
+    .extra-key-info p { font-size: 0.875rem; color: var(--text-secondary); margin: 0.25rem 0 0; }
+    .extra-key-price { font-size: 1.35rem; font-weight: 700; color: var(--gold); }
+    .extra-key-buy { padding: 0.6rem 1.25rem; border-radius: 8px; font-size: 0.875rem; font-weight: 600; color: var(--gold); border: 1px solid var(--gold-muted); background: transparent; cursor: pointer; white-space: nowrap; transition: all 0.2s; }
+    .extra-key-buy:hover { background: rgba(212,175,55,0.1); }
+    .extra-key-maxed { display: inline-block; font-size: 0.8rem; color: var(--text-muted); border: 1px solid var(--border); border-radius: 6px; padding: 0.35rem 0.75rem; }
+
     /* Payment Method Modal */
     .pm-modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(4px); z-index: 100; align-items: center; justify-content: center; }
     .pm-modal-overlay.active { display: flex; }
@@ -242,6 +254,37 @@
         <p class="text-xs text-muted mt-4">Payments processed securely via KNET / credit card</p>
     </div>
 
+    {{-- Additional API Keys --}}
+    @php
+        $user = auth()->user();
+        $userTier = $user->subscription_tier ?? 'starter';
+        $currentKeyCount = \App\Models\ApiKeys::where('user_id', $user->id)->where('status', 'active')->count();
+        $nextKeyNumber = $currentKeyCount + 1;
+        $nextKeyCost = app(\App\Services\BillingService::class)->getAdditionalApiKeyCost($userTier, $nextKeyNumber);
+        $tierMaxKeys = ['starter' => 3, 'basic' => 3, 'pro' => 4];
+        $maxKeys = $tierMaxKeys[$userTier] ?? 3;
+    @endphp
+    <div class="card extra-key-section">
+        <h2>Additional API Keys</h2>
+        <p class="text-secondary text-sm mb-4">Need more API keys? Purchase extra keys for your {{ ucfirst($userTier) }} plan.</p>
+        <div class="extra-key-card">
+            <div class="extra-key-info">
+                <strong>Your Keys</strong>
+                <p>{{ $currentKeyCount }} of {{ $maxKeys }} keys used on your {{ ucfirst($userTier) }} plan</p>
+            </div>
+            @if($nextKeyCost !== null)
+                <div style="text-align: right;">
+                    <div class="extra-key-price">{{ number_format($nextKeyCost, 3) }} KWD</div>
+                    <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.2rem;">one-time purchase</div>
+                </div>
+                <button type="button" class="extra-key-buy" onclick="openPaymentModal('extra-key')">Buy Extra API Key &mdash; {{ number_format($nextKeyCost, 3) }} KWD</button>
+            @else
+                <span class="extra-key-maxed">Maximum keys reached for your plan</span>
+            @endif
+        </div>
+        <p class="text-xs text-muted mt-4">Payments processed securely via KNET / credit card</p>
+    </div>
+
     {{-- Payment Method Modal --}}
     <div class="pm-modal-overlay" id="pmModal">
         <div class="pm-modal">
@@ -276,6 +319,10 @@
         <input type="hidden" name="credits" id="topupCredits">
         <input type="hidden" name="payment_method_id" id="topupMethodId">
     </form>
+    <form id="formExtraKey" method="POST" action="{{ route('billing.extra-key.pay') }}" style="display:none">
+        @csrf
+        <input type="hidden" name="payment_method_id" id="extraKeyMethodId">
+    </form>
 </main>
 
 @push('scripts')
@@ -291,6 +338,7 @@ function openPaymentModal(type, value) {
         trial: 'Starting your 7-day free trial (0.100 KWD card verification)',
         subscription: 'Starting your monthly subscription',
         topup: 'Purchasing a credit top-up pack',
+        'extra-key': 'Purchasing an additional API key for your plan',
     };
     document.getElementById('pmModalDesc').textContent = descs[type] || '';
     document.getElementById('pmModal').classList.add('active');
@@ -314,6 +362,9 @@ function selectPaymentMethod(methodId) {
         document.getElementById('topupCredits').value = pendingValue;
         document.getElementById('topupMethodId').value = methodId;
         document.getElementById('formTopup').submit();
+    } else if (pendingType === 'extra-key') {
+        document.getElementById('extraKeyMethodId').value = methodId;
+        document.getElementById('formExtraKey').submit();
     }
     closePaymentModal();
 }

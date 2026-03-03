@@ -50,6 +50,31 @@
     .model-name { font-weight: 600; font-size: 0.9rem; margin-bottom: 0.25rem; }
     .model-meta { font-size: 0.75rem; color: var(--text-muted); }
     .divider { border: none; border-top: 1px solid var(--border); margin: 0; }
+
+    /* ── Model List (ml-) premium redesign ── */
+    .ml-category-group { margin-bottom: 2.75rem; }
+    .ml-category-header { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.5rem; }
+    .ml-category-diamond { color: var(--gold); font-size: 0.65rem; flex-shrink: 0; line-height: 1; }
+    .ml-category-label { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); white-space: nowrap; }
+    .ml-category-line { flex: 1; height: 1px; background: linear-gradient(to right, rgba(212,175,55,0.4), transparent); }
+    .ml-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+    .ml-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px; padding: 1.2rem 1.35rem; display: flex; align-items: flex-start; gap: 1rem; transition: border-color 0.22s, box-shadow 0.22s; cursor: default; }
+    .ml-card:hover { border-color: rgba(212,175,55,0.5); box-shadow: 0 0 0 1px rgba(212,175,55,0.13), 0 8px 28px rgba(0,0,0,0.38); }
+    .ml-avatar { width: 42px; height: 42px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 0.82rem; font-weight: 800; color: #fff; flex-shrink: 0; letter-spacing: -0.01em; font-family: 'Inter', sans-serif; }
+    .ml-av-meta    { background: linear-gradient(140deg, #0866FF 0%, #3b8fff 100%); }
+    .ml-av-mistral { background: linear-gradient(140deg, #e56000 0%, #ff8c2e 100%); }
+    .ml-av-qwen    { background: linear-gradient(140deg, #e05c00 0%, #ff8533 100%); }
+    .ml-av-deepseek{ background: linear-gradient(140deg, #3a58e8 0%, #6f88ff 100%); }
+    .ml-body { flex: 1; min-width: 0; }
+    .ml-model-name { font-size: 0.875rem; font-weight: 700; color: #dde2ea; line-height: 1.3; margin-bottom: 0.2rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .ml-company { font-size: 0.7rem; color: var(--text-muted); margin-bottom: 0.4rem; line-height: 1; }
+    .ml-tagline { font-size: 0.76rem; color: var(--text-secondary); line-height: 1.55; }
+    .ml-footer { text-align: center; margin-top: 2.5rem; padding-top: 2rem; border-top: 1px solid var(--border); }
+    .ml-footer p { color: var(--text-muted); font-size: 0.875rem; }
+    .ml-footer a { color: var(--gold); text-decoration: none; font-weight: 600; }
+    .ml-footer a:hover { text-decoration: underline; }
+    @media(max-width: 900px) { .ml-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media(max-width: 560px) { .ml-grid { grid-template-columns: 1fr; } }
     .cta-section { text-align: center; padding: 5rem 2rem; background: linear-gradient(135deg, rgba(212,175,55,0.05) 0%, transparent 100%); border-top: 1px solid var(--border); }
     @media(max-width: 768px) { .hero h1 { font-size: 2rem; } .steps, .pricing-grid { grid-template-columns: 1fr; } .trial-banner { flex-direction: column; gap: 0.75rem; } }
 </style>
@@ -164,7 +189,7 @@
         <div class="addon-row"><span>500 extra credits</span><span>5 KWD</span></div>
         <div class="addon-row"><span>1,100 extra credits</span><span>10 KWD <span style="color:#28a745;font-size:0.8em;font-weight:600">(+10% bonus)</span></span></div>
         <div class="addon-row"><span>3,000 extra credits</span><span>25 KWD <span style="color:#28a745;font-size:0.8em;font-weight:600">(+20% bonus)</span></span></div>
-        <div class="addon-row"><span>Cloud model cost</span><span>2× credits per token (local = 1×)</span></div>
+        <div class="addon-row"><span>Credits per 1k tokens</span><span>0.5–3 (local) · 1–3.5 (cloud)</span></div>
     </div>
 </section>
 
@@ -174,33 +199,122 @@
 <section class="section" id="models">
     <div class="section-title">
         <h2>Available Models</h2>
-        <p>Local GPU-accelerated models with automatic cloud failover</p>
+        <p>45+ models from the world's leading AI labs. Access all from a single API.</p>
     </div>
-    <div class="models-grid">
-        <div class="model-card">
-            <div class="model-name">llama3.2:3b</div>
-            <div class="model-meta">Small · Local GPU</div>
+
+    <!-- General Chat -->
+    <div class="ml-category-group">
+        <div class="ml-category-header">
+            <span class="ml-category-diamond">&#9670;</span>
+            <span class="ml-category-label">General Chat</span>
+            <span class="ml-category-line"></span>
         </div>
-        <div class="model-card">
-            <div class="model-name">qwen2.5:7b</div>
-            <div class="model-meta">Medium · Local GPU</div>
+        <div class="ml-grid">
+
+            <div class="ml-card">
+                <div class="ml-avatar ml-av-meta">M</div>
+                <div class="ml-body">
+                    <div class="ml-model-name">Llama 3.2 3B</div>
+                    <div class="ml-company">Meta &middot; 3B</div>
+                    <div class="ml-tagline">Lightweight and blazing fast for everyday tasks</div>
+                </div>
+            </div>
+
+            <div class="ml-card">
+                <div class="ml-avatar ml-av-mistral">Mi</div>
+                <div class="ml-body">
+                    <div class="ml-model-name">Mistral Small 3.2 24B</div>
+                    <div class="ml-company">Mistral AI &middot; 24B</div>
+                    <div class="ml-tagline">Balanced quality and speed for complex chat</div>
+                </div>
+            </div>
+
         </div>
-        <div class="model-card">
-            <div class="model-name">mistral:7b</div>
-            <div class="model-meta">Medium · Local GPU</div>
+    </div>
+
+    <!-- Code -->
+    <div class="ml-category-group">
+        <div class="ml-category-header">
+            <span class="ml-category-diamond">&#9670;</span>
+            <span class="ml-category-label">Code</span>
+            <span class="ml-category-line"></span>
         </div>
-        <div class="model-card">
-            <div class="model-name">llama3.1:70b</div>
-            <div class="model-meta">Large · Cloud (Pro+)</div>
+        <div class="ml-grid">
+
+            <div class="ml-card">
+                <div class="ml-avatar ml-av-qwen">Q</div>
+                <div class="ml-body">
+                    <div class="ml-model-name">Qwen 2.5 Coder 14B</div>
+                    <div class="ml-company">Alibaba / Qwen &middot; 14B</div>
+                    <div class="ml-tagline">Code specialist with deep multi-language support</div>
+                </div>
+            </div>
+
+            <div class="ml-card">
+                <div class="ml-avatar ml-av-deepseek">D</div>
+                <div class="ml-body">
+                    <div class="ml-model-name">DeepSeek Coder 6.7B</div>
+                    <div class="ml-company">DeepSeek &middot; 6.7B</div>
+                    <div class="ml-tagline">Fast, accurate code generation and completion</div>
+                </div>
+            </div>
+
         </div>
-        <div class="model-card">
-            <div class="model-name">qwen2.5:72b</div>
-            <div class="model-meta">Large · Cloud (Pro+)</div>
+    </div>
+
+    <!-- Vision & Multimodal -->
+    <div class="ml-category-group">
+        <div class="ml-category-header">
+            <span class="ml-category-diamond">&#9670;</span>
+            <span class="ml-category-label">Vision &amp; Multimodal</span>
+            <span class="ml-category-line"></span>
         </div>
-        <div class="model-card">
-            <div class="model-name">deepseek-r1:70b</div>
-            <div class="model-meta">Large · Cloud (Pro+)</div>
+        <div class="ml-grid">
+
+            <div class="ml-card">
+                <div class="ml-avatar ml-av-qwen">Q</div>
+                <div class="ml-body">
+                    <div class="ml-model-name">Qwen3-VL 32B</div>
+                    <div class="ml-company">Alibaba / Qwen &middot; 32B</div>
+                    <div class="ml-tagline">Understand images and documents alongside text</div>
+                </div>
+            </div>
+
         </div>
+    </div>
+
+    <!-- Frontier -->
+    <div class="ml-category-group">
+        <div class="ml-category-header">
+            <span class="ml-category-diamond">&#9670;</span>
+            <span class="ml-category-label">Frontier</span>
+            <span class="ml-category-line"></span>
+        </div>
+        <div class="ml-grid">
+
+            <div class="ml-card">
+                <div class="ml-avatar ml-av-deepseek">D</div>
+                <div class="ml-body">
+                    <div class="ml-model-name">DeepSeek V3.1 671B</div>
+                    <div class="ml-company">DeepSeek &middot; 671B</div>
+                    <div class="ml-tagline">Frontier-class reasoning at scale</div>
+                </div>
+            </div>
+
+            <div class="ml-card">
+                <div class="ml-avatar ml-av-qwen">Q</div>
+                <div class="ml-body">
+                    <div class="ml-model-name">Qwen 3.5 397B</div>
+                    <div class="ml-company">Alibaba / Qwen &middot; 397B MoE</div>
+                    <div class="ml-tagline">The largest model available on the platform</div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="ml-footer">
+        <p>Showing a curated selection &mdash; <a href="/dashboard">explore all 45+ models</a> after signing in.</p>
     </div>
 </section>
 

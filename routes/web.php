@@ -69,6 +69,8 @@ Route::middleware('auth')->group(function () {
     // Payment initiation
     Route::post('/billing/payment/subscription', [PaymentController::class, 'initiateSubscriptionPayment']);
     Route::post('/billing/payment/topup', [PaymentController::class, 'initiateTopupPayment']);
+    Route::post('/billing/payment/extra-key', [PaymentController::class, 'initiateExtraKeyPayment'])->name('billing.extra-key.pay');
+    Route::get('/billing/extra-key/callback', [PaymentController::class, 'handleExtraKeyCallback'])->name('billing.extra-key.callback');
 
 });
 
