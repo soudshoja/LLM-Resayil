@@ -82,13 +82,13 @@ class RegisteredUserController extends Controller
         }
 
         $user = User::create([
-            'phone'             => $request->phone,
-            'email'             => $request->email,
-            'name'              => $request->name,
-            'password'          => Hash::make($request->password),
-            'credits'           => 0,
-            'subscription_tier' => 'basic',
-            'phone_verified_at' => now(),
+            'phone'               => $request->phone,
+            'email'               => $request->email,
+            'name'                => $request->name,
+            'password'            => Hash::make($request->password),
+            'credits'             => 1000,
+            'subscription_tier'   => 'basic',
+            'phone_verified_at'   => now(),
         ]);
 
         Auth::login($user);
