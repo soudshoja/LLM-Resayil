@@ -1,0 +1,25 @@
+# LLM Resayil — AI API Platform
+
+> OpenAI-compatible LLM API with 45+ AI models. Pay per token. Local GPU inference + cloud proxies. KNET payments.
+
+## What is LLM Resayil?
+LLM Resayil is a pay-per-token AI API platform providing access to 45+ large language models via a fully OpenAI-compatible REST API. Developers can switch to LLM Resayil by simply changing their base URL to https://llm.resayil.io/api/v1.
+
+## Models Available
+- Local models (1 credit/token): Llama 3.2 3B, Llama 3.1 8B, Qwen 2.5 7B, GLM-4 7B, DeepSeek 7B, and more
+- Cloud proxy models (2 credits/token): DeepSeek V3.1 671B, Qwen 3.5 397B, Llama 3.3 70B, and 27 more
+
+## Pricing
+- 5,000 credits: 2 KWD
+- 15,000 credits: 5 KWD
+- 50,000 credits: 15 KWD
+- Payment: KNET (Kuwait debit/credit) via MyFatoorah
+
+## API Compatibility
+Fully compatible with OpenAI's Chat Completions API. Works with any OpenAI SDK — Python, JavaScript, Go, etc.
+
+## Documentation
+Full API docs: https://llm.resayil.io/docs
+
+## Contact
+https://llm.resayil.io/contact

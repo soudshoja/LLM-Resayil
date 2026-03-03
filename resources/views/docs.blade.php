@@ -10,6 +10,22 @@
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/monokai-sublime.min.css">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type":"Question","name":"What models are available on LLM Resayil?","acceptedAnswer":{"@type":"Answer","text":"LLM Resayil provides access to 45+ AI models including Llama 3.2, DeepSeek V3.1 671B, Qwen 3.5 397B, GLM-4 Flash, and more."}},
+    {"@type":"Question","name":"Is LLM Resayil compatible with OpenAI's API?","acceptedAnswer":{"@type":"Answer","text":"Yes. Change your base URL to https://llm.resayil.io/api/v1 and use your LLM Resayil API key — no other code changes needed."}},
+    {"@type":"Question","name":"How do credits work?","acceptedAnswer":{"@type":"Answer","text":"Local models cost 1 credit/token; cloud models cost 2 credits/token. Top-ups: 5,000 credits for 2 KWD, 15,000 for 5 KWD, 50,000 for 15 KWD."}},
+    {"@type":"Question","name":"What payment methods are accepted?","acceptedAnswer":{"@type":"Answer","text":"KNET (Kuwait debit/credit cards) via MyFatoorah payment gateway."}},
+    {"@type":"Question","name":"Can I use LLM Resayil for commercial projects?","acceptedAnswer":{"@type":"Answer","text":"Yes. API access is pay-per-token with no monthly minimums or commercial restrictions."}},
+    {"@type":"Question","name":"What are the rate limits per tier?","acceptedAnswer":{"@type":"Answer","text":"Free: 10 req/min. Standard: 30 req/min. Premium: 60 req/min."}},
+    {"@type":"Question","name":"How do I get started with the API?","acceptedAnswer":{"@type":"Answer","text":"Register at llm.resayil.io, create an API key in your dashboard, add credits, then set base URL to https://llm.resayil.io/api/v1."}},
+    {"@type":"Question","name":"Is there a free trial?","acceptedAnswer":{"@type":"Answer","text":"New accounts receive a small credit allocation on signup. No credit card required to register."}}
+  ]
+}
+    </script>
     <style>
         :root {
             --bg-primary: #0f1115;
@@ -647,6 +663,25 @@
                 border-bottom: 2px solid var(--gold);
             }
         }
+
+        /* Code language bar (auto-injected by JS) */
+        .code-lang-bar {
+            background: rgba(0, 0, 0, 0.4);
+            color: var(--gold);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.72rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            padding: 0.3rem 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        /* FAQ Section */
+        .faq-list { display: flex; flex-direction: column; gap: 0.75rem; }
+        .faq-item { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 1.25rem 1.5rem; }
+        .faq-q { color: var(--gold); font-size: 1rem; font-weight: 600; margin: 0 0 0.5rem; }
+        .faq-a { color: var(--text-muted); font-size: 0.9rem; line-height: 1.6; margin: 0; }
     </style>
 </head>
 <body>
@@ -679,13 +714,14 @@
                 <div class="sidebar-reference-label">Reference</div>
                 <ul>
                     <li><a href="#getting-started" class="active">Getting Started</a></li>
-                    <li><a href="#authentication">Authentication</a></li>
+                    <li><a href="#authentication">How to Authenticate</a></li>
                     <li><a href="#api-reference">API Reference</a></li>
-                    <li><a href="#models">Models</a></li>
+                    <li><a href="#models">Available Models</a></li>
                     <li><a href="#billing">Billing & Credits</a></li>
                     <li><a href="#rate-limits">Rate Limits</a></li>
                     <li><a href="#errors">Error Codes</a></li>
                     <li><a href="#examples">Code Examples</a></li>
+                    <li><a href="#faq">FAQ</a></li>
                 </ul>
             </nav>
         </aside>
@@ -725,7 +761,7 @@
 
             <!-- Authentication -->
             <section id="authentication">
-                <h2>Authentication</h2>
+                <h2>How do I authenticate API requests?</h2>
                 <p>Every API request requires authentication using your API key in the <code>Authorization</code> header.</p>
 
                 <h3>Header Format</h3>
@@ -782,7 +818,7 @@
 
             <!-- API Reference -->
             <section id="api-reference">
-                <h2>API Reference</h2>
+                <h2>How do I send a chat completion request?</h2>
                 <p>The base URL for all API requests is:</p>
 
                 <div class="callout">
@@ -920,7 +956,7 @@
 
             <!-- Models -->
             <section id="models">
-                <h2>Models</h2>
+                <h2>Which AI models are available?</h2>
                 <p>Access 45+ LLM models spanning local open-source and cloud providers. Fetch available models using:</p>
                 <div class="code-block-wrapper">
                     <div class="code-block-header">
@@ -1077,7 +1113,7 @@
 
             <!-- Rate Limits -->
             <section id="rate-limits">
-                <h2>Rate Limits</h2>
+                <h2>What are the API rate limits?</h2>
                 <p>API requests are rate-limited on a per-key basis using a rolling 1-minute window.</p>
 
                 <h3>Rate Limits by Plan</h3>
@@ -1133,7 +1169,7 @@
 
             <!-- Error Codes -->
             <section id="errors">
-                <h2>Error Codes</h2>
+                <h2>What errors can the API return?</h2>
                 <p>All error responses follow this format:</p>
                 <div class="code-block-wrapper">
                     <div class="code-block-header">
@@ -1357,6 +1393,46 @@ console.log(completion.choices[0].message.content);</code></pre>
                 </div>
             </section>
 
+            <!-- FAQ -->
+            <section id="faq" class="doc-section">
+                <h2>Frequently Asked Questions</h2>
+
+                <div class="faq-list">
+                    <div class="faq-item">
+                        <h3 class="faq-q">What models are available on LLM Resayil?</h3>
+                        <p class="faq-a">LLM Resayil provides access to 45+ AI models including Llama 3.2, DeepSeek V3.1 671B, Qwen 3.5 397B, GLM-4 Flash, and more. Local models run on our GPU server; cloud proxy models are routed through ollama.com.</p>
+                    </div>
+                    <div class="faq-item">
+                        <h3 class="faq-q">Is LLM Resayil compatible with OpenAI's API?</h3>
+                        <p class="faq-a">Yes. LLM Resayil is fully OpenAI-compatible. Change your base URL to <code>https://llm.resayil.io/api/v1</code> and use your LLM Resayil API key — no other code changes needed.</p>
+                    </div>
+                    <div class="faq-item">
+                        <h3 class="faq-q">How do credits work?</h3>
+                        <p class="faq-a">Credits are consumed per token. Local models cost 1 credit/token; cloud models cost 2 credits/token. You can purchase top-ups: 5,000 credits for 2 KWD, 15,000 for 5 KWD, or 50,000 for 15 KWD.</p>
+                    </div>
+                    <div class="faq-item">
+                        <h3 class="faq-q">What payment methods are accepted?</h3>
+                        <p class="faq-a">We accept KNET (Kuwait debit/credit cards) via MyFatoorah payment gateway. All payments are processed securely.</p>
+                    </div>
+                    <div class="faq-item">
+                        <h3 class="faq-q">Can I use LLM Resayil for commercial projects?</h3>
+                        <p class="faq-a">Yes. There are no restrictions on commercial use. API access is pay-per-token with no monthly minimums.</p>
+                    </div>
+                    <div class="faq-item">
+                        <h3 class="faq-q">What are the rate limits per tier?</h3>
+                        <p class="faq-a">Free tier: 10 requests/minute. Standard tier: 30 requests/minute. Premium tier: 60 requests/minute. Rate limits reset every minute.</p>
+                    </div>
+                    <div class="faq-item">
+                        <h3 class="faq-q">How do I get started with the API?</h3>
+                        <p class="faq-a">Register at llm.resayil.io, go to your dashboard to create an API key, add credits via KNET, then set your base URL to <code>https://llm.resayil.io/api/v1</code>.</p>
+                    </div>
+                    <div class="faq-item">
+                        <h3 class="faq-q">Is there a free trial?</h3>
+                        <p class="faq-a">New accounts receive a small credit allocation on signup to test the API. No credit card required to register.</p>
+                    </div>
+                </div>
+            </section>
+
             <!-- Footer -->
             <footer>
                 <p>LLM Resayil API Docs · v1 · <a href="https://llm.resayil.io">llm.resayil.io</a></p>
@@ -1369,6 +1445,15 @@ console.log(completion.choices[0].message.content);</code></pre>
     <script>
         // 1. Initialize highlight.js
         hljs.highlightAll();
+
+        // 1b. Inject language header bar above bare <pre><code> blocks
+        document.querySelectorAll('pre code[class*="language-"]').forEach(el => {
+            const lang = (el.className.match(/language-(\w+)/) || [])[1] || 'code';
+            const bar = document.createElement('div');
+            bar.className = 'code-lang-bar';
+            bar.textContent = lang;
+            el.closest('pre').prepend(bar);
+        });
 
         // 2. Add code block headers with language detection
         document.querySelectorAll('.code-block-wrapper').forEach(wrapper => {

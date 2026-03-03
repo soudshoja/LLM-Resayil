@@ -85,12 +85,21 @@
     .btn-copy:hover { border-color: var(--gold); color: var(--gold); }
     .btn-copy.copied { background: var(--success); border-color: var(--success); color: white; }
     @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-    .weekly-summary { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 1.5rem; }
-    .weekly-card { background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 10px; padding: 1rem 1.25rem; }
-    .weekly-label { font-size: 0.7rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.4rem; }
-    .weekly-value { font-size: 1.5rem; font-weight: 700; color: var(--gold); }
+    .weekly-summary, .usage-summary-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 1.5rem; }
+    .weekly-card, .stat-mini-card { background: var(--bg-card, #13161d); border: 1px solid var(--border, #1e2330); border-radius: 8px; padding: 1rem 1.25rem; }
+    .weekly-label, .stat-mini-label { font-size: 0.75rem; font-weight: 600; color: var(--text-muted, #888); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.4rem; }
+    .weekly-value, .stat-mini-value { font-size: 1.5rem; font-weight: 700; color: var(--gold, #d4af37); }
     .weekly-sub { font-size: 0.75rem; color: var(--text-muted); margin-top: 0.2rem; }
+    .multiplier-badge { display: inline-block; padding: 0.15rem 0.5rem; border-radius: 4px; font-size: 0.8rem; font-weight: 600; }
+    .multiplier-badge.cloud { background: rgba(212,175,55,0.15); color: var(--gold, #d4af37); }
+    .multiplier-badge.local { background: rgba(99,202,183,0.12); color: #63cab7; }
+    .num-cell { text-align: right; font-family: monospace; }
+    .total-tokens { font-weight: 600; }
+    .credits-cell { color: var(--gold, #d4af37); font-weight: 600; font-family: monospace; }
+    .time-cell { color: var(--text-muted, #888); font-size: 0.82rem; white-space: nowrap; }
+    .model-cell { font-family: monospace; font-size: 0.8rem; }
     @media(max-width: 900px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } .section-grid { grid-template-columns: 1fr; } .detail-grid { grid-template-columns: 1fr; } }
+    @media(max-width: 768px) { .usage-summary-cards { grid-template-columns: 1fr; } }
     @media(max-width: 600px) { .stats-grid { grid-template-columns: 1fr; } .model-grid { grid-template-columns: 1fr; } .catalog-header { flex-direction: column; align-items: stretch; } .filter-group { flex-direction: column; align-items: stretch; } .weekly-summary { grid-template-columns: 1fr; } }
 </style>
 @endpush
@@ -396,20 +405,21 @@ response = requests.post(
         $avgCredits = $weekCount > 0 ? round($weekCredits / $weekCount, 1) : 0;
         $allModels = config('models.models', []);
     @endphp
-    <div class="weekly-summary">
-        <div class="weekly-card">
-            <div class="weekly-label">Tokens This Week</div>
-            <div class="weekly-value">{{ number_format($weekTokens) }}</div>
+    <!-- Usage Summary Cards -->
+    <div class="usage-summary-cards">
+        <div class="stat-mini-card">
+            <div class="stat-mini-label">Tokens This Week</div>
+            <div class="stat-mini-value">{{ number_format($weekTokens) }}</div>
             <div class="weekly-sub">{{ $weekCount }} {{ $weekCount === 1 ? 'request' : 'requests' }}</div>
         </div>
-        <div class="weekly-card">
-            <div class="weekly-label">Credits This Week</div>
-            <div class="weekly-value">{{ number_format($weekCredits) }}</div>
+        <div class="stat-mini-card">
+            <div class="stat-mini-label">Credits This Week</div>
+            <div class="stat-mini-value">{{ number_format($weekCredits) }}</div>
             <div class="weekly-sub">Last 7 days</div>
         </div>
-        <div class="weekly-card">
-            <div class="weekly-label">Avg Credits / Request</div>
-            <div class="weekly-value">{{ $avgCredits }}</div>
+        <div class="stat-mini-card">
+            <div class="stat-mini-label">Avg Credits / Request</div>
+            <div class="stat-mini-value">{{ $avgCredits }}</div>
             <div class="weekly-sub">Weekly average</div>
         </div>
     </div>
@@ -417,25 +427,35 @@ response = requests.post(
         <h2 style="font-size:1rem;font-weight:600;margin-bottom:1rem">Recent API Usage</h2>
         @if($logs->count())
         <div style="overflow-x:auto">
-        <table class="keys-table">
-            <thead><tr><th>Model</th><th>Type</th><th>Tokens</th><th>Multiplier</th><th>Credits</th><th>Time</th></tr></thead>
+        <table class="keys-table usage-table">
+            <thead>
+                <tr>
+                    <th>Model</th>
+                    <th>Type</th>
+                    <th style="text-align:right">Tokens</th>
+                    <th style="text-align:center">Multiplier</th>
+                    <th style="text-align:right">Credits</th>
+                    <th>Time</th>
+                </tr>
+            </thead>
             <tbody>
             @foreach($logs as $log)
             @php
                 $mConf = collect($allModels)->firstWhere('id', $log->model) ?? collect($allModels)->firstWhere('ollama_name', $log->model);
                 $isCloud = $mConf ? ($mConf['type'] ?? 'local') === 'cloud' : (str_contains($log->model, ':cloud') || str_contains($log->model, '-cloud'));
-                $mult = $isCloud ? '2×' : '1×';
+                $multLabel = $isCloud ? '2×' : '1×';
+                $multClass = $isCloud ? 'cloud' : 'local';
                 $typeClass = $isCloud ? 'model-badge-cloud' : 'model-badge-local';
                 $typeLabel = $isCloud ? 'Cloud' : 'Local';
                 $cleanName = preg_replace('/(-cloud|:cloud)$/', '', $log->model);
             @endphp
             <tr>
-                <td style="font-family:monospace;font-size:0.8rem">{{ $cleanName }}</td>
+                <td class="model-cell">{{ $cleanName }}</td>
                 <td><span class="model-badge {{ $typeClass }}">{{ $typeLabel }}</span></td>
-                <td>{{ number_format($log->tokens_used) }}</td>
-                <td style="font-family:monospace;color:var(--text-secondary)">{{ $mult }}</td>
-                <td class="text-gold">{{ number_format($log->credits_deducted) }}</td>
-                <td class="text-muted">{{ $log->created_at->diffForHumans() }}</td>
+                <td class="num-cell total-tokens">{{ number_format($log->tokens_used) }}</td>
+                <td style="text-align:center"><span class="multiplier-badge {{ $multClass }}">{{ $multLabel }}</span></td>
+                <td class="num-cell credits-cell">{{ number_format($log->credits_deducted) }}</td>
+                <td class="time-cell">{{ $log->created_at->diffForHumans() }}</td>
             </tr>
             @endforeach
             </tbody>

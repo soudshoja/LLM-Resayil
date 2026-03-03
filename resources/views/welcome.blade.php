@@ -3,6 +3,41 @@
 @section('title', __('welcome.title'))
 
 @push('styles')
+{{-- JSON-LD Structured Data --}}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "LLM Resayil",
+  "url": "https://llm.resayil.io",
+  "description": "OpenAI-compatible LLM API with 45+ models. Pay per token. KNET payments accepted.",
+  "logo": "https://llm.resayil.io/favicon.ico",
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "contactType": "customer support",
+    "url": "https://llm.resayil.io/contact"
+  },
+  "sameAs": []
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "LLM Resayil API",
+  "applicationCategory": "DeveloperApplication",
+  "operatingSystem": "Any",
+  "description": "OpenAI-compatible REST API providing access to 45+ AI models including Llama, DeepSeek, Qwen. Local GPU inference and cloud proxies. Pay-per-token pricing. KNET payments.",
+  "url": "https://llm.resayil.io",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "KWD",
+    "description": "Pay per token. Start with 5,000 credits for 2 KWD."
+  },
+  "featureList": ["OpenAI-compatible API", "45+ AI models", "Local GPU inference", "KNET payments", "Pay per token"]
+}
+</script>
 <style>
     body { background: var(--bg-secondary); }
     .hero { text-align: center; padding: 6rem 2rem 4rem; position: relative; overflow: hidden; }
@@ -16,30 +51,62 @@
     .hero-subcta a { color: var(--gold); text-decoration: none; transition: all 0.2s; }
     .hero-subcta a:hover { color: var(--gold-light); }
     .hero-subcta span { opacity: 0.4; }
-    /* ── Hero Slider ── */
-    .hero-slider-section { padding: 3rem 2rem; max-width: 1200px; margin: 0 auto; }
-    .hero-slider-wrapper { position: relative; background: var(--bg-card, #13161d); border: 1px solid var(--border); border-radius: 16px; padding: 2rem; overflow: hidden; }
-    .hero-slider-container { position: relative; width: 100%; height: 280px; overflow: hidden; }
-    .hero-slider { display: flex; position: relative; width: 100%; height: 100%; }
-    .hero-slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 2rem; opacity: 0; transition: opacity 0.5s ease; }
-    .hero-slide.active { opacity: 1; }
-    .hero-slide-emoji { font-size: 3rem; margin-bottom: 1rem; }
-    .hero-slide-title { font-size: 1.5rem; font-weight: 700; margin-bottom: 0.75rem; color: var(--gold, #d4af37); }
-    .hero-slide-desc { font-size: 1rem; color: var(--text-secondary); max-width: 500px; }
-    .hero-slider-controls { display: flex; align-items: center; justify-content: center; gap: 2rem; margin-top: 2rem; }
-    .hero-slider-dots { display: flex; gap: 0.5rem; }
-    .hero-slider-dot { width: 10px; height: 10px; border-radius: 50%; background: rgba(212,175,55,0.2); cursor: pointer; transition: all 0.3s; }
-    .hero-slider-dot.active { background: var(--gold, #d4af37); width: 28px; border-radius: 5px; }
-    .hero-slider-btn { width: 40px; height: 40px; border-radius: 50%; background: transparent; border: 2px solid var(--gold, #d4af37); color: var(--gold, #d4af37); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
-    .hero-slider-btn:hover { background: rgba(212,175,55,0.1); }
+    /* ── Hero Model Carousel ── */
+    .hmc-section { padding: 4rem 2rem 3rem; max-width: 1200px; margin: 0 auto; }
+    .hmc-header { text-align: center; margin-bottom: 2.75rem; }
+    .hmc-header h2 { font-size: 1.75rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.6rem; letter-spacing: -0.01em; }
+    .hmc-header h2 em { font-style: normal; background: linear-gradient(135deg, var(--gold), var(--gold-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .hmc-header-underline { width: 56px; height: 3px; background: linear-gradient(90deg, var(--gold), var(--gold-light)); border-radius: 2px; margin: 0 auto; }
+    /* Outer track */
+    .hmc-track-outer { position: relative; overflow: hidden; }
+    /* Slides container — no gap so translateX(-N*100%) aligns exactly */
+    .hmc-track { display: flex; gap: 0; transition: transform 0.55s cubic-bezier(0.4,0,0.2,1); will-change: transform; }
+    @media (prefers-reduced-motion: reduce) { .hmc-track { transition: none; } }
+    /* Individual slide — glassmorphism card */
+    .hmc-slide { flex: 0 0 100%; min-width: 0; padding: 0 0.25rem; }
+    .hmc-card { background: linear-gradient(145deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.01) 100%); border: 1px solid rgba(212,175,55,0.22); border-radius: 20px; padding: 2.5rem 2.75rem; display: flex; align-items: center; gap: 2.75rem; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); box-shadow: 0 8px 40px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.06); position: relative; overflow: hidden; transition: border-color 0.3s; }
+    .hmc-card::before { content: ''; position: absolute; top: 0; right: 0; width: 280px; height: 280px; background: radial-gradient(circle at 100% 0%, rgba(212,175,55,0.07) 0%, transparent 65%); pointer-events: none; }
+    .hmc-card::after { content: ''; position: absolute; bottom: 0; left: 0; width: 200px; height: 200px; background: radial-gradient(circle at 0% 100%, rgba(212,175,55,0.04) 0%, transparent 65%); pointer-events: none; }
+    /* Icon panel */
+    .hmc-icon-panel { flex-shrink: 0; width: 112px; height: 112px; border-radius: 18px; background: linear-gradient(140deg, rgba(212,175,55,0.12) 0%, rgba(212,175,55,0.04) 100%); border: 1px solid rgba(212,175,55,0.28); display: flex; align-items: center; justify-content: center; position: relative; z-index: 1; }
+    .hmc-icon-panel svg { width: 52px; height: 52px; color: var(--gold); filter: drop-shadow(0 0 14px rgba(212,175,55,0.45)); }
+    /* Text body */
+    .hmc-body { flex: 1; min-width: 0; position: relative; z-index: 1; }
+    .hmc-badges { display: flex; gap: 0.5rem; align-items: center; margin-bottom: 0.85rem; flex-wrap: wrap; }
+    .hmc-badge { display: inline-flex; align-items: center; padding: 0.22rem 0.7rem; border-radius: 20px; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+    .hmc-badge-local { background: rgba(5,150,105,0.15); color: #6ee7b7; border: 1px solid rgba(5,150,105,0.35); }
+    .hmc-badge-cloud { background: rgba(99,102,241,0.15); color: #a5b4fc; border: 1px solid rgba(99,102,241,0.35); }
+    .hmc-badge-api { background: rgba(59,130,246,0.15); color: #93c5fd; border: 1px solid rgba(59,130,246,0.35); }
+    .hmc-badge-all { background: rgba(212,175,55,0.13); color: var(--gold); border: 1px solid rgba(212,175,55,0.32); }
+    .hmc-credit-pill { display: inline-flex; align-items: center; gap: 0.35rem; background: rgba(212,175,55,0.09); border: 1px solid rgba(212,175,55,0.2); border-radius: 20px; padding: 0.22rem 0.75rem; font-size: 0.7rem; font-weight: 600; color: var(--gold-light); }
+    .hmc-credit-pill svg { width: 11px; height: 11px; opacity: 0.8; }
+    .hmc-model-name { font-size: 1.85rem; font-weight: 800; color: #f0f4ff; line-height: 1.2; margin-bottom: 0.6rem; letter-spacing: -0.02em; }
+    .hmc-stat { font-size: 1rem; font-weight: 600; color: var(--gold); margin-bottom: 0.5rem; }
+    .hmc-desc { font-size: 0.935rem; color: var(--text-secondary); line-height: 1.65; max-width: 520px; }
+    /* Controls bar */
+    .hmc-controls { display: flex; align-items: center; justify-content: center; gap: 1.5rem; margin-top: 2rem; }
+    .hmc-arrow { width: 44px; height: 44px; border-radius: 50%; background: transparent; border: 1.5px solid rgba(212,175,55,0.4); color: var(--gold); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s, border-color 0.2s, box-shadow 0.2s; flex-shrink: 0; }
+    .hmc-arrow:hover { background: rgba(212,175,55,0.12); border-color: var(--gold); box-shadow: 0 0 18px rgba(212,175,55,0.2); }
+    .hmc-arrow svg { width: 18px; height: 18px; }
+    .hmc-dots { display: flex; gap: 0.5rem; align-items: center; }
+    .hmc-dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(212,175,55,0.2); cursor: pointer; transition: all 0.3s cubic-bezier(0.4,0,0.2,1); border: none; padding: 0; }
+    .hmc-dot.active { background: var(--gold); width: 26px; border-radius: 4px; }
+    /* Progress bar */
+    .hmc-progress { position: absolute; bottom: 0; left: 0; height: 2px; background: linear-gradient(90deg, var(--gold), var(--gold-light)); border-radius: 1px; transition: width 0.1s linear; }
+    /* Responsive */
     @media(max-width: 768px) {
-        .hero-slider-wrapper { padding: 1.5rem; }
-        .hero-slider-container { height: 200px; }
-        .hero-slide { padding: 1.5rem; }
-        .hero-slide-emoji { font-size: 2rem; }
-        .hero-slide-title { font-size: 1.25rem; }
-        .hero-slide-desc { font-size: 0.9rem; }
-        .hero-slider-controls { gap: 1.5rem; }
+        .hmc-card { flex-direction: column; align-items: flex-start; gap: 1.5rem; padding: 1.75rem; }
+        .hmc-icon-panel { width: 72px; height: 72px; border-radius: 14px; }
+        .hmc-icon-panel svg { width: 34px; height: 34px; }
+        .hmc-model-name { font-size: 1.35rem; }
+        .hmc-stat { font-size: 0.9rem; }
+        .hmc-desc { font-size: 0.875rem; }
+        .hmc-header h2 { font-size: 1.35rem; }
+    }
+    @media(max-width: 480px) {
+        .hmc-section { padding: 2.5rem 1rem 2rem; }
+        .hmc-card { padding: 1.25rem; }
+        .hmc-model-name { font-size: 1.15rem; }
     }
     .section { padding: 4rem 2rem; max-width: 1200px; margin: 0 auto; }
     .section-title { text-align: center; margin-bottom: 3rem; }
@@ -172,47 +239,169 @@
     </div>
 </section>
 
-<!-- Hero Slider -->
-<section class="hero-slider-section">
-    <div class="hero-slider-wrapper">
-        <div class="hero-slider-container">
-            <div class="hero-slider">
-                <div class="hero-slide active">
-                    <div class="hero-slide-emoji">⚡</div>
-                    <div class="hero-slide-title">Llama 3.2 3B</div>
-                    <div class="hero-slide-desc">Fastest for everyday tasks · 1 credit/token</div>
-                </div>
-                <div class="hero-slide">
-                    <div class="hero-slide-emoji">🧠</div>
-                    <div class="hero-slide-title">DeepSeek V3.1 671B</div>
-                    <div class="hero-slide-desc">Frontier reasoning at your fingertips · 2 credits/token</div>
-                </div>
-                <div class="hero-slide">
-                    <div class="hero-slide-emoji">💬</div>
-                    <div class="hero-slide-title">Qwen 3.5 397B</div>
-                    <div class="hero-slide-desc">Largest MoE available · multilingual · 2 credits/token</div>
-                </div>
-                <div class="hero-slide">
-                    <div class="hero-slide-emoji">🔌</div>
-                    <div class="hero-slide-title">OpenAI-Compatible API</div>
-                    <div class="hero-slide-desc">Drop-in replacement · zero code changes</div>
-                </div>
-                <div class="hero-slide">
-                    <div class="hero-slide-emoji">📊</div>
-                    <div class="hero-slide-title">45+ Models</div>
-                    <div class="hero-slide-desc">One API. Local + Cloud. Pay per token.</div>
+<!-- Model Carousel -->
+<section class="hmc-section" aria-label="Model showcase carousel">
+    <div class="hmc-header">
+        <h2>Explore Our <em>Model Lineup</em></h2>
+        <div class="hmc-header-underline"></div>
+    </div>
+
+    <div class="hmc-track-outer" id="hmcTrackOuter">
+        <div class="hmc-track" id="hmcTrack" role="list">
+
+            <!-- Slide 1: Llama 3.2 3B -->
+            <div class="hmc-slide" role="listitem" aria-label="Llama 3.2 3B — fastest local model">
+                <div class="hmc-card">
+                    <div class="hmc-icon-panel" aria-hidden="true">
+                        <!-- Lightning bolt SVG — speed -->
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+                        </svg>
+                    </div>
+                    <div class="hmc-body">
+                        <div class="hmc-badges">
+                            <span class="hmc-badge hmc-badge-local">Local GPU</span>
+                            <span class="hmc-credit-pill">
+                                <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/><path d="M12 6v12M9 9h4.5a1.5 1.5 0 010 3H9m0 0h4.5a1.5 1.5 0 010 3H9" stroke="white" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg>
+                                1 credit / token
+                            </span>
+                        </div>
+                        <div class="hmc-model-name">Llama 3.2 3B</div>
+                        <div class="hmc-stat">Fastest local model on the platform</div>
+                        <div class="hmc-desc">Meta's lightweight powerhouse — blazing response times for everyday tasks, chatbots, and high-throughput workloads. Runs entirely on local GPU hardware.</div>
+                    </div>
+                    <div class="hmc-progress" id="hmcProgress" style="width:0%"></div>
                 </div>
             </div>
+
+            <!-- Slide 2: DeepSeek V3.1 671B -->
+            <div class="hmc-slide" role="listitem" aria-label="DeepSeek V3.1 671B — frontier reasoning">
+                <div class="hmc-card">
+                    <div class="hmc-icon-panel" aria-hidden="true">
+                        <!-- Neural network / brain SVG -->
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="4" r="2"/>
+                            <circle cx="4" cy="12" r="2"/>
+                            <circle cx="20" cy="12" r="2"/>
+                            <circle cx="8" cy="20" r="2"/>
+                            <circle cx="16" cy="20" r="2"/>
+                            <path d="M12 6v4m0 0l-6.5 4m6.5-4l6.5 4M5.5 13.5l2 5m9-5l-2 5"/>
+                            <circle cx="12" cy="10" r="1.5" fill="currentColor"/>
+                        </svg>
+                    </div>
+                    <div class="hmc-body">
+                        <div class="hmc-badges">
+                            <span class="hmc-badge hmc-badge-cloud">Cloud Proxy</span>
+                            <span class="hmc-credit-pill">
+                                <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/><path d="M12 6v12M9 9h4.5a1.5 1.5 0 010 3H9m0 0h4.5a1.5 1.5 0 010 3H9" stroke="white" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg>
+                                2 credits / token
+                            </span>
+                        </div>
+                        <div class="hmc-model-name">DeepSeek V3.1 671B</div>
+                        <div class="hmc-stat">Frontier reasoning at scale</div>
+                        <div class="hmc-desc">671 billion parameters of frontier-class intelligence. Built for complex reasoning, deep analysis, and multi-step problem solving. Cloud-proxied with automatic failover.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 3: Qwen 3.5 397B -->
+            <div class="hmc-slide" role="listitem" aria-label="Qwen 3.5 397B — largest MoE, multilingual">
+                <div class="hmc-card">
+                    <div class="hmc-icon-panel" aria-hidden="true">
+                        <!-- Crystal / MoE lattice SVG -->
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <polygon points="12,2 20,7 20,17 12,22 4,17 4,7"/>
+                            <polygon points="12,7 16,9.5 16,14.5 12,17 8,14.5 8,9.5"/>
+                            <line x1="12" y1="2" x2="12" y2="7"/>
+                            <line x1="20" y1="7" x2="16" y2="9.5"/>
+                            <line x1="20" y1="17" x2="16" y2="14.5"/>
+                            <line x1="12" y1="22" x2="12" y2="17"/>
+                            <line x1="4" y1="17" x2="8" y2="14.5"/>
+                            <line x1="4" y1="7" x2="8" y2="9.5"/>
+                        </svg>
+                    </div>
+                    <div class="hmc-body">
+                        <div class="hmc-badges">
+                            <span class="hmc-badge hmc-badge-cloud">Cloud Proxy</span>
+                            <span class="hmc-credit-pill">
+                                <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/><path d="M12 6v12M9 9h4.5a1.5 1.5 0 010 3H9m0 0h4.5a1.5 1.5 0 010 3H9" stroke="white" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg>
+                                2 credits / token
+                            </span>
+                        </div>
+                        <div class="hmc-model-name">Qwen 3.5 397B</div>
+                        <div class="hmc-stat">Largest MoE · true multilingual intelligence</div>
+                        <div class="hmc-desc">Alibaba's Mixture-of-Experts flagship. 397 billion parameters with native Arabic, English, Chinese support and deep multilingual coverage across 29 languages.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 4: OpenAI-Compatible API -->
+            <div class="hmc-slide" role="listitem" aria-label="OpenAI-Compatible API — drop-in replacement">
+                <div class="hmc-card">
+                    <div class="hmc-icon-panel" aria-hidden="true">
+                        <!-- Plug / connector SVG -->
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="7" y="2" width="10" height="8" rx="2"/>
+                            <path d="M9 2V0M15 2V0"/>
+                            <path d="M12 10v4"/>
+                            <path d="M9 14h6a3 3 0 010 6H9a3 3 0 010-6z"/>
+                            <path d="M12 20v2"/>
+                        </svg>
+                    </div>
+                    <div class="hmc-body">
+                        <div class="hmc-badges">
+                            <span class="hmc-badge hmc-badge-api">OpenAI SDK</span>
+                            <span class="hmc-credit-pill">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                                Zero code changes
+                            </span>
+                        </div>
+                        <div class="hmc-model-name">OpenAI-Compatible API</div>
+                        <div class="hmc-stat">Drop-in replacement — change only the base URL</div>
+                        <div class="hmc-desc">Works with the official OpenAI Python SDK, Node.js SDK, LangChain, LlamaIndex, and any HTTP client. Point <code style="color:var(--gold);font-size:0.85em">base_url</code> to our endpoint and you're done.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 5: 45+ Models -->
+            <div class="hmc-slide" role="listitem" aria-label="45+ models — one API, local and cloud">
+                <div class="hmc-card">
+                    <div class="hmc-icon-panel" aria-hidden="true">
+                        <!-- Grid / catalog SVG -->
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="3" width="7" height="7" rx="1"/>
+                            <rect x="14" y="3" width="7" height="7" rx="1"/>
+                            <rect x="3" y="14" width="7" height="7" rx="1"/>
+                            <rect x="14" y="14" width="7" height="7" rx="1"/>
+                        </svg>
+                    </div>
+                    <div class="hmc-body">
+                        <div class="hmc-badges">
+                            <span class="hmc-badge hmc-badge-all">All Tiers</span>
+                            <span class="hmc-credit-pill">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                                Pay per token
+                            </span>
+                        </div>
+                        <div class="hmc-model-name">45+ Models</div>
+                        <div class="hmc-stat">One API · Local GPU + Cloud Proxy · All tiers</div>
+                        <div class="hmc-desc">From 3B lightweight models to 671B frontier giants. Local GPU inference with automatic cloud failover. All models accessible on every subscription tier — no gating.</div>
+                    </div>
+                </div>
+            </div>
+
         </div>
-        <div class="hero-slider-controls">
-            <button class="hero-slider-btn" id="heroSliderPrev" aria-label="Previous slide">
-                <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
-            </button>
-            <div class="hero-slider-dots" id="heroSliderDots"></div>
-            <button class="hero-slider-btn" id="heroSliderNext" aria-label="Next slide">
-                <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-            </button>
-        </div>
+    </div>
+
+    <!-- Carousel controls -->
+    <div class="hmc-controls">
+        <button class="hmc-arrow" id="hmcPrev" aria-label="Previous model">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <div class="hmc-dots" id="hmcDots" role="tablist" aria-label="Carousel navigation"></div>
+        <button class="hmc-arrow" id="hmcNext" aria-label="Next model">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+        </button>
     </div>
 </section>
 
@@ -613,96 +802,113 @@ print(response.choices[0].message.content)
 
 @push('scripts')
 <script>
-// Hero Slider
+// ── Model Carousel ──────────────────────────────────────────────────────────
 (() => {
-    const slides = document.querySelectorAll('.hero-slide');
-    const sliderContainer = document.querySelector('.hero-slider-container');
-    const dotsContainer = document.getElementById('heroSliderDots');
-    const prevBtn = document.getElementById('heroSliderPrev');
-    const nextBtn = document.getElementById('heroSliderNext');
+    const track      = document.getElementById('hmcTrack');
+    const outer      = document.getElementById('hmcTrackOuter');
+    const dotsWrap   = document.getElementById('hmcDots');
+    const prevBtn    = document.getElementById('hmcPrev');
+    const nextBtn    = document.getElementById('hmcNext');
+    const progressEl = document.getElementById('hmcProgress');
 
-    let currentSlide = 0;
-    let autoplayInterval = null;
-    let isReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!track) return;
 
-    // Initialize dots
-    slides.forEach((_, index) => {
-        const dot = document.createElement('div');
-        dot.className = `hero-slider-dot ${index === 0 ? 'active' : ''}`;
-        dot.addEventListener('click', () => goToSlide(index));
-        dotsContainer.appendChild(dot);
+    const slides       = track.querySelectorAll('.hmc-slide');
+    const total        = slides.length;
+    const INTERVAL_MS  = 4500;
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    let current   = 0;
+    let timer     = null;
+    let progTimer = null;
+    let progStart = null;
+    let touchX0   = 0;
+
+    // ── Build dots ──────────────────────────────────────────────────────────
+    slides.forEach((_, i) => {
+        const dot = document.createElement('button');
+        dot.className = 'hmc-dot' + (i === 0 ? ' active' : '');
+        dot.setAttribute('role', 'tab');
+        dot.setAttribute('aria-label', 'Go to slide ' + (i + 1));
+        dot.addEventListener('click', () => { goTo(i); pauseAutoplay(); });
+        dotsWrap.appendChild(dot);
     });
+    const dots = dotsWrap.querySelectorAll('.hmc-dot');
 
-    const dots = document.querySelectorAll('.hero-slider-dot');
-
-    function goToSlide(index) {
-        slides.forEach((slide, i) => {
-            slide.classList.toggle('active', i === index);
-        });
-        dots.forEach((dot, i) => {
-            dot.classList.toggle('active', i === index);
-        });
-        currentSlide = index;
-        resetAutoplay();
+    // ── Core go-to ──────────────────────────────────────────────────────────
+    function goTo(index) {
+        current = (index + total) % total;
+        track.style.transform = 'translateX(-' + (current * 100) + '%)';
+        dots.forEach((d, i) => d.classList.toggle('active', i === current));
+        resetProgress();
     }
 
-    function nextSlide() {
-        goToSlide((currentSlide + 1) % slides.length);
+    // ── Progress bar ────────────────────────────────────────────────────────
+    function resetProgress() {
+        if (!progressEl || reducedMotion) return;
+        cancelAnimationFrame(progTimer);
+        progressEl.style.transition = 'none';
+        progressEl.style.width = '0%';
+        progStart = performance.now();
+        animProgress();
     }
 
-    function prevSlide() {
-        goToSlide((currentSlide - 1 + slides.length) % slides.length);
+    function animProgress(ts) {
+        if (!progStart) progStart = ts;
+        const elapsed = ts - progStart;
+        const pct = Math.min((elapsed / INTERVAL_MS) * 100, 100);
+        progressEl.style.width = pct + '%';
+        if (pct < 100) progTimer = requestAnimationFrame(animProgress);
     }
 
+    // ── Autoplay ────────────────────────────────────────────────────────────
     function startAutoplay() {
-        if (isReducedMotion) return;
-        autoplayInterval = setInterval(nextSlide, 4000);
+        if (reducedMotion) return;
+        timer = setInterval(() => goTo(current + 1), INTERVAL_MS);
+        resetProgress();
     }
 
-    function stopAutoplay() {
-        if (autoplayInterval) {
-            clearInterval(autoplayInterval);
-            autoplayInterval = null;
-        }
+    function pauseAutoplay() {
+        clearInterval(timer);
+        timer = null;
+        cancelAnimationFrame(progTimer);
+        if (progressEl) progressEl.style.width = '0%';
     }
 
-    function resetAutoplay() {
-        stopAutoplay();
+    function resumeAutoplay() {
+        if (reducedMotion || timer) return;
         startAutoplay();
     }
 
-    // Event listeners
-    prevBtn.addEventListener('click', () => {
-        prevSlide();
-        stopAutoplay();
-    });
-    nextBtn.addEventListener('click', () => {
-        nextSlide();
-        stopAutoplay();
-    });
+    // ── Arrow buttons ───────────────────────────────────────────────────────
+    prevBtn.addEventListener('click', () => { goTo(current - 1); pauseAutoplay(); });
+    nextBtn.addEventListener('click', () => { goTo(current + 1); pauseAutoplay(); });
 
-    // Pause on hover
-    sliderContainer.addEventListener('mouseenter', stopAutoplay);
-    sliderContainer.addEventListener('mouseleave', resetAutoplay);
+    // ── Pause on hover ──────────────────────────────────────────────────────
+    outer.addEventListener('mouseenter', pauseAutoplay);
+    outer.addEventListener('mouseleave', resumeAutoplay);
 
-    // Touch swipe support
-    let touchStartX = 0;
-    let touchEndX = 0;
+    // ── Touch / swipe ───────────────────────────────────────────────────────
+    outer.addEventListener('touchstart', (e) => {
+        touchX0 = e.changedTouches[0].clientX;
+    }, { passive: true });
 
-    sliderContainer.addEventListener('touchstart', (e) => {
-        touchStartX = e.changedTouches[0].screenX;
-    });
+    outer.addEventListener('touchend', (e) => {
+        const delta = e.changedTouches[0].clientX - touchX0;
+        if (Math.abs(delta) < 40) return;
+        goTo(delta < 0 ? current + 1 : current - 1);
+        pauseAutoplay();
+    }, { passive: true });
 
-    sliderContainer.addEventListener('touchend', (e) => {
-        touchEndX = e.changedTouches[0].screenX;
-        if (touchStartX - touchEndX > 50) {
-            nextSlide();
-        } else if (touchEndX - touchStartX > 50) {
-            prevSlide();
-        }
+    // ── Keyboard accessibility ──────────────────────────────────────────────
+    outer.setAttribute('tabindex', '0');
+    outer.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowLeft')  { goTo(current - 1); pauseAutoplay(); }
+        if (e.key === 'ArrowRight') { goTo(current + 1); pauseAutoplay(); }
     });
 
-    // Start autoplay on load
+    // ── Init ────────────────────────────────────────────────────────────────
+    goTo(0);
     startAutoplay();
 })();
 </script>

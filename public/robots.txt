@@ -1,0 +1,35 @@
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /admin/
+Disallow: /api/
+Disallow: /profile
+Disallow: /billing
+Disallow: /api-keys
+
+User-agent: GPTBot
+Allow: /
+Allow: /docs
+Allow: /about
+Allow: /privacy-policy
+Allow: /terms-of-service
+
+User-agent: ClaudeBot
+Allow: /
+Allow: /docs
+Allow: /about
+Allow: /privacy-policy
+Allow: /terms-of-service
+
+User-agent: PerplexityBot
+Allow: /
+Allow: /docs
+Allow: /about
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: Googlebot
+Allow: /
+
+Sitemap: https://llm.resayil.io/sitemap.xml

@@ -5,6 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title', 'LLM Resayil') - LLM Portal</title>
+    {{-- Open Graph / Social --}}
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ url()->current() }}">
+    <meta property="og:title" content="@yield('title', 'LLM Resayil') — AI API for Developers">
+    <meta property="og:description" content="@yield('og_description', '45+ AI models. OpenAI-compatible API. Pay per token. KNET payments accepted.')">
+    <meta property="og:image" content="{{ asset('og-image.png') }}">
+    <meta property="og:site_name" content="LLM Resayil">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="@yield('title', 'LLM Resayil')">
+    <meta name="twitter:description" content="@yield('og_description', '45+ AI models. OpenAI-compatible. Pay per token.')">
+    <meta name="twitter:image" content="{{ asset('og-image.png') }}">
+    <meta name="description" content="@yield('meta_description', '45+ open-source AI models via one OpenAI-compatible API. Local GPU inference + cloud proxies. Pay per token. KNET payments.')">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
     <style>
@@ -78,11 +90,20 @@
         .locale-switcher a.active { color: var(--gold); font-weight: 600; }
         .locale-switcher span { color: var(--border); }
         /* RTL support */
-        [dir="rtl"] body { font-family: 'Tajawal', sans-serif; }
+        [dir="rtl"] body { font-family: 'Tajawal', 'Inter', sans-serif; }
         [dir="rtl"] .nav-links { flex-direction: row-reverse; }
         [dir="rtl"] .sidebar { right: 0; left: auto; }
         [dir="rtl"] .card { text-align: right; }
-        [dir="rtl"] .locale-switcher { margin-left: 0; margin-right: 0.5rem; }
+        [dir="rtl"] .locale-switcher { margin-left: 0; margin-right: 0.5rem; order: -1; }
+        [dir="rtl"] .hero-content { text-align: right; }
+        [dir="rtl"] .code-block { direction: ltr; } /* keep code LTR */
+        [dir="rtl"] .stat-card { text-align: right; }
+        [dir="rtl"] .feature-item { flex-direction: row-reverse; }
+        [dir="rtl"] .btn-group { flex-direction: row-reverse; }
+        [dir="rtl"] .input-group .input-label { text-align: right; }
+        [dir="rtl"] .form-label { text-align: right; }
+        [dir="rtl"] .alert { text-align: right; }
+        [dir="rtl"] .nav-brand { margin-left: auto; margin-right: 0; }
     </style>
     @stack('styles')
 </head>
