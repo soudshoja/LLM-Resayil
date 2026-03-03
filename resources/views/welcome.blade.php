@@ -162,8 +162,8 @@
     <div class="addon-box">
         <h4>Credit Top-Ups &amp; Add-Ons</h4>
         <div class="addon-row"><span>500 extra credits</span><span>5 KWD</span></div>
-        <div class="addon-row"><span>1,100 extra credits</span><span>10 KWD</span></div>
-        <div class="addon-row"><span>3,000 extra credits</span><span>25 KWD</span></div>
+        <div class="addon-row"><span>1,100 extra credits</span><span>10 KWD <span style="color:#28a745;font-size:0.8em;font-weight:600">(+10% bonus)</span></span></div>
+        <div class="addon-row"><span>3,000 extra credits</span><span>25 KWD <span style="color:#28a745;font-size:0.8em;font-weight:600">(+20% bonus)</span></span></div>
         <div class="addon-row"><span>Cloud model cost</span><span>2× credits per token (local = 1×)</span></div>
     </div>
 </section>

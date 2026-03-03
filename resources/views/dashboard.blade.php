@@ -22,6 +22,7 @@
     .topup-card:hover { border-color: var(--gold-muted); }
     .topup-credits { font-size: 1.25rem; font-weight: 700; color: var(--gold); }
     .topup-price { font-size: 0.875rem; color: var(--text-secondary); margin-top: 0.2rem; }
+    .topup-bonus { font-size: 0.75rem; color: #28a745; font-weight: 600; margin-top: 0.25rem; }
     /* Model Catalog Styles */
     .model-catalog { margin-bottom: 2rem; }
     .catalog-header { display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; margin-bottom: 1.5rem; }
@@ -363,10 +364,12 @@ response = requests.post(
                 <div class="topup-card" onclick="topup(1100)">
                     <div class="topup-credits">1,100</div>
                     <div class="topup-price">10 KWD</div>
+                    <div class="topup-bonus">+10% bonus</div>
                 </div>
                 <div class="topup-card" onclick="topup(3000)">
                     <div class="topup-credits">3,000</div>
                     <div class="topup-price">25 KWD</div>
+                    <div class="topup-bonus">+20% bonus</div>
                 </div>
             </div>
             <p class="text-xs text-muted mt-4">Payments processed securely via KNET / credit card · <a href="/billing/plans" style="color:var(--gold)">View subscription plans →</a></p>

@@ -34,7 +34,7 @@ return [
             'params' => '3B',
             'quantization' => 'Q4_K_M',
             'ollama_name' => 'llama3.2:3b',
-            'credit_multiplier' => 1.0,
+            'credit_multiplier' => 0.5,
             'is_active' => true,
         ],
 
@@ -50,7 +50,7 @@ return [
             'params' => '135M',
             'quantization' => 'Q4_K_M',
             'ollama_name' => 'smollm2:135m',
-            'credit_multiplier' => 1.0,
+            'credit_multiplier' => 0.5,
             'is_active' => true,
         ],
 
@@ -66,7 +66,7 @@ return [
             'params' => '14B',
             'quantization' => 'Q4_K_M',
             'ollama_name' => 'qwen2.5-coder:14b',
-            'credit_multiplier' => 1.0,
+            'credit_multiplier' => 1.5,
             'is_active' => true,
         ],
 
@@ -82,7 +82,7 @@ return [
             'params' => '24B',
             'quantization' => 'Q4_K_M',
             'ollama_name' => 'mistral-small3.2:24b-instruct-2506-q4_K_M',
-            'credit_multiplier' => 1.0,
+            'credit_multiplier' => 1.5,
             'is_active' => true,
         ],
 
@@ -98,7 +98,7 @@ return [
             'params' => '3.8B',
             'quantization' => 'Q4_K_M',
             'ollama_name' => 'phi3.5:mini',
-            'credit_multiplier' => 1.0,
+            'credit_multiplier' => 0.5,
             'is_active' => true,
         ],
 
@@ -114,7 +114,7 @@ return [
             'params' => '9B',
             'quantization' => 'Q4_K_M',
             'ollama_name' => 'gemma2:9b',
-            'credit_multiplier' => 1.0,
+            'credit_multiplier' => 1.5,
             'is_active' => true,
         ],
 
@@ -130,7 +130,7 @@ return [
             'params' => '6.7B',
             'quantization' => 'Q4_K_M',
             'ollama_name' => 'deepseek-coder:6.7b',
-            'credit_multiplier' => 1.0,
+            'credit_multiplier' => 1.5,
             'is_active' => true,
         ],
 
@@ -146,7 +146,7 @@ return [
             'params' => '8B',
             'quantization' => 'Q4_K_M',
             'ollama_name' => 'llama3.1:8b',
-            'credit_multiplier' => 1.0,
+            'credit_multiplier' => 1.5,
             'is_active' => true,
         ],
 
@@ -162,7 +162,7 @@ return [
             'params' => '110M',
             'quantization' => 'Q4_K_M',
             'ollama_name' => 'nomic-embed-text',
-            'credit_multiplier' => 1.0,
+            'credit_multiplier' => 0.5,
             'is_active' => true,
         ],
 
@@ -178,7 +178,7 @@ return [
             'params' => '580M',
             'quantization' => 'Q4_K_M',
             'ollama_name' => 'bge-m3',
-            'credit_multiplier' => 1.0,
+            'credit_multiplier' => 1.5,
             'is_active' => true,
         ],
 
@@ -194,7 +194,7 @@ return [
             'params' => '23M',
             'quantization' => 'Q4_K_M',
             'ollama_name' => 'all-minilm',
-            'credit_multiplier' => 1.0,
+            'credit_multiplier' => 0.5,
             'is_active' => true,
         ],
 
@@ -210,7 +210,7 @@ return [
             'params' => '137M',
             'quantization' => 'Q4_K_M',
             'ollama_name' => 'snowflake-arctic-embed',
-            'credit_multiplier' => 1.0,
+            'credit_multiplier' => 1.5,
             'is_active' => true,
         ],
 
@@ -226,7 +226,7 @@ return [
             'params' => '7B',
             'quantization' => 'Q4_K_M',
             'ollama_name' => 'mistral:7b',
-            'credit_multiplier' => 1.0,
+            'credit_multiplier' => 1.5,
             'is_active' => true,
         ],
 
@@ -242,7 +242,7 @@ return [
             'params' => '3B',
             'quantization' => 'Q4_K_M',
             'ollama_name' => 'starcoder2:3b',
-            'credit_multiplier' => 1.0,
+            'credit_multiplier' => 0.5,
             'is_active' => true,
         ],
 
@@ -258,7 +258,7 @@ return [
             'params' => '7B',
             'quantization' => 'Q4_K_M',
             'ollama_name' => 'codellama:7b',
-            'credit_multiplier' => 1.0,
+            'credit_multiplier' => 0.5,
             'is_active' => true,
         ],
 
@@ -280,7 +280,7 @@ return [
             'params' => '12B',
             'quantization' => 'FP16',
             'ollama_name' => 'glm-4.7-flash:cloud',
-            'credit_multiplier' => 2.0,
+            'credit_multiplier' => 2.5,
             'is_active' => true,
         ],
 
@@ -296,7 +296,7 @@ return [
             'params' => '30B',
             'quantization' => 'FP16',
             'ollama_name' => 'qwen3-30b:cloud',
-            'credit_multiplier' => 2.0,
+            'credit_multiplier' => 2.5,
             'is_active' => true,
         ],
 
@@ -312,7 +312,7 @@ return [
             'params' => '20B',
             'quantization' => 'FP16',
             'ollama_name' => 'gpt-oss:20b-cloud',
-            'credit_multiplier' => 2.0,
+            'credit_multiplier' => 2.5,
             'is_active' => true,
         ],
 
@@ -328,7 +328,7 @@ return [
             'params' => '32B',
             'quantization' => 'FP16',
             'ollama_name' => 'qwen3-vl:32b-cloud',
-            'credit_multiplier' => 2.0,
+            'credit_multiplier' => 3.5,
             'is_active' => true,
         ],
 
@@ -345,7 +345,7 @@ return [
             'params' => '397B',
             'quantization' => 'FP16',
             'ollama_name' => 'qwen3.5:cloud',
-            'credit_multiplier' => 2.0,
+            'credit_multiplier' => 3.5,
             'is_active' => true,
         ],
 
@@ -361,7 +361,7 @@ return [
             'params' => '123B',
             'quantization' => 'FP16',
             'ollama_name' => 'devstral-2:123b-cloud',
-            'credit_multiplier' => 2.0,
+            'credit_multiplier' => 3.5,
             'is_active' => true,
         ],
 
@@ -377,7 +377,7 @@ return [
             'params' => '671B',
             'quantization' => 'FP16',
             'ollama_name' => 'deepseek-v3.1:671b-cloud',
-            'credit_multiplier' => 2.0,
+            'credit_multiplier' => 3.5,
             'is_active' => true,
         ],
 
@@ -393,7 +393,7 @@ return [
             'params' => '671B',
             'quantization' => 'FP16',
             'ollama_name' => 'deepseek-v3.2:cloud',
-            'credit_multiplier' => 2.0,
+            'credit_multiplier' => 3.5,
             'is_active' => true,
         ],
 
@@ -410,7 +410,7 @@ return [
             'params' => '11B',
             'quantization' => 'Q4_K_M',
             'ollama_name' => 'llama3.2:11b-cloud',
-            'credit_multiplier' => 2.0,
+            'credit_multiplier' => 2.5,
             'is_active' => true,
         ],
 
@@ -426,7 +426,7 @@ return [
             'params' => '70B',
             'quantization' => 'Q4_K_M',
             'ollama_name' => 'llama3.2:70b-cloud',
-            'credit_multiplier' => 2.0,
+            'credit_multiplier' => 3.5,
             'is_active' => true,
         ],
 
@@ -442,7 +442,7 @@ return [
             'params' => '70B',
             'quantization' => 'Q4_K_M',
             'ollama_name' => 'llama3.1:70b-cloud',
-            'credit_multiplier' => 2.0,
+            'credit_multiplier' => 3.5,
             'is_active' => true,
         ],
 
@@ -458,7 +458,7 @@ return [
             'params' => '405B',
             'quantization' => 'FP16',
             'ollama_name' => 'llama3.1:405b-cloud',
-            'credit_multiplier' => 2.0,
+            'credit_multiplier' => 3.5,
             'is_active' => true,
         ],
 
@@ -474,7 +474,7 @@ return [
             'params' => '27B',
             'quantization' => 'FP16',
             'ollama_name' => 'gemma2:27b-cloud',
-            'credit_multiplier' => 2.0,
+            'credit_multiplier' => 3.5,
             'is_active' => true,
         ],
 
@@ -490,7 +490,7 @@ return [
             'params' => '8x7B',
             'quantization' => 'Q4_K_M',
             'ollama_name' => 'mixtral:8x7b-cloud',
-            'credit_multiplier' => 2.0,
+            'credit_multiplier' => 3.5,
             'is_active' => true,
         ],
 
@@ -506,7 +506,7 @@ return [
             'params' => '8x22B',
             'quantization' => 'FP16',
             'ollama_name' => 'mixtral:8x22b-cloud',
-            'credit_multiplier' => 2.0,
+            'credit_multiplier' => 3.5,
             'is_active' => true,
         ],
 
@@ -522,7 +522,7 @@ return [
             'params' => '24B',
             'quantization' => 'FP16',
             'ollama_name' => 'mistral-large:24b-cloud',
-            'credit_multiplier' => 2.0,
+            'credit_multiplier' => 2.5,
             'is_active' => true,
         ],
 
@@ -538,7 +538,7 @@ return [
             'params' => '12B',
             'quantization' => 'Q4_K_M',
             'ollama_name' => 'mistral-nemo:12b-cloud',
-            'credit_multiplier' => 2.0,
+            'credit_multiplier' => 2.5,
             'is_active' => true,
         ],
 
@@ -554,7 +554,7 @@ return [
             'params' => '22B',
             'quantization' => 'Q4_K_M',
             'ollama_name' => 'codestral:22b-cloud',
-            'credit_multiplier' => 2.0,
+            'credit_multiplier' => 2.5,
             'is_active' => true,
         ],
 
@@ -570,7 +570,7 @@ return [
             'params' => '33B',
             'quantization' => 'Q4_K_M',
             'ollama_name' => 'deepseek-coder:33b-cloud',
-            'credit_multiplier' => 2.0,
+            'credit_multiplier' => 3.5,
             'is_active' => true,
         ],
 
@@ -586,7 +586,7 @@ return [
             'params' => '671B',
             'quantization' => 'FP16',
             'ollama_name' => 'deepseek-chat:671b-cloud',
-            'credit_multiplier' => 2.0,
+            'credit_multiplier' => 3.5,
             'is_active' => true,
         ],
 
@@ -602,7 +602,7 @@ return [
             'params' => '72B',
             'quantization' => 'Q4_K_M',
             'ollama_name' => 'qwen2:72b-cloud',
-            'credit_multiplier' => 2.0,
+            'credit_multiplier' => 3.5,
             'is_active' => true,
         ],
 
@@ -618,7 +618,7 @@ return [
             'params' => '32B',
             'quantization' => 'Q4_K_M',
             'ollama_name' => 'qwen2.5:32b-cloud',
-            'credit_multiplier' => 2.0,
+            'credit_multiplier' => 3.5,
             'is_active' => true,
         ],
 
@@ -634,7 +634,7 @@ return [
             'params' => '34B',
             'quantization' => 'Q4_K_M',
             'ollama_name' => 'yi:34b-cloud',
-            'credit_multiplier' => 2.0,
+            'credit_multiplier' => 3.5,
             'is_active' => true,
         ],
 
@@ -650,7 +650,7 @@ return [
             'params' => '236B',
             'quantization' => 'FP16',
             'ollama_name' => 'deepseek-v2.5:cloud',
-            'credit_multiplier' => 2.0,
+            'credit_multiplier' => 3.5,
             'is_active' => true,
         ],
 
@@ -666,7 +666,7 @@ return [
             'params' => '70B',
             'quantization' => 'FP16',
             'ollama_name' => 'llama3-gradient:70b-cloud',
-            'credit_multiplier' => 2.0,
+            'credit_multiplier' => 3.5,
             'is_active' => true,
         ],
 
@@ -682,7 +682,7 @@ return [
             'params' => '35B',
             'quantization' => 'FP16',
             'ollama_name' => 'command-r:35b-cloud',
-            'credit_multiplier' => 2.0,
+            'credit_multiplier' => 3.5,
             'is_active' => true,
         ],
 
@@ -698,7 +698,7 @@ return [
             'params' => '104B',
             'quantization' => 'FP16',
             'ollama_name' => 'command-r-plus:104b-cloud',
-            'credit_multiplier' => 2.0,
+            'credit_multiplier' => 3.5,
             'is_active' => true,
         ],
 
@@ -714,7 +714,7 @@ return [
             'params' => '18B',
             'quantization' => 'Q4_K_M',
             'ollama_name' => 'firefunction-v2:18b-cloud',
-            'credit_multiplier' => 2.0,
+            'credit_multiplier' => 2.5,
             'is_active' => true,
         ],
 
@@ -730,7 +730,7 @@ return [
             'params' => '27M',
             'quantization' => 'Q4_K_M',
             'ollama_name' => 'nomic-embed:27m-cloud',
-            'credit_multiplier' => 2.0,
+            'credit_multiplier' => 1.0,
             'is_active' => true,
         ],
 
@@ -746,7 +746,7 @@ return [
             'params' => '7M',
             'quantization' => 'Q4_K_M',
             'ollama_name' => 'gte-qwen:7m-cloud',
-            'credit_multiplier' => 2.0,
+            'credit_multiplier' => 1.0,
             'is_active' => true,
         ],
 
@@ -762,7 +762,7 @@ return [
             'params' => '335M',
             'quantization' => 'Q4_K_M',
             'ollama_name' => 'bge-large:335m-cloud',
-            'credit_multiplier' => 2.0,
+            'credit_multiplier' => 2.5,
             'is_active' => true,
         ],
 
@@ -778,7 +778,7 @@ return [
             'params' => '7B',
             'quantization' => 'Q4_K_M',
             'ollama_name' => 'e5-mistral:7b-cloud',
-            'credit_multiplier' => 2.0,
+            'credit_multiplier' => 2.5,
             'is_active' => true,
         ],
 
@@ -794,7 +794,7 @@ return [
             'params' => '1B',
             'quantization' => 'Q4_K_M',
             'ollama_name' => 'nvidia-embed:1b-cloud',
-            'credit_multiplier' => 2.0,
+            'credit_multiplier' => 1.0,
             'is_active' => true,
         ],
 
@@ -810,7 +810,7 @@ return [
             'params' => '22M',
             'quantization' => 'Q4_K_M',
             'ollama_name' => 'all-minilm-l6:22m-cloud',
-            'credit_multiplier' => 2.0,
+            'credit_multiplier' => 1.0,
             'is_active' => true,
         ],
 
@@ -826,7 +826,7 @@ return [
             'params' => '110M',
             'quantization' => 'Q4_K_M',
             'ollama_name' => 'gte-base:110m-cloud',
-            'credit_multiplier' => 2.0,
+            'credit_multiplier' => 1.0,
             'is_active' => true,
         ],
 
@@ -842,7 +842,7 @@ return [
             'params' => '335M',
             'quantization' => 'Q4_K_M',
             'ollama_name' => 'snowflake-arctic-embed-l:335m-cloud',
-            'credit_multiplier' => 2.0,
+            'credit_multiplier' => 2.5,
             'is_active' => true,
         ],
 
@@ -858,7 +858,7 @@ return [
             'params' => '8M',
             'quantization' => 'Q4_K_M',
             'ollama_name' => 'bge-small:8m-cloud',
-            'credit_multiplier' => 2.0,
+            'credit_multiplier' => 1.0,
             'is_active' => true,
         ],
 
@@ -874,7 +874,7 @@ return [
             'params' => '39M',
             'quantization' => 'Q4_K_M',
             'ollama_name' => 'minilm-l12:39m-cloud',
-            'credit_multiplier' => 2.0,
+            'credit_multiplier' => 1.0,
             'is_active' => true,
         ],
     ],

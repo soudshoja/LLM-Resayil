@@ -141,7 +141,7 @@ class ChatCompletionsController extends Controller
         if ($response->getStatusCode() === 200 && !$isAdmin) {
             $content = json_decode($response->getContent(), true);
             $tokensUsed = $this->estimateTokens($content);
-            $cost = $this->creditService->calculateCost($tokensUsed, $provider);
+            $cost = $this->creditService->calculateCost($tokensUsed, $provider, $modelId);
 
             if ($cost > 0) {
                 $this->creditService->deductCredits($user, $tokensUsed, $provider, $modelId);
@@ -258,7 +258,7 @@ class ChatCompletionsController extends Controller
                 $content = json_decode($response->getContent(), true);
                 $tokensUsed = $this->estimateTokens($content);
                 // Use the provider determined before the request (cloud vs local)
-                $cost = $this->creditService->calculateCost($tokensUsed, $provider);
+                $cost = $this->creditService->calculateCost($tokensUsed, $provider, $modelId);
 
                 if ($cost > 0) {
                     $this->creditService->deductCredits($user, $tokensUsed, $provider, $modelId);

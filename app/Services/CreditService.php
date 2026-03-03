@@ -8,12 +8,28 @@ use Illuminate\Support\Facades\DB;
 class CreditService
 {
     /**
-     * Credit cost multipliers.
+     * Fallback credit cost multipliers per 1000 tokens (used when model not in registry).
      */
-    protected array $costMultipliers = [
-        'local' => 1,
-        'cloud' => 2,
+    protected array $fallbackMultipliers = [
+        'local' => 1.0,
+        'cloud' => 2.0,
     ];
+
+    /**
+     * Resolve the credit multiplier for a model from the registry,
+     * falling back to provider-based defaults when not found.
+     */
+    protected function resolveMultiplier(string $provider, string $model): float
+    {
+        if ($model !== '') {
+            $registryMultiplier = config('models.models.' . $model . '.credit_multiplier');
+            if ($registryMultiplier !== null) {
+                return (float) $registryMultiplier;
+            }
+        }
+
+        return $this->fallbackMultipliers[$provider] ?? 1.0;
+    }
 
     /**
      * Check if user has sufficient credits.
@@ -35,8 +51,8 @@ class CreditService
      */
     public function deductCredits($user, int $tokensUsed, string $provider, string $model): array
     {
-        $costMultiplier = $this->costMultipliers[$provider] ?? 1;
-        $creditsDeducted = $tokensUsed * $costMultiplier;
+        $creditMultiplier = $this->resolveMultiplier($provider, $model);
+        $creditsDeducted = (int) ceil($tokensUsed * $creditMultiplier / 1000);
 
         if ($user->credits < $creditsDeducted) {
             return [
@@ -115,12 +131,16 @@ class CreditService
 
     /**
      * Calculate cost for a request.
+     *
+     * Pricing is per 1000 tokens. Credits = ceil(tokens * multiplier / 1000).
+     * Falls back to provider-based multiplier (local=1.0, cloud=2.0) when model
+     * is not found in the registry.
      */
-    public function calculateCost(int $tokensUsed, string $provider): int
+    public function calculateCost(int $tokensUsed, string $provider, string $model = ''): int
     {
-        $costMultiplier = $this->costMultipliers[$provider] ?? 1;
+        $creditMultiplier = $this->resolveMultiplier($provider, $model);
 
-        return $tokensUsed * $costMultiplier;
+        return (int) ceil($tokensUsed * $creditMultiplier / 1000);
     }
 
     /**

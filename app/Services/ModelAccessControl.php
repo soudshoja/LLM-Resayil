@@ -2,6 +2,8 @@
 
 namespace App\Services;
 
+use App\Models\User;
+
 class ModelAccessControl
 {
     /**
@@ -14,64 +16,46 @@ class ModelAccessControl
     ];
 
     /**
-     * Model definitions by tier.
+     * Check if a user can access the given model.
+     *
+     * Rules:
+     *  - Admin (admin@llm.resayil.io) always returns true.
+     *  - Restricted models are always blocked.
+     *  - All active models are available to starter/basic/pro users.
+     *  - TRIAL users (trial_started_at set, subscription_tier = 'starter',
+     *    myfatoorah_subscription_id is null) may only use 'small' size models.
      */
-    protected array $tierModels = [
-        'basic' => [
-            'llama3.2:3b',
-            'smollm2:135m',
-            'qwen2.5-coder:14b',
-            'mistral-small3.2:24b',
-        ],
-        'pro' => [
-            'llama3.2:3b',
-            'smollm2:135m',
-            'qwen2.5-coder:14b',
-            'mistral-small3.2:24b',
-            'qwen3-30b-40k',
-            'Qwen3-VL-32B',
-            'qwen3.5:cloud',
-            'deepseek-v3.2:cloud',
-            'gpt-oss:20b',
-        ],
-        'enterprise' => [
-            'llama3.2:3b',
-            'smollm2:135m',
-            'qwen2.5-coder:14b',
-            'mistral-small3.2:24b',
-            'qwen3-30b-40k',
-            'Qwen3-VL-32B',
-            'qwen3.5:cloud',
-            'deepseek-v3.2:cloud',
-            'gpt-oss:20b',
-            'qwen3.5:397b',
-            'devstral-2:123b',
-            'deepseek-v3.1:671b',
-            'deepseek-v3.2',
-        ],
-    ];
-
-    /**
-     * Tier priority levels.
-     */
-    protected array $tierPriority = [
-        'basic' => 1,
-        'pro' => 2,
-        'enterprise' => 3,
-    ];
-
-    /**
-     * Get allowed models for tier.
-     */
-    public function getAllowedModels(string $tier): array
+    public function canAccessModel(User $user, string $model): bool
     {
-        $tier = strtolower($tier);
+        // Admin bypasses all restrictions
+        if ($user->email === 'admin@llm.resayil.io') {
+            return true;
+        }
 
-        return $this->tierModels[$tier] ?? $this->tierModels['basic'];
+        // Always block restricted models
+        if (in_array($model, $this->restrictedModels)) {
+            return false;
+        }
+
+        // Trial restriction: starter tier with trial_started_at set but no paid subscription
+        if (
+            $user->trial_started_at !== null &&
+            $user->subscription_tier === 'starter' &&
+            $user->myfatoorah_subscription_id === null
+        ) {
+            $size = config('models.models.' . $model . '.size');
+            return $size === 'small';
+        }
+
+        // All active models available to all tiers (starter/basic/pro)
+        return true;
     }
 
     /**
-     * Check if model is allowed for tier.
+     * Check if model is allowed for a given tier string (legacy helper).
+     * Delegates to canAccessModel logic without a User object — used for
+     * non-user-context checks (e.g. listing available models for a tier).
+     * Restricted models are always blocked; everything else is allowed.
      */
     public function isModelAllowed(string $model, string $tier): bool
     {
@@ -80,48 +64,7 @@ class ModelAccessControl
             return false;
         }
 
-        // Enterprise gets all models
-        if (strtolower($tier) === 'enterprise') {
-            return true;
-        }
-
-        $allowedModels = $this->getAllowedModels($tier);
-
-        return in_array($model, $allowedModels);
-    }
-
-    /**
-     * Get tier priority level.
-     */
-    public function getTierPriority(string $tier): int
-    {
-        $tier = strtolower($tier);
-
-        return $this->tierPriority[$tier] ?? $this->tierPriority['basic'];
-    }
-
-    /**
-     * Filter models by tier access.
-     */
-    public function filterModels(array $models, string $tier): array
-    {
-        $allowedModels = $this->getAllowedModels($tier);
-
-        return array_filter($models, function ($model) use ($allowedModels, $tier) {
-            $modelName = is_string($model) ? $model : ($model['id'] ?? $model['name'] ?? '');
-
-            return $this->isModelAllowed($modelName, $tier);
-        });
-    }
-
-    /**
-     * Check if tier includes cloud models.
-     */
-    public function tierHasCloudAccess(string $tier): bool
-    {
-        $tier = strtolower($tier);
-
-        return $tier === 'pro' || $tier === 'enterprise';
+        return true;
     }
 
     /**
@@ -141,16 +84,25 @@ class ModelAccessControl
     }
 
     /**
-     * Get all available models across all tiers.
+     * Filter models array, removing restricted ones.
+     * For user-aware filtering, use canAccessModel() directly.
+     */
+    public function filterModels(array $models, string $tier): array
+    {
+        return array_values(array_filter($models, function ($model) {
+            $modelName = is_string($model) ? $model : ($model['id'] ?? $model['name'] ?? '');
+            return !in_array($modelName, $this->restrictedModels);
+        }));
+    }
+
+    /**
+     * Get all available models from the registry (excluding restricted).
      */
     public function getAllAvailableModels(): array
     {
-        $allModels = [];
+        $registry = config('models.models', []);
+        $all = array_keys($registry);
 
-        foreach ($this->tierModels as $models) {
-            $allModels = array_merge($allModels, $models);
-        }
-
-        return array_values(array_unique($allModels));
+        return array_values(array_filter($all, fn ($m) => !in_array($m, $this->restrictedModels)));
     }
 }
