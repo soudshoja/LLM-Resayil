@@ -518,10 +518,7 @@
                     Small models only
                 </li>
             </ul>
-            <div class="plan-cta-row">
-                <a href="/register" class="plan-cta plan-cta-outline">Start Monthly Plan</a>
-                <a href="/register" class="plan-cta plan-cta-outline">Start Free Trial</a>
-            </div>
+            <a href="/register" class="plan-cta plan-cta-outline">Start Monthly Plan</a>
         </div>
 
         {{-- Basic Tier (featured) --}}
@@ -573,7 +570,7 @@
                 </li>
                 <li>
                     <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                    Priority cloud failover
+                    Priority support
                 </li>
             </ul>
             <a href="/register" class="plan-cta plan-cta-outline">Start Monthly Plan</a>
