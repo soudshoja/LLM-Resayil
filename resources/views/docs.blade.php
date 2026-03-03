@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>API Documentation — LLM Resayil</title>
+    <title>{{ __('docs.title') }} — LLM Resayil</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -687,7 +687,7 @@
 <body>
     <!-- Navbar -->
     <nav>
-        <a class="nav-brand" href="/">⚡ LLM Resayil</a>
+        <a class="nav-brand" href="/">{{ __('welcome.title') }}</a>
         <button id="sidebar-toggle">
             <svg class="hamburger-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <line x1="3" y1="6" x2="21" y2="6" class="hamburger-line"></line>
@@ -697,10 +697,10 @@
         </button>
         <div class="nav-links">
             @if(auth()->check())
-                <a href="/dashboard" class="nav-link">Dashboard</a>
+                <a href="/dashboard" class="nav-link">{{ __('dashboard.title') }}</a>
             @else
-                <a href="/login" class="nav-link">Login</a>
-                <a href="/register" class="btn-gold">Get Started</a>
+                <a href="/login" class="nav-link">{{ __('auth.login') }}</a>
+                <a href="/register" class="btn-gold">{{ __('welcome.register_top_up') }}</a>
             @endif
         </div>
     </nav>
@@ -711,17 +711,17 @@
         <aside class="docs-sidebar">
             <div class="sidebar-version-badge">v1</div>
             <nav class="sidebar-nav">
-                <div class="sidebar-reference-label">Reference</div>
+                <div class="sidebar-reference-label">{{ __('docs.reference') }}</div>
                 <ul>
-                    <li><a href="#getting-started" class="active">Getting Started</a></li>
-                    <li><a href="#authentication">How to Authenticate</a></li>
-                    <li><a href="#api-reference">API Reference</a></li>
-                    <li><a href="#models">Available Models</a></li>
-                    <li><a href="#billing">Billing & Credits</a></li>
-                    <li><a href="#rate-limits">Rate Limits</a></li>
-                    <li><a href="#errors">Error Codes</a></li>
-                    <li><a href="#examples">Code Examples</a></li>
-                    <li><a href="#faq">FAQ</a></li>
+                    <li><a href="#getting-started" class="active">{{ __('docs.quick_start') }}</a></li>
+                    <li><a href="#authentication">{{ __('docs.authentication') }}</a></li>
+                    <li><a href="#api-reference">{{ __('docs.api_reference') }}</a></li>
+                    <li><a href="#models">{{ __('docs.models_endpoint') }}</a></li>
+                    <li><a href="#billing">{{ __('docs.billing') }}</a></li>
+                    <li><a href="#rate-limits">{{ __('docs.rate_limits') }}</a></li>
+                    <li><a href="#errors">{{ __('docs.error_handling') }}</a></li>
+                    <li><a href="#examples">{{ __('docs.usage_examples') }}</a></li>
+                    <li><a href="#faq">{{ __('docs.faq') }}</a></li>
                 </ul>
             </nav>
         </aside>
@@ -730,15 +730,15 @@
         <main class="docs-content">
             <!-- Getting Started -->
             <section id="getting-started">
-                <h1>Getting Started</h1>
-                <p>LLM Resayil is an OpenAI-compatible API that lets you access 45+ open-source and cloud LLM models with flexible billing. Any OpenAI SDK works seamlessly by overriding the base URL.</p>
+                <h1>{{ __('docs.getting_started') }}</h1>
+                <p>{{ __('docs.getting_started_desc') }}</p>
 
-                <h2 style="margin-top: 1.5rem;">Setup in 5 Steps</h2>
+                <h2 style="margin-top: 1.5rem;">{{ __('docs.setup_steps', ['count' => 5]) }}</h2>
                 <ol class="getting-started-steps">
-                    <li><div><strong>Register</strong> at <a href="/register" style="color: var(--gold); text-decoration: none;">llm.resayil.io/register</a></div></li>
-                    <li><div><strong>Subscribe</strong> at <a href="/billing/plans" style="color: var(--gold); text-decoration: none;">/billing/plans</a> — choose a plan or start your free 7-day trial</div></li>
-                    <li><div><strong>Create API Key</strong> at <a href="/api-keys" style="color: var(--gold); text-decoration: none;">/api-keys</a> — click "Create Key" and save it (shown only once)</div></li>
-                    <li><div><strong>Make your first call:</strong></div></li>
+                    <li><div><strong>{{ __('docs.register') }}</strong> at <a href="/register" style="color: var(--gold); text-decoration: none;">llm.resayil.io/register</a></div></li>
+                    <li><div><strong>{{ __('docs.subscribe') }}</strong> at <a href="/billing/plans" style="color: var(--gold); text-decoration: none;">/billing/plans</a> — {{ __('docs.choose_plan') }}</div></li>
+                    <li><div><strong>{{ __('docs.create_api_key') }}</strong> at <a href="/api-keys" style="color: var(--gold); text-decoration: none;">/api-keys</a> — {{ __('docs.click_create') }}</div></li>
+                    <li><div><strong>{{ __('docs.make_first_call') }}:</strong></div></li>
                 </ol>
 
                 <div class="code-block-wrapper">
@@ -755,16 +755,16 @@
                 </div>
 
                 <ol start="5" class="getting-started-steps" style="counter-reset: step-counter 4;">
-                    <li><div><strong>Track usage</strong> at <a href="/dashboard" style="color: var(--gold); text-decoration: none;">/dashboard</a></div></li>
+                    <li><div><strong>{{ __('docs.track_usage') }}</strong> at <a href="/dashboard" style="color: var(--gold); text-decoration: none;">/dashboard</a></div></li>
                 </ol>
             </section>
 
             <!-- Authentication -->
             <section id="authentication">
-                <h2>How do I authenticate API requests?</h2>
-                <p>Every API request requires authentication using your API key in the <code>Authorization</code> header.</p>
+                <h2>{{ __('docs.how_authenticate') }}</h2>
+                <p>{{ __('docs.auth_desc') }}</p>
 
-                <h3>Header Format</h3>
+                <h3>{{ __('docs.header_format') }}</h3>
                 <div class="code-block-wrapper">
                     <div class="code-block-header">
                         <div class="code-block-language">bash</div>
@@ -772,47 +772,46 @@
                     <pre><code class="language-bash">Authorization: Bearer YOUR_API_KEY</code></pre>
                 </div>
 
-                <h3>Getting Your API Key</h3>
+                <h3>{{ __('docs.getting_api_key') }}</h3>
                 <p>
-                    Visit <a href="/api-keys" style="color: var(--gold); text-decoration: none;">/api-keys</a> to create and manage keys.
-                    Your key is shown only once at creation — store it securely.
+                    <a href="/api-keys" style="color: var(--gold); text-decoration: none;">/api-keys</a> — {{ __('docs.store_securely') }}
                 </p>
 
-                <h3>Key Limits by Plan</h3>
+                <h3>{{ __('docs.key_limits') }}</h3>
                 <table>
                     <tr>
-                        <th>Plan</th>
-                        <th>Max API Keys</th>
+                        <th>{{ __('docs.plan') }}</th>
+                        <th>{{ __('docs.max_api_keys') }}</th>
                     </tr>
                     <tr>
-                        <td>Starter</td>
-                        <td>1 key</td>
+                        <td>{{ __('docs.starter') }}</td>
+                        <td>1 {{ __('docs.key') }}</td>
                     </tr>
                     <tr>
-                        <td>Basic</td>
-                        <td>2 keys</td>
+                        <td>{{ __('docs.basic') }}</td>
+                        <td>2 {{ __('docs.keys') }}</td>
                     </tr>
                     <tr>
-                        <td>Pro</td>
-                        <td>3 keys</td>
+                        <td>{{ __('docs.pro') }}</td>
+                        <td>3 {{ __('docs.keys') }}</td>
                     </tr>
                     <tr>
-                        <td>Enterprise</td>
-                        <td>Unlimited</td>
+                        <td>{{ __('docs.enterprise') }}</td>
+                        <td>{{ __('docs.unlimited') }}</td>
                     </tr>
                 </table>
 
-                <h3>Security Best Practices</h3>
+                <h3>{{ __('docs.security_best_practices') }}</h3>
                 <ul>
-                    <li>Never commit API keys to version control — use environment variables</li>
-                    <li>Rotate keys regularly</li>
-                    <li>Use separate keys per application or environment</li>
-                    <li>Revoke keys immediately if compromised</li>
-                    <li>Omit keys from error messages and logs</li>
+                    <li>{{ __('docs.never_commit_api_keys') }}</li>
+                    <li>{{ __('docs.rotate_keys') }}</li>
+                    <li>{{ __('docs.use_separate_keys') }}</li>
+                    <li>{{ __('docs.revoke_keys') }}</li>
+                    <li>{{ __('docs.omit_keys') }}</li>
                 </ul>
 
                 <div class="callout">
-                    <strong>Authentication Error:</strong> Missing or invalid API key returns <code>401 Unauthorized</code>
+                    <strong>{{ __('docs.authentication_error') }}</strong> {{ __('docs.missing_invalid_api_key') }} <code>401 {{ __('docs.unauthorized') }}</code>
                 </div>
             </section>
 
@@ -825,16 +824,16 @@
                     <code>https://llm.resayil.io/api/v1</code>
                 </div>
 
-                <h3>POST /api/v1/chat/completions</h3>
-                <p>Send messages to a model and get a completion response. Supports streaming via the <code>stream</code> parameter.</p>
+                <h3>{{ __('docs.post_chat_completions') }}</h3>
+                <p>{{ __('docs.send_messages_model', ['code' => '<code>stream</code>']) }}</p>
 
-                <h4 style="font-size: 1.1rem; margin-top: 1.5rem; margin-bottom: 1rem; font-weight: 600;">Request Parameters</h4>
+                <h4 style="font-size: 1.1rem; margin-top: 1.5rem; margin-bottom: 1rem; font-weight: 600;">{{ __('docs.request_parameters') }}</h4>
                 <table>
                     <tr>
-                        <th>Parameter</th>
-                        <th>Type</th>
-                        <th>Required</th>
-                        <th>Description</th>
+                        <th>{{ __('docs.parameter') }}</th>
+                        <th>{{ __('docs.type') }}</th>
+                        <th>{{ __('docs.required') }}</th>
+                        <th>{{ __('docs.description') }}</th>
                     </tr>
                     <tr>
                         <td><code>model</code></td>

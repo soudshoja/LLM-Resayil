@@ -1,0 +1,408 @@
+<body>
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="nav-inner">
+      <div class="nav-brand">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2" style="margin-right: 8px;">
+          <path d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+        </svg>
+        <span style="background: linear-gradient(135deg, var(--gold) 0%, #e8d5b7 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-weight: 700;">LLM Resayil</span>
+      </div>
+      <div class="nav-links">
+        <a href="/docs" class="nav-link">← Back to Docs</a>
+        @if(auth()->check())
+          <a href="/dashboard" class="nav-link">Dashboard</a>
+        @else
+          <a href="/login" class="nav-link">Login</a>
+          <a href="/register" class="btn-gold">Get Started</a>
+        @endif
+      </div>
+    </div>
+  </nav>
+
+  <div class="page-wrapper">
+    <!-- HERO SECTION -->
+    <section class="hero">
+      <div class="container">
+        <div class="hero-badge">Credits System</div>
+        <h1>Simple, Predictable <span class="gold">Credits</span></h1>
+        <p class="hero-lead">No complex token math, no surprise USD bills, no per-model pricing puzzles. Buy credits in KWD, spend them as you build. Your balance stays clear.</p>
+        <div class="hero-actions">
+          <a href="#topup" class="btn-gold">View Top-Up Packs</a>
+          <a href="/docs" class="btn-outline">Read API Docs</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION: Why Credits? -->
+    <section class="section">
+      <div class="container">
+        <div class="section-label">PRICING MODEL</div>
+        <h2 class="section-title">One system. Zero confusion.</h2>
+        <p class="section-subtitle">Other LLM providers charge per-model in USD with separate input and output rates. We simplified it.</p>
+
+        <div class="comparison-grid">
+          <!-- Bad Card -->
+          <div class="comparison-card bad">
+            <div class="card-pill bad">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M6 18L18 6M6 6l12 12"></path>
+              </svg>
+              Token-based pricing (other providers)
+            </div>
+            <h3 class="card-title">Complex & unpredictable</h3>
+            <p class="card-sub">Different rates per model. Input tokens priced separately from output tokens. Prices in USD subject to exchange rates.</p>
+
+            <div class="price-example">
+              <div style="font-weight: 600; font-size: 12px; color: #999; margin-bottom: 12px; text-transform: uppercase;">EXAMPLE: GPT-4o, 1 request</div>
+              <div class="price-row">
+                <span>Input tokens:</span>
+                <span>30 tokens × $0.0000025 = $0.000075</span>
+              </div>
+              <div class="price-row">
+                <span>Output tokens:</span>
+                <span>150 tokens × $0.000010 = $0.001500</span>
+              </div>
+              <div class="price-row">
+                <span>Exchange (KWD):</span>
+                <span>0.307 KWD/USD</span>
+              </div>
+              <div class="price-row">
+                <span>Conversion fees:</span>
+                <span>+ variable</span>
+              </div>
+              <div class="price-total" style="color: #ff6b6b;">~$0.001575 + fees</div>
+            </div>
+
+            <div class="comparison-bullets">
+              <div class="bullet">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: #ff6b6b;">
+                  <path d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+                Different price per model
+              </div>
+              <div class="bullet">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: #ff6b6b;">
+                  <path d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+                Separate input & output rates
+              </div>
+              <div class="bullet">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: #ff6b6b;">
+                  <path d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+                USD prices subject to FX rates
+              </div>
+              <div class="bullet">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: #ff6b6b;">
+                  <path d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+                Hard to predict monthly spend
+              </div>
+              <div class="bullet">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: #ff6b6b;">
+                  <path d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+                Charges even for failed requests
+              </div>
+            </div>
+          </div>
+
+          <!-- Good Card -->
+          <div class="comparison-card good">
+            <div class="card-pill good">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M5 13l4 4L19 7"></path>
+              </svg>
+              Credit-based pricing (Resayil)
+            </div>
+            <h3 class="card-title">Simple & transparent</h3>
+            <p class="card-sub">One credit = one output token (Standard) or two credits (Premium). Buy packs in KWD. No FX, no surprises.</p>
+
+            <div class="price-example">
+              <div style="font-weight: 600; font-size: 12px; color: #999; margin-bottom: 12px; text-transform: uppercase;">SAME REQUEST: Standard model, 1 request</div>
+              <div class="price-row">
+                <span>Output tokens:</span>
+                <span>150 tokens</span>
+              </div>
+              <div class="price-row">
+                <span>Rate:</span>
+                <span>× 1 credit/token</span>
+              </div>
+              <div class="price-row">
+                <span>Credits used:</span>
+                <span>150 credits</span>
+              </div>
+              <div class="price-row">
+                <span>From your pack:</span>
+                <span>5,000 credits (2 KWD)</span>
+              </div>
+              <div class="price-row">
+                <span>Remaining balance:</span>
+                <span>4,850 credits</span>
+              </div>
+              <div class="price-total" style="color: #4ade80;">150 credits</div>
+            </div>
+
+            <div class="comparison-bullets">
+              <div class="bullet">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: #4ade80;">
+                  <path d="M5 13l4 4L19 7"></path>
+                </svg>
+                Same rate for all Standard models
+              </div>
+              <div class="bullet">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: #4ade80;">
+                  <path d="M5 13l4 4L19 7"></path>
+                </svg>
+                Only output tokens count
+              </div>
+              <div class="bullet">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: #4ade80;">
+                  <path d="M5 13l4 4L19 7"></path>
+                </svg>
+                Priced in KWD — no FX surprises
+              </div>
+              <div class="bullet">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: #4ade80;">
+                  <path d="M5 13l4 4L19 7"></path>
+                </svg>
+                Clear balance always visible
+              </div>
+              <div class="bullet">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: #4ade80;">
+                  <path d="M5 13l4 4L19 7"></path>
+                </svg>
+                Credits never expire
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- SECTION: How a Request Is Charged -->
+    <section class="section">
+      <div class="container">
+        <div class="section-label">BILLING FLOW</div>
+        <h2 class="section-title">How a request is charged</h2>
+        <p class="section-subtitle">Every API call follows the same 5-step flow from request to balance update.</p>
+
+        <div class="steps-flow">
+          <div class="step-item">
+            <div class="step-num">1</div>
+            <div class="step-label">Make Request</div>
+            <div class="step-sub">Call /api/v1/chat/completions</div>
+          </div>
+          <div class="step-item">
+            <div class="step-num">2</div>
+            <div class="step-label">Model Responds</div>
+            <div class="step-sub">Response generated</div>
+          </div>
+          <div class="step-item">
+            <div class="step-num">3</div>
+            <div class="step-label">Tokens Counted</div>
+            <div class="step-sub">Output tokens measured</div>
+          </div>
+          <div class="step-item">
+            <div class="step-num">4</div>
+            <div class="step-label">Credits Deducted</div>
+            <div class="step-sub">From your balance</div>
+          </div>
+          <div class="step-item">
+            <div class="step-num">5</div>
+            <div class="step-label">Balance Updated</div>
+            <div class="step-sub">Visible on dashboard</div>
+          </div>
+        </div>
+
+        <div class="tip-box">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 12px; flex-shrink: 0;">
+            <circle cx="12" cy="12" r="10"></circle>
+            <path d="M12 16v-4M12 8h.01"></path>
+          </svg>
+          <div>
+            <strong>Only output tokens count toward credits.</strong> Input tokens (your prompt) are not charged. This means longer system prompts don't cost extra.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- SECTION: Worked Example -->
+    <section class="section" id="example">
+      <div class="container">
+        <div class="section-label">REAL EXAMPLE</div>
+        <h2 class="section-title">You ask: <span class="gold">"Write a 100-word email"</span></h2>
+        <p class="section-subtitle">See exactly how the same request is billed under each system.</p>
+
+        <div class="example-box">
+          <div class="example-prompt">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2" style="margin-right: 12px; flex-shrink: 0;">
+              <path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+            </svg>
+            <div>
+              <strong>Write a professional 100-word email introducing our product.</strong>
+              <span style="color: var(--text-muted); font-size: 14px; display: block; margin-top: 4px;">~30 input tokens, ~150 output tokens generated</span>
+            </div>
+          </div>
+
+          <div class="example-cols">
+            <!-- Left Column: Complex -->
+            <div class="example-col">
+              <div class="example-col-title">
+                <span class="complexity-tag">COMPLEX</span> Token-based (e.g. GPT-4o)
+              </div>
+              <div class="calc-row">
+                <span>Input:</span>
+                <span>30 tokens × $0.0000025 = $0.000075</span>
+              </div>
+              <div class="calc-row">
+                <span>Output:</span>
+                <span>150 tokens × $0.0000100 = $0.001500</span>
+              </div>
+              <div class="calc-row">
+                <span>FX (at 0.307):</span>
+                <span>≈ 0.000 + 0.000 KWD</span>
+              </div>
+              <div class="calc-row">
+                <span>Fees:</span>
+                <span>+ conversion fee</span>
+              </div>
+              <div class="calc-total" style="color: #ff6b6b;">~$0.001575 USD</div>
+              <div style="color: var(--text-muted); font-size: 13px; margin-top: 12px;">Varies by model, by rate changes, by FX</div>
+            </div>
+
+            <!-- Right Column: Simple -->
+            <div class="example-col">
+              <div class="example-col-title">
+                <span class="simplicity-tag">SIMPLE</span> Credit-based (Resayil Standard)
+              </div>
+              <div class="calc-row">
+                <span>Output tokens:</span>
+                <span>150</span>
+              </div>
+              <div class="calc-row">
+                <span>Rate:</span>
+                <span>1 credit / token</span>
+              </div>
+              <div class="calc-row">
+                <span>Credits used:</span>
+                <span>150</span>
+              </div>
+              <div class="calc-row">
+                <span>From 5,000-credit pack:</span>
+                <span>(2 KWD total)</span>
+              </div>
+              <div class="calc-total" style="color: #4ade80;">150 credits</div>
+              <div style="color: var(--text-muted); font-size: 13px; margin-top: 12px;">Always this rate. No surprises.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- SECTION: Credit Rates -->
+    <section class="section" id="rates">
+      <div class="container">
+        <div class="section-label">RATES</div>
+        <h2 class="section-title">Credit rates by model tier</h2>
+        <p class="section-subtitle">All models on the platform fall into one of two tiers. The model list at /api/v1/models shows which tier each model belongs to.</p>
+
+        <table class="rates-table">
+          <thead>
+            <tr>
+              <th>Model Tier</th>
+              <th>Credits per Output Token</th>
+              <th>Example Models</th>
+              <th>Best For</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="tier-badge tier-standard">Standard</span></td>
+              <td>1 credit</td>
+              <td>Llama, Qwen, Gemma, Mistral</td>
+              <td>General chat, coding, summarization</td>
+            </tr>
+            <tr>
+              <td><span class="tier-badge tier-premium">Premium</span></td>
+              <td>2 credits</td>
+              <td>DeepSeek, large reasoning models</td>
+              <td>Complex reasoning, long context, advanced tasks</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="tip-box">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 12px; flex-shrink: 0;">
+            <path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3M6.343 6.343l-.707-.707M6.343 17.657l-.707.707M12 21v-1"></path>
+          </svg>
+          <div>
+            <strong>Not sure which tier a model is?</strong> Call <code style="background: rgba(212, 175, 55, 0.1); padding: 2px 6px; border-radius: 3px; color: var(--gold);">GET /api/v1/models</code> — the response includes a <code style="background: rgba(212, 175, 55, 0.1); padding: 2px 6px; border-radius: 3px; color: var(--gold);">credit_multiplier</code> field showing 1 or 2.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- SECTION: Top-Up Packs -->
+    <section class="section" id="topup">
+      <div class="container">
+        <div class="section-label">TOP-UP PACKS</div>
+        <h2 class="section-title">Buy credits, spend as you go</h2>
+        <p class="section-subtitle">Credits never expire and are separate from your subscription. Top up anytime from your dashboard.</p>
+
+        <div class="topup-grid">
+          <!-- Pack 1: 5,000 credits -->
+          <div class="topup-card">
+            <div class="topup-credits">5,000</div>
+            <div class="topup-label">Credits</div>
+            <div class="topup-price">2 KWD</div>
+            <div class="topup-per">0.0004 KWD per credit</div>
+          </div>
+
+          <!-- Pack 2: 50,000 credits (Featured) -->
+          <div class="topup-card featured">
+            <div style="position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: var(--gold); color: #0f1115; padding: 4px 12px; border-radius: 12px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">Best Value</div>
+            <div class="topup-credits">50,000</div>
+            <div class="topup-label">Credits</div>
+            <div class="topup-price">15 KWD</div>
+            <div class="topup-per">0.0003 KWD per credit</div>
+          </div>
+
+          <!-- Pack 3: 15,000 credits -->
+          <div class="topup-card">
+            <div class="topup-credits">15,000</div>
+            <div class="topup-label">Credits</div>
+            <div class="topup-price">5 KWD</div>
+            <div class="topup-per">0.00033 KWD per credit</div>
+          </div>
+        </div>
+
+        <div class="tip-box">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 12px; flex-shrink: 0;">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+            <path d="M7 11V7a4 4 0 0 1 4-4h2a4 4 0 0 1 4 4v4"></path>
+          </svg>
+          <div>
+            <strong>Top-up packs are available at</strong> <a href="/billing/plans" style="color: var(--gold); text-decoration: none; font-weight: 600;">Billing & Plans</a>. Payment via KNET or international credit card through MyFatoorah.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="docs-footer">
+    LLM Resayil · Credits Documentation · <a href="/docs" style="color: var(--gold); text-decoration: none; font-weight: 600;">Back to Docs</a>
+  </footer>
+</body>

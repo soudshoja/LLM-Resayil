@@ -16,4 +16,9 @@ return [
     'admin' => 'Admin',
     'monitor' => 'Monitor',
     'models' => 'Models',
+    'brand' => 'LLM Resayil',
+    'portal_title' => 'LLM Portal',
+    'og_description_default' => '45+ AI models. OpenAI-compatible API. Pay per token. KNET payments accepted.',
+    'og_description_short' => '45+ AI models. OpenAI-compatible. Pay per token.',
+    'meta_description_default' => '45+ open-source AI models via one OpenAI-compatible API. Local GPU inference + cloud proxies. Pay per token. KNET payments.',
 ];

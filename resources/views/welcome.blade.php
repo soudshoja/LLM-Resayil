@@ -113,6 +113,9 @@
     .section-title h2 { font-size: 1.875rem; font-weight: 700; margin-bottom: 0.75rem; }
     .section-title p { color: var(--text-secondary); font-size: 1rem; max-width: 500px; margin: 0 auto; }
     .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+    /* RTL fix: ensure steps always go 1→2→3 left-to-right */
+    [dir="rtl"] .steps { direction: ltr; }
+    [dir="rtl"] .step-num { direction: ltr; }
     .step { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 1.75rem; text-align: center; position: relative; }
     .step-num { width: 44px; height: 44px; background: linear-gradient(135deg, var(--gold), var(--gold-light)); color: #0a0d14; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1.1rem; margin: 0 auto 1rem; }
     .step h3 { font-size: 1rem; font-weight: 600; margin-bottom: 0.5rem; }
@@ -241,6 +244,8 @@
     .form-success { display: none; padding: 1.25rem; background: rgba(5,150,105,0.1); border: 1px solid rgba(5,150,105,0.3); border-radius: 12px; color: #6ee7b7; text-align: center; margin-bottom: 1.5rem; }
     @media(max-width: 900px) { .contact-container { grid-template-columns: 1fr; } }
     @media(max-width: 768px) { .hero h1 { font-size: 2rem; } .steps { grid-template-columns: 1fr; } .contact-form-wrapper { padding: 1.75rem; } }
+    /* RTL mobile fix: steps remain LTR order even on small screens */
+    @media(max-width: 768px) { [dir="rtl"] .steps { direction: ltr; } [dir="rtl"] .step-num { direction: ltr; } }
 </style>
 @endpush
 
@@ -268,7 +273,7 @@
 <!-- Model Carousel -->
 <section class="hmc-section" aria-label="Model showcase carousel">
     <div class="hmc-header">
-        <h2>Explore Our <em>Model Lineup</em></h2>
+        <h2>{!! __('welcome.explore_model_lineup') !!}</h2>
         <div class="hmc-header-underline"></div>
     </div>
 
@@ -286,15 +291,15 @@
                     </div>
                     <div class="hmc-body">
                         <div class="hmc-badges">
-                            <span class="hmc-badge hmc-badge-local">Lightweight</span>
+                            <span class="hmc-badge hmc-badge-local">{!! __('welcome.lightweight') !!}</span>
                             <span class="hmc-credit-pill">
                                 <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/><path d="M12 6v12M9 9h4.5a1.5 1.5 0 010 3H9m0 0h4.5a1.5 1.5 0 010 3H9" stroke="white" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg>
-                                1 credit / token
+                                {{ __('welcome.per_1k_tokens') }}
                             </span>
                         </div>
                         <div class="hmc-model-name">Llama 3.2 3B</div>
-                        <div class="hmc-stat">Fastest model on the platform</div>
-                        <div class="hmc-desc">Meta's lightweight powerhouse — blazing response times for everyday tasks, chatbots, and high-throughput workloads.</div>
+                        <div class="hmc-stat">{!! __('welcome.fastest_model') !!}</div>
+                        <div class="hmc-desc">{!! __('welcome.lightweight_powerhouse') !!}</div>
                     </div>
                     <div class="hmc-progress" id="hmcProgress" style="width:0%"></div>
                 </div>
@@ -317,15 +322,15 @@
                     </div>
                     <div class="hmc-body">
                         <div class="hmc-badges">
-                            <span class="hmc-badge hmc-badge-cloud">Frontier Model</span>
+                            <span class="hmc-badge hmc-badge-cloud">{!! __('welcome.frontier_model') !!}</span>
                             <span class="hmc-credit-pill">
                                 <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/><path d="M12 6v12M9 9h4.5a1.5 1.5 0 010 3H9m0 0h4.5a1.5 1.5 0 010 3H9" stroke="white" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg>
-                                2 credits / token
+                                2 {{ __('welcome.per_1k_tokens') }}
                             </span>
                         </div>
                         <div class="hmc-model-name">DeepSeek V3.1 671B</div>
-                        <div class="hmc-stat">Frontier reasoning at scale</div>
-                        <div class="hmc-desc">671 billion parameters of frontier-class intelligence. Built for complex reasoning, deep analysis, and multi-step problem solving.</div>
+                        <div class="hmc-stat">{!! __('welcome.frontier_reasoning_scale') !!}</div>
+                        <div class="hmc-desc">{!! __('welcome.frontier_intelligence') !!}</div>
                     </div>
                 </div>
             </div>
@@ -348,15 +353,15 @@
                     </div>
                     <div class="hmc-body">
                         <div class="hmc-badges">
-                            <span class="hmc-badge hmc-badge-cloud">Frontier Model</span>
+                            <span class="hmc-badge hmc-badge-cloud">{!! __('welcome.frontier_model') !!}</span>
                             <span class="hmc-credit-pill">
                                 <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/><path d="M12 6v12M9 9h4.5a1.5 1.5 0 010 3H9m0 0h4.5a1.5 1.5 0 010 3H9" stroke="white" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg>
-                                2 credits / token
+                                2 {{ __('welcome.per_1k_tokens') }}
                             </span>
                         </div>
                         <div class="hmc-model-name">Qwen 3.5 397B</div>
-                        <div class="hmc-stat">Largest MoE · true multilingual intelligence</div>
-                        <div class="hmc-desc">Alibaba's Mixture-of-Experts flagship. 397 billion parameters with native Arabic, English, Chinese support and deep multilingual coverage across 29 languages.</div>
+                        <div class="hmc-stat">{!! __('welcome.largest_moe_multilingual') !!}</div>
+                        <div class="hmc-desc">{!! __('welcome.moe_flagship') !!}</div>
                     </div>
                 </div>
             </div>
@@ -376,15 +381,15 @@
                     </div>
                     <div class="hmc-body">
                         <div class="hmc-badges">
-                            <span class="hmc-badge hmc-badge-api">OpenAI SDK</span>
+                            <span class="hmc-badge hmc-badge-api">{!! __('welcome.openai_sdk') !!}</span>
                             <span class="hmc-credit-pill">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
                                 Zero code changes
                             </span>
                         </div>
                         <div class="hmc-model-name">OpenAI-Compatible API</div>
-                        <div class="hmc-stat">Drop-in replacement — change only the base URL</div>
-                        <div class="hmc-desc">Works with the official OpenAI Python SDK, Node.js SDK, LangChain, LlamaIndex, and any HTTP client. Point <code style="color:var(--gold);font-size:0.85em">base_url</code> to our endpoint and you're done.</div>
+                        <div class="hmc-stat">{!! __('welcome.drop_in_api') !!}</div>
+                        <div class="hmc-desc">{!! __('welcome.compatible_api_desc') !!}</div>
                     </div>
                 </div>
             </div>
@@ -403,15 +408,15 @@
                     </div>
                     <div class="hmc-body">
                         <div class="hmc-badges">
-                            <span class="hmc-badge hmc-badge-all">All Tiers</span>
+                            <span class="hmc-badge hmc-badge-all">{!! __('welcome.all_tiers') !!}</span>
                             <span class="hmc-credit-pill">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-                                Pay per token
+                                {{ __('welcome.transparent_pricing') }}
                             </span>
                         </div>
                         <div class="hmc-model-name">45+ Models</div>
-                        <div class="hmc-stat">One API · 45+ Models · Every subscription tier</div>
-                        <div class="hmc-desc">From 3B lightweight models to 671B frontier giants. All models accessible on every subscription tier — no gating, no restrictions.</div>
+                        <div class="hmc-stat">{!! __('welcome.one_api_all_models') !!}</div>
+                        <div class="hmc-desc">{!! __('welcome.all_models_access') !!}</div>
                     </div>
                 </div>
             </div>
@@ -434,24 +439,24 @@
 <!-- How It Works -->
 <section class="section">
     <div class="section-title">
-        <h2>How It Works</h2>
-        <p>Three simple steps to access powerful AI models</p>
+        <h2>{!! __('welcome.how_it_works') !!}</h2>
+        <p>{!! __('welcome.three_simple_steps') !!}</p>
     </div>
     <div class="steps">
         <div class="step">
             <div class="step-num">1</div>
-            <h3>Register & Top Up</h3>
-            <p>Create an account, choose a subscription tier, and top up with credits via KNET or credit card.</p>
+            <h3>{!! __('welcome.step_1_title') !!}</h3>
+            <p>{!! __('welcome.step_1_desc') !!}</p>
         </div>
         <div class="step">
             <div class="step-num">2</div>
-            <h3>Get Your API Key</h3>
-            <p>Generate an API key from your dashboard. Use it exactly like you would with OpenAI's API.</p>
+            <h3>{!! __('welcome.step_2_title') !!}</h3>
+            <p>{!! __('welcome.step_2_desc') !!}</p>
         </div>
         <div class="step">
             <div class="step-num">3</div>
-            <h3>Make API Calls</h3>
-            <p>Point your app to our endpoint. High-performance inference, fully automatic.</p>
+            <h3>{!! __('welcome.step_3_title') !!}</h3>
+            <p>{!! __('welcome.step_3_desc') !!}</p>
         </div>
     </div>
 </section>
@@ -461,131 +466,131 @@
 <!-- Pricing -->
 <section class="section" id="pricing">
     <div class="section-title">
-        <h2>Simple, <span class="text-gold">Transparent</span> Pricing</h2>
-        <p>All prices in Kuwaiti Dinar. Billed monthly. No hidden fees.</p>
+        <h2>{!! __('welcome.transparent_pricing') !!} <span class="text-gold">{!! __('welcome.transparent') !!}</span></h2>
+        <p>{!! __('welcome.all_prices_kwd') !!}</p>
     </div>
 
     {{-- Free Trial Box --}}
     <div class="trial-section">
-        <div class="trial-badge">Free Trial</div>
-        <h2 style="font-size:1.2rem;font-weight:700;margin-bottom:1.5rem;">Try Before You Buy</h2>
+        <div class="trial-badge">{!! __('welcome.free_trial') !!}</div>
+        <h2 style="font-size:1.2rem;font-weight:700;margin-bottom:1.5rem;">{!! __('welcome.try_before_buy') !!}</h2>
         <div class="trial-grid">
             <div class="trial-card">
                 <div class="trial-icon">⚡</div>
-                <h3 style="font-size:1rem;font-weight:600;margin-bottom:0.85rem;">7-Day Free Trial</h3>
+                <h3 style="font-size:1rem;font-weight:600;margin-bottom:0.85rem;">{!! __('welcome.7_day_trial') !!}</h3>
                 <ul class="trial-features">
-                    <li><svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>Full Starter tier features</li>
-                    <li><svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>1,000 credits included</li>
-                    <li><svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>Small models (3–14B)</li>
-                    <li><svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>1 free API key</li>
-                    <li><svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>Cancel anytime during trial</li>
+                    <li><svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>{!! __('welcome.full_starter_features') !!}</li>
+                    <li><svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>{!! __('welcome.1000_credits') !!}</li>
+                    <li><svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>{!! __('welcome.small_models') !!}</li>
+                    <li><svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>{!! __('welcome.free_api_key') !!}</li>
+                    <li><svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>{!! __('welcome.cancel_anytime') !!}</li>
                 </ul>
             </div>
             <div class="trial-cta-col">
-                <div class="trial-after-label">After Trial</div>
-                <div class="trial-after-plan">Auto-bill to Starter</div>
-                <div class="trial-after-details">15 KWD / month<br>Credit card required<br>Cancel anytime</div>
-                <a href="/register" class="trial-cta-btn">Start Free Trial — Card Required</a>
+                <div class="trial-after-label">{!! __('welcome.after_trial') !!}</div>
+                <div class="trial-after-plan">{!! __('welcome.auto_bill_starter') !!}</div>
+                <div class="trial-after-details">{!! __('welcome.15_kwd_month') !!}<br>{!! __('welcome.card_required') !!}<br>{!! __('welcome.cancel_anytime') !!}</div>
+                <a href="/register" class="trial-cta-btn">{!! __('welcome.start_free_trial') !!} — {!! __('welcome.card_required') !!}</a>
             </div>
         </div>
-        <p class="trial-footer">⚠️ Payments processed securely via KNET / credit card. Cancel anytime during the trial period.</p>
+        <p class="trial-footer">{!! __('welcome.trial_cancel_info') !!}</p>
     </div>
 
     <div class="pricing-grid">
 
         {{-- Starter Tier --}}
         <div class="plan-card">
-            <div class="plan-badge">Most Popular</div>
-            <div class="plan-name">Starter</div>
+            <div class="plan-badge">{!! __('welcome.most_popular') !!}</div>
+            <div class="plan-name">{!! __('welcome.starter_tier') !!}</div>
             <div class="plan-price">15 <span>KWD</span></div>
-            <div class="plan-billing">per month &nbsp;&middot;&nbsp; billed monthly</div>
+            <div class="plan-billing">{!! __('welcome.per_month') !!} &nbsp;&middot;&nbsp; {!! __('welcome.billed_monthly') !!}</div>
             <hr class="plan-divider">
             <ul class="plan-features">
                 <li>
                     <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                    1,000 credits / month
+                    1,000 {{ __('welcome.credits_month') }}
                 </li>
                 <li>
                     <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                    10 requests / minute
+                    10 {{ __('welcome.requests_minute') }}
                 </li>
                 <li>
                     <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                    1 free API key
+                    1 {{ __('welcome.free_api_key') }}
                 </li>
                 <li>
                     <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                    Small models only
+                    {{ __('welcome.small_models_only') }}
                 </li>
             </ul>
-            <a href="/register" class="plan-cta plan-cta-outline">Start Monthly Plan</a>
+            <a href="/register" class="plan-cta plan-cta-outline">{!! __('welcome.start_monthly') !!}</a>
         </div>
 
         {{-- Basic Tier (featured) --}}
         <div class="plan-card featured">
-            <div class="plan-badge">Best Value</div>
-            <div class="plan-name">Basic</div>
+            <div class="plan-badge">{!! __('welcome.best_value') !!}</div>
+            <div class="plan-name">{!! __('welcome.basic_tier') !!}</div>
             <div class="plan-price">25 <span>KWD</span></div>
-            <div class="plan-billing">per month &nbsp;&middot;&nbsp; billed monthly</div>
+            <div class="plan-billing">{!! __('welcome.per_month') !!} &nbsp;&middot;&nbsp; {!! __('welcome.billed_monthly') !!}</div>
             <hr class="plan-divider">
             <ul class="plan-features">
                 <li>
                     <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                    3,000 credits / month
+                    3,000 {{ __('welcome.credits_month') }}
                 </li>
                 <li>
                     <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                    30 requests / minute
+                    30 {{ __('welcome.requests_minute') }}
                 </li>
                 <li>
                     <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                    1 free API key
+                    1 {{ __('welcome.free_api_key') }}
                 </li>
                 <li>
                     <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                    All model sizes
+                    {{ __('welcome.all_model_sizes') }}
                 </li>
             </ul>
-            <a href="/register" class="plan-cta plan-cta-gold">Start Monthly Plan</a>
+            <a href="/register" class="plan-cta plan-cta-gold">{!! __('welcome.start_monthly') !!}</a>
         </div>
 
         {{-- Pro Tier --}}
         <div class="plan-card">
-            <div class="plan-name">Pro</div>
+            <div class="plan-name">{!! __('welcome.pro_tier') !!}</div>
             <div class="plan-price">45 <span>KWD</span></div>
-            <div class="plan-billing">per month &nbsp;&middot;&nbsp; billed monthly</div>
+            <div class="plan-billing">{!! __('welcome.per_month') !!} &nbsp;&middot;&nbsp; {!! __('welcome.billed_monthly') !!}</div>
             <hr class="plan-divider">
             <ul class="plan-features">
                 <li>
                     <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                    10,000 credits / month
+                    10,000 {{ __('welcome.credits_month') }}
                 </li>
                 <li>
                     <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                    60 requests / minute
+                    60 {{ __('welcome.requests_minute') }}
                 </li>
                 <li>
                     <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                    2 free API keys
+                    2 {{ __('welcome.free_api_keys') }}
                 </li>
                 <li>
                     <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                    Priority support
+                    {{ __('welcome.priority_support') }}
                 </li>
             </ul>
-            <a href="/register" class="plan-cta plan-cta-outline">Start Monthly Plan</a>
+            <a href="/register" class="plan-cta plan-cta-outline">{!! __('welcome.start_monthly') !!}</a>
         </div>
 
     </div>
-    <p class="trial-note">Card required for trial. Cancel anytime. Payments processed securely via KNET / credit card.</p>
+    <p class="trial-note">{!! __('welcome.card_required_trial') !!}</p>
 
     <!-- Credit top-up & addons info -->
     <div class="addon-box">
-        <h4>Credit Top-Ups &amp; Add-Ons</h4>
-        <div class="addon-row"><span>5,000 extra credits</span><span>2 KWD</span></div>
-        <div class="addon-row"><span>15,000 extra credits</span><span>5 KWD</span></div>
-        <div class="addon-row"><span>50,000 extra credits</span><span>15 KWD</span></div>
-        <div class="addon-row"><span>Credits per 1k tokens</span><span>0.5–3.5 credits</span></div>
+        <h4>{!! __('welcome.credit_topup_addons') !!}</h4>
+        <div class="addon-row"><span>{!! __('welcome.5k_credits') !!}</span><span>2 KWD</span></div>
+        <div class="addon-row"><span>{!! __('welcome.15k_credits') !!}</span><span>5 KWD</span></div>
+        <div class="addon-row"><span>{!! __('welcome.50k_credits') !!}</span><span>15 KWD</span></div>
+        <div class="addon-row"><span>{!! __('welcome.credits_per_token') !!}</span><span>{!! __('welcome.credit_range') !!}</span></div>
     </div>
 </section>
 
@@ -594,15 +599,15 @@
 <!-- Available Models -->
 <section class="section" id="models">
     <div class="section-title">
-        <h2>Available Models</h2>
-        <p>45+ models from the world's leading AI labs. Access all from a single API.</p>
+        <h2>{!! __('welcome.available_models') !!}</h2>
+        <p>{!! __('welcome.45_plus_models') !!}</p>
     </div>
 
     <!-- General Chat -->
     <div class="ml-category-group">
         <div class="ml-category-header">
             <span class="ml-category-diamond">&#9670;</span>
-            <span class="ml-category-label">General Chat</span>
+            <span class="ml-category-label">{!! __('welcome.general_chat') !!}</span>
             <span class="ml-category-line"></span>
         </div>
         <div class="ml-grid">
@@ -612,7 +617,7 @@
                 <div class="ml-body">
                     <div class="ml-model-name">Llama 3.2 3B</div>
                     <div class="ml-company">Meta &middot; 3B</div>
-                    <div class="ml-tagline">Lightweight and blazing fast for everyday tasks</div>
+                    <div class="ml-tagline">{!! __('welcome.lightweight_fast') !!}</div>
                 </div>
             </div>
 
@@ -621,7 +626,7 @@
                 <div class="ml-body">
                     <div class="ml-model-name">Mistral Small 3.2 24B</div>
                     <div class="ml-company">Mistral AI &middot; 24B</div>
-                    <div class="ml-tagline">Balanced quality and speed for complex chat</div>
+                    <div class="ml-tagline">{!! __('welcome.balanced_quality_speed') !!}</div>
                 </div>
             </div>
 
@@ -632,7 +637,7 @@
     <div class="ml-category-group">
         <div class="ml-category-header">
             <span class="ml-category-diamond">&#9670;</span>
-            <span class="ml-category-label">Code</span>
+            <span class="ml-category-label">{!! __('welcome.code') !!}</span>
             <span class="ml-category-line"></span>
         </div>
         <div class="ml-grid">
@@ -642,7 +647,7 @@
                 <div class="ml-body">
                     <div class="ml-model-name">Qwen 2.5 Coder 14B</div>
                     <div class="ml-company">Alibaba / Qwen &middot; 14B</div>
-                    <div class="ml-tagline">Code specialist with deep multi-language support</div>
+                    <div class="ml-tagline">{!! __('welcome.code_specialist') !!}</div>
                 </div>
             </div>
 
@@ -651,7 +656,7 @@
                 <div class="ml-body">
                     <div class="ml-model-name">DeepSeek Coder 6.7B</div>
                     <div class="ml-company">DeepSeek &middot; 6.7B</div>
-                    <div class="ml-tagline">Fast, accurate code generation and completion</div>
+                    <div class="ml-tagline">{!! __('welcome.fast_code_generation') !!}</div>
                 </div>
             </div>
 
@@ -662,7 +667,7 @@
     <div class="ml-category-group">
         <div class="ml-category-header">
             <span class="ml-category-diamond">&#9670;</span>
-            <span class="ml-category-label">Vision &amp; Multimodal</span>
+            <span class="ml-category-label">{!! __('welcome.vision_multimodal') !!}</span>
             <span class="ml-category-line"></span>
         </div>
         <div class="ml-grid">
@@ -672,7 +677,7 @@
                 <div class="ml-body">
                     <div class="ml-model-name">Qwen3-VL 32B</div>
                     <div class="ml-company">Alibaba / Qwen &middot; 32B</div>
-                    <div class="ml-tagline">Understand images and documents alongside text</div>
+                    <div class="ml-tagline">{!! __('welcome.understand_images') !!}</div>
                 </div>
             </div>
 
@@ -683,7 +688,7 @@
     <div class="ml-category-group">
         <div class="ml-category-header">
             <span class="ml-category-diamond">&#9670;</span>
-            <span class="ml-category-label">Frontier</span>
+            <span class="ml-category-label">{!! __('welcome.frontier') !!}</span>
             <span class="ml-category-line"></span>
         </div>
         <div class="ml-grid">
@@ -693,7 +698,7 @@
                 <div class="ml-body">
                     <div class="ml-model-name">DeepSeek V3.1 671B</div>
                     <div class="ml-company">DeepSeek &middot; 671B</div>
-                    <div class="ml-tagline">Frontier-class reasoning at scale</div>
+                    <div class="ml-tagline">{!! __('welcome.frontier_reasoning') !!}</div>
                 </div>
             </div>
 
@@ -702,7 +707,7 @@
                 <div class="ml-body">
                     <div class="ml-model-name">Qwen 3.5 397B</div>
                     <div class="ml-company">Alibaba / Qwen &middot; 397B MoE</div>
-                    <div class="ml-tagline">The largest model available on the platform</div>
+                    <div class="ml-tagline">{!! __('welcome.largest_model_available') !!}</div>
                 </div>
             </div>
 
@@ -710,7 +715,7 @@
     </div>
 
     <div class="ml-footer">
-        <p>Showing a curated selection &mdash; <a href="/dashboard">explore all 45+ models</a> after signing in.</p>
+        <p>{!! __('welcome.curated_selection') !!} &mdash; <a href="/dashboard">{!! __('welcome.explore_all_models') !!}</a> {{ __('welcome.after_signing_in') }}.</p>
     </div>
 </section>
 
@@ -719,11 +724,11 @@
 <!-- Code Example -->
 <section class="section" id="docs">
     <div class="section-title">
-        <h2>Drop-In Replacement</h2>
-        <p>Works with any OpenAI-compatible SDK. Just change the base URL and API key.</p>
+        <h2>{!! __('welcome.drop_in_replacement') !!}</h2>
+        <p>{!! __('welcome.works_with_openai') !!}</p>
     </div>
     <div class="code-block">
-<span class="comment"># Python example using openai SDK</span>
+<span class="comment">{!! __('welcome.python_example') !!}</span>
 from openai import OpenAI
 
 client = OpenAI(
@@ -742,48 +747,48 @@ print(response.choices[0].message.content)
 <!-- Contact Us -->
 <section class="contact-form-section" id="contact">
     <div class="section-title">
-        <h2 style="color:var(--text-primary)">Need Help?</h2>
-        <p>Have questions? Our team is here to assist you with integration, pricing, or technical support.</p>
+        <h2 style="color:var(--text-primary)">{!! __('welcome.need_help') !!}</h2>
+        <p>{!! __('welcome.contact_subtitle') !!}</p>
     </div>
     <div class="contact-container">
         <div class="contact-info">
-            <h2>Get in Touch</h2>
-            <p>Fill out the form and we'll respond to your email at <strong style="color:var(--gold)">soud@alphia.net</strong> within 24 hours.</p>
+            <h2>{!! __('welcome.get_in_touch') !!}</h2>
+            <p>{!! str_replace(':email', '<strong style="color:var(--gold)">support@resayil.io</strong>', __('welcome.contact_form_response')) !!}</p>
 
             <div class="contact-info-item">
                 <div class="contact-icon email">
                     <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
                 </div>
                 <div>
-                    <strong>Email</strong>
+                    <strong>{!! __('welcome.email') !!}</strong>
                     <br>
-                    <span>Use the contact form below</span>
+                    <span>{!! __('welcome.use_contact_form') !!}</span>
                 </div>
             </div>
 
         </div>
 
         <div class="contact-form-wrapper">
-            <h3>Send us a Message</h3>
+            <h3>{!! __('welcome.send_message') !!}</h3>
             <div id="contact-form-success" class="form-success">
                 <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="display:block;margin:0 auto 0.75rem;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                <strong>Message sent!</strong> We'll get back to you at soud@alphia.net within 24 hours.
+                <strong>{!! __('welcome.message_sent') !!}</strong> {!! str_replace(':email', '<strong style="color:var(--gold)">support@resayil.io</strong>', __('welcome.contact_form_success')) !!}
             </div>
             <form id="contactForm" method="POST" action="/contact">
                 @csrf
                 <div class="form-group">
-                    <label for="full_name" class="form-label">Full Name</label>
-                    <input type="text" id="full_name" name="full_name" class="form-input" placeholder="John Doe" required>
+                    <label for="full_name" class="form-label">{!! __('welcome.full_name') !!}</label>
+                    <input type="text" id="full_name" name="full_name" class="form-input" placeholder="{!! __('welcome.placeholder_full_name') !!}" required>
                 </div>
                 <div class="form-group">
-                    <label for="email" class="form-label">Email Address</label>
-                    <input type="email" id="email" name="email" class="form-input" placeholder="john@example.com" required>
+                    <label for="email" class="form-label">{!! __('welcome.email_address') !!}</label>
+                    <input type="email" id="email" name="email" class="form-input" placeholder="{!! __('welcome.placeholder_email') !!}" required>
                 </div>
                 <div class="form-group">
-                    <label for="message" class="form-label">Message</label>
-                    <textarea id="message" name="message" class="form-textarea" placeholder="How can we help you?" required></textarea>
+                    <label for="message" class="form-label">{!! __('welcome.message') !!}</label>
+                    <textarea id="message" name="message" class="form-textarea" placeholder="{!! __('welcome.placeholder_message') !!}" required></textarea>
                 </div>
-                <button type="submit" class="btn-submit">Send Message</button>
+                <button type="submit" class="btn-submit">{!! __('welcome.send_message_btn') !!}</button>
             </form>
         </div>
     </div>
@@ -791,9 +796,9 @@ print(response.choices[0].message.content)
 
 <!-- CTA -->
 <section class="cta-section">
-    <h2 style="font-size:2rem;font-weight:700;margin-bottom:0.75rem">Ready to get started?</h2>
-    <p style="color:var(--text-secondary);margin-bottom:2rem">Join developers already using LLM Resayil. Pay with KNET or credit card.</p>
-    <a href="/register" class="btn btn-gold" style="padding:0.85rem 2.5rem;font-size:1.05rem">Create Free Account</a>
+    <h2 style="font-size:2rem;font-weight:700;margin-bottom:0.75rem">{!! __('welcome.ready_to_start') !!}</h2>
+    <p style="color:var(--text-secondary);margin-bottom:2rem">{!! __('welcome.join_developers') !!}</p>
+    <a href="/register" class="btn btn-gold" style="padding:0.85rem 2.5rem;font-size:1.05rem">{!! __('welcome.create_free_account') !!}</a>
 </section>
 
 <footer class="site-footer">
@@ -809,7 +814,7 @@ print(response.choices[0].message.content)
             <span class="footer-sep">·</span>
             <a href="/contact">{{ __('welcome.contact') }}</a>
         </div>
-        <p class="footer-copy">© {{ date('Y') }} LLM Resayil. {{ __('welcome.all_rights_reserved') }}</p>
+        <p class="footer-copy">© {{ date('Y') }} {{ __('welcome.footer_title') }}. {{ __('welcome.all_rights_reserved') }}</p>
     </div>
 </footer>
 
@@ -923,7 +928,11 @@ print(response.choices[0].message.content)
     });
 
     // ── Init ────────────────────────────────────────────────────────────────
-    goTo(0);
+    // Set current to 0 explicitly and show first slide WITHOUT calling goTo()
+    // to avoid calling resetProgress() which could interfere with autoplay
+    current = 0;
+    track.style.transform = 'translateX(0%)';
+    if (dots.length > 0) dots[0].classList.add('active');
     startAutoplay();
 })();
 </script>

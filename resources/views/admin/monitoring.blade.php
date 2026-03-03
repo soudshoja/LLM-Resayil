@@ -1,11 +1,11 @@
 @extends('layouts.app')
-@section('title', 'API Monitoring')
+@section('title', __('admin.monitoring.title'))
 
 @section('content')
 <main>
     <div style="margin-bottom:2rem">
-        <h1 style="font-size:1.5rem;font-weight:700">API Monitoring</h1>
-        <p class="text-secondary text-sm">Platform-wide usage analytics</p>
+        <h1 style="font-size:1.5rem;font-weight:700">{{ __('admin.monitoring.title') }}</h1>
+        <p class="text-secondary text-sm">{{ __('admin.monitoring.subtitle') }}</p>
     </div>
 
     @php
@@ -35,7 +35,7 @@
 
     {{-- Platform totals --}}
     <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:1rem;margin-bottom:2rem">
-        @foreach([["Today's Calls",$totalCallsToday],['Calls (7d)',number_format($totalCallsWeek)],['Calls (30d)',number_format($totalCallsMonth)],['Tokens (30d)',number_format($totalTokensMonth)],['Credits Used (30d)',number_format($totalCreditsMonth)]] as [$label,$value])
+        @foreach([[__('admin.monitoring.today_calls',$totalCallsToday],[__('admin.monitoring.calls_7d'),number_format($totalCallsWeek)],[__('admin.monitoring.calls_30d'),number_format($totalCallsMonth)],[__('admin.monitoring.tokens_30d'),number_format($totalTokensMonth)],[__('admin.monitoring.credits_30d'),number_format($totalCreditsMonth)]] as [$label,$value])
         <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:1.25rem">
             <div style="font-size:0.75rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:0.5rem">{{ $label }}</div>
             <div style="font-size:1.75rem;font-weight:700;color:var(--gold)">{{ $value }}</div>
@@ -46,14 +46,14 @@
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:2rem">
         {{-- Per-user stats --}}
         <div class="card">
-            <h2 style="font-size:1rem;font-weight:600;margin-bottom:1rem">Top Users (30d)</h2>
+            <h2 style="font-size:1rem;font-weight:600;margin-bottom:1rem">{{ __('admin.monitoring.top_users') }}</h2>
             @if($userStats->count())
             <table style="width:100%;border-collapse:collapse">
                 <thead><tr>
-                    <th style="font-size:0.7rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;padding:0.5rem 0;text-align:left;border-bottom:1px solid var(--border)">User</th>
-                    <th style="font-size:0.7rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;padding:0.5rem 0;text-align:right;border-bottom:1px solid var(--border)">Calls</th>
-                    <th style="font-size:0.7rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;padding:0.5rem 0;text-align:right;border-bottom:1px solid var(--border)">Tokens</th>
-                    <th style="font-size:0.7rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;padding:0.5rem 0;text-align:right;border-bottom:1px solid var(--border)">Credits</th>
+                    <th style="font-size:0.7rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;padding:0.5rem 0;text-align:left;border-bottom:1px solid var(--border)">{{ __('admin.monitoring.user') }}</th>
+                    <th style="font-size:0.7rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;padding:0.5rem 0;text-align:right;border-bottom:1px solid var(--border)">{{ __('admin.monitoring.calls') }}</th>
+                    <th style="font-size:0.7rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;padding:0.5rem 0;text-align:right;border-bottom:1px solid var(--border)">{{ __('admin.monitoring.tokens') }}</th>
+                    <th style="font-size:0.7rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;padding:0.5rem 0;text-align:right;border-bottom:1px solid var(--border)">{{ __('admin.monitoring.credits') }}</th>
                 </tr></thead>
                 <tbody>
                 @foreach($userStats as $s)
@@ -70,19 +70,19 @@
                 </tbody>
             </table>
             @else
-            <div style="text-align:center;padding:2rem;color:var(--text-muted);font-size:0.875rem">No API calls yet.</div>
+            <div style="text-align:center;padding:2rem;color:var(--text-muted);font-size:0.875rem">{{ __('admin.monitoring.no_api_calls') }}</div>
             @endif
         </div>
 
         {{-- Top models --}}
         <div class="card">
-            <h2 style="font-size:1rem;font-weight:600;margin-bottom:1rem">Top Models (30d)</h2>
+            <h2 style="font-size:1rem;font-weight:600;margin-bottom:1rem">{{ __('admin.monitoring.top_models') }}</h2>
             @if($modelStats->count())
             <table style="width:100%;border-collapse:collapse">
                 <thead><tr>
-                    <th style="font-size:0.7rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;padding:0.5rem 0;text-align:left;border-bottom:1px solid var(--border)">Model</th>
-                    <th style="font-size:0.7rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;padding:0.5rem 0;text-align:right;border-bottom:1px solid var(--border)">Calls</th>
-                    <th style="font-size:0.7rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;padding:0.5rem 0;text-align:right;border-bottom:1px solid var(--border)">Tokens</th>
+                    <th style="font-size:0.7rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;padding:0.5rem 0;text-align:left;border-bottom:1px solid var(--border)">{{ __('admin.monitoring.model') }}</th>
+                    <th style="font-size:0.7rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;padding:0.5rem 0;text-align:right;border-bottom:1px solid var(--border)">{{ __('admin.monitoring.calls') }}</th>
+                    <th style="font-size:0.7rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;padding:0.5rem 0;text-align:right;border-bottom:1px solid var(--border)">{{ __('admin.monitoring.tokens') }}</th>
                 </tr></thead>
                 <tbody>
                 @foreach($modelStats as $s)
@@ -95,22 +95,22 @@
                 </tbody>
             </table>
             @else
-            <div style="text-align:center;padding:2rem;color:var(--text-muted);font-size:0.875rem">No API calls yet.</div>
+            <div style="text-align:center;padding:2rem;color:var(--text-muted);font-size:0.875rem">{{ __('admin.monitoring.no_api_calls') }}</div>
             @endif
         </div>
     </div>
 
     {{-- Recent calls --}}
     <div class="card">
-        <h2 style="font-size:1rem;font-weight:600;margin-bottom:1rem">Recent API Calls</h2>
+        <h2 style="font-size:1rem;font-weight:600;margin-bottom:1rem">{{ __('admin.monitoring.recent_calls') }}</h2>
         @if($recentCalls->count())
         <table style="width:100%;border-collapse:collapse">
             <thead><tr>
-                <th style="font-size:0.7rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;padding:0.5rem 0.75rem;text-align:left;border-bottom:1px solid var(--border)">User</th>
-                <th style="font-size:0.7rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;padding:0.5rem 0.75rem;text-align:left;border-bottom:1px solid var(--border)">Model</th>
-                <th style="font-size:0.7rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;padding:0.5rem 0.75rem;text-align:right;border-bottom:1px solid var(--border)">Tokens</th>
-                <th style="font-size:0.7rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;padding:0.5rem 0.75rem;text-align:right;border-bottom:1px solid var(--border)">Credits</th>
-                <th style="font-size:0.7rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;padding:0.5rem 0.75rem;text-align:right;border-bottom:1px solid var(--border)">Time</th>
+                <th style="font-size:0.7rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;padding:0.5rem 0.75rem;text-align:left;border-bottom:1px solid var(--border)">{{ __('admin.monitoring.user') }}</th>
+                <th style="font-size:0.7rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;padding:0.5rem 0.75rem;text-align:left;border-bottom:1px solid var(--border)">{{ __('admin.monitoring.model') }}</th>
+                <th style="font-size:0.7rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;padding:0.5rem 0.75rem;text-align:right;border-bottom:1px solid var(--border)">{{ __('admin.monitoring.tokens') }}</th>
+                <th style="font-size:0.7rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;padding:0.5rem 0.75rem;text-align:right;border-bottom:1px solid var(--border)">{{ __('admin.monitoring.credits') }}</th>
+                <th style="font-size:0.7rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;padding:0.5rem 0.75rem;text-align:right;border-bottom:1px solid var(--border)">{{ __('admin.monitoring.time') }}</th>
             </tr></thead>
             <tbody>
             @foreach($recentCalls as $c)
@@ -125,7 +125,7 @@
             </tbody>
         </table>
         @else
-        <div style="text-align:center;padding:2rem;color:var(--text-muted);font-size:0.875rem">No API calls yet.</div>
+        <div style="text-align:center;padding:2rem;color:var(--text-muted);font-size:0.875rem">{{ __('admin.monitoring.no_api_calls') }}</div>
         @endif
     </div>
 </main>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>API Settings - LLM Resayil Admin</title>
+    <title>{{ __('admin.api_settings.title') }} - LLM Resayil Admin</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         .gradient-text {
@@ -28,7 +28,7 @@
                 </div>
                 <div>
                     <h1 class="text-xl font-bold gradient-text">LLM Resayil</h1>
-                    <span class="text-xs text-amber-500 font-medium uppercase tracking-wider">Admin</span>
+                    <span class="text-xs text-amber-500 font-medium uppercase tracking-wider">{{ __('admin.api_settings.administrator') }}</span>
                 </div>
             </div>
         </div>

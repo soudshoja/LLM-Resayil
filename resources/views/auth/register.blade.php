@@ -114,7 +114,7 @@ document.getElementById('registerForm').addEventListener('submit', async functio
         const json = await res.json();
         if (res.ok && json.step === 'verify') {
             document.getElementById('verify-subtitle').textContent =
-                'Enter the 6-digit code sent to ' + formData.phone + '.';
+                @json(__('auth.enter_code_sent_to', ['phone' => ''])) + formData.phone + '.';
             document.getElementById('step-register').style.display = 'none';
             document.getElementById('step-verify').style.display = 'block';
             document.getElementById('otp-input').focus();
@@ -183,7 +183,7 @@ document.getElementById('btn-back').addEventListener('click', function(e) {
     e.preventDefault();
     document.getElementById('step-verify').style.display = 'none';
     document.getElementById('step-register').style.display = 'block';
-    document.getElementById('btn-register').textContent = 'Send Verification Code';
+    document.getElementById('btn-register').textContent = @json(__('auth.send_verification_code'));
     document.getElementById('btn-register').disabled = false;
 });
 
@@ -191,7 +191,7 @@ document.getElementById('btn-resend').addEventListener('click', async function(e
     e.preventDefault();
     const alertArea = document.getElementById('alert-area-verify');
     alertArea.innerHTML = '';
-    this.textContent = 'Sending...';
+    this.textContent = @json(__('auth.sending'));
 
     try {
         const res = await fetch('/register/otp', {
@@ -201,15 +201,15 @@ document.getElementById('btn-resend').addEventListener('click', async function(e
         });
         const json = await res.json();
         if (res.ok && json.step === 'verify') {
-            alertArea.innerHTML = '<div class="alert alert-success">A new code has been sent.</div>';
+            alertArea.innerHTML = '<div class="alert alert-success">' + @json(__('auth.new_code_sent')) + '</div>';
             document.getElementById('otp-input').value = '';
         } else {
-            alertArea.innerHTML = '<div class="alert alert-error">' + (json.message || 'Failed to resend.') + '</div>';
+            alertArea.innerHTML = '<div class="alert alert-error">' + (json.message || @json(__('auth.failed_resend'))) + '</div>';
         }
     } catch (err) {
-        alertArea.innerHTML = '<div class="alert alert-error">An error occurred.</div>';
+        alertArea.innerHTML = '<div class="alert alert-error">' + @json(__('auth.error_occurred')) + '</div>';
     }
-    this.textContent = 'Resend code';
+    this.textContent = @json(__('auth.resend_code'));
 });
 </script>
 @endpush

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Payment Methods')
+@section('title', __('billing.payment_methods'))
 
 @push('styles')
 <style>
@@ -40,8 +40,8 @@
 @section('content')
 <main>
     <div class="payment-methods-header">
-        <h1>Payment Methods</h1>
-        <p class="text-secondary text-sm">Manage your saved payment methods for subscriptions</p>
+        <h1>{{ __('billing.payment_methods') }}</h1>
+        <p class="text-secondary text-sm">{{ __('billing.manage_saved_methods') }}</p>
     </div>
 
     @if(session('success'))
@@ -70,7 +70,7 @@
                     </div>
                 </div>
                 @if($method['IsDefault'] ?? false)
-                <span class="card-default">Default</span>
+                <span class="card-default">{{ __('billing.default') }}</span>
                 @endif
             </div>
             <div class="card-icons">
@@ -86,7 +86,7 @@
             </div>
             <div class="card-footer">
                 <button type="button" class="btn-delete" onclick="confirmDelete('{{ $method['PaymentMethodId'] ?? '' }}')">
-                    Delete
+                    {{ __('billing.delete_method') }}
                 </button>
             </div>
         </div>
@@ -95,54 +95,54 @@
     @else
     <div class="card" style="text-align: center; padding: 3rem;">
         <div style="display: flex; gap: 1rem; justify-content: center; margin-bottom: 1.5rem; flex-wrap: wrap;">
-            <div style="background: #0055a5; color: white; font-weight: 700; padding: 0.5rem 1.25rem; border-radius: 8px; font-size: 0.9rem; letter-spacing: 0.05em;">KNET</div>
-            <div style="background: #1a1f71; color: white; font-weight: 700; padding: 0.5rem 1.25rem; border-radius: 8px; font-size: 0.9rem; font-style: italic;">VISA</div>
-            <div style="background: #eb001b; color: white; font-weight: 700; padding: 0.5rem 1.25rem; border-radius: 8px; font-size: 0.9rem;">Mastercard</div>
+            <div style="background: #0055a5; color: white; font-weight: 700; padding: 0.5rem 1.25rem; border-radius: 8px; font-size: 0.9rem; letter-spacing: 0.05em;">{{ __('billing.card_type_knet') }}</div>
+            <div style="background: #1a1f71; color: white; font-weight: 700; padding: 0.5rem 1.25rem; border-radius: 8px; font-size: 0.9rem; font-style: italic;">{{ __('billing.card_type_visa') }}</div>
+            <div style="background: #eb001b; color: white; font-weight: 700; padding: 0.5rem 1.25rem; border-radius: 8px; font-size: 0.9rem;">{{ __('billing.card_type_mastercard') }}</div>
         </div>
-        <h2 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 0.5rem;">No payment methods saved</h2>
+        <h2 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 0.5rem;">{{ __('billing.no_payment_methods_saved') }}</h2>
         <p class="text-secondary text-sm" style="margin-bottom: 1.5rem;">
-            Add a card below to enable recurring subscriptions and auto-billing.
+            {{ __('billing.add_card_enable_recurring') }}
         </p>
     </div>
     @endif
 
     <div class="add-method-section">
-        <h2 class="add-method-title">Add Payment Method</h2>
+        <h2 class="add-method-title">{{ __('billing.add_payment_method_title') }}</h2>
         <p class="text-secondary text-sm" style="margin-bottom: 1.5rem;">
-            You'll be redirected to our secure payment page. We accept:
+            {{ __('billing.redirect_to_secure') }}
         </p>
         <div style="display: flex; gap: 1rem; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap;">
-            <div style="background: #0055a5; color: white; font-weight: 700; padding: 0.5rem 1rem; border-radius: 6px; font-size: 0.9rem; letter-spacing: 0.05em;">KNET</div>
-            <div style="background: #1a1f71; color: white; font-weight: 700; padding: 0.5rem 1rem; border-radius: 6px; font-size: 0.9rem; font-style: italic;">VISA</div>
-            <div style="background: #eb001b; color: white; font-weight: 700; padding: 0.5rem 1rem; border-radius: 6px; font-size: 0.9rem;">Mastercard</div>
+            <div style="background: #0055a5; color: white; font-weight: 700; padding: 0.5rem 1rem; border-radius: 6px; font-size: 0.9rem; letter-spacing: 0.05em;">{{ __('billing.card_type_knet') }}</div>
+            <div style="background: #1a1f71; color: white; font-weight: 700; padding: 0.5rem 1rem; border-radius: 6px; font-size: 0.9rem; font-style: italic;">{{ __('billing.card_type_visa') }}</div>
+            <div style="background: #eb001b; color: white; font-weight: 700; padding: 0.5rem 1rem; border-radius: 6px; font-size: 0.9rem;">{{ __('billing.card_type_mastercard') }}</div>
         </div>
         <form method="POST" action="{{ route('billing.payment-methods.store') }}">
             @csrf
             <input type="hidden" name="customer_name" value="{{ auth()->user()->name }}">
             <input type="hidden" name="customer_email" value="{{ auth()->user()->email }}">
             <button type="submit" class="btn-add btn-add-primary">
-                Add Card via Secure Checkout →
+                {{ __('billing.add_card_button') }}
             </button>
         </form>
         <p class="text-xs text-muted" style="margin-top: 0.75rem;">
-            A 0.100 KWD card verification charge is used to tokenize your card. It will be credited back.
+            {{ __('billing.card_verification_text') }}
         </p>
     </div>
 
     <div style="margin-top: 2rem; padding: 1.5rem; background: var(--bg-card); border-radius: 12px; border: 1px solid var(--border);">
-        <h3 style="font-size: 0.9rem; font-weight: 600; margin-bottom: 0.75rem;">Payment Security</h3>
+        <h3 style="font-size: 0.9rem; font-weight: 600; margin-bottom: 0.75rem;">{{ __('billing.payment_security_title') }}</h3>
         <p class="text-secondary text-sm" style="margin: 0;">
-            Your payment information is securely processed through MyFatoorah. We do not store your full card details. All transactions are encrypted and PCI-DSS compliant.
+            {{ __('billing.payment_security_text') }}
         </p>
     </div>
 </main>
 
 <script>
 function confirmDelete(paymentMethodId) {
-    if (confirm('Are you sure you want to delete this payment method?')) {
+    if (confirm('{{ __('billing.confirm_delete_payment_method') }}')) {
         // For now, we need a delete route
         // In production, this would call the delete endpoint
-        alert('Payment method deletion requires MyFatoorah API enhancement. Please contact support.');
+        alert('{{ __('billing.delete_requires_api') }}');
     }
 }
 </script>
