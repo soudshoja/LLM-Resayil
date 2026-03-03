@@ -1,26 +1,26 @@
 ---
 gsd_state_version: 1.0
-milestone: v1.0
-milestone_name: milestone
+milestone: v1.1
+milestone_name: documentation-links
 status: complete
-last_updated: "2026-03-02T19:00:00Z"
+last_updated: "2026-03-03T12:30:00Z"
 progress:
   total_phases: 7
   completed_phases: 7
-  total_plans: 14
+  total_plans: 15
   completed_plans: 15
   percent: 100
 ---
 
 # State: LLM Resayil Portal
 
-**Last Updated:** 2026-03-02 (Phase 7 Plan 05 complete — WhatsApp OTP registration + homepage pricing)
+**Last Updated:** 2026-03-03 (Phase 7 complete - Documentation + Billing Links)
 
 ## Project Reference
 
 **Core Value:** Users can access powerful LLMs via a simple OpenAI-compatible API with pay-per-use credits, no infrastructure management, and automatic failover to cloud models when local capacity is exceeded.
 
-**Current Focus:** ALL PLANS COMPLETE — v1.0 milestone achieved
+**Current Focus:** v1.1 — Phase 7 Plan 07 in progress (UI fixes + billing enhancements + admin unlimited)
 
 **Project Context:**
 - Laravel SaaS for OpenAI-compatible LLM API access
@@ -184,4 +184,30 @@ progress:
 
 AUTH-01, AUTH-02, AUTH-03, KEY-01, KEY-02, KEY-03, KEY-04, LP-01 through LP-06, DASH-01 through DASH-05, ADMIN-01 through ADMIN-05, NOTIF-01 through NOTIF-10, SUB-01, SUB-02, SUB-03, TOP-01, TOP-02, API-01 through API-05, RATE-01 through RATE-03, QUEUE-01, QUEUE-02, CLOUD-01, CLOUD-02, MODEL-01 through MODEL-04, TEAM-01, TEAM-02, TEAM-03, TEAM-04, BILL-01 through BILL-10, TRIAL-01 through TRIAL-05, RECUR-01 through RECUR-03
 
-*State file last updated: 2026-03-02 — Phase 7 Plans 01, 02, 03, 04, 05 complete*
+---
+
+## Plan 06: Documentation + Billing Links ✅ COMPLETE
+
+**Completed:**
+- ✅ Created `/docs` documentation hub page at `resources/views/docs.blade.php`
+- ✅ Added `/docs` route to `routes/web.php`
+- ✅ Added "Docs" and "Credits" nav links to `resources/views/layouts/app.blade.php`
+- ✅ Added "How Credits Work" link to billing/plans trial section
+- ✅ Added "How Credits Work" link to dashboard Top Up Credits section
+- ✅ Deployed to production with `git push` and `git pull` on server
+
+**Git Commits:**
+```
+d162e10 feat: add /docs page + How Credits Work links
+1d1cd3f feat: add /credits page (How Credits Work) + Phase 8 plan + roadmap entry
+eb44537 feat: AJAX toggle for admin models — no page reload on enable/disable
+```
+
+**Production URLs:**
+- `/docs` → Documentation hub with 3 plan cards
+- `/credits` → "How Credits Work" standalone page
+- Navbar: "Docs" and "Credits" links visible for authenticated users
+
+---
+
+*State file last updated: 2026-03-03 — Phase 7 ALL plans complete (100%)*
