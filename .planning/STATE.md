@@ -3,7 +3,7 @@ gsd_state_version: 1.0
 milestone: v1.1
 milestone_name: documentation-links
 status: complete
-last_updated: "2026-03-03T12:30:00Z"
+last_updated: "2026-03-03T13:30:00Z"
 progress:
   total_phases: 7
   completed_phases: 7
@@ -11,6 +11,59 @@ progress:
   completed_plans: 15
   percent: 100
 ---
+
+## v1.1 Enhancements (Under Discussion)
+
+### Enhancement: Landing Page UI Improvements (COMPLETED)
+
+**Status:** Completed - 2026-03-03
+
+**Changes made to `welcome.blade.php`:**
+- Updated hero CTA: "Get Started" instead of "Start Free Trial"
+- Added "Documentation" button to hero CTA
+- Added footer links: "How Credits Work", "API Docs", "Pricing Details"
+- All links use correct color palette (gold #d4af37)
+
+---
+
+### Enhancement: Usage Detail per API Call
+
+**Status:** Proposed - needs discussion
+
+**Goal:** Show users detailed breakdown of their API call costs including:
+- Tokens used (input + output)
+- Cost multiplier (1x for local, 2x for cloud)
+- Credits deducted per call
+- Estimated vs actual cost comparison
+
+**Proposed implementation:**
+
+#### 1. Dashboard Recent Usage Table Enhancement
+Currently shows: Model, Tokens, Credits Used, Time
+
+Enhanced to show:
+| Model | Input Tokens | Output Tokens | Total | Multiplier | Credits | Time |
+|-------|-------------|---------------|-------|------------|---------|------|
+| llama3.2:3b | 45 | 120 | 165 | 1x | 1 | 2h ago |
+
+#### 2. Add Cost Breakdown on Model Detail
+When clicking a model in catalog, show:
+- **Cost estimate:** ~0.25 credits per 1000 tokens (local)
+- **Actual costs logged per call** in usage history
+
+#### 3. Daily/Weekly Usage Summary
+Add summary cards showing:
+- Total tokens this week
+- Total credits this week
+- Average cost per request
+- Most expensive models used
+
+#### 4. Cost Calculator Tool
+Pre-call estimate: user inputs message length, gets estimated cost before making API call.
+
+---
+
+## Phase 8 — Pending
 
 # State: LLM Resayil Portal
 
@@ -38,12 +91,36 @@ progress:
 **Phase:** Phase 7 - Backend Services
 **Plan:** 04 - UI/Admin/Profile Improvements
 **Status:** COMPLETE - Dynamic model loading, category tags, admin filters, profile page, branding cleanup
-**Progress:** All 6 original phases + Phase 7 Plans 01, 02, 03, 04 complete
+**Progress:** All 7 phases + all 15 plans complete (v1.1 milestone achieved)
 **Active Requirements:** None
+
+**Plan Completion Status:**
+| Phase | Plan 01 | Plan 02 | Plan 03 | Plan 04 | Plan 05 | Plan 06 | Plan 07 |
+|-------|---------|---------|---------|---------|---------|---------|---------|
+| 07-backend-services | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 
 ---
 
 ## Phase 7 — Complete Log
+
+### Plan 07: UI Fixes + Billing Enhancements + Admin Unlimited Access ✅ COMPLETE
+
+**Completed:** 2026-03-03
+
+**Summary:**
+- Agent 1: Homepage pricing redesign — matches `/billing/plans` card style with free trial box
+- Agent 2: Dashboard layout fix — API Keys + Top Up Credits side-by-side; admin key creation modal
+- Agent 3: 4 bug fixes — enterprise tier pricing, admin unlimited keys, clean model names, smollm2 size
+
+**Key Achievements:**
+- Enterprise tier with appropriate API key limits (2-3 free, 4+ paid)
+- Admin can create unlimited API keys without payment flow
+- Usage logs show clean model names (`:cloud` and `-cloud` suffixes removed)
+- SmollLM2:135m correctly classified as 'small' for pricing
+
+**Commits:** 0188355, b29db5c, 3c25cbd, 207b82e, 4488cb4
+
+---
 
 ### Plan 01: Fix API Endpoint ✅ COMPLETE
 
@@ -210,4 +287,205 @@ eb44537 feat: AJAX toggle for admin models — no page reload on enable/disable
 
 ---
 
-*State file last updated: 2026-03-03 — Phase 7 ALL plans complete (100%)*
+## Enhancement: Usage Detail per API Call (Under Discussion)
+
+**Status:** Proposed - needs discussion
+**Target:** v1.1 enhancement
+
+**Goal:** Show users detailed breakdown of their API call costs including:
+- Input tokens vs output tokens
+- Cost multiplier (1x for local, 2x for cloud)
+- Credits deducted per call
+
+**Proposed dashboard enhancement:**
+
+| Model | Input Tokens | Output Tokens | Total | Multiplier | Credits | Time |
+|-------|-------------|---------------|-------|------------|---------|------|
+| llama3.2:3b | 45 | 120 | 165 | 1x | 1 | 2h ago |
+| qwen3.5:cloud | 100 | 300 | 400 | 2x | 1 | 5h ago |
+
+**Also consider:**
+- Daily/Weekly usage summary cards
+- Cost calculator tool (pre-call estimate)
+- Export usage history to CSV
+
+---
+
+## v1.2 Enhancements
+
+### Enhancement: Landing Page Hero Slider
+
+**Status:** Proposed - needs discussion
+**Target:** v1.2 enhancement
+
+**Goal:** Add an attractive slider/carousel to the landing page to showcase:
+- Featured models with visuals
+- Platform features
+- Customer testimonials
+- Live stats (users, API calls, models)
+
+**Recommended slider implementation:**
+
+#### 1. Hero Slider (Autoplay, Auto-Pause on Hover)
+- 3-5 slides with gradient backgrounds
+- Model cards or feature highlights
+- Smooth fade/slide transitions
+- Pagination dots + prev/next arrows
+- Mobile-responsive touch gestures
+
+#### 2. Content Ideas for Slides
+| Slide | Content |
+|-------|---------|
+| 1 | Llama 3.2 3B - "Fastest for everyday tasks" |
+| 2 | DeepSeek V3.1 671B - "Frontier reasoning" |
+| 3 | Qwen 3.5 397B - "Largest MoE available" |
+| 4 | 45+ models - "One API for all" |
+| 5 | 100ms avg latency - "Blazing fast responses" |
+
+#### 3. UI Components Needed
+- CSS slide container with `transform: translateX()`
+- JavaScript for auto-play + manual navigation
+- Touch swipe support for mobile
+- Smooth fade transitions (CSS opacity + transform)
+
+#### 4. Design Considerations
+- Match existing dark luxury theme
+- Gold accent colors (#d4af37)
+- Inter/Tajawal fonts
+- 16px+ readable font size
+- Proper contrast ratios (4.5:1 minimum)
+
+**Anti-patterns to avoid:**
+- Don't auto-play audio
+- Don't use fast flickering animations
+- Don't hide important info behind slider
+- Include accessibility labels for screen readers
+
+---
+
+## v1.3 Enhancements
+
+### Enhancement: Contact Us Page
+
+**Status:** Completed - 2026-03-03
+**Target:** v1.3 enhancement
+
+**Goal:** Add a Contact Us page for users to send emails directly to soud@alphia.net
+
+**Implementation:**
+
+#### Files Created/Modified:
+- `app/Http/Controllers/ContactController.php` - Contact form controller
+- `resources/views/contact.blade.php` - Contact page UI with dark luxury theme
+- `resources/views/emails/contact.blade.php` - Email template
+- `routes/web.php` - Added `/contact` routes
+- `resources/views/welcome.blade.php` - Added contact section at bottom
+
+#### Contact Form Fields:
+- Full Name (required)
+- Email Address (required) - User's email for reply
+- Mobile Number (required) - For quick contact
+- Message (required, 10-5000 chars)
+
+#### Email Delivery:
+- Email sent to: `soud@alphia.net`
+- Subject: "New Contact Form Submission - LLM Resayil"
+- User receives success redirect with confirmation
+
+#### UI Design:
+- Two-column layout: Contact info (left) + Form (right)
+- Gold accent icons for Email, Phone, Message
+- Dark luxury theme matching existing design system
+- Responsive grid for mobile
+- Form validation with error messages
+- Success confirmation after submission
+
+---
+
+## v1.4 Enhancements
+
+### Enhancement: Arabic Language Support
+
+**Status:** Proposed - needs discussion
+**Target:** v1.4 enhancement
+
+**Goal:** Add full Arabic language support to the website with RTL (Right-to-Left) layout
+
+**Implementation Approach:**
+
+#### 1. Laravel Localization Setup
+- Create `resources/lang/ar/` directory with translation files
+- Create `resources/lang/en/` directory (default language)
+- Update `config/app.php` to support `ar` locale
+- Add locale switcher in navbar
+
+#### 2. Translation Files to Create
+
+**en/**
+- `auth.php` - Login/register text
+- `pagination.php` - Pagination links
+- `passwords.php` - Password reset text
+- `validation.php` - Form validation messages
+- `welcome.php` - Landing page content
+- `dashboard.php` - Dashboard text
+- `billing.php` - Billing/plans text
+- `contact.php` - Contact page text
+
+**ar/**
+- All same files with Arabic translations
+- RTL-compatible content
+
+#### 3. UI/UX Design Considerations
+
+**RTL Layout Adjustments:**
+- Flip nav links order for Arabic
+- Reverse card layouts (pricing, models)
+- Adjust icon positioning
+- Mirror form inputs
+
+**Typography:**
+- Tajawal as primary font (already in use)
+- Inter for English text
+- Arabic-specific font weights (400, 500, 700, 900)
+
+**Direction:**
+- `dir="rtl"` on `<html>` when Arabic selected
+- CSS uses logical properties where possible
+- Arabic text flows right to left
+
+#### 4. Locale Detection
+- URL prefix: `/ar/` and `/en/` routes
+- Session storage for user preference
+- Browser language detection (fallback)
+- Default to Arabic for Kuwait region
+
+#### 5. Files to Modify
+- `routes/web.php` - Group routes by locale
+- `resources/views/layouts/app.blade.php` - Locale switcher + RTL support
+- `resources/views/welcome.blade.php` - Translations
+- `resources/views/dashboard.blade.php` - Translations
+- `resources/views/billing/plans.blade.php` - Translations
+- `resources/views/contact.blade.php` - Translations
+
+#### 6. Design Considerations (UI Pro)
+- Maintain dark luxury theme in both languages
+- Gold accents (#d4af37) work in both LTR/RTL
+- Inter (Latin) + Tajawal (Arabic) font pairing is ideal
+- Ensure 4.5:1 contrast ratio for Arabic text
+- Touch targets minimum 44x44px for RTL interactions
+
+**Anti-patterns to avoid:**
+- Don't just reverse text without checking grammar
+- Don't use inline styles that assume LTR direction
+- Don't forget to flip icons (like search, arrows)
+- Test with real Arabic content (not just placeholder)
+
+#### 7. Content Translation Notes
+- Model names remain in English (Llama, Qwen, DeepSeek)
+- Technical terms (API, token, credit) may stay in English
+- All UI buttons, labels, and descriptions translated
+- Documentation pages (`/docs`, `/credits`) also need Arabic
+
+---
+
+*State file last updated: 2026-03-03 — Phase 7 complete, v1.1/v1.2/v1.3/v1.4 enhancements (Arabic support pending)*
