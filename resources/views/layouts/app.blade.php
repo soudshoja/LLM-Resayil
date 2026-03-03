@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('title', __('navigation.brand')) - __('navigation.portal_title')</title>
+    <title>@yield('title', __('navigation.portal_title'))</title>
     {{-- Open Graph / Social --}}
     <meta property="og:type" content="website">
     <meta property="og:url" content="{{ url()->current() }}">

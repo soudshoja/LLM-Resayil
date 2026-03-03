@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'about' => 'من نحن',
     'dashboard' => 'لوحة التحكم',
     'api_keys' => 'مفاتيح API',
     'billing' => 'الفواتير',

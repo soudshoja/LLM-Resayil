@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'about' => 'About',
     'dashboard' => 'Dashboard',
     'api_keys' => 'API Keys',
     'billing' => 'Billing',
