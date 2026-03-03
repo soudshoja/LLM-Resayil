@@ -46,9 +46,6 @@
     .model-badge { padding: 0.15rem 0.5rem; border-radius: 4px; font-size: 0.65rem; text-transform: uppercase; }
     .model-badge-local { background: rgba(5,150,105,0.15); color: #6ee7b7; border: 1px solid rgba(5,150,105,0.3); }
     .model-badge-cloud { background: rgba(212,175,55,0.15); color: var(--gold); border: 1px solid rgba(212,175,55,0.3); }
-    .model-badge-small { background: rgba(59,130,246,0.15); color: #60a5fa; }
-    .model-badge-medium { background: rgba(245,158,11,0.15); color: #fbbf24; }
-    .model-badge-large { background: rgba(239,68,68,0.15); color: #f87171; }
     .model-desc { font-size: 0.8rem; color: var(--text-primary); margin-top: 0.5rem; }
     .model-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 0.75rem; padding-top: 0.5rem; border-top: 1px solid rgba(30,34,48,0.5); }
     .model-credits { font-size: 0.7rem; color: var(--text-muted); }
@@ -188,15 +185,6 @@
                 @else
                 <select id="filter-type" style="display:none"><option value="">All Types</option></select>
                 @endif
-                <div class="filter-group">
-                    <span class="filter-label">Size:</span>
-                    <select id="filter-size" class="filter-select">
-                        <option value="">All Sizes</option>
-                        <option value="small">Small</option>
-                        <option value="medium">Medium</option>
-                        <option value="large">Large</option>
-                    </select>
-                </div>
                 <div class="filter-group" style="flex-grow:1">
                     <input type="text" id="search-models" class="search-input" placeholder="Search models...">
                 </div>
@@ -432,7 +420,6 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('filter-family').addEventListener('change', renderModels);
     document.getElementById('filter-category').addEventListener('change', renderModels);
     document.getElementById('filter-type').addEventListener('change', renderModels);
-    document.getElementById('filter-size').addEventListener('change', renderModels);
     document.getElementById('search-models').addEventListener('input', renderModels);
 });
 
@@ -471,14 +458,12 @@ function renderModels() {
     const familyFilter = document.getElementById('filter-family').value;
     const categoryFilter = document.getElementById('filter-category').value;
     const typeFilter = document.getElementById('filter-type').value;
-    const sizeFilter = document.getElementById('filter-size').value;
     const searchQuery = document.getElementById('search-models').value.toLowerCase();
 
     const filtered = allModels.filter(model => {
         if (familyFilter && model.family !== familyFilter) return false;
         if (categoryFilter && model.category !== categoryFilter) return false;
         if (typeFilter && model.type !== typeFilter) return false;
-        if (sizeFilter && model.size !== sizeFilter) return false;
         if (searchQuery && !model.id.toLowerCase().includes(searchQuery) && !(model.name||'').toLowerCase().includes(searchQuery)) return false;
         return true;
     });
@@ -497,7 +482,6 @@ function renderModelGrid(models) {
 
     const categoryIcons = { chat:'💬', code:'💻', embedding:'🔗', vision:'👁', thinking:'🧠', tools:'🔧' };
     const html = models.map(model => {
-        const sizeClass = `model-badge-${model.size || 'medium'}`;
         const cat = model.category || 'chat';
         const icon = categoryIcons[cat] || '';
 
@@ -506,7 +490,6 @@ function renderModelGrid(models) {
                 <div class="model-name">${escapeHtml(model.id)}</div>
                 <div class="model-meta">
                     <span class="model-badge model-badge-local">${icon} ${escapeHtml(cat)}</span>
-                    <span class="model-badge ${sizeClass}">${escapeHtml(model.size || 'unknown')}</span>
                     <span class="model-badge">${escapeHtml(model.family || 'unknown')}</span>
                 </div>
             </div>
