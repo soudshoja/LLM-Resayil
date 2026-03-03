@@ -11,7 +11,8 @@
 - [x] **Phase 4: Notifications** - WhatsApp notification system for all user and admin events
 - [x] **Phase 5: Dashboards** - User dashboard, admin dashboard, landing page, and enterprise team management
 - [x] **Phase 6: MySQL Production Setup** - Database migrations, environment configuration, and production deployment
-- [ ] **Phase 7: Backend Services** - Fix API endpoint (config files, throttle, OllamaProxy), verify end-to-end API flow
+- [x] **Phase 7: Backend Services** - Fix API endpoint (config files, throttle, OllamaProxy), verify end-to-end API flow
+- [ ] **Phase 8: User Documentation** - End-user API docs (markdown + in-portal /docs page) for API consumers
 
 ## Phase Details
 
@@ -210,6 +211,8 @@ Plan 01 covers:
 | 4 - Notifications | 1/1 | Complete | Plan 01 completed |
 | 5 - Dashboards | 3/3 | Complete | Plans 01-03 completed |
 | 6 - MySQL Production Setup | 1/1 | Planned | Plan 01 ready for execution |
+| 7 - Backend Services | 7/7 | Complete | All plans deployed 2026-03-03 |
+| 8 - User Documentation | 0/1 | Pending | — |
 
 ---
 

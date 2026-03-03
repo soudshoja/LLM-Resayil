@@ -77,6 +77,11 @@ Route::middleware('auth')->group(function () {
 // Webhook handler (outside auth — MyFatoorah calls this without session)
 Route::post('/billing/webhook', [WebhookController::class, 'handleWebhook'])->name('billing.webhook');
 
+// Credits documentation page
+Route::get('/credits', function () {
+    return view('credits');
+})->name('credits');
+
 // Home route
 Route::get('/', function () {
     return view('welcome');
