@@ -85,8 +85,13 @@
     .btn-copy:hover { border-color: var(--gold); color: var(--gold); }
     .btn-copy.copied { background: var(--success); border-color: var(--success); color: white; }
     @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    .weekly-summary { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 1.5rem; }
+    .weekly-card { background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 10px; padding: 1rem 1.25rem; }
+    .weekly-label { font-size: 0.7rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.4rem; }
+    .weekly-value { font-size: 1.5rem; font-weight: 700; color: var(--gold); }
+    .weekly-sub { font-size: 0.75rem; color: var(--text-muted); margin-top: 0.2rem; }
     @media(max-width: 900px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } .section-grid { grid-template-columns: 1fr; } .detail-grid { grid-template-columns: 1fr; } }
-    @media(max-width: 600px) { .stats-grid { grid-template-columns: 1fr; } .model-grid { grid-template-columns: 1fr; } .catalog-header { flex-direction: column; align-items: stretch; } .filter-group { flex-direction: column; align-items: stretch; } }
+    @media(max-width: 600px) { .stats-grid { grid-template-columns: 1fr; } .model-grid { grid-template-columns: 1fr; } .catalog-header { flex-direction: column; align-items: stretch; } .filter-group { flex-direction: column; align-items: stretch; } .weekly-summary { grid-template-columns: 1fr; } }
 </style>
 @endpush
 
@@ -382,23 +387,60 @@ response = requests.post(
     </div>
 
     <!-- Recent Usage -->
+    @php
+        $logs = \App\Models\UsageLog::where('user_id', auth()->user()->id)->orderByDesc('created_at')->take(10)->get();
+        $weekLogs = \App\Models\UsageLog::where('user_id', auth()->user()->id)->where('created_at', '>=', now()->subDays(7))->get();
+        $weekTokens = $weekLogs->sum('tokens_used');
+        $weekCredits = $weekLogs->sum('credits_deducted');
+        $weekCount = $weekLogs->count();
+        $avgCredits = $weekCount > 0 ? round($weekCredits / $weekCount, 1) : 0;
+        $allModels = config('models.models', []);
+    @endphp
+    <div class="weekly-summary">
+        <div class="weekly-card">
+            <div class="weekly-label">Tokens This Week</div>
+            <div class="weekly-value">{{ number_format($weekTokens) }}</div>
+            <div class="weekly-sub">{{ $weekCount }} {{ $weekCount === 1 ? 'request' : 'requests' }}</div>
+        </div>
+        <div class="weekly-card">
+            <div class="weekly-label">Credits This Week</div>
+            <div class="weekly-value">{{ number_format($weekCredits) }}</div>
+            <div class="weekly-sub">Last 7 days</div>
+        </div>
+        <div class="weekly-card">
+            <div class="weekly-label">Avg Credits / Request</div>
+            <div class="weekly-value">{{ $avgCredits }}</div>
+            <div class="weekly-sub">Weekly average</div>
+        </div>
+    </div>
     <div class="card">
         <h2 style="font-size:1rem;font-weight:600;margin-bottom:1rem">Recent API Usage</h2>
-        @php $logs = \App\Models\UsageLog::where('user_id', auth()->user()->id)->orderByDesc('created_at')->take(10)->get(); @endphp
         @if($logs->count())
+        <div style="overflow-x:auto">
         <table class="keys-table">
-            <thead><tr><th>Model</th><th>Tokens</th><th>Credits Used</th><th>Time</th></tr></thead>
+            <thead><tr><th>Model</th><th>Type</th><th>Tokens</th><th>Multiplier</th><th>Credits</th><th>Time</th></tr></thead>
             <tbody>
             @foreach($logs as $log)
+            @php
+                $mConf = collect($allModels)->firstWhere('id', $log->model) ?? collect($allModels)->firstWhere('ollama_name', $log->model);
+                $isCloud = $mConf ? ($mConf['type'] ?? 'local') === 'cloud' : (str_contains($log->model, ':cloud') || str_contains($log->model, '-cloud'));
+                $mult = $isCloud ? '2×' : '1×';
+                $typeClass = $isCloud ? 'model-badge-cloud' : 'model-badge-local';
+                $typeLabel = $isCloud ? 'Cloud' : 'Local';
+                $cleanName = preg_replace('/(-cloud|:cloud)$/', '', $log->model);
+            @endphp
             <tr>
-                <td style="font-family:monospace;font-size:0.8rem">{{ preg_replace('/(-cloud|:cloud)$/', '', $log->model) }}</td>
+                <td style="font-family:monospace;font-size:0.8rem">{{ $cleanName }}</td>
+                <td><span class="model-badge {{ $typeClass }}">{{ $typeLabel }}</span></td>
                 <td>{{ number_format($log->tokens_used) }}</td>
-                <td class="text-gold">{{ $log->credits_deducted }}</td>
+                <td style="font-family:monospace;color:var(--text-secondary)">{{ $mult }}</td>
+                <td class="text-gold">{{ number_format($log->credits_deducted) }}</td>
                 <td class="text-muted">{{ $log->created_at->diffForHumans() }}</td>
             </tr>
             @endforeach
             </tbody>
         </table>
+        </div>
         @else
         <div class="empty-state">No API calls yet. Create an API key and make your first request!</div>
         @endif

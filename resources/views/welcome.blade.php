@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'LLM Resayil - OpenAI-Compatible LLM API')
+@section('title', __('welcome.title'))
 
 @push('styles')
 <style>
@@ -12,6 +12,35 @@
     .hero h1 span { background: linear-gradient(135deg, var(--gold), var(--gold-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
     .hero p { font-size: 1.125rem; color: var(--text-secondary); max-width: 560px; margin: 0 auto 2rem; line-height: 1.7; }
     .hero-cta { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .hero-subcta { margin-top: 1.5rem; display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap; font-size: 0.85rem; color: var(--text-secondary); }
+    .hero-subcta a { color: var(--gold); text-decoration: none; transition: all 0.2s; }
+    .hero-subcta a:hover { color: var(--gold-light); }
+    .hero-subcta span { opacity: 0.4; }
+    /* ── Hero Slider ── */
+    .hero-slider-section { padding: 3rem 2rem; max-width: 1200px; margin: 0 auto; }
+    .hero-slider-wrapper { position: relative; background: var(--bg-card, #13161d); border: 1px solid var(--border); border-radius: 16px; padding: 2rem; overflow: hidden; }
+    .hero-slider-container { position: relative; width: 100%; height: 280px; overflow: hidden; }
+    .hero-slider { display: flex; position: relative; width: 100%; height: 100%; }
+    .hero-slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 2rem; opacity: 0; transition: opacity 0.5s ease; }
+    .hero-slide.active { opacity: 1; }
+    .hero-slide-emoji { font-size: 3rem; margin-bottom: 1rem; }
+    .hero-slide-title { font-size: 1.5rem; font-weight: 700; margin-bottom: 0.75rem; color: var(--gold, #d4af37); }
+    .hero-slide-desc { font-size: 1rem; color: var(--text-secondary); max-width: 500px; }
+    .hero-slider-controls { display: flex; align-items: center; justify-content: center; gap: 2rem; margin-top: 2rem; }
+    .hero-slider-dots { display: flex; gap: 0.5rem; }
+    .hero-slider-dot { width: 10px; height: 10px; border-radius: 50%; background: rgba(212,175,55,0.2); cursor: pointer; transition: all 0.3s; }
+    .hero-slider-dot.active { background: var(--gold, #d4af37); width: 28px; border-radius: 5px; }
+    .hero-slider-btn { width: 40px; height: 40px; border-radius: 50%; background: transparent; border: 2px solid var(--gold, #d4af37); color: var(--gold, #d4af37); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
+    .hero-slider-btn:hover { background: rgba(212,175,55,0.1); }
+    @media(max-width: 768px) {
+        .hero-slider-wrapper { padding: 1.5rem; }
+        .hero-slider-container { height: 200px; }
+        .hero-slide { padding: 1.5rem; }
+        .hero-slide-emoji { font-size: 2rem; }
+        .hero-slide-title { font-size: 1.25rem; }
+        .hero-slide-desc { font-size: 0.9rem; }
+        .hero-slider-controls { gap: 1.5rem; }
+    }
     .section { padding: 4rem 2rem; max-width: 1200px; margin: 0 auto; }
     .section-title { text-align: center; margin-bottom: 3rem; }
     .section-title h2 { font-size: 1.875rem; font-weight: 700; margin-bottom: 0.75rem; }
@@ -94,11 +123,31 @@
     .ml-footer p { color: var(--text-muted); font-size: 0.875rem; }
     .ml-footer a { color: var(--gold); text-decoration: none; font-weight: 600; }
     .ml-footer a:hover { text-decoration: underline; }
-    @media(max-width: 900px) { .ml-grid { grid-template-columns: repeat(2, 1fr); } }
-    @media(max-width: 560px) { .ml-grid { grid-template-columns: 1fr; } }
-    .cta-section { text-align: center; padding: 5rem 2rem; background: linear-gradient(135deg, rgba(212,175,55,0.05) 0%, transparent 100%); border-top: 1px solid var(--border); }
-    @media(max-width: 900px) { .pricing-grid { grid-template-columns: 1fr; } .trial-grid { grid-template-columns: 1fr; } }
-    @media(max-width: 768px) { .hero h1 { font-size: 2rem; } .steps { grid-template-columns: 1fr; } }
+    .contact-form-section { padding: 5rem 2rem; max-width: 1200px; margin: 0 auto; }
+    .contact-container { display: grid; grid-template-columns: 1.2fr 1fr; gap: 3rem; align-items: center; }
+    .contact-info h2 { font-size: 2.25rem; font-weight: 700; margin-bottom: 1.25rem; }
+    .contact-info p { color: var(--text-secondary); font-size: 1rem; line-height: 1.7; margin-bottom: 2rem; }
+    .contact-info-item { display: flex; align-items: flex-start; gap: 1rem; margin-bottom: 1.5rem; }
+    .contact-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.25rem; flex-shrink: 0; }
+    .contact-icon.email { background: rgba(212,175,55,0.1); color: var(--gold); }
+    .contact-icon.phone { background: rgba(5,150,105,0.1); color: #6ee7b7; }
+    .contact-icon.message { background: rgba(59,130,246,0.1); color: #60a5fa; }
+    .contact-info-item strong { color: var(--text-primary); font-weight: 600; }
+    .contact-info-item span { color: var(--text-secondary); font-size: 0.925rem; }
+    .contact-form-wrapper { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 2.5rem; }
+    .contact-form-wrapper h3 { font-size: 1.25rem; font-weight: 700; margin-bottom: 1.75rem; color: var(--text-primary); }
+    .form-group { margin-bottom: 1.25rem; }
+    .form-label { display: block; font-size: 0.875rem; font-weight: 600; color: var(--text-secondary); margin-bottom: 0.5rem; }
+    .form-input { width: 100%; background: var(--bg-primary); border: 1px solid var(--border); border-radius: 10px; padding: 0.75rem 1rem; color: var(--text-primary); font-size: 0.925rem; transition: border-color 0.2s; }
+    .form-input:focus { outline: none; border-color: var(--gold-muted); }
+    .form-input::placeholder { color: var(--text-muted); }
+    .form-textarea { width: 100%; background: var(--bg-primary); border: 1px solid var(--border); border-radius: 10px; padding: 0.75rem 1rem; color: var(--text-primary); font-size: 0.925rem; min-height: 140px; resize: vertical; font-family: 'Inter', sans-serif; }
+    .form-textarea:focus { outline: none; border-color: var(--gold-muted); }
+    .btn-submit { display: block; width: 100%; padding: 0.9rem 1.5rem; border-radius: 10px; font-weight: 700; font-size: 0.95rem; text-align: center; text-decoration: none; cursor: pointer; border: none; transition: all 0.2s; background: linear-gradient(135deg, var(--gold), var(--gold-light)); color: #0a0d14; }
+    .btn-submit:hover { opacity: 0.9; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(212,175,55,0.35); color: #0a0d14; }
+    .form-success { display: none; padding: 1.25rem; background: rgba(5,150,105,0.1); border: 1px solid rgba(5,150,105,0.3); border-radius: 12px; color: #6ee7b7; text-align: center; margin-bottom: 1.5rem; }
+    @media(max-width: 900px) { .contact-container { grid-template-columns: 1fr; } }
+    @media(max-width: 768px) { .hero h1 { font-size: 2rem; } .steps { grid-template-columns: 1fr; } .contact-form-wrapper { padding: 1.75rem; } }
 </style>
 @endpush
 
@@ -106,12 +155,64 @@
 
 <!-- Hero -->
 <section class="hero">
-    <div class="hero-badge">✦ OpenAI-Compatible API Gateway</div>
-    <h1>Powerful LLMs, <span>Pay As You Go</span></h1>
-    <p>Access state-of-the-art language models via an OpenAI-compatible API. Credit-based billing, automatic cloud failover, and enterprise team management — all in Kuwait Dinar.</p>
+    <div class="hero-badge">✦ {{ __('welcome.openai_compatible') }}</div>
+    <h1>{!! __('welcome.hero_title') !!}</h1>
+    <p>{{ __('welcome.hero_subtitle') }}</p>
     <div class="hero-cta">
-        <a href="/register" class="btn btn-gold" style="padding:0.75rem 2rem;font-size:1rem">Start Free Trial</a>
-        <a href="#pricing" class="btn btn-outline" style="padding:0.75rem 2rem;font-size:1rem">View Pricing</a>
+        <a href="/register" class="btn btn-gold" style="padding:0.75rem 2rem;font-size:1rem">{{ __('welcome.get_started') }}</a>
+        <a href="#pricing" class="btn btn-outline" style="padding:0.75rem 2rem;font-size:1rem">{{ __('welcome.view_plans') }}</a>
+        <a href="/docs" class="btn btn-outline" style="padding:0.75rem 2rem;font-size:1rem">{{ __('welcome.documentation') }}</a>
+    </div>
+    <div class="hero-subcta">
+        <a href="/credits">{{ __('welcome.how_credits_work') }}</a>
+        <span>|</span>
+        <a href="/docs">{{ __('welcome.api_docs') }}</a>
+        <span>|</span>
+        <a href="/billing/plans">{{ __('welcome.pricing_details') }}</a>
+    </div>
+</section>
+
+<!-- Hero Slider -->
+<section class="hero-slider-section">
+    <div class="hero-slider-wrapper">
+        <div class="hero-slider-container">
+            <div class="hero-slider">
+                <div class="hero-slide active">
+                    <div class="hero-slide-emoji">⚡</div>
+                    <div class="hero-slide-title">Llama 3.2 3B</div>
+                    <div class="hero-slide-desc">Fastest for everyday tasks · 1 credit/token</div>
+                </div>
+                <div class="hero-slide">
+                    <div class="hero-slide-emoji">🧠</div>
+                    <div class="hero-slide-title">DeepSeek V3.1 671B</div>
+                    <div class="hero-slide-desc">Frontier reasoning at your fingertips · 2 credits/token</div>
+                </div>
+                <div class="hero-slide">
+                    <div class="hero-slide-emoji">💬</div>
+                    <div class="hero-slide-title">Qwen 3.5 397B</div>
+                    <div class="hero-slide-desc">Largest MoE available · multilingual · 2 credits/token</div>
+                </div>
+                <div class="hero-slide">
+                    <div class="hero-slide-emoji">🔌</div>
+                    <div class="hero-slide-title">OpenAI-Compatible API</div>
+                    <div class="hero-slide-desc">Drop-in replacement · zero code changes</div>
+                </div>
+                <div class="hero-slide">
+                    <div class="hero-slide-emoji">📊</div>
+                    <div class="hero-slide-title">45+ Models</div>
+                    <div class="hero-slide-desc">One API. Local + Cloud. Pay per token.</div>
+                </div>
+            </div>
+        </div>
+        <div class="hero-slider-controls">
+            <button class="hero-slider-btn" id="heroSliderPrev" aria-label="Previous slide">
+                <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+            </button>
+            <div class="hero-slider-dots" id="heroSliderDots"></div>
+            <button class="hero-slider-btn" id="heroSliderNext" aria-label="Next slide">
+                <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+            </button>
+        </div>
     </div>
 </section>
 
@@ -426,11 +527,185 @@ print(response.choices[0].message.content)
     </div>
 </section>
 
+<!-- Contact Us -->
+<section class="contact-form-section" id="contact">
+    <div class="section-title">
+        <h2 style="color:var(--text-primary)">Need Help?</h2>
+        <p>Have questions? Our team is here to assist you with integration, pricing, or technical support.</p>
+    </div>
+    <div class="contact-container">
+        <div class="contact-info">
+            <h2>Get in Touch</h2>
+            <p>Fill out the form and we'll respond to your email at <strong style="color:var(--gold)">soud@alphia.net</strong> within 24 hours.</p>
+
+            <div class="contact-info-item">
+                <div class="contact-icon email">
+                    <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                </div>
+                <div>
+                    <strong>Email</strong>
+                    <br>
+                    <span>Use the contact form below</span>
+                </div>
+            </div>
+
+            <div class="contact-info-item">
+                <div class="contact-icon phone">
+                    <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+                </div>
+                <div>
+                    <strong>Phone</strong>
+                    <br>
+                    <span>Available on request</span>
+                </div>
+            </div>
+
+            <div class="contact-info-item">
+                <div class="contact-icon message">
+                    <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/></svg>
+                </div>
+                <div>
+                    <strong>Support</strong>
+                    <br>
+                    <span>We respond within 24 hours</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="contact-form-wrapper">
+            <h3>Send us a Message</h3>
+            <div id="contact-form-success" class="form-success">
+                <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="display:block;margin:0 auto 0.75rem;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                <strong>Message sent!</strong> We'll get back to you at soud@alphia.net within 24 hours.
+            </div>
+            <form id="contactForm" method="POST" action="/contact">
+                @csrf
+                <div class="form-group">
+                    <label for="full_name" class="form-label">Full Name</label>
+                    <input type="text" id="full_name" name="full_name" class="form-input" placeholder="John Doe" required>
+                </div>
+                <div class="form-group">
+                    <label for="email" class="form-label">Email Address</label>
+                    <input type="email" id="email" name="email" class="form-input" placeholder="john@example.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="mobile" class="form-label">Mobile Number</label>
+                    <input type="tel" id="mobile" name="mobile" class="form-input" placeholder="+965 1234 5678" required>
+                </div>
+                <div class="form-group">
+                    <label for="message" class="form-label">Message</label>
+                    <textarea id="message" name="message" class="form-textarea" placeholder="How can we help you?" required></textarea>
+                </div>
+                <button type="submit" class="btn-submit">Send Message</button>
+            </form>
+        </div>
+    </div>
+</section>
+
 <!-- CTA -->
 <section class="cta-section">
     <h2 style="font-size:2rem;font-weight:700;margin-bottom:0.75rem">Ready to get started?</h2>
     <p style="color:var(--text-secondary);margin-bottom:2rem">Join developers already using LLM Resayil. Pay with KNET or credit card.</p>
     <a href="/register" class="btn btn-gold" style="padding:0.85rem 2.5rem;font-size:1.05rem">Create Free Account</a>
 </section>
+
+@endsection
+
+@push('scripts')
+<script>
+// Hero Slider
+(() => {
+    const slides = document.querySelectorAll('.hero-slide');
+    const sliderContainer = document.querySelector('.hero-slider-container');
+    const dotsContainer = document.getElementById('heroSliderDots');
+    const prevBtn = document.getElementById('heroSliderPrev');
+    const nextBtn = document.getElementById('heroSliderNext');
+
+    let currentSlide = 0;
+    let autoplayInterval = null;
+    let isReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // Initialize dots
+    slides.forEach((_, index) => {
+        const dot = document.createElement('div');
+        dot.className = `hero-slider-dot ${index === 0 ? 'active' : ''}`;
+        dot.addEventListener('click', () => goToSlide(index));
+        dotsContainer.appendChild(dot);
+    });
+
+    const dots = document.querySelectorAll('.hero-slider-dot');
+
+    function goToSlide(index) {
+        slides.forEach((slide, i) => {
+            slide.classList.toggle('active', i === index);
+        });
+        dots.forEach((dot, i) => {
+            dot.classList.toggle('active', i === index);
+        });
+        currentSlide = index;
+        resetAutoplay();
+    }
+
+    function nextSlide() {
+        goToSlide((currentSlide + 1) % slides.length);
+    }
+
+    function prevSlide() {
+        goToSlide((currentSlide - 1 + slides.length) % slides.length);
+    }
+
+    function startAutoplay() {
+        if (isReducedMotion) return;
+        autoplayInterval = setInterval(nextSlide, 4000);
+    }
+
+    function stopAutoplay() {
+        if (autoplayInterval) {
+            clearInterval(autoplayInterval);
+            autoplayInterval = null;
+        }
+    }
+
+    function resetAutoplay() {
+        stopAutoplay();
+        startAutoplay();
+    }
+
+    // Event listeners
+    prevBtn.addEventListener('click', () => {
+        prevSlide();
+        stopAutoplay();
+    });
+    nextBtn.addEventListener('click', () => {
+        nextSlide();
+        stopAutoplay();
+    });
+
+    // Pause on hover
+    sliderContainer.addEventListener('mouseenter', stopAutoplay);
+    sliderContainer.addEventListener('mouseleave', resetAutoplay);
+
+    // Touch swipe support
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    sliderContainer.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+    });
+
+    sliderContainer.addEventListener('touchend', (e) => {
+        touchEndX = e.changedTouches[0].screenX;
+        if (touchStartX - touchEndX > 50) {
+            nextSlide();
+        } else if (touchEndX - touchStartX > 50) {
+            prevSlide();
+        }
+    });
+
+    // Start autoplay on load
+    startAutoplay();
+})();
+</script>
+@endpush
 
 @endsection

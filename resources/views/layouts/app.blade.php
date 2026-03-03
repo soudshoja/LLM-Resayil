@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="{{ app()->getLocale() }}" dir="{{ app()->getLocale() === 'ar' ? 'rtl' : 'ltr' }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -71,36 +71,55 @@
         .badge-gold { background: rgba(212,175,55,0.15); color: var(--gold); border: 1px solid rgba(212,175,55,0.3); }
         .badge-green { background: rgba(5,150,105,0.15); color: #6ee7b7; border: 1px solid rgba(5,150,105,0.3); }
         @media(max-width: 768px) { .grid-cols-2, .grid-cols-3 { grid-template-columns: 1fr; } main { padding: 1rem; } }
+        /* Locale switcher */
+        .locale-switcher { display: flex; align-items: center; gap: 0.5rem; font-size: 0.875rem; margin-left: 0.5rem; }
+        .locale-switcher a { color: var(--text-muted); text-decoration: none; transition: color 0.2s; }
+        .locale-switcher a:hover { color: var(--text-primary); }
+        .locale-switcher a.active { color: var(--gold); font-weight: 600; }
+        .locale-switcher span { color: var(--border); }
+        /* RTL support */
+        [dir="rtl"] body { font-family: 'Tajawal', sans-serif; }
+        [dir="rtl"] .nav-links { flex-direction: row-reverse; }
+        [dir="rtl"] .sidebar { right: 0; left: auto; }
+        [dir="rtl"] .card { text-align: right; }
+        [dir="rtl"] .locale-switcher { margin-left: 0; margin-right: 0.5rem; }
     </style>
     @stack('styles')
 </head>
-<body>
+<body dir="{{ app()->getLocale() === 'ar' ? 'rtl' : 'ltr' }}">
 <nav>
     <a href="/" class="nav-brand">⚡ LLM Resayil</a>
     <div class="nav-links">
+        <!-- Language Switcher -->
+        <div class="locale-switcher">
+            <a href="{{ route('locale', 'en') }}" class="{{ app()->getLocale() === 'en' ? 'active' : '' }}">EN</a>
+            <span>|</span>
+            <a href="{{ route('locale', 'ar') }}" class="{{ app()->getLocale() === 'ar' ? 'active' : '' }}">ع</a>
+        </div>
         @auth
-            <a href="/dashboard">Dashboard</a>
-            <a href="/api-keys">API Keys</a>
-            <a href="/billing/plans" style="color:var(--gold)">Billing</a>
-            <a href="/docs">Docs</a>
-            <a href="/credits">Credits</a>
-            <a href="/billing/payment-methods">Payment Methods</a>
+            <a href="/dashboard">{{ __('navigation.dashboard') }}</a>
+            <a href="/api-keys">{{ __('navigation.api_keys') }}</a>
+            <a href="/billing/plans" style="color:var(--gold)">{{ __('navigation.billing') }}</a>
+            <a href="/docs">{{ __('navigation.docs') }}</a>
+            <a href="/credits">{{ __('navigation.credits') }}</a>
+            <a href="/contact">{{ __('navigation.contact') }}</a>
+            <a href="/billing/payment-methods">{{ __('navigation.payment_methods') }}</a>
             @if(auth()->user()->subscription_tier === 'enterprise')
-            <a href="/teams">Team</a>
+            <a href="/teams">{{ __('navigation.team') }}</a>
             @endif
             @if(auth()->user()->email === 'admin@llm.resayil.io')
             <a href="/admin" style="color:var(--gold)">Admin</a>
             <a href="/admin/monitoring" style="color:var(--gold)">Monitor</a>
             <a href="/admin/models" style="color:var(--gold)">Models</a>
             @endif
-            <a href="/profile">Profile</a>
+            <a href="/profile">{{ __('navigation.profile') }}</a>
             <form method="POST" action="/logout" style="display:inline">
                 @csrf
-                <button type="submit" class="btn btn-outline" style="padding:0.4rem 0.8rem">Logout</button>
+                <button type="submit" class="btn btn-outline" style="padding:0.4rem 0.8rem">{{ __('navigation.logout') }}</button>
             </form>
         @else
-            <a href="/login">Login</a>
-            <a href="/register" class="btn btn-gold">Get Started</a>
+            <a href="/login">{{ __('navigation.login') }}</a>
+            <a href="/register" class="btn btn-gold">{{ __('navigation.get_started') }}</a>
         @endauth
     </div>
 </nav>

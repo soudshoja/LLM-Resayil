@@ -11,6 +11,8 @@ use App\Http\Controllers\TeamMemberController;
 use App\Http\Controllers\Admin\ApiSettingsController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\AdminModelController;
+use App\Http\Controllers\ContactController;
+use App\Http\Controllers\WelcomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,99 +25,122 @@ use App\Http\Controllers\AdminModelController;
 |
 */
 
-// Auth routes - web interface
-Route::get('/register', [RegisteredUserController::class, 'create'])->middleware('guest');
-Route::post('/register/otp', [App\Http\Controllers\Auth\RegisteredUserController::class, 'sendOtp'])->middleware('guest');
-Route::post('/register', [RegisteredUserController::class, 'store'])->middleware('guest');
+// Locale switcher — sets session locale and redirects back (no auth required)
+Route::get('/locale/{locale}', function ($locale) {
+    if (in_array($locale, ['en', 'ar'])) {
+        session(['locale' => $locale]);
+    }
+    return redirect()->back();
+})->name('locale')->where('locale', 'en|ar');
 
-Route::get('/login', [AuthenticatedSessionController::class, 'create'])->middleware('guest')->name('login');
-Route::post('/login', [AuthenticatedSessionController::class, 'store'])->middleware('guest');
+// Web routes group
+Route::group([], function () {
 
-Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->middleware('auth');
+    // Auth routes - web interface
+    Route::get('/register', [RegisteredUserController::class, 'create'])->middleware('guest');
+    Route::post('/register/otp', [App\Http\Controllers\Auth\RegisteredUserController::class, 'sendOtp'])->middleware('guest');
+    Route::post('/register', [RegisteredUserController::class, 'store'])->middleware('guest');
 
-// Dashboard (protected)
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware('auth');
+    Route::get('/login', [AuthenticatedSessionController::class, 'create'])->middleware('guest')->name('login');
+    Route::post('/login', [AuthenticatedSessionController::class, 'store'])->middleware('guest');
 
-// Profile (protected)
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [App\Http\Controllers\ProfileController::class, 'show'])->name('profile');
-    Route::post('/profile', [App\Http\Controllers\ProfileController::class, 'update'])->name('profile.update');
-    Route::post('/profile/password', [App\Http\Controllers\ProfileController::class, 'updatePassword'])->name('profile.password');
-    Route::post('/profile/phone/otp', [App\Http\Controllers\OtpController::class, 'sendPhoneOtp'])->name('profile.phone.otp');
-    Route::post('/profile/phone/verify', [App\Http\Controllers\OtpController::class, 'verifyPhoneOtp'])->name('profile.phone.verify');
-});
+    Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->middleware('auth');
 
-// API Keys routes (web interface)
-Route::get('/api-keys', [ApiKeysController::class, 'index'])->middleware('auth');
-Route::post('/api-keys', [ApiKeysController::class, 'store'])->middleware('auth');
-Route::delete('/api-keys/{id}', [ApiKeysController::class, 'destroy'])->middleware('auth');
+    // Dashboard (protected)
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->middleware('auth');
 
-// Billing routes (protected)
-Route::middleware('auth')->group(function () {
-    // Subscription plans page
-    Route::get('/billing/plans', [PaymentController::class, 'index'])->name('billing.plans');
+    // Profile (protected)
+    Route::middleware('auth')->group(function () {
+        Route::get('/profile', [App\Http\Controllers\ProfileController::class, 'show'])->name('profile');
+        Route::post('/profile', [App\Http\Controllers\ProfileController::class, 'update'])->name('profile.update');
+        Route::post('/profile/password', [App\Http\Controllers\ProfileController::class, 'updatePassword'])->name('profile.password');
+        Route::post('/profile/phone/otp', [App\Http\Controllers\OtpController::class, 'sendPhoneOtp'])->name('profile.phone.otp');
+        Route::post('/profile/phone/verify', [App\Http\Controllers\OtpController::class, 'verifyPhoneOtp'])->name('profile.phone.verify');
+    });
 
-    // Trial payment routes
-    Route::post('/billing/trial/start', [PaymentController::class, 'initiateTrialPayment'])->name('billing.trial.start');
-    Route::get('/billing/trial/callback', [PaymentController::class, 'handleTrialCallback'])->name('billing.trial.callback');
+    // API Keys routes (web interface)
+    Route::get('/api-keys', [ApiKeysController::class, 'index'])->middleware('auth');
+    Route::post('/api-keys', [ApiKeysController::class, 'store'])->middleware('auth');
+    Route::delete('/api-keys/{id}', [ApiKeysController::class, 'destroy'])->middleware('auth');
 
-    // Payment methods page
-    Route::get('/billing/payment-methods', [PaymentMethodsController::class, 'index'])->name('billing.payment-methods');
-    Route::post('/billing/payment-methods', [PaymentMethodsController::class, 'store'])->name('billing.payment-methods.store');
-    Route::delete('/billing/payment-methods/{id}', [PaymentMethodsController::class, 'destroy'])->name('billing.payment-methods.destroy');
+    // Billing routes (protected)
+    Route::middleware('auth')->group(function () {
+        // Subscription plans page
+        Route::get('/billing/plans', [PaymentController::class, 'index'])->name('billing.plans');
 
-    // Payment initiation
-    Route::post('/billing/payment/subscription', [PaymentController::class, 'initiateSubscriptionPayment']);
-    Route::post('/billing/payment/topup', [PaymentController::class, 'initiateTopupPayment']);
-    Route::post('/billing/payment/extra-key', [PaymentController::class, 'initiateExtraKeyPayment'])->name('billing.extra-key.pay');
-    Route::get('/billing/extra-key/callback', [PaymentController::class, 'handleExtraKeyCallback'])->name('billing.extra-key.callback');
+        // Trial payment routes
+        Route::post('/billing/trial/start', [PaymentController::class, 'initiateTrialPayment'])->name('billing.trial.start');
+        Route::get('/billing/trial/callback', [PaymentController::class, 'handleTrialCallback'])->name('billing.trial.callback');
 
-});
+        // Payment methods page
+        Route::get('/billing/payment-methods', [PaymentMethodsController::class, 'index'])->name('billing.payment-methods');
+        Route::post('/billing/payment-methods', [PaymentMethodsController::class, 'store'])->name('billing.payment-methods.store');
+        Route::delete('/billing/payment-methods/{id}', [PaymentMethodsController::class, 'destroy'])->name('billing.payment-methods.destroy');
 
-// Webhook handler (outside auth — MyFatoorah calls this without session)
-Route::post('/billing/webhook', [WebhookController::class, 'handleWebhook'])->name('billing.webhook');
+        // Payment initiation
+        Route::post('/billing/payment/subscription', [PaymentController::class, 'initiateSubscriptionPayment']);
+        Route::post('/billing/payment/topup', [PaymentController::class, 'initiateTopupPayment']);
+        Route::post('/billing/payment/extra-key', [PaymentController::class, 'initiateExtraKeyPayment'])->name('billing.extra-key.pay');
+        Route::get('/billing/extra-key/callback', [PaymentController::class, 'handleExtraKeyCallback'])->name('billing.extra-key.callback');
 
-// Credits documentation page
-Route::get('/credits', function () {
-    return view('credits');
-})->name('credits');
+    });
 
-// Documentation page
-Route::get('/docs', function () {
-    return view('docs');
-})->name('docs');
+    // Webhook handler (outside auth — MyFatoorah calls this without session)
+    Route::post('/billing/webhook', [WebhookController::class, 'handleWebhook'])->name('billing.webhook');
 
-// Home route
-Route::get('/', function () {
-    return view('welcome');
-});
+    // Credits documentation page
+    Route::get('/credits', function () {
+        return view('credits');
+    })->name('credits');
 
-// Model catalog for dashboard (session auth, no API key required)
-Route::get('/models/catalog', [App\Http\Controllers\Api\ModelsController::class, 'index'])->middleware('auth');
+    // Documentation page
+    Route::get('/docs', function () {
+        return view('docs');
+    })->name('docs');
 
-// Admin routes
-Route::middleware(['auth'])->prefix('admin')->group(function () {
-    Route::get('/', function () { return view('admin.dashboard'); })->name('admin.dashboard');
-    Route::get('/api-settings', [ApiSettingsController::class, 'index'])->name('admin.api-settings');
-    Route::put('/api-settings', [ApiSettingsController::class, 'update'])->name('admin.api-settings.update');
-    Route::get('/monitoring', function () { return view('admin.monitoring'); })->name('admin.monitoring');
+    // Contact page (public, no auth required)
+    Route::get('/contact', function () {
+        return view('contact');
+    })->name('contact');
 
-    // Model management routes
-    Route::get('/models', [AdminModelController::class, 'index'])->name('admin.models');
-    Route::post('/models/update', [AdminModelController::class, 'update'])->name('admin.models.update');
+    // Contact form submission (public, no auth required)
+    Route::post('/contact', [ContactController::class, 'submit'])->name('contact.submit');
 
-    // User management routes
-    Route::post('/users/{user}/keys', [AdminController::class, 'createApiKeyForUser'])->name('admin.users.keys.create');
-    Route::post('/users/{user}/credits', [AdminController::class, 'setUserCredits'])->name('admin.users.credits.set');
-    Route::post('/users/{user}/tier', [AdminController::class, 'setUserTier'])->name('admin.users.tier.set');
-    Route::post('/users/{user}/expiry', [AdminController::class, 'setUserExpiry'])->name('admin.users.expiry.set');
-});
+    // Home route
+    Route::get('/', [WelcomeController::class, 'index'])->name('welcome');
 
-// Team routes (Enterprise only)
-Route::middleware(['auth', 'enterprise'])->prefix('teams')->group(function () {
-    Route::get('/', [TeamMemberController::class, 'index'])->name('teams.index');
-    Route::post('/members', [TeamMemberController::class, 'store'])->name('teams.members.store');
-    Route::delete('/members/{id}', [TeamMemberController::class, 'destroy'])->name('teams.members.destroy');
+    // Static/legal pages
+    Route::get('/about', [WelcomeController::class, 'about'])->name('about');
+    Route::get('/privacy-policy', [WelcomeController::class, 'privacy'])->name('privacy-policy');
+    Route::get('/terms-of-service', [WelcomeController::class, 'terms'])->name('terms-of-service');
+
+    // Model catalog for dashboard (session auth, no API key required)
+    Route::get('/models/catalog', [App\Http\Controllers\Api\ModelsController::class, 'index'])->middleware('auth');
+
+    // Admin routes
+    Route::middleware(['auth'])->prefix('admin')->group(function () {
+        Route::get('/', function () { return view('admin.dashboard'); })->name('admin.dashboard');
+        Route::get('/api-settings', [ApiSettingsController::class, 'index'])->name('admin.api-settings');
+        Route::put('/api-settings', [ApiSettingsController::class, 'update'])->name('admin.api-settings.update');
+        Route::get('/monitoring', function () { return view('admin.monitoring'); })->name('admin.monitoring');
+
+        // Model management routes
+        Route::get('/models', [AdminModelController::class, 'index'])->name('admin.models');
+        Route::post('/models/update', [AdminModelController::class, 'update'])->name('admin.models.update');
+
+        // User management routes
+        Route::post('/users/{user}/keys', [AdminController::class, 'createApiKeyForUser'])->name('admin.users.keys.create');
+        Route::post('/users/{user}/credits', [AdminController::class, 'setUserCredits'])->name('admin.users.credits.set');
+        Route::post('/users/{user}/tier', [AdminController::class, 'setUserTier'])->name('admin.users.tier.set');
+        Route::post('/users/{user}/expiry', [AdminController::class, 'setUserExpiry'])->name('admin.users.expiry.set');
+    });
+
+    // Team routes (Enterprise only)
+    Route::middleware(['auth', 'enterprise'])->prefix('teams')->group(function () {
+        Route::get('/', [TeamMemberController::class, 'index'])->name('teams.index');
+        Route::post('/members', [TeamMemberController::class, 'store'])->name('teams.members.store');
+        Route::delete('/members/{id}', [TeamMemberController::class, 'destroy'])->name('teams.members.destroy');
+    });
 });

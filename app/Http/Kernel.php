@@ -34,6 +34,7 @@ class Kernel extends HttpKernel
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
+            \App\Http\Middleware\SetLocale::class,
         ],
 
         'api' => [
@@ -60,5 +61,6 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'api.key.auth' => \App\Http\Middleware\ApiKeyAuth::class,
         'enterprise' => \App\Http\Middleware\EnterpriseMiddleware::class,
+        'set.locale' => \App\Http\Middleware\SetLocale::class,
     ];
 }

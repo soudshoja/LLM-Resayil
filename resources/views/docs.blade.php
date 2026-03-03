@@ -7,13 +7,13 @@
     <title>API Documentation — LLM Resayil</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/monokai-sublime.min.css">
     <style>
         :root {
             --bg-primary: #0f1115;
-            --bg-secondary: #0a0d14;
+            --bg-secondary: #090b0f;
             --bg-card: #13161d;
             --gold: #d4af37;
             --gold-light: #eac558;
@@ -35,7 +35,7 @@
         }
 
         body {
-            font-family: 'Inter', 'Tajawal', sans-serif;
+            font-family: 'IBM Plex Sans', 'Tajawal', sans-serif;
             background: var(--bg-secondary);
             color: var(--text-primary);
             line-height: 1.6;
@@ -140,6 +140,30 @@
             padding: 2rem 1rem;
         }
 
+        .sidebar-version-badge {
+            display: inline-block;
+            background: rgba(212, 175, 55, 0.15);
+            color: var(--gold);
+            padding: 0.25rem 0.75rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .sidebar-reference-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+            padding-left: 1rem;
+        }
+
         .sidebar-nav ul {
             list-style: none;
         }
@@ -185,7 +209,7 @@
 
         h1 {
             font-size: 2.5rem;
-            font-weight: 800;
+            font-weight: 700;
             color: var(--gold);
             margin-bottom: 1rem;
             line-height: 1.2;
@@ -197,6 +221,8 @@
             color: var(--text-primary);
             margin-bottom: 1.5rem;
             margin-top: 2rem;
+            border-left: 3px solid rgba(212, 175, 55, 0.4);
+            padding-left: 1rem;
         }
 
         h3 {
@@ -213,6 +239,49 @@
             line-height: 1.7;
         }
 
+        /* Getting Started Steps */
+        .getting-started-steps {
+            list-style: none;
+            counter-reset: step-counter;
+        }
+
+        .getting-started-steps li {
+            counter-increment: step-counter;
+            display: flex;
+            align-items: flex-start;
+            gap: 1.5rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            position: relative;
+        }
+
+        .getting-started-steps li::before {
+            content: counter(step-counter);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            min-width: 32px;
+            background: rgba(212, 175, 55, 0.2);
+            border: 2px solid var(--gold);
+            border-radius: 50%;
+            color: var(--gold);
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        .getting-started-steps li > div {
+            flex: 1;
+        }
+
+        .getting-started-steps strong {
+            color: var(--text-primary);
+        }
+
         /* Code Blocks */
         .code-block-wrapper {
             position: relative;
@@ -223,17 +292,39 @@
             overflow: hidden;
         }
 
+        .code-block-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 0.75rem 1.5rem;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            letter-spacing: 0.5px;
+        }
+
+        .code-block-language {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
         pre {
             background: var(--bg-card) !important;
             padding: 1.5rem;
             overflow-x: auto;
             border: none !important;
+            margin: 0;
         }
 
         pre code {
             background: transparent !important;
             border: none;
             color: var(--text-primary);
+            font-family: 'JetBrains Mono', monospace;
             font-size: 0.85rem;
             line-height: 1.5;
         }
@@ -243,7 +334,7 @@
             background: rgba(212, 175, 55, 0.1);
             border-radius: 4px;
             padding: 2px 6px;
-            font-family: 'Courier New', monospace;
+            font-family: 'JetBrains Mono', monospace;
             font-size: 0.9em;
         }
 
@@ -296,7 +387,6 @@
             margin: 1.5rem 0;
             background: var(--bg-card);
             border: 1px solid var(--border);
-            border-radius: 8px;
             overflow: hidden;
         }
 
@@ -313,6 +403,10 @@
             padding: 1rem;
             border-bottom: 1px solid var(--border);
             color: var(--text-secondary);
+        }
+
+        tr:nth-child(even) {
+            background: rgba(255, 255, 255, 0.02);
         }
 
         tr:last-child td {
@@ -339,6 +433,7 @@
             border-radius: 8px;
             padding: 1.5rem;
             margin: 1.5rem 0;
+            position: relative;
         }
 
         .error-card.error-401 {
@@ -365,6 +460,7 @@
             font-weight: 600;
             font-size: 0.85rem;
             margin-bottom: 0.5rem;
+            font-family: 'JetBrains Mono', monospace;
         }
 
         .error-card.error-401 .error-badge {
@@ -392,39 +488,35 @@
         /* Tabs */
         .tab-switcher {
             display: flex;
-            gap: 0;
+            gap: 0.5rem;
             border-bottom: 2px solid var(--border);
             margin: 2rem 0 1.5rem;
+            flex-wrap: wrap;
         }
 
         .tab-btn {
             background: transparent;
             color: var(--text-secondary);
             border: none;
-            padding: 1rem 1.5rem;
+            padding: 0.75rem 1.5rem;
             cursor: pointer;
             font-weight: 500;
             font-size: 0.95rem;
             position: relative;
-            transition: color 0.2s ease;
+            transition: all 0.2s ease;
+            border-radius: 20px;
+            border-bottom: 2px solid transparent;
         }
 
         .tab-btn:hover {
             color: var(--gold);
+            background: rgba(212, 175, 55, 0.05);
         }
 
         .tab-btn.active {
-            color: var(--gold);
-        }
-
-        .tab-btn.active::after {
-            content: '';
-            position: absolute;
-            bottom: -2px;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background: var(--gold);
+            color: var(--bg-primary);
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            border-bottom: 2px solid var(--gold);
         }
 
         .tab-panel {
@@ -439,7 +531,7 @@
         footer {
             text-align: center;
             padding: 2rem;
-            color: var(--text-secondary);
+            color: var(--text-muted);
             font-size: 0.9rem;
             border-top: 1px solid var(--border);
             margin-top: 4rem;
@@ -463,6 +555,25 @@
             font-size: 1.5rem;
             cursor: pointer;
             padding: 0.5rem;
+            width: 40px;
+            height: 40px;
+        }
+
+        /* SVG hamburger menu */
+        .hamburger-icon {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+        }
+
+        .hamburger-line {
+            width: 100%;
+            height: 2px;
+            background: currentColor;
+            border-radius: 1px;
+            transition: all 0.3s ease;
         }
 
         /* Mobile */
@@ -473,16 +584,19 @@
 
             .docs-sidebar {
                 display: none;
-                position: absolute;
+                position: fixed;
                 top: 64px;
                 left: 0;
                 right: 0;
                 width: 100%;
                 height: auto;
-                max-height: 400px;
+                max-height: calc(100vh - 64px);
                 border-right: none;
                 border-bottom: 1px solid var(--border);
                 z-index: 999;
+                background: var(--bg-primary);
+                overflow-y: auto;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
             }
 
             .docs-sidebar.open {
@@ -490,7 +604,9 @@
             }
 
             #sidebar-toggle {
-                display: block;
+                display: flex;
+                align-items: center;
+                justify-content: center;
             }
 
             .docs-content {
@@ -509,6 +625,27 @@
             nav {
                 padding: 0 1rem;
             }
+
+            .code-block-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .tab-switcher {
+                flex-direction: column;
+                gap: 0;
+                border-bottom: none;
+            }
+
+            .tab-btn {
+                border-radius: 0;
+                border-bottom: 1px solid var(--border);
+                padding: 1rem;
+            }
+
+            .tab-btn.active {
+                border-bottom: 2px solid var(--gold);
+            }
         }
     </style>
 </head>
@@ -516,7 +653,13 @@
     <!-- Navbar -->
     <nav>
         <a class="nav-brand" href="/">⚡ LLM Resayil</a>
-        <button id="sidebar-toggle">≡</button>
+        <button id="sidebar-toggle">
+            <svg class="hamburger-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="3" y1="6" x2="21" y2="6" class="hamburger-line"></line>
+                <line x1="3" y1="12" x2="21" y2="12" class="hamburger-line"></line>
+                <line x1="3" y1="18" x2="21" y2="18" class="hamburger-line"></line>
+            </svg>
+        </button>
         <div class="nav-links">
             @if(auth()->check())
                 <a href="/dashboard" class="nav-link">Dashboard</a>
@@ -531,7 +674,9 @@
     <div class="docs-layout">
         <!-- Sidebar -->
         <aside class="docs-sidebar">
+            <div class="sidebar-version-badge">v1</div>
             <nav class="sidebar-nav">
+                <div class="sidebar-reference-label">Reference</div>
                 <ul>
                     <li><a href="#getting-started" class="active">Getting Started</a></li>
                     <li><a href="#authentication">Authentication</a></li>
@@ -553,14 +698,17 @@
                 <p>LLM Resayil is an OpenAI-compatible API that lets you access 45+ open-source and cloud LLM models with flexible billing. Any OpenAI SDK works seamlessly by overriding the base URL.</p>
 
                 <h2 style="margin-top: 1.5rem;">Setup in 5 Steps</h2>
-                <ol>
-                    <li><strong>Register</strong> at <a href="/register" style="color: var(--gold); text-decoration: none;">llm.resayil.io/register</a></li>
-                    <li><strong>Subscribe</strong> at <a href="/billing/plans" style="color: var(--gold); text-decoration: none;">/billing/plans</a> — choose a plan or start your free 7-day trial</li>
-                    <li><strong>Create API Key</strong> at <a href="/api-keys" style="color: var(--gold); text-decoration: none;">/api-keys</a> — click "Create Key" and save it (shown only once)</li>
-                    <li><strong>Make your first call:</strong></li>
+                <ol class="getting-started-steps">
+                    <li><div><strong>Register</strong> at <a href="/register" style="color: var(--gold); text-decoration: none;">llm.resayil.io/register</a></div></li>
+                    <li><div><strong>Subscribe</strong> at <a href="/billing/plans" style="color: var(--gold); text-decoration: none;">/billing/plans</a> — choose a plan or start your free 7-day trial</div></li>
+                    <li><div><strong>Create API Key</strong> at <a href="/api-keys" style="color: var(--gold); text-decoration: none;">/api-keys</a> — click "Create Key" and save it (shown only once)</div></li>
+                    <li><div><strong>Make your first call:</strong></div></li>
                 </ol>
 
                 <div class="code-block-wrapper">
+                    <div class="code-block-header">
+                        <div class="code-block-language">bash</div>
+                    </div>
                     <pre><code class="language-bash">curl https://llm.resayil.io/api/v1/chat/completions \
   -H "Authorization: Bearer YOUR_API_KEY" \
   -H "Content-Type: application/json" \
@@ -570,8 +718,8 @@
   }'</code></pre>
                 </div>
 
-                <ol start="5">
-                    <li><strong>Track usage</strong> at <a href="/dashboard" style="color: var(--gold); text-decoration: none;">/dashboard</a></li>
+                <ol start="5" class="getting-started-steps" style="counter-reset: step-counter 4;">
+                    <li><div><strong>Track usage</strong> at <a href="/dashboard" style="color: var(--gold); text-decoration: none;">/dashboard</a></div></li>
                 </ol>
             </section>
 
@@ -582,6 +730,9 @@
 
                 <h3>Header Format</h3>
                 <div class="code-block-wrapper">
+                    <div class="code-block-header">
+                        <div class="code-block-language">bash</div>
+                    </div>
                     <pre><code class="language-bash">Authorization: Bearer YOUR_API_KEY</code></pre>
                 </div>
 
@@ -683,6 +834,9 @@
 
                 <h4 style="font-size: 1.1rem; margin-top: 1.5rem; margin-bottom: 1rem; font-weight: 600;">Example Request</h4>
                 <div class="code-block-wrapper">
+                    <div class="code-block-header">
+                        <div class="code-block-language">bash</div>
+                    </div>
                     <pre><code class="language-bash">curl https://llm.resayil.io/api/v1/chat/completions \
   -H "Authorization: Bearer YOUR_API_KEY" \
   -H "Content-Type: application/json" \
@@ -698,6 +852,9 @@
 
                 <h4 style="font-size: 1.1rem; margin-top: 1.5rem; margin-bottom: 1rem; font-weight: 600;">Example Response</h4>
                 <div class="code-block-wrapper">
+                    <div class="code-block-header">
+                        <div class="code-block-language">json</div>
+                    </div>
                     <pre><code class="language-json">{
   "id": "chatcmpl-abc123def456",
   "object": "chat.completion",
@@ -726,6 +883,9 @@
 
                 <h4 style="font-size: 1.1rem; margin-top: 1.5rem; margin-bottom: 1rem; font-weight: 600;">Example Response</h4>
                 <div class="code-block-wrapper">
+                    <div class="code-block-header">
+                        <div class="code-block-language">json</div>
+                    </div>
                     <pre><code class="language-json">{
   "object": "list",
   "data": [
@@ -763,6 +923,9 @@
                 <h2>Models</h2>
                 <p>Access 45+ LLM models spanning local open-source and cloud providers. Fetch available models using:</p>
                 <div class="code-block-wrapper">
+                    <div class="code-block-header">
+                        <div class="code-block-language">bash</div>
+                    </div>
                     <pre><code class="language-bash">curl https://llm.resayil.io/api/v1/models \
   -H "Authorization: Bearer YOUR_API_KEY"</code></pre>
                 </div>
@@ -944,6 +1107,9 @@
                 <h3>Exceeding Limits</h3>
                 <p>When you exceed your rate limit, the API returns a <code>429 Too Many Requests</code> response:</p>
                 <div class="code-block-wrapper">
+                    <div class="code-block-header">
+                        <div class="code-block-language">json</div>
+                    </div>
                     <pre><code class="language-json">{
   "error": {
     "code": "429",
@@ -970,6 +1136,9 @@
                 <h2>Error Codes</h2>
                 <p>All error responses follow this format:</p>
                 <div class="code-block-wrapper">
+                    <div class="code-block-header">
+                        <div class="code-block-language">json</div>
+                    </div>
                     <pre><code class="language-json">{
   "error": {
     "code": "ERROR_CODE",
@@ -986,6 +1155,9 @@
                     <p><strong>When it occurs:</strong> Missing, invalid, or expired API key.</p>
                     <p><strong>Example response:</strong></p>
                     <div class="code-block-wrapper">
+                        <div class="code-block-header">
+                            <div class="code-block-language">json</div>
+                        </div>
                         <pre><code class="language-json">{
   "error": {
     "code": "unauthorized",
@@ -1002,6 +1174,9 @@
                     <p><strong>When it occurs:</strong> Account has insufficient credits to process the request.</p>
                     <p><strong>Example response:</strong></p>
                     <div class="code-block-wrapper">
+                        <div class="code-block-header">
+                            <div class="code-block-language">json</div>
+                        </div>
                         <pre><code class="language-json">{
   "error": {
     "code": "insufficient_credits",
@@ -1018,6 +1193,9 @@
                     <p><strong>When it occurs:</strong> You've exceeded your plan's rate limit within the current 1-minute window.</p>
                     <p><strong>Example response:</strong></p>
                     <div class="code-block-wrapper">
+                        <div class="code-block-header">
+                            <div class="code-block-language">json</div>
+                        </div>
                         <pre><code class="language-json">{
   "error": {
     "code": "rate_limit_exceeded",
@@ -1034,6 +1212,9 @@
                     <p><strong>When it occurs:</strong> The API or a model service is temporarily unavailable.</p>
                     <p><strong>Example response:</strong></p>
                     <div class="code-block-wrapper">
+                        <div class="code-block-header">
+                            <div class="code-block-language">json</div>
+                        </div>
                         <pre><code class="language-json">{
   "error": {
     "code": "service_unavailable",
@@ -1061,6 +1242,9 @@
                     <h3>cURL</h3>
                     <p>Make API calls directly from the command line:</p>
                     <div class="code-block-wrapper">
+                        <div class="code-block-header">
+                            <div class="code-block-language">bash</div>
+                        </div>
                         <pre><code class="language-bash">curl https://llm.resayil.io/api/v1/chat/completions \
   -H "Authorization: Bearer YOUR_API_KEY" \
   -H "Content-Type: application/json" \
@@ -1077,6 +1261,9 @@
                     <h3>Python</h3>
                     <p>Use the official OpenAI Python library with LLM Resayil:</p>
                     <div class="code-block-wrapper">
+                        <div class="code-block-header">
+                            <div class="code-block-language">python</div>
+                        </div>
                         <pre><code class="language-python"># pip install openai
 from openai import OpenAI
 
@@ -1100,6 +1287,9 @@ print(response.choices[0].message.content)</code></pre>
                     <h3>JavaScript</h3>
                     <p>Use the official OpenAI JavaScript library:</p>
                     <div class="code-block-wrapper">
+                        <div class="code-block-header">
+                            <div class="code-block-language">javascript</div>
+                        </div>
                         <pre><code class="language-javascript">// npm install openai
 import OpenAI from 'openai';
 
@@ -1138,6 +1328,9 @@ console.log(completion.choices[0].message.content);</code></pre>
                     </ol>
 
                     <div class="code-block-wrapper">
+                        <div class="code-block-header">
+                            <div class="code-block-language">json</div>
+                        </div>
                         <pre><code class="language-json">@verbatim
 {
   "model": "llama3.2:3b",
@@ -1154,6 +1347,9 @@ console.log(completion.choices[0].message.content);</code></pre>
                     <ol start="8">
                         <li>To extract the response, reference:
                             <div class="code-block-wrapper">
+                                <div class="code-block-header">
+                                    <div class="code-block-language"></div>
+                                </div>
                                 <pre><code>@verbatim{{ $json.choices[0].message.content }}@endverbatim</code></pre>
                             </div>
                         </li>
@@ -1174,14 +1370,24 @@ console.log(completion.choices[0].message.content);</code></pre>
         // 1. Initialize highlight.js
         hljs.highlightAll();
 
-        // 2. Copy buttons for code blocks
+        // 2. Add code block headers with language detection
         document.querySelectorAll('.code-block-wrapper').forEach(wrapper => {
+            const code = wrapper.querySelector('code');
+            if (code && !wrapper.querySelector('.code-block-header')) {
+                const classList = code.className.match(/language-(\w+)/);
+                const language = classList ? classList[1] : 'code';
+                const header = document.createElement('div');
+                header.className = 'code-block-header';
+                header.innerHTML = `<div class="code-block-language">${language}</div>`;
+                wrapper.insertBefore(header, code.parentElement);
+            }
+
             const btn = document.createElement('button');
             btn.className = 'copy-btn';
             btn.textContent = 'Copy';
             btn.onclick = () => {
-                const code = wrapper.querySelector('code');
-                navigator.clipboard.writeText(code.innerText).then(() => {
+                const codeEl = wrapper.querySelector('code');
+                navigator.clipboard.writeText(codeEl.innerText).then(() => {
                     btn.textContent = 'Copied!';
                     setTimeout(() => btn.textContent = 'Copy', 2000);
                 });
@@ -1220,6 +1426,15 @@ console.log(completion.choices[0].message.content);</code></pre>
         if (toggleBtn) {
             toggleBtn.addEventListener('click', () => sidebar.classList.toggle('open'));
         }
+
+        // 6. Close sidebar when clicking a link
+        document.querySelectorAll('.sidebar-nav a').forEach(link => {
+            link.addEventListener('click', () => {
+                if (sidebar.classList.contains('open')) {
+                    sidebar.classList.remove('open');
+                }
+            });
+        });
     </script>
 </body>
 </html>
