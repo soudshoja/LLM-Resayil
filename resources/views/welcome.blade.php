@@ -21,21 +21,33 @@
     .step-num { width: 44px; height: 44px; background: linear-gradient(135deg, var(--gold), var(--gold-light)); color: #0a0d14; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1.1rem; margin: 0 auto 1rem; }
     .step h3 { font-size: 1rem; font-weight: 600; margin-bottom: 0.5rem; }
     .step p { color: var(--text-secondary); font-size: 0.875rem; line-height: 1.6; }
-    .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
-    .pricing-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 2rem; position: relative; transition: transform 0.2s, box-shadow 0.2s; }
-    .pricing-card:hover { transform: translateY(-4px); box-shadow: 0 12px 30px rgba(0,0,0,0.3); }
-    .pricing-card.featured { border-color: rgba(212,175,55,0.4); background: linear-gradient(160deg, rgba(212,175,55,0.06) 0%, var(--bg-card) 60%); }
-    .pricing-card.featured::before { content: 'Most Popular'; position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: linear-gradient(135deg, var(--gold), var(--gold-light)); color: #0a0d14; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.75rem; font-weight: 700; white-space: nowrap; }
-    .plan-name { font-size: 0.875rem; font-weight: 600; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem; }
-    .plan-price { font-size: 2.5rem; font-weight: 700; color: var(--gold); margin-bottom: 0.25rem; }
-    .plan-price span { font-size: 1rem; color: var(--text-secondary); font-weight: 400; }
-    .plan-billing { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1.25rem; }
-    .plan-features { list-style: none; margin: 0 0 1.75rem; display: flex; flex-direction: column; gap: 0.6rem; }
-    .plan-features li { font-size: 0.875rem; color: var(--text-secondary); display: flex; align-items: center; gap: 0.5rem; }
-    .plan-features li::before { content: '✓'; color: var(--gold); font-weight: 700; }
-    .trial-banner { background: linear-gradient(135deg, rgba(5,150,105,0.12) 0%, rgba(5,150,105,0.05) 100%); border: 1px solid rgba(5,150,105,0.3); border-radius: 12px; padding: 1.25rem 1.75rem; margin-bottom: 2.5rem; display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; justify-content: space-between; }
-    .trial-banner-text { font-size: 0.95rem; color: #6ee7b7; }
-    .trial-banner-text strong { color: #a7f3d0; }
+    /* ── Pricing cards (matches billing/plans style) ── */
+    .pricing-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
+    .plan-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px; padding: 2rem; display: flex; flex-direction: column; position: relative; transition: border-color 0.2s, transform 0.2s; }
+    .plan-card:hover { border-color: rgba(212,175,55,0.4); transform: translateY(-2px); }
+    .plan-card.featured { border-color: rgba(212,175,55,0.4); box-shadow: 0 0 0 1px rgba(212,175,55,0.2), 0 8px 32px rgba(212,175,55,0.08); }
+    .plan-card.trial-card { border: 2px dashed rgba(212,175,55,0.45); background: linear-gradient(160deg, rgba(212,175,55,0.04) 0%, var(--bg-card) 70%); }
+    .plan-card.trial-card:hover { border-color: rgba(212,175,55,0.7); }
+    .plan-badge { position: absolute; top: -13px; left: 50%; transform: translateX(-50%); background: linear-gradient(135deg, var(--gold), var(--gold-light)); color: #0a0d14; font-size: 0.7rem; font-weight: 700; padding: 0.25rem 0.85rem; border-radius: 20px; text-transform: uppercase; letter-spacing: 0.05em; white-space: nowrap; }
+    .plan-badge-trial { position: absolute; top: -13px; left: 50%; transform: translateX(-50%); background: linear-gradient(135deg, #28a745, #20c997); color: #fff; font-size: 0.7rem; font-weight: 700; padding: 0.25rem 0.85rem; border-radius: 20px; text-transform: uppercase; letter-spacing: 0.05em; white-space: nowrap; }
+    .plan-name { font-size: 1rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-secondary); margin-bottom: 0.75rem; }
+    .plan-price { font-size: 2.5rem; font-weight: 700; color: var(--gold); line-height: 1; margin-bottom: 0.25rem; }
+    .plan-price span { font-size: 1rem; font-weight: 500; color: var(--text-secondary); }
+    .plan-price-free { font-size: 2rem; font-weight: 700; color: #28a745; line-height: 1; margin-bottom: 0.25rem; }
+    .plan-billing { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1.5rem; }
+    .plan-divider { border: none; border-top: 1px solid var(--border); margin-bottom: 1.25rem; }
+    .plan-features { list-style: none; flex: 1; margin-bottom: 1.75rem; padding: 0; }
+    .plan-features li { display: flex; align-items: center; gap: 0.6rem; font-size: 0.875rem; color: var(--text-secondary); padding: 0.35rem 0; }
+    .plan-features li svg { flex-shrink: 0; color: var(--gold); }
+    .plan-features li svg.green { color: #28a745; }
+    .plan-cta { display: block; width: 100%; padding: 0.75rem 1.5rem; border-radius: 8px; font-weight: 600; font-size: 0.9rem; cursor: pointer; border: none; transition: all 0.2s; text-align: center; text-decoration: none; }
+    .plan-cta-gold { background: linear-gradient(135deg, var(--gold), var(--gold-light)); color: #0a0d14; }
+    .plan-cta-gold:hover { opacity: 0.9; transform: translateY(-1px); box-shadow: 0 4px 15px rgba(212,175,55,0.3); color: #0a0d14; }
+    .plan-cta-outline { background: transparent; border: 1px solid rgba(212,175,55,0.4); color: var(--gold); }
+    .plan-cta-outline:hover { background: rgba(212,175,55,0.1); color: var(--gold); }
+    .plan-cta-green { background: linear-gradient(135deg, #28a745, #20c997); color: #fff; }
+    .plan-cta-green:hover { opacity: 0.9; transform: translateY(-1px); box-shadow: 0 4px 15px rgba(40,167,69,0.3); color: #fff; }
+    .trial-note { font-size: 0.75rem; color: var(--text-muted); text-align: center; margin-top: 1.25rem; }
     .addon-box { background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 10px; padding: 1.25rem 1.5rem; margin-top: 2rem; }
     .addon-box h4 { font-size: 0.875rem; font-weight: 600; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.75rem; }
     .addon-row { display: flex; justify-content: space-between; font-size: 0.85rem; padding: 0.35rem 0; border-bottom: 1px solid var(--border); color: var(--text-secondary); }
@@ -76,7 +88,8 @@
     @media(max-width: 900px) { .ml-grid { grid-template-columns: repeat(2, 1fr); } }
     @media(max-width: 560px) { .ml-grid { grid-template-columns: 1fr; } }
     .cta-section { text-align: center; padding: 5rem 2rem; background: linear-gradient(135deg, rgba(212,175,55,0.05) 0%, transparent 100%); border-top: 1px solid var(--border); }
-    @media(max-width: 768px) { .hero h1 { font-size: 2rem; } .steps, .pricing-grid { grid-template-columns: 1fr; } .trial-banner { flex-direction: column; gap: 0.75rem; } }
+    @media(max-width: 1100px) { .pricing-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media(max-width: 768px) { .hero h1 { font-size: 2rem; } .steps, .pricing-grid { grid-template-columns: 1fr; } }
 </style>
 @endpush
 
@@ -127,61 +140,141 @@
         <p>All prices in Kuwaiti Dinar. Billed monthly. No hidden fees.</p>
     </div>
 
-    <!-- Free Trial Banner -->
-    <div class="trial-banner">
-        <div class="trial-banner-text">
-            🎁 <strong>7-Day Free Trial</strong> — Try any plan free for 7 days. Card required, cancel anytime.
-        </div>
-        <a href="/register" class="btn btn-gold" style="padding:0.5rem 1.5rem;font-size:0.9rem">Start Free Trial</a>
-    </div>
-
     <div class="pricing-grid">
+
+        <!-- Free Trial -->
+        <div class="plan-card trial-card">
+            <div class="plan-badge-trial">Free Trial</div>
+            <div class="plan-name">Trial</div>
+            <div class="plan-price-free">FREE</div>
+            <div class="plan-billing">7-Day Free Trial &mdash; then 15 KWD/mo</div>
+            <hr class="plan-divider">
+            <ul class="plan-features">
+                <li>
+                    <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="green"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                    Full Starter features
+                </li>
+                <li>
+                    <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="green"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                    1,000 credits included
+                </li>
+                <li>
+                    <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="green"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                    All 45 models (local + cloud)
+                </li>
+                <li>
+                    <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="green"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                    1 free API key
+                </li>
+                <li>
+                    <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="green"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                    Cancel anytime during trial
+                </li>
+            </ul>
+            <a href="/register" class="plan-cta plan-cta-green">Start Free Trial</a>
+        </div>
+
         <!-- Starter -->
-        <div class="pricing-card">
+        <div class="plan-card">
             <div class="plan-name">Starter</div>
             <div class="plan-price">15 <span>KWD</span></div>
-            <div class="plan-billing">per month · billed monthly</div>
+            <div class="plan-billing">per month &nbsp;&middot;&nbsp; billed monthly</div>
+            <hr class="plan-divider">
             <ul class="plan-features">
-                <li>1,000 credits / month</li>
-                <li>All 45 models (local + cloud)</li>
-                <li>10 requests / minute</li>
-                <li>1 free API key</li>
-                <li>Extra keys: +5 KWD (2nd), +10 KWD (3rd)</li>
+                <li>
+                    <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                    1,000 credits / month
+                </li>
+                <li>
+                    <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                    All 45 models (local + cloud)
+                </li>
+                <li>
+                    <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                    10 requests / minute
+                </li>
+                <li>
+                    <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                    1 free API key
+                </li>
+                <li>
+                    <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                    Extra keys: +5 KWD (2nd), +10 KWD (3rd)
+                </li>
             </ul>
-            <a href="/register" class="btn btn-outline" style="width:100%;justify-content:center">Get Started</a>
+            <a href="/register" class="plan-cta plan-cta-outline">Get Started</a>
         </div>
 
         <!-- Basic (Most Popular) -->
-        <div class="pricing-card featured">
+        <div class="plan-card featured">
+            <div class="plan-badge">Most Popular</div>
             <div class="plan-name">Basic</div>
             <div class="plan-price">25 <span>KWD</span></div>
-            <div class="plan-billing">per month · billed monthly</div>
+            <div class="plan-billing">per month &nbsp;&middot;&nbsp; billed monthly</div>
+            <hr class="plan-divider">
             <ul class="plan-features">
-                <li>3,000 credits / month</li>
-                <li>All 45 models (local + cloud)</li>
-                <li>30 requests / minute</li>
-                <li>1 free API key</li>
-                <li>Extra keys: +3 KWD (2nd), +7 KWD (3rd)</li>
+                <li>
+                    <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                    3,000 credits / month
+                </li>
+                <li>
+                    <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                    All 45 models (local + cloud)
+                </li>
+                <li>
+                    <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                    30 requests / minute
+                </li>
+                <li>
+                    <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                    1 free API key
+                </li>
+                <li>
+                    <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                    Extra keys: +3 KWD (2nd), +7 KWD (3rd)
+                </li>
             </ul>
-            <a href="/register" class="btn btn-gold" style="width:100%;justify-content:center">Get Started</a>
+            <a href="/register" class="plan-cta plan-cta-gold">Get Started</a>
         </div>
 
-        <!-- Pro -->
-        <div class="pricing-card">
+        <!-- Pro (Best Value) -->
+        <div class="plan-card">
+            <div class="plan-badge" style="background: linear-gradient(135deg, #6366f1, #8b5cf6); color: #fff;">Best Value</div>
             <div class="plan-name">Pro</div>
             <div class="plan-price">45 <span>KWD</span></div>
-            <div class="plan-billing">per month · billed monthly</div>
+            <div class="plan-billing">per month &nbsp;&middot;&nbsp; billed monthly</div>
+            <hr class="plan-divider">
             <ul class="plan-features">
-                <li>10,000 credits / month</li>
-                <li>All 45 models (local + cloud)</li>
-                <li>60 requests / minute</li>
-                <li>2 free API keys</li>
-                <li>Extra keys: +2 KWD (3rd), +5 KWD (4th)</li>
-                <li>Priority cloud queue</li>
+                <li>
+                    <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                    10,000 credits / month
+                </li>
+                <li>
+                    <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                    All 45 models (local + cloud)
+                </li>
+                <li>
+                    <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                    60 requests / minute
+                </li>
+                <li>
+                    <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                    2 free API keys
+                </li>
+                <li>
+                    <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                    Priority cloud queue
+                </li>
+                <li>
+                    <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                    Extra keys: +2 KWD (3rd), +5 KWD (4th)
+                </li>
             </ul>
-            <a href="/register" class="btn btn-outline" style="width:100%;justify-content:center">Get Started</a>
+            <a href="/register" class="plan-cta plan-cta-outline">Get Started</a>
         </div>
+
     </div>
+    <p class="trial-note">Card required for trial. Cancel anytime. Payments processed securely via KNET / credit card.</p>
 
     <!-- Credit top-up & addons info -->
     <div class="addon-box">
