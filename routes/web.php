@@ -82,6 +82,11 @@ Route::get('/credits', function () {
     return view('credits');
 })->name('credits');
 
+// Documentation page
+Route::get('/docs', function () {
+    return view('docs');
+})->name('docs');
+
 // Home route
 Route::get('/', function () {
     return view('welcome');

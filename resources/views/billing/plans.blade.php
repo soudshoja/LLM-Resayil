@@ -126,6 +126,9 @@
                         1 free API key
                     </li>
                 </ul>
+                <p style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 1rem; text-align: center;">
+                    <a href="/credits" style="color: var(--gold); font-weight: 600; text-decoration: underline; text-decoration-style: dashed; text-underline-offset: 4px;">How Credits Work</a>
+                </p>
             </div>
             <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
                 <div style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 1rem;">After Trial</div>

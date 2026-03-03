@@ -363,7 +363,7 @@ response = requests.post(
                     <div class="topup-bonus">+20% bonus</div>
                 </div>
             </div>
-            <p class="text-xs text-muted mt-4">Payments processed securely via KNET / credit card · <a href="/billing/plans" style="color:var(--gold)">View subscription plans →</a></p>
+            <p class="text-xs text-muted mt-4">Payments processed securely via KNET / credit card · <a href="/billing/plans" style="color:var(--gold)">View subscription plans →</a> · <a href="/credits" style="color:var(--gold)">How Credits Work</a></p>
 
             <hr style="margin:1.25rem 0;border-color:var(--border)">
             <h3 style="font-size:0.875rem;font-weight:600;margin-bottom:0.75rem">Recent Purchases</h3>
