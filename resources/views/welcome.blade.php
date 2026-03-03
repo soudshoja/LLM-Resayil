@@ -276,7 +276,7 @@
         <div class="hmc-track" id="hmcTrack" role="list">
 
             <!-- Slide 1: Llama 3.2 3B -->
-            <div class="hmc-slide" role="listitem" aria-label="Llama 3.2 3B — fastest local model">
+            <div class="hmc-slide" role="listitem" aria-label="Llama 3.2 3B — fastest lightweight model">
                 <div class="hmc-card">
                     <div class="hmc-icon-panel" aria-hidden="true">
                         <!-- Lightning bolt SVG — speed -->
@@ -286,15 +286,15 @@
                     </div>
                     <div class="hmc-body">
                         <div class="hmc-badges">
-                            <span class="hmc-badge hmc-badge-local">Local GPU</span>
+                            <span class="hmc-badge hmc-badge-local">Lightweight</span>
                             <span class="hmc-credit-pill">
                                 <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/><path d="M12 6v12M9 9h4.5a1.5 1.5 0 010 3H9m0 0h4.5a1.5 1.5 0 010 3H9" stroke="white" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg>
                                 1 credit / token
                             </span>
                         </div>
                         <div class="hmc-model-name">Llama 3.2 3B</div>
-                        <div class="hmc-stat">Fastest local model on the platform</div>
-                        <div class="hmc-desc">Meta's lightweight powerhouse — blazing response times for everyday tasks, chatbots, and high-throughput workloads. Runs entirely on local GPU hardware.</div>
+                        <div class="hmc-stat">Fastest model on the platform</div>
+                        <div class="hmc-desc">Meta's lightweight powerhouse — blazing response times for everyday tasks, chatbots, and high-throughput workloads.</div>
                     </div>
                     <div class="hmc-progress" id="hmcProgress" style="width:0%"></div>
                 </div>
@@ -317,7 +317,7 @@
                     </div>
                     <div class="hmc-body">
                         <div class="hmc-badges">
-                            <span class="hmc-badge hmc-badge-cloud">Cloud Proxy</span>
+                            <span class="hmc-badge hmc-badge-cloud">Frontier Model</span>
                             <span class="hmc-credit-pill">
                                 <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/><path d="M12 6v12M9 9h4.5a1.5 1.5 0 010 3H9m0 0h4.5a1.5 1.5 0 010 3H9" stroke="white" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg>
                                 2 credits / token
@@ -325,7 +325,7 @@
                         </div>
                         <div class="hmc-model-name">DeepSeek V3.1 671B</div>
                         <div class="hmc-stat">Frontier reasoning at scale</div>
-                        <div class="hmc-desc">671 billion parameters of frontier-class intelligence. Built for complex reasoning, deep analysis, and multi-step problem solving. Cloud-proxied with automatic failover.</div>
+                        <div class="hmc-desc">671 billion parameters of frontier-class intelligence. Built for complex reasoning, deep analysis, and multi-step problem solving.</div>
                     </div>
                 </div>
             </div>
@@ -348,7 +348,7 @@
                     </div>
                     <div class="hmc-body">
                         <div class="hmc-badges">
-                            <span class="hmc-badge hmc-badge-cloud">Cloud Proxy</span>
+                            <span class="hmc-badge hmc-badge-cloud">Frontier Model</span>
                             <span class="hmc-credit-pill">
                                 <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/><path d="M12 6v12M9 9h4.5a1.5 1.5 0 010 3H9m0 0h4.5a1.5 1.5 0 010 3H9" stroke="white" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg>
                                 2 credits / token
@@ -390,7 +390,7 @@
             </div>
 
             <!-- Slide 5: 45+ Models -->
-            <div class="hmc-slide" role="listitem" aria-label="45+ models — one API, local and cloud">
+            <div class="hmc-slide" role="listitem" aria-label="45+ models — one API, every model">
                 <div class="hmc-card">
                     <div class="hmc-icon-panel" aria-hidden="true">
                         <!-- Grid / catalog SVG -->
@@ -410,8 +410,8 @@
                             </span>
                         </div>
                         <div class="hmc-model-name">45+ Models</div>
-                        <div class="hmc-stat">One API · Local GPU + Cloud Proxy · All tiers</div>
-                        <div class="hmc-desc">From 3B lightweight models to 671B frontier giants. Local GPU inference with automatic cloud failover. All models accessible on every subscription tier — no gating.</div>
+                        <div class="hmc-stat">One API · 45+ Models · Every subscription tier</div>
+                        <div class="hmc-desc">From 3B lightweight models to 671B frontier giants. All models accessible on every subscription tier — no gating, no restrictions.</div>
                     </div>
                 </div>
             </div>
@@ -451,7 +451,7 @@
         <div class="step">
             <div class="step-num">3</div>
             <h3>Make API Calls</h3>
-            <p>Point your app to our endpoint. Local GPU processing, cloud failover when needed — all automatic.</p>
+            <p>Point your app to our endpoint. High-performance inference, fully automatic.</p>
         </div>
     </div>
 </section>
@@ -582,10 +582,10 @@
     <!-- Credit top-up & addons info -->
     <div class="addon-box">
         <h4>Credit Top-Ups &amp; Add-Ons</h4>
-        <div class="addon-row"><span>500 extra credits</span><span>5 KWD</span></div>
-        <div class="addon-row"><span>1,100 extra credits</span><span>10 KWD <span style="color:#28a745;font-size:0.8em;font-weight:600">(+10% bonus)</span></span></div>
-        <div class="addon-row"><span>3,000 extra credits</span><span>25 KWD <span style="color:#28a745;font-size:0.8em;font-weight:600">(+20% bonus)</span></span></div>
-        <div class="addon-row"><span>Credits per 1k tokens</span><span>0.5–3 (local) · 1–3.5 (cloud)</span></div>
+        <div class="addon-row"><span>5,000 extra credits</span><span>2 KWD</span></div>
+        <div class="addon-row"><span>15,000 extra credits</span><span>5 KWD</span></div>
+        <div class="addon-row"><span>50,000 extra credits</span><span>15 KWD</span></div>
+        <div class="addon-row"><span>Credits per 1k tokens</span><span>0.5–3.5 credits</span></div>
     </div>
 </section>
 
