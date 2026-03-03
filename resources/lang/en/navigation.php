@@ -13,4 +13,7 @@ return [
     'get_started' => 'Get Started',
     'docs' => 'Docs',
     'contact' => 'Contact',
+    'admin' => 'Admin',
+    'monitor' => 'Monitor',
+    'models' => 'Models',
 ];

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Login')
+@section('title', __('auth.login'))
 
 @push('styles')
 <style>
@@ -16,8 +16,8 @@
 @section('content')
 <div class="auth-container">
     <div class="auth-card">
-        <div class="auth-title">Welcome back</div>
-        <div class="auth-subtitle">Sign in to your LLM Resayil account</div>
+        <div class="auth-title">{{ __('auth.welcome_back') }}</div>
+        <div class="auth-subtitle">{{ __('auth.sign_in_subtitle') }}</div>
 
         @if($errors->any())
         <div class="alert alert-error">{{ $errors->first() }}</div>
@@ -26,22 +26,22 @@
         <form method="POST" action="/login" id="loginForm">
             @csrf
             <div class="form-group">
-                <label class="form-label">Email Address</label>
+                <label class="form-label">{{ __('auth.email') }}</label>
                 <input type="email" name="email" class="form-input" placeholder="you@example.com" value="{{ old('email') }}" required>
             </div>
             <div class="form-group">
-                <label class="form-label">Password</label>
+                <label class="form-label">{{ __('auth.password_label') }}</label>
                 <input type="password" name="password" class="form-input" placeholder="••••••••" required>
             </div>
             <div class="form-group" style="display:flex;align-items:center;gap:0.5rem">
                 <input type="checkbox" name="remember" id="remember" style="accent-color:var(--gold)">
-                <label for="remember" style="font-size:0.875rem;color:var(--text-secondary);cursor:pointer">Remember me</label>
+                <label for="remember" style="font-size:0.875rem;color:var(--text-secondary);cursor:pointer">{{ __('auth.remember_me') }}</label>
             </div>
-            <button type="submit" class="btn btn-gold" style="width:100%;justify-content:center;padding:0.75rem;font-size:0.95rem">Sign In</button>
+            <button type="submit" class="btn btn-gold" style="width:100%;justify-content:center;padding:0.75rem;font-size:0.95rem">{{ __('auth.sign_in') }}</button>
         </form>
 
         <div class="auth-footer">
-            Don't have an account? <a href="/register">Register here</a>
+            {{ __('auth.no_account') }} <a href="/register">{{ __('auth.register_here') }}</a>
         </div>
     </div>
 </div>
@@ -53,7 +53,7 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
     e.preventDefault();
     const form = e.target;
     const btn = form.querySelector('button[type="submit"]');
-    btn.textContent = 'Signing in...';
+    btn.textContent = @json(__('auth.signing_in'));
     btn.disabled = true;
 
     const data = {
@@ -74,12 +74,12 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
             window.location.href = '/dashboard';
         } else {
             document.querySelector('.auth-card').insertAdjacentHTML('afterbegin',
-                `<div class="alert alert-error">${json.message || 'Login failed.'}</div>`);
-            btn.textContent = 'Sign In';
+                `<div class="alert alert-error">${json.message || @json(__('auth.login_failed'))}</div>`);
+            btn.textContent = @json(__('auth.sign_in'));
             btn.disabled = false;
         }
     } catch(err) {
-        btn.textContent = 'Sign In';
+        btn.textContent = @json(__('auth.sign_in'));
         btn.disabled = false;
     }
 });
