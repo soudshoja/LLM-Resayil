@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" dir="{{ app()->getLocale() === 'ar' ? 'rtl' : 'ltr' }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>500 - Server Error - LLM Resayil</title>
+    <title>500 - {{ __('errors.server_error') }} - LLM Resayil</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
@@ -104,19 +104,18 @@
     <div class="error-container">
         <div class="warning-icon">⚠️</div>
         <div class="error-code">500</div>
-        <h1 class="error-title">Something went wrong</h1>
+        <h1 class="error-title">{{ __('errors.something_went_wrong') }}</h1>
         <p class="error-message">
-            We're experiencing technical difficulties on our end. Our team has been notified
-            and we're working to fix the issue. Please try again in a few moments.
+            {{ __('errors.500_message') }}
         </p>
         <div>
-            <a href="/dashboard" class="btn btn-gold">Return to Dashboard</a>
-            <button onclick="window.location.reload()" class="btn btn-outline">Try Again</button>
+            <a href="/dashboard" class="btn btn-gold">{{ __('errors.return_to_dashboard') }}</a>
+            <button onclick="window.location.reload()" class="btn btn-outline">{{ __('errors.try_again') }}</button>
         </div>
 
         @if(app()->environment('local') || app()->environment('debug'))
         <div class="debug-info">
-            <h3>Debug Information (Local Only)</h3>
+            <h3>{{ __('errors.debug_info') }}</h3>
             <p>Error: {{ $exception->getMessage() }}</p>
             <p>File: {{ $exception->getFile() }}:{{ $exception->getLine() }}</p>
         </div>

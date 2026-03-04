@@ -88,13 +88,13 @@
     <div class="error-container">
         <div class="security-icon">🔒</div>
         <div class="error-code">401</div>
-        <h1 class="error-title">Unauthorized</h1>
+        <h1 class="error-title">{{ __('errors.unauthorized') }}</h1>
         <p class="error-message">
-            You must be logged in to access this resource. Please sign in to continue.
+            {{ __('errors.401_message') }}
         </p>
         <div>
-            <a href="/login" class="btn btn-gold">Sign In</a>
-            <a href="/register" class="btn btn-outline">Create Account</a>
+            <a href="/login" class="btn btn-gold">{{ __('errors.sign_in') }}</a>
+            <a href="/register" class="btn btn-outline">{{ __('errors.create_account') }}</a>
         </div>
     </div>
 </body>

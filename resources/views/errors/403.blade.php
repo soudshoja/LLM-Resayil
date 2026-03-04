@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" dir="{{ app()->getLocale() === 'ar' ? 'rtl' : 'ltr' }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>403 - Forbidden - LLM Resayil</title>
+    <title>403 - {{ __('errors.forbidden') }} - LLM Resayil</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
@@ -88,12 +88,12 @@
     <div class="error-container">
         <div class="security-icon">🚫</div>
         <div class="error-code">403</div>
-        <h1 class="error-title">Forbidden</h1>
+        <h1 class="error-title">{{ __('errors.forbidden') }}</h1>
         <p class="error-message">
-            You don't have permission to access this resource. Please contact support if you believe this is an error.
+            {{ __('errors.403_message') }}
         </p>
         <div>
-            <a href="/dashboard" class="btn btn-gold">Go to Dashboard</a>
+            <a href="/dashboard" class="btn btn-gold">{{ __('errors.go_to_dashboard') }}</a>
         </div>
     </div>
 </body>

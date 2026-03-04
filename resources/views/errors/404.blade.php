@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" dir="{{ app()->getLocale() === 'ar' ? 'rtl' : 'ltr' }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>404 - Page Not Found - LLM Resayil</title>
+    <title>404 - {{ __('errors.page_not_found') }} - LLM Resayil</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
@@ -88,13 +88,13 @@
     <div class="error-container">
         <div class="map-icon">🗺️</div>
         <div class="error-code">404</div>
-        <h1 class="error-title">Page Not Found</h1>
+        <h1 class="error-title">{{ __('errors.page_not_found') }}</h1>
         <p class="error-message">
-            The page you're looking for doesn't exist or has been moved. Let's get you back on track.
+            {{ __('errors.404_message') }}
         </p>
         <div>
-            <a href="/dashboard" class="btn btn-gold">Go to Dashboard</a>
-            <a href="/docs" class="btn btn-outline">View Documentation</a>
+            <a href="/dashboard" class="btn btn-gold">{{ __('errors.go_to_dashboard') }}</a>
+            <a href="/docs" class="btn btn-outline">{{ __('errors.view_documentation') }}</a>
         </div>
     </div>
 </body>

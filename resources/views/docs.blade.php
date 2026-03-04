@@ -259,7 +259,7 @@
         <div class="docs-grid">
             <!-- Billing & Plans -->
             <a href="/docs/plans/2026-03-02-billing-admin-enhancements.md" class="doc-card" style="pointer-events: auto;">
-                <span class="doc-date">March 2, 2026</span>
+                <span class="doc-date">{{ __('docs.last_updated') }}</span>
                 <h3 class="doc-title">@lang('docs.billing_subscription_plans')</h3>
                 <p class="doc-description">@lang('docs.complete_guide_subscription')</p>
                 <span class="doc-tag">@lang('billing.plans')</span>
@@ -268,7 +268,7 @@
 
             <!-- Model Catalog -->
             <a href="/docs/plans/2026-03-02-model-catalog-admin-panel.md" class="doc-card" style="pointer-events: auto;">
-                <span class="doc-date">March 2, 2026</span>
+                <span class="doc-date">{{ __('docs.last_updated') }}</span>
                 <h3 class="doc-title">@lang('docs.model_catalog_admin_panel')</h3>
                 <p class="doc-description">@lang('docs.access_llm_models')</p>
                 <span class="doc-tag">@lang('docs.api')</span>
@@ -277,7 +277,7 @@
 
             <!-- Recurring Payments & WhatsApp -->
             <a href="/docs/plans/2026-03-02-billing-recurring-whatsapp.md" class="doc-card" style="pointer-events: auto;">
-                <span class="doc-date">March 2, 2026</span>
+                <span class="doc-date">{{ __('docs.last_updated') }}</span>
                 <h3 class="doc-title">@lang('docs.recurring_payments_whatsapp')</h3>
                 <p class="doc-description">@lang('docs.myfatoorah_payment_gateway')</p>
                 <span class="doc-tag">@lang('billing.plans')</span>
