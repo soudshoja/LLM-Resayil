@@ -299,17 +299,17 @@
 
     {{-- ── Hero ── --}}
     <div class="about-hero">
-        <span class="hero-eyebrow">About LLM Resayil</span>
-        <h1>The LLM API Built for<br><em>Developers Who Ship</em></h1>
-        <p>45+ open-source and frontier AI models through one OpenAI-compatible gateway. Local GPU inference, cloud proxies, pay-per-token — zero lock-in.</p>
+        <span class="hero-eyebrow">{{ __('about.hero_badge') }}</span>
+        <h1>{!! __('about.hero_title') !!}</h1>
+        <p>{{ __('about.hero_description') }}</p>
         <div class="hero-cta">
             <a href="/register" class="btn-primary">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-                Get Started
+                {{ __('about.get_started') }}
             </a>
             <a href="/docs" class="btn-secondary">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-                Read the Docs
+                {{ __('about.read_docs') }}
             </a>
         </div>
     </div>
@@ -318,32 +318,32 @@
     <div class="stats-bar">
         <div class="stat-block">
             <div class="stat-num">45+</div>
-            <div class="stat-label">AI Models</div>
+            <div class="stat-label">{{ __('about.models') }}</div>
         </div>
         <div class="stat-block">
             <div class="stat-num">1:1</div>
-            <div class="stat-label">OpenAI Compatible</div>
+            <div class="stat-label">{{ __('about.openai_compatible') }}</div>
         </div>
         <div class="stat-block">
             <div class="stat-num">KWD</div>
-            <div class="stat-label">Local Currency</div>
+            <div class="stat-label">{{ __('about.local_currency') }}</div>
         </div>
         <div class="stat-block">
             <div class="stat-num">0ms</div>
-            <div class="stat-label">Setup Time</div>
+            <div class="stat-label">{{ __('about.setup_time') }}</div>
         </div>
     </div>
 
     {{-- ── Mission ── --}}
     <div class="about-section">
-        <span class="section-label">Our Mission</span>
-        <h2 class="section-title">Powerful AI shouldn't require<br>a PhD in infrastructure</h2>
-        <p class="section-body">We built LLM Resayil to remove the friction between "I want to use AI" and "my app is live." GPU servers, model weights, provider APIs, billing — we handle it. You focus on building.</p>
+        <span class="section-label">{{ __('about.our_mission') }}</span>
+        <h2 class="section-title">{{ __('about.mission_title') }}</h2>
+        <p class="section-body">{{ __('about.mission_description') }}</p>
     </div>
 
     {{-- ── Features bento grid ── --}}
     <div style="max-width:1100px;margin:0 auto;padding:0 2rem 5rem">
-        <span class="section-label">What We Offer</span>
+        <span class="section-label">{{ __('about.what_we_offer') }}</span>
         <div class="bento-grid">
 
             {{-- Wide: API compatibility --}}
@@ -353,13 +353,13 @@
                         <path d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/>
                     </svg>
                 </div>
-                <div class="bento-title">OpenAI-Compatible API</div>
-                <div class="bento-desc">Drop-in replacement. Change your base URL, keep your code. Works with any SDK that targets OpenAI's API — Python, Node, curl, n8n, LangChain.</div>
+                <div class="bento-title">{{ __('about.api_compatibility') }}</div>
+                <div class="bento-desc">{{ __('about.api_compatibility_desc') }}</div>
                 <div class="terminal-block">
                     <span class="t-prompt">$</span> <span class="t-cmd">curl https://llm.resayil.io/api/v1/chat/completions</span><br>
                     &nbsp;&nbsp;<span class="t-cmd">-H </span><span class="t-str">"Authorization: Bearer $API_KEY"</span><br>
                     &nbsp;&nbsp;<span class="t-cmd">-d </span><span class="t-str">'{"model":"llama3.2:3b","messages":[...]}'</span><br>
-                    <span class="t-out"># Returns standard OpenAI-format JSON ✓</span>
+                    <span class="t-out">{{ __('about.curl_success') }} ✓</span>
                 </div>
             </div>
 
@@ -371,9 +371,9 @@
                     </svg>
                 </div>
                 <div class="bento-big-num">45+</div>
-                <div class="bento-title">AI Models</div>
-                <div class="bento-desc">Local GPU: Llama 3.2, Qwen 3, Mistral, Gemma, Phi-4. Cloud proxies: DeepSeek V3.1, GPT-4o, Claude, Gemini, and more.</div>
-                <div class="bento-badge">15 local · 30 cloud</div>
+                <div class="bento-title">{{ __('about.models') }}</div>
+                <div class="bento-desc">{{ __('about.forty_five_models_desc') }}</div>
+                <div class="bento-badge">{{ __('about.local_cloud_badge') }}</div>
             </div>
 
             {{-- Pay per token --}}
@@ -383,9 +383,9 @@
                         <circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>
                     </svg>
                 </div>
-                <div class="bento-title">Pay Per Token</div>
-                <div class="bento-desc">No subscriptions. Buy credits, use them anytime. Local: 1 cr/token. Cloud: 2 cr/token.</div>
-                <div class="bento-badge">No monthly fee</div>
+                <div class="bento-title">{{ __('about.pay_per_token') }}</div>
+                <div class="bento-desc">{{ __('about.pay_per_token_desc') }}</div>
+                <div class="bento-badge">{{ __('about.no_monthly_fee') }}</div>
             </div>
 
             {{-- KNET --}}
@@ -395,9 +395,9 @@
                         <rect x="1" y="4" width="22" height="16" rx="2"/><path d="M1 10h22"/>
                     </svg>
                 </div>
-                <div class="bento-title">KNET Payments</div>
-                <div class="bento-desc">Secure local KNET payments via MyFatoorah. KWD pricing. No international card needed.</div>
-                <div class="bento-badge">Powered by MyFatoorah</div>
+                <div class="bento-title">{{ __('about.knets_payments') }}</div>
+                <div class="bento-desc">{{ __('about.knets_payments_desc') }}</div>
+                <div class="bento-badge">{{ __('about.myfatoorah_badge') }}</div>
             </div>
 
             {{-- Usage tracking --}}
@@ -407,8 +407,8 @@
                         <path d="M3 3v18h18"/><path d="M18.7 8l-5.1 5.2-2.8-2.7L7 14.3"/>
                     </svg>
                 </div>
-                <div class="bento-title">Full Usage Visibility</div>
-                <div class="bento-desc">Per-call logs: model, tokens, credits, timing. Weekly summaries in your dashboard.</div>
+                <div class="bento-title">{{ __('about.usage_visibility') }}</div>
+                <div class="bento-desc">{{ __('about.usage_visibility_desc') }}</div>
             </div>
 
             {{-- Security --}}
@@ -418,8 +418,8 @@
                         <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
                     </svg>
                 </div>
-                <div class="bento-title">Secure by Default</div>
-                <div class="bento-desc">API keys hashed at rest. WhatsApp OTP for account verification. Per-key rate limits. HTTPS only.</div>
+                <div class="bento-title">{{ __('about.security') }}</div>
+                <div class="bento-desc">{{ __('about.security_desc') }}</div>
             </div>
 
         </div>
@@ -427,86 +427,86 @@
 
     {{-- ── Pricing overview ── --}}
     <div style="max-width:1100px;margin:0 auto;padding:0 2rem 5rem">
-        <span class="section-label">Pricing</span>
-        <h2 class="section-title">Simple credit-based pricing</h2>
+        <span class="section-label">{{ __('about.pricing') }}</span>
+        <h2 class="section-title">{{ __('about.pricing_description') }}</h2>
         <div class="pricing-strip">
             <div class="pricing-strip-header">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3m.08 4h.01"/></svg>
-                <span>Credit top-ups — unused credits never expire</span>
+                <span>{{ __('about.credit_topups') }}</span>
             </div>
             <div class="pricing-row">
-                <div class="pricing-cell header">Credits</div>
-                <div class="pricing-cell header">Price (KWD)</div>
-                <div class="pricing-cell header">Local use</div>
-                <div class="pricing-cell header">Cloud use</div>
+                <div class="pricing-cell header">{{ __('about.credits') }}</div>
+                <div class="pricing-cell header">{{ __('about.price_kwd') }}</div>
+                <div class="pricing-cell header">{{ __('about.local_use') }}</div>
+                <div class="pricing-cell header">{{ __('about.cloud_use') }}</div>
             </div>
             <div class="pricing-row">
-                <div class="pricing-cell"><strong>5,000</strong> credits</div>
+                <div class="pricing-cell"><strong>5,000</strong> {{ __('about.credits') }}</div>
                 <div class="pricing-cell">2.000 KWD</div>
-                <div class="pricing-cell">5,000 tokens</div>
-                <div class="pricing-cell">2,500 tokens</div>
+                <div class="pricing-cell">{{ __('about.tokens_amount', ['amount' => '5,000']) }}</div>
+                <div class="pricing-cell">{{ __('about.tokens_amount', ['amount' => '2,500']) }}</div>
             </div>
             <div class="pricing-row">
-                <div class="pricing-cell"><strong>15,000</strong> credits</div>
+                <div class="pricing-cell"><strong>15,000</strong> {{ __('about.credits') }}</div>
                 <div class="pricing-cell">5.000 KWD</div>
-                <div class="pricing-cell">15,000 tokens</div>
-                <div class="pricing-cell">7,500 tokens</div>
+                <div class="pricing-cell">{{ __('about.tokens_amount', ['amount' => '15,000']) }}</div>
+                <div class="pricing-cell">{{ __('about.tokens_amount', ['amount' => '7,500']) }}</div>
             </div>
             <div class="pricing-row">
-                <div class="pricing-cell"><strong>50,000</strong> credits</div>
+                <div class="pricing-cell"><strong>50,000</strong> {{ __('about.credits') }}</div>
                 <div class="pricing-cell">15.000 KWD</div>
-                <div class="pricing-cell">50,000 tokens</div>
-                <div class="pricing-cell">25,000 tokens</div>
+                <div class="pricing-cell">{{ __('about.tokens_amount', ['amount' => '50,000']) }}</div>
+                <div class="pricing-cell">{{ __('about.tokens_amount', ['amount' => '25,000']) }}</div>
             </div>
         </div>
     </div>
 
     {{-- ── Infrastructure ── --}}
     <div class="about-section" style="padding-top:0">
-        <span class="section-label">Infrastructure</span>
-        <h2 class="section-title">Built on dedicated GPU hardware</h2>
-        <p class="section-body">We run our own GPU server for local model inference, backed by cloud proxy routing for frontier models. Everything is served over HTTPS with per-key authentication.</p>
+        <span class="section-label">{{ __('about.infrastructure') }}</span>
+        <h2 class="section-title">{{ __('about.infrastructure_title') }}</h2>
+        <p class="section-body">{{ __('about.infrastructure_desc') }}</p>
         <div class="infra-grid">
             <div class="infra-card">
-                <h3>Local GPU Server</h3>
-                <p>Dedicated GPU hardware running Ollama for fast, private inference on open-source models. Llama, Qwen, Mistral, Phi, Gemma, and more — served from our own hardware.</p>
+                <h3>{{ __('about.gpu_server') }}</h3>
+                <p>{{ __('about.gpu_server_desc') }}</p>
             </div>
             <div class="infra-card">
-                <h3>Cloud Proxy Models</h3>
-                <p>Frontier models (DeepSeek V3.1, Qwen 3.5 397B, and others) routed via Ollama cloud proxies. Same API interface — no extra configuration.</p>
+                <h3>{{ __('about.cloud_proxy') }}</h3>
+                <p>{{ __('about.cloud_proxy_desc') }}</p>
             </div>
             <div class="infra-card">
-                <h3>Payment Processing</h3>
-                <p>All payments handled by MyFatoorah — a licensed Kuwaiti payment gateway. We never store card numbers or KNET credentials.</p>
+                <h3>{{ __('about.payment_processing') }}</h3>
+                <p>{{ __('about.payment_processing_desc') }}</p>
             </div>
             <div class="infra-card">
-                <h3>Account Security</h3>
-                <p>Phone verification via WhatsApp OTP. API keys are hashed, never stored in plain text. Rate limiting applied per key, per tier.</p>
+                <h3>{{ __('about.account_security') }}</h3>
+                <p>{{ __('about.account_security_desc') }}</p>
             </div>
         </div>
     </div>
 
     {{-- ── CTA strip ── --}}
     <div class="cta-strip">
-        <h2>Ready to build?</h2>
-        <p>Create your account, get your API key, and make your first request in under 5 minutes.</p>
+        <h2>{{ __('about.ready_to_build') }}</h2>
+        <p>{{ __('about.build_description') }}</p>
         <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap">
-            <a href="/register" class="btn-primary">Create Free Account</a>
-            <a href="/docs" class="btn-secondary">Explore the Docs</a>
+            <a href="/register" class="btn-primary">{{ __('about.create_account') }}</a>
+            <a href="/docs" class="btn-secondary">{{ __('about.explore_docs') }}</a>
         </div>
     </div>
 
     {{-- ── Footer nav ── --}}
     <nav class="about-footer-nav">
-        <a href="/docs">Documentation</a>
+        <a href="/docs">{{ __('about.footer_docs') }}</a>
         <span>·</span>
-        <a href="/billing/plans">Pricing</a>
+        <a href="/billing/plans">{{ __('about.footer_pricing') }}</a>
         <span>·</span>
-        <a href="/contact">Contact</a>
+        <a href="/contact">{{ __('about.footer_contact') }}</a>
         <span>·</span>
-        <a href="/terms-of-service">Terms</a>
+        <a href="/terms-of-service">{{ __('about.footer_terms') }}</a>
         <span>·</span>
-        <a href="/privacy-policy">Privacy</a>
+        <a href="/privacy-policy">{{ __('about.footer_privacy') }}</a>
     </nav>
 
 </div>

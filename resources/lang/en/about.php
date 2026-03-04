@@ -3,7 +3,7 @@
 return [
     'title' => 'About',
     'hero_badge' => 'About LLM Resayil',
-    'hero_title' => 'The LLM API Built for <span>Developers Who Ship</span>',
+    'hero_title' => 'The LLM API Built for<br><em>Developers Who Ship</em>',
     'hero_description' => '45+ open-source and frontier AI models through one OpenAI-compatible gateway. Local GPU inference, cloud proxies, pay-per-token — zero lock-in.',
     'get_started' => 'Get Started',
     'read_docs' => 'Read the Docs',
@@ -41,7 +41,9 @@ return [
     'local_use' => 'Local use',
     'cloud_use' => 'Cloud use',
     'credit_topups' => 'Credit top-ups — unused credits never expire',
-    'setup' => 'Built on dedicated GPU hardware',
+    'infrastructure' => 'Infrastructure',
+    'infrastructure_title' => 'Built on dedicated GPU hardware',
+    'infrastructure_desc' => 'We run our own GPU server for local model inference, backed by cloud proxy routing for frontier models. Everything is served over HTTPS with per-key authentication.',
     'gpu_server' => 'Local GPU Server',
     'gpu_server_desc' => 'Dedicated GPU hardware running Ollama for fast, private inference on open-source models. Llama, Qwen, Mistral, Phi, Gemma, and more — served from our own hardware.',
     'cloud_proxy' => 'Cloud Proxy Models',
@@ -54,4 +56,15 @@ return [
     'build_description' => 'Create your account, get your API key, and make your first request in under 5 minutes.',
     'create_account' => 'Create Free Account',
     'explore_docs' => 'Explore the Docs',
+
+    // Footer nav
+    'footer_docs' => 'Documentation',
+    'footer_pricing' => 'Pricing',
+    'footer_contact' => 'Contact',
+    'footer_terms' => 'Terms',
+    'footer_privacy' => 'Privacy',
+
+    // Pricing table row values
+    'credits_amount' => ':amount credits',
+    'tokens_amount' => ':amount tokens',
 ];
