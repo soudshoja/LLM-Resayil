@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'About')
+@section('title', __('about.title'))
 
 @push('styles')
 <link rel="preconnect" href="https://fonts.googleapis.com">
