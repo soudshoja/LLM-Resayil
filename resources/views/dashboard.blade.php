@@ -112,7 +112,7 @@
 @section('content')
 <main>
     <div class="dash-header">
-        <h1>{{ __('dashboard.welcome_back') }}, {{ auth()->user()->name ?: auth()->user()->email }}</h1>
+        <h1>{{ __('dashboard.welcome_back', ['name' => auth()->user()->name ?: auth()->user()->email]) }}</h1>
         <div class="text-secondary text-sm">
             {{ __('dashboard.plan') }}: <span class="badge badge-gold">{{ ucfirst(auth()->user()->subscription_tier) }}</span>
             @if(auth()->user()->subscription_expiry)
