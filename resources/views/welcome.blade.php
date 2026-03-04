@@ -25,6 +25,8 @@
     .hero-slider-dot { width: 12px; height: 12px; border-radius: 50%; background: rgba(212,175,55,0.3); border: 2px solid var(--gold); cursor: pointer; transition: all 0.3s; }
     .hero-slider-dot.active { background: var(--gold); transform: scale(1.2); }
     .hero-slider-dot:hover { background: rgba(212,175,55,0.6); }
+    .hero-slide-logo { margin-bottom: 1rem; opacity: 0.9; }
+    .hero-slider-counter { text-align: center; margin-top: 0.75rem; font-size: 0.8rem; color: var(--text-muted); letter-spacing: 0.05em; }
     .section { padding: 4rem 2rem; max-width: 1200px; margin: 0 auto; }
     .section-title { text-align: center; margin-bottom: 3rem; }
     .section-title h2 { font-size: 1.875rem; font-weight: 700; margin-bottom: 0.75rem; }
@@ -140,6 +142,8 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
         currentSlide = index;
+        const counter = document.getElementById('heroSlideCounter');
+        if (counter) counter.textContent = (index + 1) + ' / ' + slides.length;
     }
 
     function nextSlide() {
@@ -152,18 +156,35 @@ document.addEventListener('DOMContentLoaded', function() {
         showSlide(prev);
     }
 
+    function startAutoPlay() {
+        autoPlay = setInterval(nextSlide, 4000);
+    }
+
+    function stopAutoPlay() {
+        if (autoPlay) { clearInterval(autoPlay); autoPlay = null; }
+    }
+
     dots.forEach((dot, index) => {
-        dot.addEventListener('click', () => showSlide(index));
+        dot.addEventListener('click', () => { stopAutoPlay(); showSlide(index); startAutoPlay(); });
     });
 
-    document.querySelector('.hero-slider-prev')?.addEventListener('click', prevSlide);
-    document.querySelector('.hero-slider-next')?.addEventListener('click', nextSlide);
+    document.querySelector('.hero-slider-prev')?.addEventListener('click', () => { stopAutoPlay(); prevSlide(); startAutoPlay(); });
+    document.querySelector('.hero-slider-next')?.addEventListener('click', () => { stopAutoPlay(); nextSlide(); startAutoPlay(); });
 
     // Keyboard navigation
     document.addEventListener('keydown', function(e) {
-        if (e.key === 'ArrowLeft') prevSlide();
-        if (e.key === 'ArrowRight') nextSlide();
+        if (e.key === 'ArrowLeft') { stopAutoPlay(); prevSlide(); startAutoPlay(); }
+        if (e.key === 'ArrowRight') { stopAutoPlay(); nextSlide(); startAutoPlay(); }
     });
+
+    // Initialize: activate first dot + start auto-play
+    showSlide(0);
+    startAutoPlay();
+
+    // Pause on hover
+    const sliderContainer = document.querySelector('.hero-slider-container');
+    sliderContainer?.addEventListener('mouseenter', stopAutoPlay);
+    sliderContainer?.addEventListener('mouseleave', startAutoPlay);
 });
 </script>
 @endpush
@@ -177,6 +198,13 @@ document.addEventListener('DOMContentLoaded', function() {
         <!-- Slide 1: Lightweight & Fast -->
         <div class="hero-slide active">
             <div class="hero-slide-content">
+                <div class="hero-slide-logo">
+                    <svg width="40" height="40" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M30 20c-5.523 0-10 4.477-10 10s4.477 10 10 10c2.761 0 5.26-1.12 7.071-2.929" stroke="#d4af37" stroke-width="3" stroke-linecap="round" fill="none"/>
+                        <path d="M30 20c5.523 0 10 4.477 10 10s-4.477 10-10 10c-2.761 0-5.26-1.12-7.071-2.929" stroke="#d4af37" stroke-width="3" stroke-linecap="round" fill="none"/>
+                        <text x="50%" y="56" text-anchor="middle" fill="#d4af37" font-size="8" font-family="Inter, sans-serif" font-weight="700">Meta</text>
+                    </svg>
+                </div>
                 <div class="hero-slide-badge">
                     <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
                     {{ __('welcome.lightweight') }}
@@ -188,6 +216,14 @@ document.addEventListener('DOMContentLoaded', function() {
         <!-- Slide 2: Frontier Model -->
         <div class="hero-slide">
             <div class="hero-slide-content">
+                <div class="hero-slide-logo">
+                    <svg width="40" height="40" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="30" cy="30" r="18" stroke="#d4af37" stroke-width="2.5" fill="none"/>
+                        <path d="M22 30c0-4.418 3.582-8 8-8s8 3.582 8 8-3.582 8-8 8" stroke="#d4af37" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+                        <circle cx="30" cy="30" r="3" fill="#d4af37"/>
+                        <text x="50%" y="56" text-anchor="middle" fill="#d4af37" font-size="7" font-family="Inter, sans-serif" font-weight="700">DeepSeek</text>
+                    </svg>
+                </div>
                 <div class="hero-slide-badge">
                     <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
                     {{ __('welcome.frontier_model') }}
@@ -201,6 +237,7 @@ document.addEventListener('DOMContentLoaded', function() {
             <button class="hero-slider-dot" aria-label="Slide 1"></button>
             <button class="hero-slider-dot" aria-label="Slide 2"></button>
         </div>
+        <div class="hero-slider-counter" id="heroSlideCounter">1 / 2</div>
     </div>
     <div class="hero-cta">
         <a href="/register" class="btn btn-gold btn-lg">{{ __('welcome.cta_start_free_trial') }}</a>
