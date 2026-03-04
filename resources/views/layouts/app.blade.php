@@ -9,6 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
     <style>
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        a { text-decoration: none; color: inherit; }
         :root {
             --bg-primary: #0f1115;
             --bg-secondary: #0a0d14;
@@ -77,7 +78,7 @@
         .lang-switch { position: relative; }
         .lang-switch button { background: transparent; border: none; color: var(--text-secondary); cursor: pointer; padding: 0.4rem 0.8rem; border-radius: 6px; transition: all 0.2s; display: flex; align-items: center; gap: 0.4rem; font-size: 0.9rem; }
         .lang-switch button:hover { color: var(--text-primary); background: var(--slate); }
-        .lang-dropdown { position: absolute; top: 100%; right: 0; margin-top: 0.5rem; background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.3); overflow: hidden; min-width: 160px; z-index: 100; }
+        .lang-dropdown { display: none; position: absolute; top: 100%; right: 0; margin-top: 0.5rem; background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.3); overflow: hidden; min-width: 160px; z-index: 100; }
         .lang-dropdown.show { display: block; }
         .lang-dropdown button { display: block; width: 100%; padding: 0.6rem 1rem; text-align: left; background: transparent; border: none; color: var(--text-secondary); cursor: pointer; font-size: 0.875rem; transition: all 0.2s; }
         .lang-dropdown button:hover { color: var(--text-primary); background: var(--slate); }
@@ -99,31 +100,7 @@
             }
 
             function setLanguage(lang) {
-                currentLocale = lang;
-                // Create hidden form and submit
-                const form = document.createElement('form');
-                form.method = 'POST';
-                form.action = '/locale/' + lang;
-
-                // Add CSRF token
-                const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
-                if (csrfToken) {
-                    const csrfInput = document.createElement('input');
-                    csrfInput.type = 'hidden';
-                    csrfInput.name = '_token';
-                    csrfInput.value = csrfToken;
-                    form.appendChild(csrfInput);
-                }
-
-                // Add locale hidden input
-                const localeInput = document.createElement('input');
-                localeInput.type = 'hidden';
-                localeInput.name = 'locale';
-                localeInput.value = lang;
-                form.appendChild(localeInput);
-
-                document.body.appendChild(form);
-                form.submit();
+                window.location.href = '/locale/' + lang;
             }
 
             langButton?.addEventListener('click', function(e) {
