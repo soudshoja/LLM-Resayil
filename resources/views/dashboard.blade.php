@@ -85,6 +85,9 @@
     .btn-copy:hover { border-color: var(--gold); color: var(--gold); }
     .btn-copy.copied { background: var(--success); border-color: var(--success); color: white; }
     @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    .card-heading { font-size: 1rem; font-weight: 600; }
+    .card-heading-mb { font-size: 1rem; font-weight: 600; margin-bottom: 1rem; }
+    .card-subheading { font-size: 0.875rem; font-weight: 600; margin-bottom: 0.75rem; }
     @media(max-width: 900px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } .section-grid { grid-template-columns: 1fr; } .detail-grid { grid-template-columns: 1fr; } }
     @media(max-width: 600px) { .stats-grid { grid-template-columns: 1fr; } .model-grid { grid-template-columns: 1fr; } .catalog-header { flex-direction: column; align-items: stretch; } .filter-group { flex-direction: column; align-items: stretch; } }
 </style>
@@ -296,7 +299,7 @@ response = requests.post(
         <!-- API Keys -->
         <div class="card">
             <div class="flex items-center justify-between mb-4">
-                <h2 style="font-size:1rem;font-weight:600">{{ __('dashboard.api_keys_title') }}</h2>
+                <h2 class="card-heading">{{ __('dashboard.api_keys_title') }}</h2>
                 <button onclick="createKey()" class="btn btn-gold" style="padding:0.4rem 0.9rem;font-size:0.8rem">{{ __('dashboard.new_key') }}</button>
             </div>
             <div id="keys-list">
@@ -346,7 +349,7 @@ response = requests.post(
 
         <!-- Top Up Credits -->
         <div class="card">
-            <h2 style="font-size:1rem;font-weight:600;margin-bottom:1rem">{{ __('dashboard.top_up_credits') }}</h2>
+            <h2 class="card-heading-mb">{{ __('dashboard.top_up_credits') }}</h2>
             <div class="topup-grid">
                 <div class="topup-card" onclick="topup(500)">
                     <div class="topup-credits">{{ __('dashboard.topup_500') }}</div>
@@ -363,10 +366,10 @@ response = requests.post(
                     <div class="topup-bonus">{{ __('dashboard.topup_bonus_20') }}</div>
                 </div>
             </div>
-            <p class="text-xs text-muted mt-4">Payments processed securely via KNET / credit card · <a href="/billing/plans" style="color:var(--gold)">{{ __('dashboard.view_plans') }} →</a> · <a href="/credits" style="color:var(--gold)">{{ __('dashboard.how_credits_work') }}</a></p>
+            <p class="text-xs text-muted mt-4">{{ __('dashboard.payments_secure') }} · <a href="/billing/plans" class="text-gold">{{ __('dashboard.view_plans') }} &rarr;</a> · <a href="/credits" class="text-gold">{{ __('dashboard.how_credits_work') }}</a></p>
 
             <hr style="margin:1.25rem 0;border-color:var(--border)">
-            <h3 style="font-size:0.875rem;font-weight:600;margin-bottom:0.75rem">{{ __('dashboard.recent_purchases') }}</h3>
+            <h3 class="card-subheading">{{ __('dashboard.recent_purchases') }}</h3>
             @php $purchases = \App\Models\TopupPurchase::where('user_id', auth()->user()->id)->orderByDesc('created_at')->take(3)->get(); @endphp
             @if($purchases->count())
                 @foreach($purchases as $p)
@@ -383,7 +386,7 @@ response = requests.post(
 
     <!-- Recent Usage -->
     <div class="card">
-        <h2 style="font-size:1rem;font-weight:600;margin-bottom:1rem">{{ __('dashboard.recent_api_usage') }}</h2>
+        <h2 class="card-heading-mb">{{ __('dashboard.recent_api_usage') }}</h2>
         @php $logs = \App\Models\UsageLog::where('user_id', auth()->user()->id)->orderByDesc('created_at')->take(10)->get(); @endphp
         @if($logs->count())
         <table class="keys-table">

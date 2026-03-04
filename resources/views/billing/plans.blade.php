@@ -9,6 +9,7 @@
     .plans-header p { color: var(--text-secondary); font-size: 0.95rem; }
     .trial-section { margin-bottom: 2.5rem; padding: 2rem; background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px; }
     .trial-badge { display: inline-block; background: linear-gradient(135deg, #28a745, #20c997); color: white; padding: 0.35rem 0.75rem; border-radius: 20px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 1rem; }
+    .trial-section-title { font-size: 1.25rem; font-weight: 600; margin-bottom: 1.5rem; }
     .trial-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 2rem; margin-bottom: 1.5rem; }
     .trial-card { background: var(--bg-secondary); border: 2px dashed var(--gold-muted); border-radius: 12px; padding: 1.5rem; }
     .trial-icon { font-size: 3rem; margin-bottom: 1rem; }
@@ -57,6 +58,22 @@
     .extra-key-buy:hover { background: rgba(212,175,55,0.1); }
     .extra-key-maxed { display: inline-block; font-size: 0.8rem; color: var(--text-muted); border: 1px solid var(--border); border-radius: 6px; padding: 0.35rem 0.75rem; }
 
+    /* ── Billing status banners ── */
+    .billing-banner { border-radius: 8px; padding: 0.75rem 1.25rem; max-width: 1200px; margin: 1rem auto; font-size: 0.875rem; display: flex; align-items: center; gap: 0.5rem; }
+    .billing-banner-success { background: rgba(5,150,105,0.1); border: 1px solid rgba(5,150,105,0.3); color: #6ee7b7; }
+    .billing-banner-gold { background: rgba(212,175,55,0.1); border: 1px solid rgba(212,175,55,0.3); color: var(--gold); }
+    /* ── Trial CTA column ── */
+    .trial-cta-col { display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
+    .trial-after-label { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 1rem; }
+    .trial-after-plan { font-size: 2rem; font-weight: 700; color: var(--gold); margin-bottom: 1.5rem; }
+    .trial-after-note { font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1.5rem; text-align: left; }
+    .trial-after-note p { margin: 0.25rem 0; }
+    /* ── Credits link ── */
+    .credits-dashed-link { color: var(--gold); font-weight: 600; border-bottom: 1px dashed rgba(212,175,55,0.5); padding-bottom: 1px; }
+    .credits-dashed-link:hover { color: var(--gold-light); border-bottom-color: var(--gold-light); }
+    /* ── Extra key pricing ── */
+    .extra-key-right { text-align: right; }
+    .extra-key-right-label { font-size: 0.75rem; color: var(--text-muted); margin-top: 0.2rem; }
     /* Payment Method Modal */
     .pm-modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(4px); z-index: 100; align-items: center; justify-content: center; }
     .pm-modal-overlay.active { display: flex; }
@@ -77,14 +94,15 @@
 @section('content')
 @if(auth()->user()->trial_started_at && !auth()->user()->myfatoorah_subscription_id)
     @php $trialExpiry = auth()->user()->trial_started_at->addDays(7); @endphp
-    <div style="background: rgba(5,150,105,0.1); border: 1px solid rgba(5,150,105,0.3); border-radius: 8px; padding: 0.75rem 1.25rem; max-width: 1200px; margin: 1rem auto; font-size: 0.875rem; color: #6ee7b7; display: flex; align-items: center; gap: 0.5rem;">
-        ✅ <strong>{{ __('billing.trial_active') }}</strong> — {{ __('billing.trial_expires') }} {{ $trialExpiry->format('d M Y') }}
-        ({{ $trialExpiry->diffForHumans() }})
+    <div class="billing-banner billing-banner-success">
+        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        <strong>{{ __('billing.trial_active') }}</strong> &mdash; {{ __('billing.trial_expires') }} {{ $trialExpiry->format('d M Y') }} ({{ $trialExpiry->diffForHumans() }})
     </div>
 @elseif(auth()->user()->subscription_expiry)
-    <div style="background: rgba(212,175,55,0.1); border: 1px solid rgba(212,175,55,0.3); border-radius: 8px; padding: 0.75rem 1.25rem; max-width: 1200px; margin: 1rem auto; font-size: 0.875rem; color: var(--gold); display: flex; align-items: center; gap: 0.5rem;">
-        ⚡ <strong>{{ __('billing.current_plan') }}</strong>: {{ ucfirst(auth()->user()->subscription_tier) }}
-        — {{ __('billing.renews') }} {{ auth()->user()->subscription_expiry->format('d M Y') }}
+    <div class="billing-banner billing-banner-gold">
+        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+        <strong>{{ __('billing.current_plan') }}</strong>: {{ ucfirst(auth()->user()->subscription_tier) }}
+        &mdash; {{ __('billing.renews') }} {{ auth()->user()->subscription_expiry->format('d M Y') }}
     </div>
 @endif
 <main>
@@ -103,7 +121,7 @@
     {{-- Free Trial Card --}}
     <div class="trial-section">
         <div class="trial-badge">{{ __('billing.free_trial') }}</div>
-        <h2 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 1.5rem;">{{ __('billing.try_before_buy') }}</h2>
+        <h2 class="trial-section-title">{{ __('billing.try_before_buy') }}</h2>
         <div class="trial-grid">
             <div class="trial-card">
                 <div class="trial-icon">⚡</div>
@@ -126,18 +144,18 @@
                         {{ __('billing.1_free_api_key') }}
                     </li>
                 </ul>
-                <p style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 1rem; text-align: center;">
-                    <a href="/credits" style="color: var(--gold); font-weight: 600; text-decoration: underline; text-decoration-style: dashed; text-underline-offset: 4px;">{{ __('billing.how_credits_work') }}</a>
+                <p class="text-xs text-secondary mt-4" style="text-align:center">
+                    <a href="/credits" class="credits-dashed-link">{{ __('billing.how_credits_work') }}</a>
                 </p>
             </div>
-            <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
-                <div style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 1rem;">{{ __('billing.after_trial') }}</div>
-                <div style="font-size: 2rem; font-weight: 700; color: var(--gold); margin-bottom: 1.5rem;">{{ __('billing.auto_bill_to_starter') }}</div>
-                <div style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1.5rem; text-align: left;">
-                    <p style="margin: 0.25rem 0;">{{ __('billing.card_required') }}</p>
-                    <p style="margin: 0.25rem 0;">{{ __('billing.cancel_anytime') }}</p>
+            <div class="trial-cta-col">
+                <div class="trial-after-label">{{ __('billing.after_trial') }}</div>
+                <div class="trial-after-plan">{{ __('billing.auto_bill_to_starter') }}</div>
+                <div class="trial-after-note">
+                    <p>{{ __('billing.card_required') }}</p>
+                    <p>{{ __('billing.cancel_anytime') }}</p>
                 </div>
-                <button type="button" class="plan-cta plan-cta-gold" style="width: 100%;" onclick="openPaymentModal('trial')">{{ __('billing.start_free_trial') }}</button>
+                <button type="button" class="plan-cta plan-cta-gold" style="width:100%" onclick="openPaymentModal('trial')">{{ __('billing.start_free_trial') }}</button>
             </div>
         </div>
         <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 1rem; text-align: center;">
@@ -281,13 +299,13 @@
                 @endif
             </div>
             @if($nextKeyCost !== null)
-                <div style="text-align: right;">
+                <div class="extra-key-right">
                     @if($nextKeyCost == 0)
                     <div class="extra-key-price">{{ __('billing.free') }}</div>
-                    <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.2rem;">{{ __('billing.included_with_plan') }}</div>
+                    <div class="extra-key-right-label">{{ __('billing.included_with_plan') }}</div>
                     @else
                     <div class="extra-key-price">{{ number_format($nextKeyCost, 3) }} KWD</div>
-                    <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.2rem;">{{ __('billing.one_time_purchase') }}</div>
+                    <div class="extra-key-right-label">{{ __('billing.one_time_purchase') }}</div>
                     @endif
                 </div>
                 <button type="button" class="extra-key-buy" onclick="openPaymentModal('extra-key')">
