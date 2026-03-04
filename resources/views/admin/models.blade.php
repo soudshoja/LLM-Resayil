@@ -23,8 +23,8 @@
 @section('content')
 <main>
     <div style="margin-bottom:2rem">
-        <h1 style="font-size:1.5rem;font-weight:700">Model Management</h1>
-        <p class="text-secondary text-sm">Configure model availability and credit multipliers</p>
+        <h1 style="font-size:1.5rem;font-weight:700">{{ __('admin.model_management') }}</h1>
+        <p class="text-secondary text-sm">{{ __('admin.configure_models') }}</p>
     </div>
 
     @php
@@ -37,19 +37,19 @@
     <!-- Stats -->
     <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:2rem">
         <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:1.25rem">
-            <div style="font-size:0.75rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:0.5rem">Total Models</div>
+            <div style="font-size:0.75rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:0.5rem">{{ __('admin.total_models') }}</div>
             <div style="font-size:1.75rem;font-weight:700;color:var(--gold)">{{ $totalModels }}</div>
         </div>
         <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:1.25rem">
-            <div style="font-size:0.75rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:0.5rem">Active Models</div>
+            <div style="font-size:0.75rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:0.5rem">{{ __('admin.active_models') }}</div>
             <div id="activeCount" style="font-size:1.75rem;font-weight:700;color:var(--gold)">{{ $activeModels }}</div>
         </div>
         <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:1.25rem">
-            <div style="font-size:0.75rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:0.5rem">Local Models</div>
+            <div style="font-size:0.75rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:0.5rem">{{ __('admin.local_models') }}</div>
             <div style="font-size:1.75rem;font-weight:700;color:#3b82f6">{{ $localModels }}</div>
         </div>
         <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:1.25rem">
-            <div style="font-size:0.75rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:0.5rem">Cloud Models</div>
+            <div style="font-size:0.75rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:0.5rem">{{ __('admin.cloud_models') }}</div>
             <div style="font-size:1.75rem;font-weight:700;color:#f59e0b">{{ $cloudModels }}</div>
         </div>
     </div>
@@ -58,56 +58,56 @@
     <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:1rem;margin-bottom:1rem">
         <div style="display:flex;flex-wrap:wrap;gap:0.75rem;align-items:center;margin-bottom:0.75rem">
             <div style="display:flex;align-items:center;gap:0.4rem">
-                <span style="font-size:0.75rem;color:var(--text-muted);font-weight:600;text-transform:uppercase;letter-spacing:0.05em">Family:</span>
+                <span style="font-size:0.75rem;color:var(--text-muted);font-weight:600;text-transform:uppercase;letter-spacing:0.05em">{{ __('admin.family') }}:</span>
                 <select id="filterFamily" onchange="applyFilters()" style="background:var(--bg-secondary);border:1px solid var(--border);border-radius:6px;padding:0.35rem 0.6rem;color:var(--text);font-size:0.8rem">
-                    <option value="">All</option>
+                    <option value="">{{ __('admin.all') }}</option>
                     @foreach(array_unique(array_column($modelList, 'family')) as $fam)
                     <option value="{{ $fam }}">{{ $fam }}</option>
                     @endforeach
                 </select>
             </div>
             <div style="display:flex;align-items:center;gap:0.4rem">
-                <span style="font-size:0.75rem;color:var(--text-muted);font-weight:600;text-transform:uppercase;letter-spacing:0.05em">Category:</span>
+                <span style="font-size:0.75rem;color:var(--text-muted);font-weight:600;text-transform:uppercase;letter-spacing:0.05em">{{ __('admin.category') }}:</span>
                 <select id="filterCategory" onchange="applyFilters()" style="background:var(--bg-secondary);border:1px solid var(--border);border-radius:6px;padding:0.35rem 0.6rem;color:var(--text);font-size:0.8rem">
-                    <option value="">All</option>
-                    <option value="chat">Chat</option>
-                    <option value="code">Code</option>
-                    <option value="embedding">Embedding</option>
-                    <option value="vision">Vision</option>
-                    <option value="thinking">Thinking</option>
-                    <option value="tools">Tools</option>
+                    <option value="">{{ __('admin.all') }}</option>
+                    <option value="chat">{{ __('admin.chat') }}</option>
+                    <option value="code">{{ __('admin.code') }}</option>
+                    <option value="embedding">{{ __('admin.embedding') }}</option>
+                    <option value="vision">{{ __('admin.vision') }}</option>
+                    <option value="thinking">{{ __('admin.thinking') }}</option>
+                    <option value="tools">{{ __('admin.tools') }}</option>
                 </select>
             </div>
             <div style="display:flex;align-items:center;gap:0.4rem">
-                <span style="font-size:0.75rem;color:var(--text-muted);font-weight:600;text-transform:uppercase;letter-spacing:0.05em">Type:</span>
+                <span style="font-size:0.75rem;color:var(--text-muted);font-weight:600;text-transform:uppercase;letter-spacing:0.05em">{{ __('admin.type') }}:</span>
                 <select id="filterType" onchange="applyFilters()" style="background:var(--bg-secondary);border:1px solid var(--border);border-radius:6px;padding:0.35rem 0.6rem;color:var(--text);font-size:0.8rem">
-                    <option value="">All</option>
-                    <option value="local">Local</option>
-                    <option value="cloud">Cloud</option>
+                    <option value="">{{ __('admin.all') }}</option>
+                    <option value="local">{{ __('admin.local') }}</option>
+                    <option value="cloud">{{ __('admin.cloud') }}</option>
                 </select>
             </div>
             <div style="display:flex;align-items:center;gap:0.4rem">
-                <span style="font-size:0.75rem;color:var(--text-muted);font-weight:600;text-transform:uppercase;letter-spacing:0.05em">Size:</span>
+                <span style="font-size:0.75rem;color:var(--text-muted);font-weight:600;text-transform:uppercase;letter-spacing:0.05em">{{ __('admin.size') }}:</span>
                 <select id="filterSize" onchange="applyFilters()" style="background:var(--bg-secondary);border:1px solid var(--border);border-radius:6px;padding:0.35rem 0.6rem;color:var(--text);font-size:0.8rem">
-                    <option value="">All</option>
-                    <option value="small">Small</option>
-                    <option value="medium">Medium</option>
-                    <option value="large">Large</option>
+                    <option value="">{{ __('admin.all') }}</option>
+                    <option value="small">{{ __('admin.small') }}</option>
+                    <option value="medium">{{ __('admin.medium') }}</option>
+                    <option value="large">{{ __('admin.large') }}</option>
                 </select>
             </div>
             <div style="position:relative;flex:1;min-width:200px">
-                <input type="text" id="searchInput" oninput="applyFilters()" placeholder="Search models..." style="width:100%;background:var(--bg-secondary);border:1px solid var(--border);border-radius:6px;padding:0.35rem 0.75rem 0.35rem 2.25rem;color:var(--text);font-size:0.8rem;box-sizing:border-box">
+                <input type="text" id="searchInput" oninput="applyFilters()" placeholder="{{ __('admin.search_models') }}" style="width:100%;background:var(--bg-secondary);border:1px solid var(--border);border-radius:6px;padding:0.35rem 0.75rem 0.35rem 2.25rem;color:var(--text);font-size:0.8rem;box-sizing:border-box">
                 <svg style="position:absolute;left:0.6rem;top:50%;transform:translateY(-50%);width:0.9rem;height:0.9rem;color:var(--text-muted)" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
             </div>
         </div>
         <div style="display:flex;gap:0.5rem">
             <button type="button" onclick="bulkUpdate('enable')" style="background:var(--bg-secondary);border:1px solid var(--border);border-radius:6px;padding:0.35rem 0.75rem;color:var(--text-muted);cursor:pointer;font-size:0.8rem">
                 <svg style="width:0.85rem;height:0.85rem;vertical-align:middle" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                Enable
+                {{ __('admin.enable') }}
             </button>
             <button type="button" onclick="bulkUpdate('disable')" style="background:var(--bg-secondary);border:1px solid var(--border);border-radius:6px;padding:0.35rem 0.75rem;color:var(--text-muted);cursor:pointer;font-size:0.8rem">
                 <svg style="width:0.85rem;height:0.85rem;vertical-align:middle" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-                Disable
+                {{ __('admin.disable') }}
             </button>
             <span id="visibleCount" style="font-size:0.75rem;color:var(--text-muted);align-self:center;margin-left:0.5rem"></span>
         </div>
@@ -120,14 +120,14 @@
                 <thead>
                     <tr>
                         <th style="width:40px"><input type="checkbox" onclick="toggleAll(this)"></th>
-                        <th>Model ID</th>
-                        <th>Family</th>
-                        <th>Category</th>
-                        <th>Type</th>
-                        <th>Size</th>
-                        <th>Multiplier</th>
-                        <th>Status</th>
-                        <th>Actions</th>
+                        <th>{{ __('admin.model_id') }}</th>
+                        <th>{{ __('admin.family') }}</th>
+                        <th>{{ __('admin.category') }}</th>
+                        <th>{{ __('admin.type') }}</th>
+                        <th>{{ __('admin.size') }}</th>
+                        <th>{{ __('admin.multiplier') }}</th>
+                        <th>{{ __('admin.status') }}</th>
+                        <th>{{ __('admin.actions') }}</th>
                     </tr>
                 </thead>
                 <tbody id="modelsTableBody">
@@ -144,7 +144,7 @@
                         <td>
                             <div class="model-id">{{ $model['model_id'] }}</div>
                             @if($model['credit_multiplier_override'] !== null)
-                                <div class="multiplier-override" style="font-size:0.65rem;color:#f59e0b">override: {{ $model['credit_multiplier_override'] }}</div>
+                                <div class="multiplier-override" style="font-size:0.65rem;color:#f59e0b">{{ __('admin.override_label') }} {{ $model['credit_multiplier_override'] }}</div>
                             @endif
                         </td>
                         <td>{{ $model['family'] }}</td>
@@ -152,13 +152,13 @@
                             @php
                                 $catEmoji = ['chat'=>'💬','code'=>'💻','embedding'=>'🔗','vision'=>'👁','thinking'=>'🧠','tools'=>'🔧'];
                             @endphp
-                            <span class="badge" style="background:rgba(212,175,55,0.12);color:var(--gold);border:1px solid rgba(212,175,55,0.25)">{{ ($catEmoji[$model['category']] ?? '') }} {{ $model['category'] }}</span>
+                            <span class="badge" style="background:rgba(212,175,55,0.12);color:var(--gold);border:1px solid rgba(212,175,55,0.25)">{{ ($catEmoji[$model['category']] ?? '') }} {{ __(strtolower($model['category'])) }}</span>
                         </td>
                         <td>
-                            <span class="badge badge-{{ $model['type'] }}">{{ $model['type'] }}</span>
+                            <span class="badge badge-{{ $model['type'] }}">{{ __(strtolower($model['type'])) }}</span>
                         </td>
                         <td>
-                            <span class="badge badge-{{ $model['size'] }}">{{ $model['size'] }}</span>
+                            <span class="badge badge-{{ $model['size'] }}">{{ __(strtolower($model['size'])) }}</span>
                         </td>
                         <td class="multiplier-cell">{{ $model['credit_multiplier_override'] ?? $model['credit_multiplier'] }}</td>
                         <td>
@@ -168,7 +168,7 @@
                                  data-active="{{ $model['is_active'] ? '1' : '0' }}"></div>
                         </td>
                         <td>
-                            <button type="button" onclick="openEditModal('{{ $model['model_id'] }}', '{{ $model['name'] }}', {{ $model['credit_multiplier'] }}, '{{ $model['credit_multiplier_override'] ?? '' }}', {{ $model['is_active'] ? '1' : '0' }})" style="background:var(--bg-card);border:1px solid var(--border);border-radius:6px;padding:0.3rem 0.6rem;color:var(--text);font-size:0.75rem;cursor:pointer;transition:all 0.2s">Edit</button>
+                            <button type="button" onclick="openEditModal('{{ $model['model_id'] }}', '{{ $model['name'] }}', {{ $model['credit_multiplier'] }}, '{{ $model['credit_multiplier_override'] ?? '' }}', {{ $model['is_active'] ? '1' : '0' }})" style="background:var(--bg-card);border:1px solid var(--border);border-radius:6px;padding:0.3rem 0.6rem;color:var(--text);font-size:0.75rem;cursor:pointer;transition:all 0.2s">{{ __('admin.edit') }}</button>
                         </td>
                     </tr>
                     @endforeach
@@ -181,7 +181,7 @@
     <div id="editModal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);z-index:1000;align-items:center;justify-content:center">
         <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:12px;width:90%;max-width:500px;max-height:90vh;overflow-y:auto">
             <div style="padding:1.5rem;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center">
-                <h2 style="font-size:1.25rem;font-weight:600">Edit Model Settings</h2>
+                <h2 style="font-size:1.25rem;font-weight:600">{{ __('admin.edit_model_settings') }}</h2>
                 <button type="button" onclick="closeEditModal()" style="background:none;border:none;color:var(--text-muted);cursor:pointer">
                     <svg style="width:1.5rem;height:1.5rem" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
                 </button>
@@ -190,26 +190,26 @@
                 @csrf
                 <input type="hidden" name="model_id" id="editModelId">
                 <div style="margin-bottom:1.5rem">
-                    <label style="display:block;font-size:0.875rem;font-weight:500;margin-bottom:0.5rem">Credit Multiplier Override</label>
-                    <input type="number" name="credit_multiplier_override" id="editMultiplier" step="0.1" min="0" placeholder="Leave empty for default" style="width:100%;background:var(--bg-secondary);border:1px solid var(--border);border-radius:8px;padding:0.75rem;color:var(--text)">
-                    <p style="font-size:0.75rem;color:var(--text-muted);margin-top:0.5rem">Set to override default multiplier. Leave empty to use default from config.</p>
+                    <label style="display:block;font-size:0.875rem;font-weight:500;margin-bottom:0.5rem">{{ __('admin.credit_multiplier_override') }}</label>
+                    <input type="number" name="credit_multiplier_override" id="editMultiplier" step="0.1" min="0" placeholder="{{ __('admin.leave_empty_default') }}" style="width:100%;background:var(--bg-secondary);border:1px solid var(--border);border-radius:8px;padding:0.75rem;color:var(--text)">
+                    <p style="font-size:0.75rem;color:var(--text-muted);margin-top:0.5rem">{{ __('admin.use_default_from_config') }}</p>
                 </div>
                 <div style="margin-bottom:1.5rem">
-                    <label style="display:block;font-size:0.875rem;font-weight:500;margin-bottom:0.5rem">Status</label>
+                    <label style="display:block;font-size:0.875rem;font-weight:500;margin-bottom:0.5rem">{{ __('admin.status') }}</label>
                     <div style="display:flex;gap:1rem">
                         <label style="display:flex;align-items:center;gap:0.5rem;cursor:pointer">
                             <input type="radio" name="is_active" value="1" checked>
-                            <span>Active</span>
+                            <span>{{ __('admin.active') }}</span>
                         </label>
                         <label style="display:flex;align-items:center;gap:0.5rem;cursor:pointer">
                             <input type="radio" name="is_active" value="0">
-                            <span>Inactive</span>
+                            <span>{{ __('admin.inactive') }}</span>
                         </label>
                     </div>
                 </div>
                 <div style="display:flex;justify-content:flex-end;gap:0.75rem">
-                    <button type="button" onclick="closeEditModal()" style="background:var(--bg-secondary);border:1px solid var(--border);border-radius:8px;padding:0.5rem 1rem;color:var(--text);cursor:pointer">Cancel</button>
-                    <button type="submit" id="editSaveBtn" style="background:var(--gold);border:none;border-radius:8px;padding:0.5rem 1rem;color:#0f1115;font-weight:600;cursor:pointer">Save Changes</button>
+                    <button type="button" onclick="closeEditModal()" style="background:var(--bg-secondary);border:1px solid var(--border);border-radius:8px;padding:0.5rem 1rem;color:var(--text);cursor:pointer">{{ __('admin.cancel') }}</button>
+                    <button type="submit" id="editSaveBtn" style="background:var(--gold);border:none;border-radius:8px;padding:0.5rem 1rem;color:#0f1115;font-weight:600;cursor:pointer">{{ __('admin.save_changes') }}</button>
                 </div>
             </form>
         </div>
@@ -276,13 +276,13 @@ async function toggleModelStatus(btn) {
         });
 
         if (!res.ok) throw new Error('Server error');
-        showToast(newActive ? 'Model enabled.' : 'Model disabled.');
+        showToast(newActive ? '{{ __('admin.model_enabled') }}' : '{{ __('admin.model_disabled') }}');
         updateActiveCount(newActive ? 1 : -1);
     } catch {
         // Revert on failure
         btn.classList.toggle('active', wasActive);
         btn.dataset.active = wasActive ? '1' : '0';
-        showToast('Update failed. Please try again.', 'error');
+        showToast('{{ __('admin.update_failed') }}', 'error');
     } finally {
         btn.classList.remove('loading');
     }
@@ -295,10 +295,10 @@ async function bulkUpdate(action) {
         .filter(cb => cb.closest('.model-row').style.display !== 'none');
 
     if (!checked.length) {
-        showToast('Please select models to update.', 'error');
+        showToast('{{ __('admin.select_models_update') }}', 'error');
         return;
     }
-    if (!confirm(`${action === 'enable' ? 'Enable' : 'Disable'} ${checked.length} model(s)?`)) return;
+    if (!confirm(`{{ __('admin.enable_models') }} ${checked.length} {{ __('admin.model') }}(s)?`)) return;
 
     const newActive = action === 'enable';
     const csrf = getCsrf();
@@ -339,7 +339,7 @@ async function bulkUpdate(action) {
 
     const successCount = results.filter(r => r.ok).length;
     updateActiveCount(delta);
-    showToast(`${successCount} model(s) ${action}d.`);
+    showToast(`${successCount} {{ __('admin.model') }}(s) ${action}d.`);
 }
 
 // ── Filter functionality ──────────────────────────────────────────────────────
@@ -364,7 +364,7 @@ function applyFilters() {
 
     const total = document.querySelectorAll('.model-row').length;
     document.getElementById('visibleCount').textContent =
-        visible < total ? `Showing ${visible} of ${total}` : `${total} models`;
+        visible < total ? `{{ __('admin.showing') }} ${visible} {{ __('admin.of') }} ${total}` : `${total} {{ __('admin.models') }}`;
 }
 applyFilters();
 
@@ -396,7 +396,7 @@ document.getElementById('editForm').addEventListener('submit', async function(e)
     const saveBtn    = document.getElementById('editSaveBtn');
 
     saveBtn.disabled = true;
-    saveBtn.textContent = 'Saving…';
+    saveBtn.textContent = '{{ __('admin.saving') }}';
 
     try {
         const res = await fetch(this.action, {
@@ -437,13 +437,13 @@ document.getElementById('editForm').addEventListener('submit', async function(e)
             const overrideEl = row.querySelector('.multiplier-override');
             if (override) {
                 if (overrideEl) {
-                    overrideEl.textContent = `override: ${override}`;
+                    overrideEl.textContent = `{{ __('admin.override_label') }} ${override}`;
                 } else {
                     const modelIdEl = row.querySelector('.model-id');
                     const newEl = document.createElement('div');
                     newEl.className = 'multiplier-override';
                     newEl.style.cssText = 'font-size:0.65rem;color:#f59e0b';
-                    newEl.textContent = `override: ${override}`;
+                    newEl.textContent = `{{ __('admin.override_label') }} ${override}`;
                     modelIdEl.insertAdjacentElement('afterend', newEl);
                 }
             } else if (overrideEl) {
@@ -452,12 +452,12 @@ document.getElementById('editForm').addEventListener('submit', async function(e)
         }
 
         closeEditModal();
-        showToast('Model settings saved.');
+        showToast('{{ __('admin.model_settings_saved') }}');
     } catch {
-        showToast('Failed to save. Please try again.', 'error');
+        showToast('{{ __('admin.failed_save') }}', 'error');
     } finally {
         saveBtn.disabled = false;
-        saveBtn.textContent = 'Save Changes';
+        saveBtn.textContent = '{{ __('admin.save_changes') }}';
     }
 });
 

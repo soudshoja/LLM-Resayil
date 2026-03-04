@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'LLM Resayil - OpenAI-Compatible LLM API')
+@section('title', __('welcome.title'))
 
 @push('styles')
 <style>
@@ -106,36 +106,36 @@
 
 <!-- Hero -->
 <section class="hero">
-    <div class="hero-badge">✦ OpenAI-Compatible API Gateway</div>
-    <h1>Powerful LLMs, <span>Pay As You Go</span></h1>
-    <p>Access state-of-the-art language models via an OpenAI-compatible API. Credit-based billing, automatic cloud failover, and enterprise team management — all in Kuwait Dinar.</p>
+    <div class="hero-badge">{{ __('welcome.hero_badge') }}</div>
+    <h1>{{ str_replace(':span', '<span>', __('welcome.hero_title')) }}</h1>
+    <p>{{ __('welcome.hero_description') }}</p>
     <div class="hero-cta">
-        <a href="/register" class="btn btn-gold" style="padding:0.75rem 2rem;font-size:1rem">Start Free Trial</a>
-        <a href="#pricing" class="btn btn-outline" style="padding:0.75rem 2rem;font-size:1rem">View Pricing</a>
+        <a href="/register" class="btn btn-gold" style="padding:0.75rem 2rem;font-size:1rem">{{ __('welcome.cta_start_free_trial') }}</a>
+        <a href="#pricing" class="btn btn-outline" style="padding:0.75rem 2rem;font-size:1rem">{{ __('welcome.cta_view_pricing') }}</a>
     </div>
 </section>
 
 <!-- How It Works -->
 <section class="section">
     <div class="section-title">
-        <h2>How It Works</h2>
-        <p>Three simple steps to access powerful AI models</p>
+        <h2>{{ __('welcome.how_it_works_title') }}</h2>
+        <p>{{ __('welcome.how_it_works_subtitle') }}</p>
     </div>
     <div class="steps">
         <div class="step">
             <div class="step-num">1</div>
-            <h3>Register & Top Up</h3>
-            <p>Create an account, choose a subscription tier, and top up with credits via KNET or credit card.</p>
+            <h3>{{ __('welcome.step_1_title') }}</h3>
+            <p>{{ __('welcome.step_1_description') }}</p>
         </div>
         <div class="step">
             <div class="step-num">2</div>
-            <h3>Get Your API Key</h3>
-            <p>Generate an API key from your dashboard. Use it exactly like you would with OpenAI's API.</p>
+            <h3>{{ __('welcome.step_2_title') }}</h3>
+            <p>{{ __('welcome.step_2_description') }}</p>
         </div>
         <div class="step">
             <div class="step-num">3</div>
-            <h3>Make API Calls</h3>
-            <p>Point your app to our endpoint. Local GPU processing, cloud failover when needed — all automatic.</p>
+            <h3>{{ __('welcome.step_3_title') }}</h3>
+            <p>{{ __('welcome.step_3_description') }}</p>
         </div>
     </div>
 </section>
@@ -145,134 +145,134 @@
 <!-- Pricing -->
 <section class="section" id="pricing">
     <div class="section-title">
-        <h2>Simple, <span class="text-gold">Transparent</span> Pricing</h2>
-        <p>All prices in Kuwaiti Dinar. Billed monthly. No hidden fees.</p>
+        <h2>{{ str_replace(':span', '<span class="text-gold">', __('welcome.pricing_title')) }}</h2>
+        <p>{{ __('welcome.pricing_subtitle') }}</p>
     </div>
 
     {{-- Free Trial Box --}}
     <div class="trial-section">
-        <div class="trial-badge">Free Trial</div>
-        <h2 style="font-size:1.2rem;font-weight:700;margin-bottom:1.5rem;">Try Before You Buy</h2>
+        <div class="trial-badge">{{ __('welcome.free_trial_badge') }}</div>
+        <h2 style="font-size:1.2rem;font-weight:700;margin-bottom:1.5rem;">{{ __('welcome.try_before_buy') }}</h2>
         <div class="trial-grid">
             <div class="trial-card">
                 <div class="trial-icon">⚡</div>
-                <h3 style="font-size:1rem;font-weight:600;margin-bottom:0.85rem;">7-Day Free Trial</h3>
+                <h3 style="font-size:1rem;font-weight:600;margin-bottom:0.85rem;">{{ __('welcome.seven_day_trial') }}</h3>
                 <ul class="trial-features">
-                    <li><svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>Full Starter tier features</li>
-                    <li><svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>1,000 credits included</li>
-                    <li><svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>Small models (3–14B)</li>
-                    <li><svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>1 free API key</li>
-                    <li><svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>Cancel anytime during trial</li>
+                    <li><svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>{{ __('welcome.full_starter_features') }}</li>
+                    <li><svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>{{ __('welcome.one_thousand_credits') }}</li>
+                    <li><svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>{{ __('welcome.small_models_only') }}</li>
+                    <li><svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>{{ __('welcome.one_free_api_key') }}</li>
+                    <li><svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>{{ __('welcome.cancel_anytime_trial') }}</li>
                 </ul>
             </div>
             <div class="trial-cta-col">
-                <div class="trial-after-label">After Trial</div>
-                <div class="trial-after-plan">Auto-bill to Starter</div>
-                <div class="trial-after-details">15 KWD / month<br>Credit card required<br>Cancel anytime</div>
-                <a href="/register" class="trial-cta-btn">Start Free Trial — Card Required</a>
+                <div class="trial-after-label">{{ __('welcome.after_trial_label') }}</div>
+                <div class="trial-after-plan">{{ __('welcome.auto_bill_to_starter') }}</div>
+                <div class="trial-after-details">{{ __('welcome.card_required_for_trial') }}<br>{{ __('welcome.cancel_anytime') }}</div>
+                <a href="/register" class="trial-cta-btn">{{ __('welcome.start_free_trial_card_required') }}</a>
             </div>
         </div>
-        <p class="trial-footer">⚠️ Payments processed securely via KNET / credit card. Cancel anytime during the trial period.</p>
+        <p class="trial-footer">{{ __('welcome.payments_secure') }}</p>
     </div>
 
     <div class="pricing-grid">
 
         {{-- Starter Tier --}}
         <div class="plan-card">
-            <div class="plan-badge">Most Popular</div>
-            <div class="plan-name">Starter</div>
+            <div class="plan-badge">{{ __('welcome.most_popular') }}</div>
+            <div class="plan-name">{{ __('welcome.starter_tier') }}</div>
             <div class="plan-price">15 <span>KWD</span></div>
-            <div class="plan-billing">per month &nbsp;&middot;&nbsp; billed monthly</div>
+            <div class="plan-billing">{{ __('welcome.per_month') }} &nbsp;&middot;&nbsp; {{ __('welcome.billed_monthly') }}</div>
             <hr class="plan-divider">
             <ul class="plan-features">
                 <li>
                     <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                    1,000 credits / month
+                    {{ __('welcome.one_thousand_credits_month') }}
                 </li>
                 <li>
                     <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                    10 requests / minute
+                    {{ __('welcome.ten_requests_minute') }}
                 </li>
                 <li>
                     <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                    1 free API key
+                    {{ __('welcome.one_free_api_key') }}
                 </li>
                 <li>
                     <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                    Small models only
+                    {{ __('welcome.small_models_only') }}
                 </li>
             </ul>
             <div class="plan-cta-row">
-                <a href="/register" class="plan-cta plan-cta-outline">Start Monthly Plan</a>
-                <a href="/register" class="plan-cta plan-cta-outline">Start Free Trial</a>
+                <a href="/register" class="plan-cta plan-cta-outline">{{ __('welcome.start_monthly_plan') }}</a>
+                <a href="/register" class="plan-cta plan-cta-outline">{{ __('welcome.start_free_trial') }}</a>
             </div>
         </div>
 
         {{-- Basic Tier (featured) --}}
         <div class="plan-card featured">
-            <div class="plan-badge">Best Value</div>
-            <div class="plan-name">Basic</div>
+            <div class="plan-badge">{{ __('welcome.best_value') }}</div>
+            <div class="plan-name">{{ __('welcome.basic_tier') }}</div>
             <div class="plan-price">25 <span>KWD</span></div>
-            <div class="plan-billing">per month &nbsp;&middot;&nbsp; billed monthly</div>
+            <div class="plan-billing">{{ __('welcome.per_month') }} &nbsp;&middot;&nbsp; {{ __('welcome.billed_monthly') }}</div>
             <hr class="plan-divider">
             <ul class="plan-features">
                 <li>
                     <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                    3,000 credits / month
+                    {{ __('welcome.three_thousand_credits_month') }}
                 </li>
                 <li>
                     <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                    30 requests / minute
+                    {{ __('welcome.thirty_requests_minute') }}
                 </li>
                 <li>
                     <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                    1 free API key
+                    {{ __('welcome.one_free_api_key') }}
                 </li>
                 <li>
                     <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                    All model sizes
+                    {{ __('welcome.all_model_sizes') }}
                 </li>
             </ul>
-            <a href="/register" class="plan-cta plan-cta-gold">Start Monthly Plan</a>
+            <a href="/register" class="plan-cta plan-cta-gold">{{ __('welcome.start_monthly_plan') }}</a>
         </div>
 
         {{-- Pro Tier --}}
         <div class="plan-card">
-            <div class="plan-name">Pro</div>
+            <div class="plan-name">{{ __('welcome.pro_tier') }}</div>
             <div class="plan-price">45 <span>KWD</span></div>
-            <div class="plan-billing">per month &nbsp;&middot;&nbsp; billed monthly</div>
+            <div class="plan-billing">{{ __('welcome.per_month') }} &nbsp;&middot;&nbsp; {{ __('welcome.billed_monthly') }}</div>
             <hr class="plan-divider">
             <ul class="plan-features">
                 <li>
                     <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                    10,000 credits / month
+                    {{ __('welcome.ten_thousand_credits_month') }}
                 </li>
                 <li>
                     <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                    60 requests / minute
+                    {{ __('welcome.sixty_requests_minute') }}
                 </li>
                 <li>
                     <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                    2 free API keys
+                    {{ __('welcome.two_free_api_keys') }}
                 </li>
                 <li>
                     <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                    Priority cloud failover
+                    {{ __('welcome.priority_cloud_failover') }}
                 </li>
             </ul>
-            <a href="/register" class="plan-cta plan-cta-outline">Start Monthly Plan</a>
+            <a href="/register" class="plan-cta plan-cta-outline">{{ __('welcome.start_monthly_plan') }}</a>
         </div>
 
     </div>
-    <p class="trial-note">Card required for trial. Cancel anytime. Payments processed securely via KNET / credit card.</p>
+    <p class="trial-note">{{ __('welcome.card_required_for_trial') }} {{ __('welcome.cancel_anytime') }} {{ __('welcome.payments_secure') }}</p>
 
     <!-- Credit top-up & addons info -->
     <div class="addon-box">
-        <h4>Credit Top-Ups &amp; Add-Ons</h4>
-        <div class="addon-row"><span>500 extra credits</span><span>5 KWD</span></div>
-        <div class="addon-row"><span>1,100 extra credits</span><span>10 KWD <span style="color:#28a745;font-size:0.8em;font-weight:600">(+10% bonus)</span></span></div>
-        <div class="addon-row"><span>3,000 extra credits</span><span>25 KWD <span style="color:#28a745;font-size:0.8em;font-weight:600">(+20% bonus)</span></span></div>
-        <div class="addon-row"><span>Credits per 1k tokens</span><span>0.5–3 (local) · 1–3.5 (cloud)</span></div>
+        <h4>{{ __('welcome.credit_top_ups_title') }}</h4>
+        <div class="addon-row"><span>{{ __('welcome.five_hundred_credits') }}</span><span>{{ __('welcome.five_kwd') }}</span></div>
+        <div class="addon-row"><span>{{ __('welcome.one_thousand_one_hundred_credits') }}</span><span>{{ __('welcome.ten_kwd') }} <span style="color:#28a745;font-size:0.8em;font-weight:600">{{ __('welcome.bonus_ten') }}</span></span></div>
+        <div class="addon-row"><span>{{ __('welcome.three_thousand_credits') }}</span><span>{{ __('welcome.twenty_five_kwd') }} <span style="color:#28a745;font-size:0.8em;font-weight:600">{{ __('welcome.bonus_twenty') }}</span></span></div>
+        <div class="addon-row"><span>{{ __('welcome.credits_per_one_k_tokens') }}</span><span>{{ __('welcome.local_cloud_pricing') }}</span></div>
     </div>
 </section>
 
@@ -281,15 +281,15 @@
 <!-- Available Models -->
 <section class="section" id="models">
     <div class="section-title">
-        <h2>Available Models</h2>
-        <p>45+ models from the world's leading AI labs. Access all from a single API.</p>
+        <h2>{{ __('welcome.available_models_title') }}</h2>
+        <p>{{ __('welcome.available_models_description') }}</p>
     </div>
 
     <!-- General Chat -->
     <div class="ml-category-group">
         <div class="ml-category-header">
             <span class="ml-category-diamond">&#9670;</span>
-            <span class="ml-category-label">General Chat</span>
+            <span class="ml-category-label">{{ __('welcome.general_chat_category') }}</span>
             <span class="ml-category-line"></span>
         </div>
         <div class="ml-grid">
@@ -297,18 +297,18 @@
             <div class="ml-card">
                 <div class="ml-avatar ml-av-meta">M</div>
                 <div class="ml-body">
-                    <div class="ml-model-name">Llama 3.2 3B</div>
-                    <div class="ml-company">Meta &middot; 3B</div>
-                    <div class="ml-tagline">Lightweight and blazing fast for everyday tasks</div>
+                    <div class="ml-model-name">{{ __('welcome.llama_32_3b') }}</div>
+                    <div class="ml-company">{{ __('welcome.llama_32_3b_company') }}</div>
+                    <div class="ml-tagline">{{ __('welcome.llama_32_3b_description') }}</div>
                 </div>
             </div>
 
             <div class="ml-card">
                 <div class="ml-avatar ml-av-mistral">Mi</div>
                 <div class="ml-body">
-                    <div class="ml-model-name">Mistral Small 3.2 24B</div>
-                    <div class="ml-company">Mistral AI &middot; 24B</div>
-                    <div class="ml-tagline">Balanced quality and speed for complex chat</div>
+                    <div class="ml-model-name">{{ __('welcome.mistral_small_32_24b') }}</div>
+                    <div class="ml-company">{{ __('welcome.mistral_small_32_24b_company') }}</div>
+                    <div class="ml-tagline">{{ __('welcome.mistral_small_32_24b_description') }}</div>
                 </div>
             </div>
 
@@ -319,7 +319,7 @@
     <div class="ml-category-group">
         <div class="ml-category-header">
             <span class="ml-category-diamond">&#9670;</span>
-            <span class="ml-category-label">Code</span>
+            <span class="ml-category-label">{{ __('welcome.code_category') }}</span>
             <span class="ml-category-line"></span>
         </div>
         <div class="ml-grid">
@@ -327,18 +327,18 @@
             <div class="ml-card">
                 <div class="ml-avatar ml-av-qwen">Q</div>
                 <div class="ml-body">
-                    <div class="ml-model-name">Qwen 2.5 Coder 14B</div>
-                    <div class="ml-company">Alibaba / Qwen &middot; 14B</div>
-                    <div class="ml-tagline">Code specialist with deep multi-language support</div>
+                    <div class="ml-model-name">{{ __('welcome.qwen_25_coder_14b') }}</div>
+                    <div class="ml-company">{{ __('welcome.qwen_25_coder_14b_company') }}</div>
+                    <div class="ml-tagline">{{ __('welcome.qwen_25_coder_14b_description') }}</div>
                 </div>
             </div>
 
             <div class="ml-card">
                 <div class="ml-avatar ml-av-deepseek">D</div>
                 <div class="ml-body">
-                    <div class="ml-model-name">DeepSeek Coder 6.7B</div>
-                    <div class="ml-company">DeepSeek &middot; 6.7B</div>
-                    <div class="ml-tagline">Fast, accurate code generation and completion</div>
+                    <div class="ml-model-name">{{ __('welcome.deepseek_coder_67b') }}</div>
+                    <div class="ml-company">{{ __('welcome.deepseek_coder_67b_company') }}</div>
+                    <div class="ml-tagline">{{ __('welcome.deepseek_coder_67b_description') }}</div>
                 </div>
             </div>
 
@@ -349,7 +349,7 @@
     <div class="ml-category-group">
         <div class="ml-category-header">
             <span class="ml-category-diamond">&#9670;</span>
-            <span class="ml-category-label">Vision &amp; Multimodal</span>
+            <span class="ml-category-label">{{ __('welcome.vision_multimodal_category') }}</span>
             <span class="ml-category-line"></span>
         </div>
         <div class="ml-grid">
@@ -357,9 +357,9 @@
             <div class="ml-card">
                 <div class="ml-avatar ml-av-qwen">Q</div>
                 <div class="ml-body">
-                    <div class="ml-model-name">Qwen3-VL 32B</div>
-                    <div class="ml-company">Alibaba / Qwen &middot; 32B</div>
-                    <div class="ml-tagline">Understand images and documents alongside text</div>
+                    <div class="ml-model-name">{{ __('welcome.qwen3_vl_32b') }}</div>
+                    <div class="ml-company">{{ __('welcome.qwen3_vl_32b_company') }}</div>
+                    <div class="ml-tagline">{{ __('welcome.qwen3_vl_32b_description') }}</div>
                 </div>
             </div>
 
@@ -370,7 +370,7 @@
     <div class="ml-category-group">
         <div class="ml-category-header">
             <span class="ml-category-diamond">&#9670;</span>
-            <span class="ml-category-label">Frontier</span>
+            <span class="ml-category-label">{{ __('welcome.frontier_category') }}</span>
             <span class="ml-category-line"></span>
         </div>
         <div class="ml-grid">
@@ -378,18 +378,18 @@
             <div class="ml-card">
                 <div class="ml-avatar ml-av-deepseek">D</div>
                 <div class="ml-body">
-                    <div class="ml-model-name">DeepSeek V3.1 671B</div>
-                    <div class="ml-company">DeepSeek &middot; 671B</div>
-                    <div class="ml-tagline">Frontier-class reasoning at scale</div>
+                    <div class="ml-model-name">{{ __('welcome.deepseek_v31_671b') }}</div>
+                    <div class="ml-company">{{ __('welcome.deepseek_v31_671b_company') }}</div>
+                    <div class="ml-tagline">{{ __('welcome.deepseek_v31_671b_description') }}</div>
                 </div>
             </div>
 
             <div class="ml-card">
                 <div class="ml-avatar ml-av-qwen">Q</div>
                 <div class="ml-body">
-                    <div class="ml-model-name">Qwen 3.5 397B</div>
-                    <div class="ml-company">Alibaba / Qwen &middot; 397B MoE</div>
-                    <div class="ml-tagline">The largest model available on the platform</div>
+                    <div class="ml-model-name">{{ __('welcome.qwen_35_397b') }}</div>
+                    <div class="ml-company">{{ __('welcome.qwen_35_397b_company') }}</div>
+                    <div class="ml-tagline">{{ __('welcome.qwen_35_397b_description') }}</div>
                 </div>
             </div>
 
@@ -397,7 +397,7 @@
     </div>
 
     <div class="ml-footer">
-        <p>Showing a curated selection &mdash; <a href="/dashboard">explore all 45+ models</a> after signing in.</p>
+        <p>{{ str_replace(':link', '<a href="/dashboard">', __('welcome.model_selection_notice')) }}</p>
     </div>
 </section>
 
@@ -406,8 +406,8 @@
 <!-- Code Example -->
 <section class="section" id="docs">
     <div class="section-title">
-        <h2>Drop-In Replacement</h2>
-        <p>Works with any OpenAI-compatible SDK. Just change the base URL and API key.</p>
+        <h2>{{ __('welcome.drop_in_replacement_title') }}</h2>
+        <p>{{ __('welcome.drop_in_replacement_description') }}</p>
     </div>
     <div class="code-block">
 <span class="comment"># Python example using openai SDK</span>
@@ -428,9 +428,9 @@ print(response.choices[0].message.content)
 
 <!-- CTA -->
 <section class="cta-section">
-    <h2 style="font-size:2rem;font-weight:700;margin-bottom:0.75rem">Ready to get started?</h2>
-    <p style="color:var(--text-secondary);margin-bottom:2rem">Join developers already using LLM Resayil. Pay with KNET or credit card.</p>
-    <a href="/register" class="btn btn-gold" style="padding:0.85rem 2.5rem;font-size:1.05rem">Create Free Account</a>
+    <h2 style="font-size:2rem;font-weight:700;margin-bottom:0.75rem">{{ __('welcome.ready_to_get_started') }}</h2>
+    <p style="color:var(--text-secondary);margin-bottom:2rem">{{ __('welcome.join_developers') }}</p>
+    <a href="/register" class="btn btn-gold" style="padding:0.85rem 2.5rem;font-size:1.05rem">{{ __('welcome.create_free_account') }}</a>
 </section>
 
 @endsection

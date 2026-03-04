@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Admin Dashboard')
+@section('title', __('admin.admin_dashboard'))
 
 @push('styles')
 <style>
@@ -47,8 +47,8 @@
 @section('content')
 <main>
     <div style="margin-bottom:2rem">
-        <h1 style="font-size:1.5rem;font-weight:700">Admin Dashboard</h1>
-        <p class="text-secondary text-sm">Platform overview and management</p>
+        <h1 style="font-size:1.5rem;font-weight:700">{{ __('admin.admin_dashboard') }}</h1>
+        <p class="text-secondary text-sm">{{ __('admin.platform_overview') }}</p>
     </div>
 
     @php
@@ -61,19 +61,19 @@
 
     <div class="stats-grid">
         <div class="stat-card">
-            <div class="stat-label">Total Users</div>
+            <div class="stat-label">{{ __('admin.total_users') }}</div>
             <div class="stat-value">{{ $totalUsers }}</div>
         </div>
         <div class="stat-card">
-            <div class="stat-label">Active Subscriptions</div>
+            <div class="stat-label">{{ __('admin.active_subscriptions') }}</div>
             <div class="stat-value">{{ $activeSubscriptions }}</div>
         </div>
         <div class="stat-card">
-            <div class="stat-label">Total API Calls</div>
+            <div class="stat-label">{{ __('admin.total_api_calls') }}</div>
             <div class="stat-value">{{ number_format($totalApiCalls) }}</div>
         </div>
         <div class="stat-card">
-            <div class="stat-label">Cloud Budget Used</div>
+            <div class="stat-label">{{ __('admin.cloud_budget_used') }}</div>
             <div class="stat-value">{{ $cloudBudget ? $cloudBudget->requests_today : 0 }}/{{ $cloudBudget ? $cloudBudget->daily_limit : 500 }}</div>
         </div>
     </div>
@@ -81,17 +81,17 @@
     <!-- Users Table -->
     <div class="card">
         <div class="flex items-center justify-between mb-4">
-            <h2 style="font-size:1rem;font-weight:600">All Users</h2>
+            <h2 style="font-size:1rem;font-weight:600">{{ __('admin.all_users') }}</h2>
         </div>
         <table class="users-table">
             <thead>
                 <tr>
-                    <th>Name / Email</th>
-                    <th>Phone</th>
-                    <th>Plan</th>
-                    <th>Credits</th>
-                    <th>Joined</th>
-                    <th style="width: 150px;">Actions</th>
+                    <th>{{ __('admin.name_email') }}</th>
+                    <th>{{ __('admin.phone') }}</th>
+                    <th>{{ __('admin.plan') }}</th>
+                    <th>{{ __('admin.credits') }}</th>
+                    <th>{{ __('admin.joined') }}</th>
+                    <th style="width: 150px;">{{ __('admin.actions') }}</th>
                 </tr>
             </thead>
             <tbody>
@@ -107,10 +107,10 @@
                     <td class="text-muted">{{ $user->created_at->format('d M Y') }}</td>
                     <td>
                         <div class="action-buttons">
-                            <button class="btn-action btn-set-credits" onclick="openCreditsModal('{{ $user->id }}')">Credits</button>
-                            <button class="btn-action btn-set-tier" onclick="openTierModal('{{ $user->id }}')">Tier</button>
-                            <button class="btn-action btn-set-expiry" onclick="openExpiryModal('{{ $user->id }}')">Expiry</button>
-                            <button class="btn-action btn-create-key" onclick="openKeyModal('{{ $user->id }}')">API Key</button>
+                            <button class="btn-action btn-set-credits" onclick="openCreditsModal('{{ $user->id }}')">{{ __('admin.credits_action') }}</button>
+                            <button class="btn-action btn-set-tier" onclick="openTierModal('{{ $user->id }}')">{{ __('admin.tier_action') }}</button>
+                            <button class="btn-action btn-set-expiry" onclick="openExpiryModal('{{ $user->id }}')">{{ __('admin.expiry_action') }}</button>
+                            <button class="btn-action btn-create-key" onclick="openKeyModal('{{ $user->id }}')">{{ __('admin.api_key_action') }}</button>
                         </div>
                     </td>
                 </tr>
@@ -123,23 +123,23 @@
     <div class="modal-overlay" id="creditsModal">
         <div class="modal">
             <div class="modal-header">
-                <div class="modal-title">Set Credits</div>
+                <div class="modal-title">{{ __('admin.set_credits') }}</div>
                 <button class="modal-close" onclick="closeModal('creditsModal')">&times;</button>
             </div>
             <div class="modal-body">
                 <div class="form-group">
-                    <label class="form-label">User ID</label>
+                    <label class="form-label">{{ __('admin.user_id') }}</label>
                     <div class="form-input" id="creditsUserId" readonly></div>
                 </div>
                 <div class="form-group">
-                    <label class="form-label">Credits</label>
-                    <input type="number" id="creditsInput" class="form-input" placeholder="Enter credits" min="0">
+                    <label class="form-label">{{ __('admin.credits') }}</label>
+                    <input type="number" id="creditsInput" class="form-input" placeholder="{{ __('admin.enter_credits') }}" min="0">
                 </div>
                 <div id="creditsSuccess" class="success-message"></div>
             </div>
             <div class="modal-footer">
-                <button class="btn-save btn-save-secondary" onclick="closeModal('creditsModal')">Cancel</button>
-                <button class="btn-save btn-save-primary" onclick="saveCredits()">Save</button>
+                <button class="btn-save btn-save-secondary" onclick="closeModal('creditsModal')">{{ __('admin.cancel') }}</button>
+                <button class="btn-save btn-save-primary" onclick="saveCredits()">{{ __('admin.save') }}</button>
             </div>
         </div>
     </div>
@@ -148,27 +148,27 @@
     <div class="modal-overlay" id="tierModal">
         <div class="modal">
             <div class="modal-header">
-                <div class="modal-title">Set Subscription Tier</div>
+                <div class="modal-title">{{ __('admin.set_subscription_tier') }}</div>
                 <button class="modal-close" onclick="closeModal('tierModal')">&times;</button>
             </div>
             <div class="modal-body">
                 <div class="form-group">
-                    <label class="form-label">User ID</label>
+                    <label class="form-label">{{ __('admin.user_id') }}</label>
                     <div class="form-input" id="tierUserId" readonly></div>
                 </div>
                 <div class="form-group">
-                    <label class="form-label">Tier</label>
+                    <label class="form-label">{{ __('admin.tier') }}</label>
                     <select id="tierInput" class="form-input">
-                        <option value="starter">Starter</option>
-                        <option value="basic">Basic</option>
-                        <option value="pro">Pro</option>
+                        <option value="starter">{{ __('admin.starter') }}</option>
+                        <option value="basic">{{ __('admin.basic') }}</option>
+                        <option value="pro">{{ __('admin.pro') }}</option>
                     </select>
                 </div>
                 <div id="tierSuccess" class="success-message"></div>
             </div>
             <div class="modal-footer">
-                <button class="btn-save btn-save-secondary" onclick="closeModal('tierModal')">Cancel</button>
-                <button class="btn-save btn-save-primary" onclick="saveTier()">Save</button>
+                <button class="btn-save btn-save-secondary" onclick="closeModal('tierModal')">{{ __('admin.cancel') }}</button>
+                <button class="btn-save btn-save-primary" onclick="saveTier()">{{ __('admin.save') }}</button>
             </div>
         </div>
     </div>
@@ -177,28 +177,28 @@
     <div class="modal-overlay" id="expiryModal">
         <div class="modal">
             <div class="modal-header">
-                <div class="modal-title">Set Subscription Expiry</div>
+                <div class="modal-title">{{ __('admin.set_subscription_expiry') }}</div>
                 <button class="modal-close" onclick="closeModal('expiryModal')">&times;</button>
             </div>
             <div class="modal-body">
                 <div class="form-group">
-                    <label class="form-label">User ID</label>
+                    <label class="form-label">{{ __('admin.user_id') }}</label>
                     <div class="form-input" id="expiryUserId" readonly></div>
                 </div>
                 <div class="form-group">
-                    <label class="form-label">Expiry Date</label>
+                    <label class="form-label">{{ __('admin.expiry_date') }}</label>
                     <input type="date" id="expiryInput" class="form-input">
                 </div>
                 <div class="form-group">
                     <label class="form-label" style="display: flex; align-items: center; gap: 0.5rem;">
-                        <input type="checkbox" id="expiryClear" class="form-input" style="width: auto; margin: 0;"> Clear expiry (reset to null)
+                        <input type="checkbox" id="expiryClear" class="form-input" style="width: auto; margin: 0;"> {{ __('admin.clear_expiry') }}
                     </label>
                 </div>
                 <div id="expirySuccess" class="success-message"></div>
             </div>
             <div class="modal-footer">
-                <button class="btn-save btn-save-secondary" onclick="closeModal('expiryModal')">Cancel</button>
-                <button class="btn-save btn-save-primary" onclick="saveExpiry()">Save</button>
+                <button class="btn-save btn-save-secondary" onclick="closeModal('expiryModal')">{{ __('admin.cancel') }}</button>
+                <button class="btn-save btn-save-primary" onclick="saveExpiry()">{{ __('admin.save') }}</button>
             </div>
         </div>
     </div>
@@ -207,27 +207,27 @@
     <div class="modal-overlay" id="keyModal">
         <div class="modal">
             <div class="modal-header">
-                <div class="modal-title">Create API Key</div>
+                <div class="modal-title">{{ __('admin.create_api_key') }}</div>
                 <button class="modal-close" onclick="closeModal('keyModal')">&times;</button>
             </div>
             <div class="modal-body">
                 <div class="form-group">
-                    <label class="form-label">User ID</label>
+                    <label class="form-label">{{ __('admin.user_id') }}</label>
                     <div class="form-input" id="keyUserId" readonly></div>
                 </div>
                 <div class="form-group">
-                    <label class="form-label">Key Name</label>
-                    <input type="text" id="keyNameInput" class="form-input" placeholder="Enter key name (e.g., Production)" value="Admin Created Key">
+                    <label class="form-label">{{ __('admin.key_name') }}</label>
+                    <input type="text" id="keyNameInput" class="form-input" placeholder="{{ __('admin.enter_key_name') }}" value="{{ __('admin.admin_created_key') }}">
                 </div>
                 <div id="keySuccess" class="success-message">
-                    API key created successfully. Copy this key - it won't be shown again:
+                    {{ __('admin.api_key_created') }}
                     <div id="keyResult" style="margin-top: 0.5rem; padding: 0.75rem; background: var(--bg-secondary); border-radius: 6px; font-family: monospace; word-break: break-all; font-size: 0.8rem;"></div>
-                    <button class="btn-save btn-save-primary" style="margin-top: 0.5rem;" onclick="copyKeyToClipboard()">Copy to Clipboard</button>
+                    <button class="btn-save btn-save-primary" style="margin-top: 0.5rem;" onclick="copyKeyToClipboard()">{{ __('admin.copy_to_clipboard') }}</button>
                 </div>
             </div>
             <div class="modal-footer">
-                <button class="btn-save btn-save-secondary" onclick="closeModal('keyModal')">Close</button>
-                <button class="btn-save btn-save-primary" id="createKeyBtn" onclick="saveKey()">Create Key</button>
+                <button class="btn-save btn-save-secondary" onclick="closeModal('keyModal')">{{ __('admin.close') }}</button>
+                <button class="btn-save btn-save-primary" id="createKeyBtn" onclick="saveKey()">{{ __('admin.create_key') }}</button>
             </div>
         </div>
     </div>
@@ -264,7 +264,7 @@ function openExpiryModal(userId) {
 function openKeyModal(userId) {
     currentUserId = userId;
     document.getElementById('keyUserId').textContent = userId;
-    document.getElementById('keyNameInput').value = 'Admin Created Key';
+    document.getElementById('keyNameInput').value = '{{ __('admin.admin_created_key') }}';
     document.getElementById('keySuccess').style.display = 'none';
     document.getElementById('keyResult').textContent = '';
     document.getElementById('keyModal').classList.add('active');
@@ -278,7 +278,7 @@ function closeModal(modalId) {
 function saveCredits() {
     const credits = document.getElementById('creditsInput').value;
     if (credits === '' || credits < 0) {
-        alert('Please enter a valid non-negative number of credits.');
+        alert('{{ __('admin.invalid_credits') }}');
         return;
     }
 
@@ -300,11 +300,11 @@ function saveCredits() {
                 location.reload();
             }, 1500);
         } else {
-            alert('Error: ' + (data.message || 'Failed to update credits'));
+            alert('{{ __('admin.error') }}: ' + (data.message || '{{ __('admin.credits_error') }}'));
         }
     })
     .catch(error => {
-        alert('Error: ' + error.message);
+        alert('{{ __('admin.error') }}: ' + error.message);
     });
 }
 
@@ -329,11 +329,11 @@ function saveTier() {
                 location.reload();
             }, 1500);
         } else {
-            alert('Error: ' + (data.message || 'Failed to update tier'));
+            alert('{{ __('admin.error') }}: ' + (data.message || '{{ __('admin.tier_error') }}'));
         }
     })
     .catch(error => {
-        alert('Error: ' + error.message);
+        alert('{{ __('admin.error') }}: ' + error.message);
     });
 }
 
@@ -359,11 +359,11 @@ function saveExpiry() {
                 location.reload();
             }, 1500);
         } else {
-            alert('Error: ' + (data.message || 'Failed to update expiry'));
+            alert('{{ __('admin.error') }}: ' + (data.message || '{{ __('admin.expiry_error') }}'));
         }
     })
     .catch(error => {
-        alert('Error: ' + error.message);
+        alert('{{ __('admin.error') }}: ' + error.message);
     });
 }
 
@@ -385,18 +385,18 @@ function saveKey() {
             document.getElementById('keySuccess').style.display = 'block';
             document.getElementById('createKeyBtn').style.display = 'none';
         } else {
-            alert('Error: ' + (data.message || 'Failed to create API key'));
+            alert('{{ __('admin.error') }}: ' + (data.message || '{{ __('admin.key_error') }}'));
         }
     })
     .catch(error => {
-        alert('Error: ' + error.message);
+        alert('{{ __('admin.error') }}: ' + error.message);
     });
 }
 
 function copyKeyToClipboard() {
     const key = document.getElementById('keyResult').textContent;
     navigator.clipboard.writeText(key).then(() => {
-        alert('API key copied to clipboard!');
+        alert('{{ __('admin.key_copied') }}');
     });
 }
 </script>
