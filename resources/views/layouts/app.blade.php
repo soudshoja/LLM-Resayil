@@ -27,64 +27,112 @@
             --border: #1e2230;
         }
         body { background: var(--bg-secondary); color: var(--text-primary); font-family: 'Inter', sans-serif; min-height: 100vh; }
-        nav { background: rgba(10,13,20,0.95); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border); padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 64px; position: sticky; top: 0; z-index: 50; }
-        .nav-brand { font-size: 1.25rem; font-weight: 700; background: linear-gradient(135deg, var(--gold), var(--gold-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-decoration: none; }
-        .nav-links { display: flex; gap: 1rem; align-items: center; }
-        .nav-links a { color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; padding: 0.4rem 0.8rem; border-radius: 6px; transition: all 0.2s; }
+        [lang="ar"] body, [dir="rtl"] body { font-family: 'Tajawal', 'Inter', sans-serif; }
+
+        /* ── Navbar ── */
+        nav { background: rgba(10,13,20,0.97); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 64px; position: sticky; top: 0; z-index: 100; }
+        .nav-brand { font-size: 1.15rem; font-weight: 700; background: linear-gradient(135deg, var(--gold), var(--gold-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; letter-spacing: -0.01em; }
+        .nav-links { display: flex; gap: 0.25rem; align-items: center; }
+        .nav-links a { color: var(--text-secondary); font-size: 0.875rem; padding: 0.4rem 0.7rem; border-radius: 6px; transition: color 0.2s, background 0.2s; white-space: nowrap; }
         .nav-links a:hover { color: var(--text-primary); background: var(--slate); }
-        .nav-link-gold { color: var(--gold); }
+        .nav-links a.nav-active { color: var(--text-primary); background: var(--slate); }
+        .nav-link-gold { color: var(--gold) !important; }
+        .nav-link-gold:hover { color: var(--gold-light) !important; background: rgba(212,175,55,0.08) !important; }
+
+        /* ── Mobile hamburger ── */
+        .nav-hamburger { display: none; background: transparent; border: none; cursor: pointer; padding: 0.4rem; color: var(--text-secondary); transition: color 0.2s; }
+        .nav-hamburger:hover { color: var(--text-primary); }
+        .nav-hamburger svg { display: block; }
+        @media(max-width: 900px) {
+            .nav-links { display: none; position: fixed; top: 64px; left: 0; right: 0; background: rgba(10,13,20,0.98); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); flex-direction: column; align-items: flex-start; padding: 1rem 1.5rem; gap: 0.25rem; z-index: 99; }
+            .nav-links.nav-open { display: flex; }
+            .nav-links a { width: 100%; padding: 0.6rem 0.75rem; font-size: 0.95rem; }
+            .nav-hamburger { display: flex; align-items: center; gap: 0.5rem; }
+            .nav-hamburger-lang { display: none; }
+        }
+
+        /* ── Buttons ── */
         .btn-sm { padding: 0.4rem 0.8rem; font-size: 0.875rem; }
-        .btn { display: inline-flex; align-items: center; justify-content: center; padding: 0.5rem 1.25rem; border-radius: 8px; font-weight: 600; font-size: 0.875rem; text-decoration: none; border: none; cursor: pointer; transition: all 0.2s; }
+        .btn { display: inline-flex; align-items: center; justify-content: center; padding: 0.5rem 1.25rem; border-radius: 8px; font-weight: 600; font-size: 0.875rem; text-decoration: none; border: none; cursor: pointer; transition: all 0.2s; gap: 0.4rem; }
         .btn-gold { background: linear-gradient(135deg, var(--gold), var(--gold-light)); color: #0a0d14; }
-        .btn-gold:hover { opacity: 0.9; transform: translateY(-1px); box-shadow: 0 4px 15px rgba(212,175,55,0.3); }
+        .btn-gold:hover { opacity: 0.9; transform: translateY(-1px); box-shadow: 0 4px 15px rgba(212,175,55,0.3); color: #0a0d14; }
         .btn-outline { border: 1px solid var(--gold-muted); color: var(--gold); background: transparent; }
-        .btn-outline:hover { background: rgba(212,175,55,0.1); }
+        .btn-outline:hover { background: rgba(212,175,55,0.1); color: var(--gold); }
         .btn-danger { background: var(--error); color: white; }
         .btn-danger:hover { opacity: 0.9; }
+
+        /* ── Layout ── */
         main { padding: 2rem; max-width: 1200px; margin: 0 auto; }
         .card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; }
+
+        /* ── Forms ── */
         .form-group { margin-bottom: 1.25rem; }
         .form-label { display: block; font-size: 0.875rem; font-weight: 500; color: var(--text-secondary); margin-bottom: 0.4rem; }
-        .form-input { width: 100%; background: var(--bg-primary); border: 1px solid var(--border); border-radius: 8px; padding: 0.65rem 1rem; color: var(--text-primary); font-size: 0.925rem; transition: border-color 0.2s; }
+        .form-input { width: 100%; background: var(--bg-primary); border: 1px solid var(--border); border-radius: 8px; padding: 0.65rem 1rem; color: var(--text-primary); font-size: 0.925rem; transition: border-color 0.2s; font-family: inherit; }
         .form-input:focus { outline: none; border-color: var(--gold-muted); }
+
+        /* ── Alerts ── */
         .alert { padding: 0.75rem 1rem; border-radius: 8px; font-size: 0.875rem; margin-bottom: 1rem; }
         .alert-error { background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.3); color: #fca5a5; }
         .alert-success { background: rgba(5,150,105,0.1); border: 1px solid rgba(5,150,105,0.3); color: #6ee7b7; }
+
+        /* ── Grid helpers ── */
         .grid { display: grid; }
         .grid-cols-2 { grid-template-columns: repeat(2, 1fr); }
         .grid-cols-3 { grid-template-columns: repeat(3, 1fr); }
         .gap-4 { gap: 1rem; }
         .gap-6 { gap: 1.5rem; }
+
+        /* ── Text utilities ── */
         .text-gold { color: var(--gold); }
         .text-sm { font-size: 0.875rem; }
         .text-xs { font-size: 0.75rem; }
         .text-muted { color: var(--text-muted); }
         .text-secondary { color: var(--text-secondary); }
         .font-bold { font-weight: 700; }
+        .font-semibold { font-weight: 600; }
+        .hidden { display: none !important; }
+        .ml-1 { margin-left: 0.25rem; }
+
+        /* ── Spacing ── */
         .mb-2 { margin-bottom: 0.5rem; }
         .mb-4 { margin-bottom: 1rem; }
         .mb-6 { margin-bottom: 1.5rem; }
+        .mt-2 { margin-top: 0.5rem; }
         .mt-4 { margin-top: 1rem; }
         .mt-6 { margin-top: 1.5rem; }
+
+        /* ── Flex ── */
         .flex { display: flex; }
         .items-center { align-items: center; }
         .justify-between { justify-content: space-between; }
         .gap-2 { gap: 0.5rem; }
+
+        /* ── Session messages ── */
         .session-message { max-width: 1200px; margin: 1rem auto; padding: 0 2rem; }
+
+        /* ── Badges ── */
         .badge { display: inline-flex; align-items: center; padding: 0.2rem 0.6rem; border-radius: 20px; font-size: 0.75rem; font-weight: 600; }
         .badge-gold { background: rgba(212,175,55,0.15); color: var(--gold); border: 1px solid rgba(212,175,55,0.3); }
         .badge-green { background: rgba(5,150,105,0.15); color: #6ee7b7; border: 1px solid rgba(5,150,105,0.3); }
+
         /* ── Language Switcher ── */
         .lang-switch { position: relative; }
-        .lang-switch button { background: transparent; border: none; color: var(--text-secondary); cursor: pointer; padding: 0.4rem 0.8rem; border-radius: 6px; transition: all 0.2s; display: flex; align-items: center; gap: 0.4rem; font-size: 0.9rem; }
+        .lang-switch button { background: transparent; border: none; color: var(--text-secondary); cursor: pointer; padding: 0.4rem 0.7rem; border-radius: 6px; transition: all 0.2s; display: flex; align-items: center; gap: 0.4rem; font-size: 0.875rem; font-family: inherit; }
         .lang-switch button:hover { color: var(--text-primary); background: var(--slate); }
-        .lang-dropdown { display: none; position: absolute; top: 100%; right: 0; margin-top: 0.5rem; background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.3); overflow: hidden; min-width: 160px; z-index: 100; }
+        .lang-dropdown { display: none; position: absolute; top: calc(100% + 0.5rem); right: 0; background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; box-shadow: 0 8px 24px rgba(0,0,0,0.4); overflow: hidden; min-width: 160px; z-index: 200; }
+        [dir="rtl"] .lang-dropdown { right: auto; left: 0; }
         .lang-dropdown.show { display: block; }
-        .lang-dropdown button { display: block; width: 100%; padding: 0.6rem 1rem; text-align: left; background: transparent; border: none; color: var(--text-secondary); cursor: pointer; font-size: 0.875rem; transition: all 0.2s; }
+        .lang-dropdown button { display: flex; width: 100%; padding: 0.65rem 1rem; background: transparent; border: none; color: var(--text-secondary); cursor: pointer; font-size: 0.875rem; transition: all 0.2s; font-family: inherit; }
         .lang-dropdown button:hover { color: var(--text-primary); background: var(--slate); }
         .lang-dropdown button.active { color: var(--gold); font-weight: 600; }
         .lang-option { display: flex; align-items: center; gap: 0.5rem; }
-        @media(max-width: 768px) { .grid-cols-2, .grid-cols-3 { grid-template-columns: 1fr; } main { padding: 1rem; } }
+
+        /* ── Responsive ── */
+        @media(max-width: 768px) {
+            .grid-cols-2, .grid-cols-3 { grid-template-columns: 1fr; }
+            main { padding: 1rem; }
+        }
     </style>
     @stack('styles')
     <script>
@@ -93,32 +141,50 @@
             const langSwitch = document.querySelector('.lang-switch');
             const langButton = langSwitch?.querySelector('.lang-btn');
             const langDropdown = langSwitch?.querySelector('.lang-dropdown');
-            let currentLocale = '{{ app()->getLocale() }}';
-
-            function toggleLangDropdown() {
-                langDropdown.classList.toggle('show');
-            }
-
-            function setLanguage(lang) {
-                window.location.href = '/locale/' + lang;
-            }
 
             langButton?.addEventListener('click', function(e) {
                 e.stopPropagation();
-                toggleLangDropdown();
+                langDropdown.classList.toggle('show');
             });
 
             document.querySelectorAll('.lang-option-btn').forEach(btn => {
-                btn.addEventListener('click', function(e) {
-                    const lang = this.getAttribute('data-lang');
-                    setLanguage(lang);
+                btn.addEventListener('click', function() {
+                    window.location.href = '/locale/' + this.getAttribute('data-lang');
                 });
             });
 
-            // Close dropdown when clicking outside
             document.addEventListener('click', function(e) {
                 if (!langSwitch?.contains(e.target)) {
-                    langDropdown.classList.remove('show');
+                    langDropdown?.classList.remove('show');
+                }
+            });
+
+            // Mobile hamburger menu
+            const hamburger = document.getElementById('nav-hamburger');
+            const navLinks = document.querySelector('.nav-links');
+            hamburger?.addEventListener('click', function() {
+                navLinks.classList.toggle('nav-open');
+                const isOpen = navLinks.classList.contains('nav-open');
+                hamburger.setAttribute('aria-expanded', isOpen);
+                hamburger.querySelector('.ham-icon-open').style.display = isOpen ? 'none' : 'block';
+                hamburger.querySelector('.ham-icon-close').style.display = isOpen ? 'block' : 'none';
+            });
+
+            // Close mobile menu when a link is clicked
+            navLinks?.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', function() {
+                    navLinks.classList.remove('nav-open');
+                });
+            });
+
+            // Active nav link highlighting
+            const currentPath = window.location.pathname;
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                const href = link.getAttribute('href');
+                if (href && href !== '/' && currentPath.startsWith(href)) {
+                    link.classList.add('nav-active');
+                } else if (href === '/' && currentPath === '/') {
+                    link.classList.add('nav-active');
                 }
             });
         });
@@ -126,34 +192,36 @@
 </head>
 <body>
 <nav>
-    <a href="/" class="nav-brand">⚡ LLM Resayil</a>
+    <a href="/" class="nav-brand">LLM Resayil</a>
+
+    <!-- Mobile hamburger -->
+    <button id="nav-hamburger" class="nav-hamburger" aria-label="Toggle navigation" aria-expanded="false">
+        <svg class="ham-icon-open" width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        <svg class="ham-icon-close" width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="display:none"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+    </button>
+
     <div class="nav-links">
+        <!-- Language Switcher -->
         <div class="lang-switch">
             <button class="lang-btn" type="button" aria-label="{{ __('navigation.language') }}">
-                <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"/>
                 </svg>
-                <span id="current-lang-text">{{ app()->getLocale() === 'ar' ? 'AR' : 'EN' }}</span>
+                <span>{{ app()->getLocale() === 'ar' ? 'AR' : 'EN' }}</span>
             </button>
             <div class="lang-dropdown">
-                <button class="lang-option-btn" data-lang="en">
+                <button class="lang-option-btn{{ app()->getLocale() === 'en' ? ' active' : '' }}" data-lang="en">
                     <span class="lang-option">
                         <svg width="16" height="12" viewBox="0 0 640 480">
                             <path fill="#b22234" d="M0 0h640v480H0z"/>
                             <path fill="#fff" d="M0 70h640v40H0zM0 190h640v40H0zM0 310h640v40H0zM0 430h640v40H0z"/>
                             <path fill="#3c3b6e" d="M0 0h266.67v240H0z"/>
-                            <g fill="#fff">
-                                <circle cx="26.67" cy="24" r="12"/>
-                                <circle cx="80" cy="24" r="12"/>
-                                <circle cx="133.33" cy="24" r="12"/>
-                                <circle cx="186.67" cy="24" r="12"/>
-                                <circle cx="240" cy="24" r="12"/>
-                            </g>
+                            <g fill="#fff"><circle cx="26.67" cy="24" r="12"/><circle cx="80" cy="24" r="12"/><circle cx="133.33" cy="24" r="12"/><circle cx="186.67" cy="24" r="12"/><circle cx="240" cy="24" r="12"/></g>
                         </svg>
                         <span>{{ __('navigation.english') }}</span>
                     </span>
                 </button>
-                <button class="lang-option-btn" data-lang="ar">
+                <button class="lang-option-btn{{ app()->getLocale() === 'ar' ? ' active' : '' }}" data-lang="ar">
                     <span class="lang-option">
                         <svg width="16" height="12" viewBox="0 0 640 480">
                             <path fill="#007a3d" d="M0 0h640v160H0z"/>
@@ -166,6 +234,7 @@
                 </button>
             </div>
         </div>
+
         @auth
             <a href="/dashboard">{{ __('navigation.dashboard') }}</a>
             <a href="/api-keys">{{ __('navigation.api_keys') }}</a>
@@ -188,18 +257,18 @@
             </form>
         @else
             <a href="/login">{{ __('navigation.login') }}</a>
-            <a href="/register" class="btn btn-gold">{{ __('navigation.get_started') }}</a>
+            <a href="/register" class="btn btn-gold btn-sm">{{ __('navigation.get_started') }}</a>
         @endauth
     </div>
 </nav>
 
 @if(session('success'))
-<div class="session-message session-message-success">
+<div class="session-message">
     <div class="alert alert-success">{{ session('success') }}</div>
 </div>
 @endif
 @if(session('error'))
-<div class="session-message session-message-error">
+<div class="session-message">
     <div class="alert alert-error">{{ session('error') }}</div>
 </div>
 @endif
