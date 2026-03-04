@@ -495,7 +495,8 @@ let allModels = [];
 let selectedModel = null;
 
 // Translation strings for JavaScript
-const LANG = @json([
+@php
+$dashLang = [
     'loading_models' => __('dashboard.loading_models'),
     'no_models_available' => __('dashboard.no_models_available'),
     'error_loading_models' => __('dashboard.error_loading_models'),
@@ -508,7 +509,9 @@ const LANG = @json([
     'credits_per_token_unit' => __('dashboard.credits_per_token_unit'),
     'default_key_name' => __('dashboard.default_key_name'),
     'key_created_successfully' => __('dashboard.key_created_successfully'),
-]);
+];
+@endphp
+const LANG = @json($dashLang);
 
 // Initialize on page load
 document.addEventListener('DOMContentLoaded', function() {
