@@ -208,11 +208,30 @@ class OllamaProxy
                 $totalTokens = (int) (mb_strlen($body['message']['content']) / 3);
             }
 
-            $this->logUsage($request->user(), $request->input('api_key_id'), $model,
-                $totalTokens, $provider, $responseTime, $response->getStatusCode(),
-                $promptTokens, $completionTokens);
+            // Transform Ollama response to OpenAI-compatible format (BUG-01)
+            $openAiResponse = [
+                'id'      => 'chatcmpl-' . Str::uuid(),
+                'object'  => 'chat.completion',
+                'created' => time(),
+                'model'   => $model,
+                'choices' => [[
+                    'index'        => 0,
+                    'message'      => [
+                        'role'    => $body['message']['role'] ?? 'assistant',
+                        'content' => $body['message']['content'] ?? '',
+                    ],
+                    'finish_reason' => $body['done_reason'] ?? 'stop',
+                ]],
+                'usage' => [
+                    'prompt_tokens'     => $promptTokens ?? 0,
+                    'completion_tokens' => $completionTokens ?? 0,
+                    'total_tokens'      => $totalTokens,
+                ],
+            ];
 
-            return response()->json($body, $response->getStatusCode());
+            // BUG-03: logUsage() removed — ChatCompletionsController handles all logging via deductCredits()
+
+            return response()->json($openAiResponse, $response->getStatusCode());
         } catch (GuzzleException $e) {
             Log::error('Ollama proxy error', [
                 'provider' => $provider,
