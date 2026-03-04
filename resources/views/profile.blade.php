@@ -66,11 +66,11 @@
 
         <div id="phone-current" class="phone-current">
             <span class="text-muted text-sm">{{ __('profile.current') }}: </span>
-            <span id="phone-display" style="font-weight:600">{{ auth()->user()->phone ?? '—' }}</span>
+            <span id="phone-display" class="font-semibold">{{ auth()->user()->phone ?? '—' }}</span>
             @if(auth()->user()->phone_verified_at)
-                <span id="phone-badge" class="badge badge-green" style="margin-left:0.5rem">{{ __('profile.verified') }}</span>
+                <span id="phone-badge" class="badge badge-green ml-1">{{ __('profile.verified') }}</span>
             @else
-                <span id="phone-badge" class="badge badge-red" style="margin-left:0.5rem">{{ __('profile.unverified') }}</span>
+                <span id="phone-badge" class="badge badge-red ml-1">{{ __('profile.unverified') }}</span>
             @endif
         </div>
 
@@ -91,7 +91,7 @@
             </form>
         </div>
 
-        <div id="phone-step-verify" style="display:none">
+        <div id="phone-step-verify" class="hidden">
             <p class="text-sm text-secondary mb-4" id="phone-verify-hint">
                 {{ __('profile.enter_code_hint') }}
             </p>
@@ -143,7 +143,7 @@
                 <label class="form-label">{{ __('profile.confirm_new_password') }}</label>
                 <input type="password" name="password_confirmation" class="form-input" required autocomplete="new-password">
             </div>
-            <button type="submit" class="btn btn-outline" style="margin-top:0.5rem">{{ __('profile.update_password') }}</button>
+            <button type="submit" class="btn btn-outline mt-2">{{ __('profile.update_password') }}</button>
         </form>
     </div>
 </main>
@@ -196,8 +196,8 @@ document.getElementById('phoneForm').addEventListener('submit', async function(e
         if (res.ok && json.step === 'verify') {
             const hint = @json(__('profile.enter_code_sent_to', ['phone' => '__PHONE__']));
             document.getElementById('phone-verify-hint').textContent = hint.replace('__PHONE__', pendingPhone);
-            document.getElementById('phone-step-enter').style.display = 'none';
-            document.getElementById('phone-step-verify').style.display = 'block';
+            document.getElementById('phone-step-enter').classList.add('hidden');
+            document.getElementById('phone-step-verify').classList.remove('hidden');
             document.getElementById('phone-otp-input').focus();
         } else {
             alertEl.appendChild(alertHtml('error', json.message || LANG.failed_send));
@@ -231,12 +231,11 @@ document.getElementById('phoneVerifyForm').addEventListener('submit', async func
             document.getElementById('phone-display').textContent = pendingPhone;
             const badge = document.getElementById('phone-badge');
             badge.textContent = LANG.verified;
-            badge.className = 'badge badge-green';
-            badge.style.marginLeft = '0.5rem';
+            badge.className = 'badge badge-green ml-1';
 
             alertEl.appendChild(alertHtml('success', LANG.phone_updated));
-            document.getElementById('phone-step-verify').style.display = 'none';
-            document.getElementById('phone-step-enter').style.display = 'block';
+            document.getElementById('phone-step-verify').classList.add('hidden');
+            document.getElementById('phone-step-enter').classList.remove('hidden');
             document.getElementById('new-phone-input').value = '';
             btn.textContent = LANG.confirm;
             btn.disabled = false;
@@ -254,8 +253,8 @@ document.getElementById('phoneVerifyForm').addEventListener('submit', async func
 
 document.getElementById('phone-back-link').addEventListener('click', function(e) {
     e.preventDefault();
-    document.getElementById('phone-step-verify').style.display = 'none';
-    document.getElementById('phone-step-enter').style.display = 'block';
+    document.getElementById('phone-step-verify').classList.add('hidden');
+    document.getElementById('phone-step-enter').classList.remove('hidden');
     document.getElementById('btn-send-phone-otp').textContent = LANG.send_code;
     document.getElementById('btn-send-phone-otp').disabled = false;
 });
