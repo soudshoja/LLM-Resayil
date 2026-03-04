@@ -25,8 +25,8 @@ class AuthenticatedSessionController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'phone' => 'required_without:email|numeric|exists:users,phone',
-            'email' => 'required_without:phone|email|exists:users,email',
+            'phone' => 'required_without:email|numeric',
+            'email' => 'required_without:phone|email',
             'password' => 'required|string',
         ]);
 
