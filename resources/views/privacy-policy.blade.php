@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Privacy Policy')
+@section('title', __('privacy.page_title'))
 
 @push('styles')
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -108,20 +108,20 @@
 
     {{-- ── Sidebar ── --}}
     <aside class="legal-sidebar">
-        <div class="toc-header">Contents</div>
-        <a class="toc-link active" href="#intro">1. Introduction</a>
-        <a class="toc-link" href="#data-collected">2. Data We Collect</a>
-        <a class="toc-link" href="#how-used">3. How We Use Data</a>
-        <a class="toc-link" href="#api-content">4. API Request Content</a>
-        <a class="toc-link" href="#third-party">5. Third-Party Services</a>
-        <a class="toc-link" href="#retention">6. Data Retention</a>
-        <a class="toc-link" href="#security">7. Security</a>
-        <a class="toc-link" href="#rights">8. Your Rights</a>
-        <a class="toc-link" href="#updates">9. Policy Updates</a>
-        <a class="toc-link" href="#contact">10. Contact</a>
+        <div class="toc-header">{{ __('privacy.toc_header') }}</div>
+        <a class="toc-link active" href="#intro">{{ __('privacy.toc_introduction') }}</a>
+        <a class="toc-link" href="#data-collected">{{ __('privacy.toc_data_collected') }}</a>
+        <a class="toc-link" href="#how-used">{{ __('privacy.toc_how_used') }}</a>
+        <a class="toc-link" href="#api-content">{{ __('privacy.toc_api_content') }}</a>
+        <a class="toc-link" href="#third-party">{{ __('privacy.toc_third_party') }}</a>
+        <a class="toc-link" href="#retention">{{ __('privacy.toc_retention') }}</a>
+        <a class="toc-link" href="#security">{{ __('privacy.toc_security') }}</a>
+        <a class="toc-link" href="#rights">{{ __('privacy.toc_rights') }}</a>
+        <a class="toc-link" href="#updates">{{ __('privacy.toc_updates') }}</a>
+        <a class="toc-link" href="#contact">{{ __('privacy.toc_contact') }}</a>
         <div class="toc-meta">
-            <p><strong>Last updated</strong><br>March 2026</p>
-            <p><strong>Version</strong><br>1.0</p>
+            <p><strong>{{ __('privacy.last_updated_label') }}</strong><br>{{ __('privacy.last_updated_date') }}</p>
+            <p><strong>{{ __('privacy.version_label') }}</strong><br>{{ __('privacy.version_number') }}</p>
         </div>
     </aside>
 
@@ -129,131 +129,131 @@
     <main class="legal-main" id="legalContent">
 
         <div class="legal-hero">
-            <span class="legal-eyebrow">Legal</span>
-            <h1>Privacy Policy</h1>
+            <span class="legal-eyebrow">{{ __('privacy.eyebrow') }}</span>
+            <h1>{{ __('privacy.page_title') }}</h1>
             <div class="legal-meta-row">
                 <span class="legal-meta-item">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
-                    Last updated: March 2026
+                    {{ __('privacy.last_updated_label') }} {{ __('privacy.last_updated_date') }}
                 </span>
                 <span class="legal-meta-item">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-                    ~6 min read
+                    {{ __('privacy.read_time') }}
                 </span>
-                <span class="legal-meta-item">LLM Resayil</span>
+                <span class="legal-meta-item">{{ __('privacy.brand_name') }}</span>
             </div>
         </div>
 
         <div class="legal-section" id="intro">
-            <h2><span class="sec-num">01</span> Introduction</h2>
-            <p>LLM Resayil ("we", "us", "our") is committed to protecting your privacy. This policy explains what data we collect, how we use it, and your rights regarding that data when you use our API and web portal at llm.resayil.io.</p>
+            <h2><span class="sec-num">01</span> {{ __('privacy.section_introduction') }}</h2>
+            <p>{{ __('privacy.introduction_text') }}</p>
         </div>
 
         <div class="legal-section" id="data-collected">
-            <h2><span class="sec-num">02</span> Data We Collect</h2>
+            <h2><span class="sec-num">02</span> {{ __('privacy.section_data_collected') }}</h2>
             <table class="data-table">
                 <thead>
-                    <tr><th>Category</th><th>Data</th><th>Purpose</th></tr>
+                    <tr><th>{{ __('privacy.table_category') }}</th><th>{{ __('privacy.table_data') }}</th><th>{{ __('privacy.table_purpose') }}</th></tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td><strong>Account</strong></td>
-                        <td>Name, email, phone number</td>
-                        <td>Registration, OTP verification, support</td>
+                        <td><strong>{{ __('privacy.category_account') }}</strong></td>
+                        <td>{{ __('privacy.data_account') }}</td>
+                        <td>{{ __('privacy.purpose_account') }}</td>
                     </tr>
                     <tr>
-                        <td><strong>Usage logs</strong></td>
-                        <td>Model name, token count, credits deducted, timestamp</td>
-                        <td>Billing, dashboard, rate limiting</td>
+                        <td><strong>{{ __('privacy.category_usage_logs') }}</strong></td>
+                        <td>{{ __('privacy.data_usage_logs') }}</td>
+                        <td>{{ __('privacy.purpose_usage_logs') }}</td>
                     </tr>
                     <tr>
-                        <td><strong>Payment</strong></td>
-                        <td>Transaction ID, payment status (from MyFatoorah)</td>
-                        <td>Credit top-up confirmation</td>
+                        <td><strong>{{ __('privacy.category_payment') }}</strong></td>
+                        <td>{{ __('privacy.data_payment') }}</td>
+                        <td>{{ __('privacy.purpose_payment') }}</td>
                     </tr>
                     <tr>
-                        <td><strong>Session</strong></td>
-                        <td>Session cookies, locale preference</td>
-                        <td>Authentication, UI language</td>
+                        <td><strong>{{ __('privacy.category_session') }}</strong></td>
+                        <td>{{ __('privacy.data_session') }}</td>
+                        <td>{{ __('privacy.purpose_session') }}</td>
                     </tr>
                 </tbody>
             </table>
-            <p>We do <strong style="color:var(--legal-text)">not</strong> collect advertising data, browser fingerprints, or third-party tracking identifiers.</p>
+            <p>{!! __('privacy.no_tracking') !!}</p>
         </div>
 
         <div class="legal-section" id="how-used">
-            <h2><span class="sec-num">03</span> How We Use Your Data</h2>
+            <h2><span class="sec-num">03</span> {{ __('privacy.section_how_used') }}</h2>
             <ul>
-                <li>Authenticate your account and verify your phone number via WhatsApp OTP</li>
-                <li>Process payments and top-up credits via MyFatoorah / KNET</li>
-                <li>Track API usage for billing, rate limits, and dashboard display</li>
-                <li>Send transactional WhatsApp messages (OTP codes, payment confirmations)</li>
-                <li>Respond to support enquiries submitted via the contact form</li>
+                <li>{{ __('privacy.use_authenticate') }}</li>
+                <li>{{ __('privacy.use_payments') }}</li>
+                <li>{{ __('privacy.use_track_api') }}</li>
+                <li>{{ __('privacy.use_whatsapp') }}</li>
+                <li>{{ __('privacy.use_support') }}</li>
             </ul>
             <div class="legal-callout">
-                <p><strong>We do not sell your data.</strong> We do not use your data for advertising, profiling, or any purpose beyond operating the Service.</p>
+                <p>{!! __('privacy.no_sell_data') !!}</p>
             </div>
         </div>
 
         <div class="legal-section" id="api-content">
-            <h2><span class="sec-num">04</span> API Request Content</h2>
-            <p>We do <strong style="color:var(--legal-text)">not</strong> store the content of your API requests (prompts) or model responses. Usage logs record only metadata — model name, token count, credits deducted, and timestamp.</p>
-            <p>Your prompt data is forwarded directly to the model inference server and is not persisted to any database or log file.</p>
+            <h2><span class="sec-num">04</span> {{ __('privacy.section_api_content') }}</h2>
+            <p>{!! __('privacy.api_content_text_1') !!}</p>
+            <p>{{ __('privacy.api_content_text_2') }}</p>
         </div>
 
         <div class="legal-section" id="third-party">
-            <h2><span class="sec-num">05</span> Third-Party Services</h2>
+            <h2><span class="sec-num">05</span> {{ __('privacy.section_third_party') }}</h2>
             <div class="third-party-list">
                 <div class="tp-item">
-                    <div class="tp-name">MyFatoorah</div>
-                    <div class="tp-desc">Payment processing via KNET and credit card. Card details are handled entirely by MyFatoorah — we never receive or store them. Subject to <a href="https://www.myfatoorah.com/privacy-policy" target="_blank" style="color:var(--legal-gold)">MyFatoorah's privacy policy</a>.</div>
+                    <div class="tp-name">{{ __('privacy.tp_myfatoorah_name') }}</div>
+                    <div class="tp-desc">{!! __('privacy.tp_myfatoorah_desc') !!}</div>
                 </div>
                 <div class="tp-item">
-                    <div class="tp-name">Resayil WhatsApp API</div>
-                    <div class="tp-desc">Used to send OTP codes and account notifications to your registered phone number. Phone numbers are shared with this service only for transactional messaging.</div>
+                    <div class="tp-name">{{ __('privacy.tp_resayil_name') }}</div>
+                    <div class="tp-desc">{{ __('privacy.tp_resayil_desc') }}</div>
                 </div>
                 <div class="tp-item">
-                    <div class="tp-name">Google Fonts</div>
-                    <div class="tp-desc">IBM Plex Sans and JetBrains Mono are loaded from Google Fonts CDN on the web portal. Subject to Google's privacy policy.</div>
+                    <div class="tp-name">{{ __('privacy.tp_google_fonts_name') }}</div>
+                    <div class="tp-desc">{{ __('privacy.tp_google_fonts_desc') }}</div>
                 </div>
             </div>
         </div>
 
         <div class="legal-section" id="retention">
-            <h2><span class="sec-num">06</span> Data Retention</h2>
+            <h2><span class="sec-num">06</span> {{ __('privacy.section_retention') }}</h2>
             <ul>
-                <li>Account data — retained while your account is active</li>
-                <li>Usage logs — retained for up to 12 months for billing and support</li>
-                <li>OTP codes — expire after 10 minutes and are deleted after use or expiry</li>
-                <li>Session data — expires after 2 hours of inactivity</li>
+                <li>{{ __('privacy.retention_account') }}</li>
+                <li>{{ __('privacy.retention_usage') }}</li>
+                <li>{{ __('privacy.retention_otp') }}</li>
+                <li>{{ __('privacy.retention_session') }}</li>
             </ul>
-            <p>You may request deletion of your account and associated data by contacting us via the contact form. We will process requests within 14 business days.</p>
+            <p>{{ __('privacy.retention_deletion') }}</p>
         </div>
 
         <div class="legal-section" id="security">
-            <h2><span class="sec-num">07</span> Security</h2>
-            <p>All data is transmitted over HTTPS (TLS 1.2+). API keys are hashed using bcrypt and never stored in plain text. Database access is restricted to authorised server processes only. We do not store payment credentials.</p>
+            <h2><span class="sec-num">07</span> {{ __('privacy.section_security') }}</h2>
+            <p>{{ __('privacy.security_text') }}</p>
         </div>
 
         <div class="legal-section" id="rights">
-            <h2><span class="sec-num">08</span> Your Rights</h2>
-            <p>You have the right to access, correct, or delete your personal data at any time. To exercise these rights, use our <a href="/contact" style="color:var(--legal-gold)">contact form</a>. We will respond within 14 business days.</p>
+            <h2><span class="sec-num">08</span> {{ __('privacy.section_rights') }}</h2>
+            <p>{!! __('privacy.rights_text') !!}</p>
         </div>
 
         <div class="legal-section" id="updates">
-            <h2><span class="sec-num">09</span> Policy Updates</h2>
-            <p>We may update this policy periodically. The "last updated" date above will reflect changes. Continued use of the Service after changes constitutes acceptance of the updated policy. Material changes will be communicated by email or portal notice.</p>
+            <h2><span class="sec-num">09</span> {{ __('privacy.section_updates') }}</h2>
+            <p>{{ __('privacy.updates_text') }}</p>
         </div>
 
         <div class="legal-section" id="contact">
-            <h2><span class="sec-num">10</span> Contact</h2>
-            <p>Privacy questions or data requests: <a href="/contact" style="color:var(--legal-gold)">contact form</a>.</p>
+            <h2><span class="sec-num">10</span> {{ __('privacy.section_contact') }}</h2>
+            <p>{!! __('privacy.contact_text') !!}</p>
         </div>
 
         <div class="legal-footer">
-            <a href="/about">About</a>
-            <a href="/terms-of-service">Terms of Service</a>
-            <a href="/contact">Contact</a>
+            <a href="/about">{{ __('privacy.footer_about') }}</a>
+            <a href="/terms-of-service">{{ __('privacy.footer_terms') }}</a>
+            <a href="/contact">{{ __('privacy.footer_contact') }}</a>
         </div>
 
     </main>
