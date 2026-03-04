@@ -57,6 +57,7 @@ class User extends Authenticatable
         'trial_started_at' => 'datetime',
         'trial_credits_remaining' => 'integer',
         'auto_billed' => 'boolean',
+        'phone_verified_at' => 'datetime',
     ];
 
     /**

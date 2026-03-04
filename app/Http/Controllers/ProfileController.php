@@ -24,9 +24,14 @@ class ProfileController extends Controller
 
         $user->name  = $validated['name'];
         $user->email = $validated['email'];
+
+        if ($user->isDirty('email')) {
+            $user->email_verified_at = null;
+        }
+
         $user->save();
 
-        return back()->with('success', 'Profile updated successfully.');
+        return back()->with('success', __('profile.profile_updated'));
     }
 
     public function updatePassword(Request $request)
@@ -45,6 +50,6 @@ class ProfileController extends Controller
         $user->password = Hash::make($request->password);
         $user->save();
 
-        return back()->with('password_success', 'Password changed successfully.');
+        return back()->with('password_success', __('profile.password_updated'));
     }
 }
