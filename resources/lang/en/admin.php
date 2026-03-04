@@ -97,4 +97,123 @@ return [
     'credits' => 'Credits',
     'time' => 'Time',
     'no_api_calls_yet' => 'No API calls yet.',
+
+    // Dashboard - stats cards
+    'total_users' => 'Total Users',
+    'active_subscriptions' => 'Active Subscriptions',
+    'total_api_calls' => 'Total API Calls',
+    'cloud_budget_used' => 'Cloud Budget Used',
+
+    // Dashboard - users table
+    'all_users' => 'All Users',
+    'name_email' => 'Name / Email',
+    'phone' => 'Phone',
+    'plan' => 'Plan',
+    'joined' => 'Joined',
+    'actions' => 'Actions',
+
+    // Dashboard - action buttons
+    'credits_action' => 'Credits',
+    'tier_action' => 'Tier',
+    'expiry_action' => 'Expiry',
+    'api_key_action' => 'API Key',
+
+    // Dashboard - credits modal
+    'set_credits' => 'Set Credits',
+    'user_id' => 'User ID',
+    'enter_credits' => 'Enter credits amount',
+    'cancel' => 'Cancel',
+    'save' => 'Save',
+
+    // Dashboard - tier modal
+    'set_subscription_tier' => 'Set Subscription Tier',
+    'tier' => 'Tier',
+    'starter' => 'Starter',
+    'basic' => 'Basic',
+    'pro' => 'Pro',
+    'enterprise' => 'Enterprise',
+
+    // Dashboard - expiry modal
+    'set_subscription_expiry' => 'Set Subscription Expiry',
+    'expiry_date' => 'Expiry Date',
+    'clear_expiry' => 'Clear expiry (no expiration)',
+
+    // Dashboard - API key modal
+    'create_api_key' => 'Create API Key',
+    'key_name' => 'Key Name',
+    'enter_key_name' => 'Enter key name',
+    'admin_created_key' => 'Admin-created key',
+    'api_key_created' => 'API key created successfully!',
+    'copy_to_clipboard' => 'Copy to Clipboard',
+    'close' => 'Close',
+    'create_key' => 'Create Key',
+
+    // Dashboard - JS alerts
+    'invalid_credits' => 'Please enter a valid credits amount.',
+    'credits_error' => 'Failed to update credits.',
+    'tier_error' => 'Failed to update tier.',
+    'expiry_error' => 'Failed to update expiry.',
+    'key_error' => 'Failed to create API key.',
+    'key_copied' => 'API key copied to clipboard!',
+
+    // Models page - headers & stats
+    'model_management' => 'Model Management',
+    'configure_models' => 'Configure model availability and credit multipliers',
+    'total_models' => 'Total Models',
+    'active_models' => 'Active Models',
+    'local_models' => 'Local Models',
+    'cloud_models' => 'Cloud Models',
+
+    // Models page - filter labels
+    'family' => 'Family',
+    'category' => 'Category',
+    'type' => 'Type',
+    'size' => 'Size',
+    'all' => 'All',
+    'chat' => 'Chat',
+    'code' => 'Code',
+    'embedding' => 'Embedding',
+    'vision' => 'Vision',
+    'thinking' => 'Thinking',
+    'tools' => 'Tools',
+    'local' => 'Local',
+    'cloud' => 'Cloud',
+    'small' => 'Small',
+    'medium' => 'Medium',
+    'large' => 'Large',
+    'search_models' => 'Search models...',
+
+    // Models page - bulk actions
+    'enable' => 'Enable',
+    'disable' => 'Disable',
+    'bulk_update' => 'Bulk Update',
+
+    // Models page - table headers
+    'model_id' => 'Model ID',
+    'multiplier' => 'Multiplier',
+    'status' => 'Status',
+    'override_label' => 'Override:',
+    'edit' => 'Edit',
+    'models' => 'models',
+
+    // Models page - edit modal
+    'edit_model_settings' => 'Edit Model Settings',
+    'credit_multiplier_override' => 'Credit Multiplier Override',
+    'leave_empty_default' => 'Leave empty for default',
+    'use_default_from_config' => 'Leave empty to use the default multiplier from config.',
+    'active' => 'Active',
+    'inactive' => 'Inactive',
+    'save_changes' => 'Save Changes',
+
+    // Models page - JS toast & strings
+    'model_enabled' => 'Model enabled successfully.',
+    'model_disabled' => 'Model disabled successfully.',
+    'update_failed' => 'Update failed. Please try again.',
+    'select_models_update' => 'Please select models to update.',
+    'enable_models' => 'Are you sure you want to update',
+    'showing' => 'Showing',
+    'of' => 'of',
+    'saving' => 'Saving...',
+    'model_settings_saved' => 'Model settings saved successfully.',
+    'failed_save' => 'Failed to save model settings.',
 ];
