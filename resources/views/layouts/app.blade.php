@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" dir="{{ app()->getLocale() === 'ar' ? 'rtl' : 'ltr' }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -79,28 +79,28 @@
     <a href="/" class="nav-brand">⚡ LLM Resayil</a>
     <div class="nav-links">
         @auth
-            <a href="/dashboard">Dashboard</a>
-            <a href="/api-keys">API Keys</a>
-            <a href="/billing/plans" style="color:var(--gold)">Billing</a>
-            <a href="/docs">Docs</a>
-            <a href="/credits">Credits</a>
-            <a href="/billing/payment-methods">Payment Methods</a>
+            <a href="/dashboard">{{ __('navigation.dashboard') }}</a>
+            <a href="/api-keys">{{ __('navigation.api_keys') }}</a>
+            <a href="/billing/plans" style="color:var(--gold)">{{ __('navigation.billing') }}</a>
+            <a href="/docs">{{ __('navigation.docs') }}</a>
+            <a href="/credits">{{ __('navigation.credits') }}</a>
+            <a href="/billing/payment-methods">{{ __('navigation.payment_methods') }}</a>
             @if(auth()->user()->subscription_tier === 'enterprise')
-            <a href="/teams">Team</a>
+            <a href="/teams">{{ __('navigation.team') }}</a>
             @endif
             @if(auth()->user()->email === 'admin@llm.resayil.io')
-            <a href="/admin" style="color:var(--gold)">Admin</a>
-            <a href="/admin/monitoring" style="color:var(--gold)">Monitor</a>
-            <a href="/admin/models" style="color:var(--gold)">Models</a>
+            <a href="/admin" style="color:var(--gold)">{{ __('navigation.admin') }}</a>
+            <a href="/admin/monitoring" style="color:var(--gold)">{{ __('navigation.monitor') }}</a>
+            <a href="/admin/models" style="color:var(--gold)">{{ __('navigation.models') }}</a>
             @endif
-            <a href="/profile">Profile</a>
+            <a href="/profile">{{ __('navigation.profile') }}</a>
             <form method="POST" action="/logout" style="display:inline">
                 @csrf
-                <button type="submit" class="btn btn-outline" style="padding:0.4rem 0.8rem">Logout</button>
+                <button type="submit" class="btn btn-outline" style="padding:0.4rem 0.8rem">{{ __('navigation.logout') }}</button>
             </form>
         @else
-            <a href="/login">Login</a>
-            <a href="/register" class="btn btn-gold">Get Started</a>
+            <a href="/login">{{ __('navigation.login') }}</a>
+            <a href="/register" class="btn btn-gold">{{ __('navigation.get_started') }}</a>
         @endauth
     </div>
 </nav>

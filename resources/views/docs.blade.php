@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" dir="{{ app()->getLocale() === 'ar' ? 'rtl' : 'ltr' }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Documentation — LLM Resayil</title>
+    <title>@lang('docs.documentation') — LLM Resayil</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -237,20 +237,20 @@
     <nav class="navbar">
         <div class="navbar-brand">LLM Resayil</div>
         <div class="navbar-nav">
-            <a href="/" class="navbar-link">Home</a>
-            <a href="/dashboard" class="navbar-link">Dashboard</a>
+            <a href="/" class="navbar-link">@lang('navigation.home')</a>
+            <a href="/dashboard" class="navbar-link">@lang('navigation.dashboard')</a>
             @if(auth()->check())
-                <a href="/credits" class="navbar-link">How Credits Work</a>
+                <a href="/credits" class="navbar-link">@lang('credits.how_credits_work')</a>
             @endif
         </div>
     </nav>
 
     <!-- Hero Section -->
     <section class="hero">
-        <h1>Documentation</h1>
-        <p class="hero-lead">Everything you need to know about using the LLM Resayil API, pricing, billing, and features.</p>
+        <h1>@lang('docs.documentation')</h1>
+        <p class="hero-lead">@lang('docs.everything_need_to_know')</p>
         <div>
-            <a href="/dashboard" class="btn-gold">Go to Dashboard</a>
+            <a href="/dashboard" class="btn-gold">@lang('docs.go_to_dashboard')</a>
         </div>
     </section>
 
@@ -260,41 +260,41 @@
             <!-- Billing & Plans -->
             <a href="/docs/plans/2026-03-02-billing-admin-enhancements.md" class="doc-card" style="pointer-events: auto;">
                 <span class="doc-date">March 2, 2026</span>
-                <h3 class="doc-title">Billing & Subscription Plans</h3>
-                <p class="doc-description">Complete guide to subscription tiers (Starter, Basic, Pro), credit top-ups, trial period, and auto-billing with MyFatoorah payment gateway.</p>
-                <span class="doc-tag">Billing</span>
-                <div class="doc-link-arrow">Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></div>
+                <h3 class="doc-title">@lang('docs.billing_subscription_plans')</h3>
+                <p class="doc-description">@lang('docs.complete_guide_subscription')</p>
+                <span class="doc-tag">@lang('billing.plans')</span>
+                <div class="doc-link-arrow">@lang('docs.read_more') <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></div>
             </a>
 
             <!-- Model Catalog -->
             <a href="/docs/plans/2026-03-02-model-catalog-admin-panel.md" class="doc-card" style="pointer-events: auto;">
                 <span class="doc-date">March 2, 2026</span>
-                <h3 class="doc-title">Model Catalog & Admin Panel</h3>
-                <p class="doc-description">Access 45+ LLM models (local and cloud), detailed model metadata, search and filter options, and admin model management.</p>
-                <span class="doc-tag">API</span>
-                <div class="doc-link-arrow">Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></div>
+                <h3 class="doc-title">@lang('docs.model_catalog_admin_panel')</h3>
+                <p class="doc-description">@lang('docs.access_llm_models')</p>
+                <span class="doc-tag">@lang('docs.api')</span>
+                <div class="doc-link-arrow">@lang('docs.read_more') <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></div>
             </a>
 
             <!-- Recurring Payments & WhatsApp -->
             <a href="/docs/plans/2026-03-02-billing-recurring-whatsapp.md" class="doc-card" style="pointer-events: auto;">
                 <span class="doc-date">March 2, 2026</span>
-                <h3 class="doc-title">Recurring Payments & WhatsApp Timeline</h3>
-                <p class="doc-description">MyFatoorah recurring payment gateway setup, WhatsApp notification timeline (Day 1, Day 6, Day 7), and trial automation.</p>
-                <span class="doc-tag">Billing</span>
-                <div class="doc-link-arrow">Read more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></div>
+                <h3 class="doc-title">@lang('docs.recurring_payments_whatsapp')</h3>
+                <p class="doc-description">@lang('docs.myfatoorah_payment_gateway')</p>
+                <span class="doc-tag">@lang('billing.plans')</span>
+                <div class="doc-link-arrow">@lang('docs.read_more') <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></div>
             </a>
         </div>
 
         <div style="margin-top: 3rem; padding: 2rem; background: var(--bg-card); border-radius: 12px; text-align: center;">
-            <h2 style="color: var(--text); margin-bottom: 1rem;">Need More Help?</h2>
-            <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">Check out our API reference and frequently asked questions.</p>
-            <a href="/credits" class="btn-gold">How Credits Work</a>
+            <h2 style="color: var(--text); margin-bottom: 1rem;">@lang('docs.need_more_help')</h2>
+            <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">@lang('docs.check_api_reference')</p>
+            <a href="/credits" class="btn-gold">@lang('credits.how_credits_work')</a>
         </div>
     </section>
 
     <!-- Footer -->
     <footer class="footer">
-        <p>LLM Resayil Documentation &bull; <a href="/">Home</a> &bull; <a href="/dashboard">Dashboard</a></p>
+        <p>LLM Resayil @lang('docs.documentation') &bull; <a href="/">@lang('docs.home')</a> &bull; <a href="/dashboard">@lang('navigation.dashboard')</a></p>
     </footer>
 </body>
 </html>
