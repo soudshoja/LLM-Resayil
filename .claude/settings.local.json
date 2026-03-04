@@ -43,7 +43,8 @@
       "Bash(ls:*)",
       "Bash(wc:*)",
       "Skill(seo)",
-      "Skill(gsd:execute-phase)"
+      "Skill(gsd:execute-phase)",
+      "Bash(start:*)"
     ]
   }
 }
