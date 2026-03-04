@@ -778,35 +778,35 @@
 
     <!-- Billing Flow Section -->
     <section class="section" id="flow">
-        <div class="section-label">Billing Flow</div>
-        <h2 class="section-title">How a request is charged</h2>
-        <p class="section-subtitle">Every API call follows the same 5-step flow.</p>
+        <div class="section-label">@lang('credits.billing_flow')</div>
+        <h2 class="section-title">@lang('credits.how_request_charged')</h2>
+        <p class="section-subtitle">@lang('credits.every_api_call')</p>
 
         <div class="steps-flow">
             <div class="step">
                 <div class="step-num">1</div>
-                <div class="step-label">Make Request</div>
-                <div class="step-desc">Call /api/v1/chat/completions</div>
+                <div class="step-label">@lang('credits.make_request')</div>
+                <div class="step-desc">@lang('credits.call_api')</div>
             </div>
             <div class="step">
                 <div class="step-num">2</div>
-                <div class="step-label">Model Responds</div>
-                <div class="step-desc">Response generated</div>
+                <div class="step-label">@lang('credits.model_responds')</div>
+                <div class="step-desc">@lang('credits.response_generated')</div>
             </div>
             <div class="step">
                 <div class="step-num">3</div>
-                <div class="step-label">Tokens Counted</div>
-                <div class="step-desc">Output tokens measured</div>
+                <div class="step-label">@lang('credits.tokens_counted')</div>
+                <div class="step-desc">@lang('credits.tokens_measured')</div>
             </div>
             <div class="step">
                 <div class="step-num">4</div>
-                <div class="step-label">Credits Deducted</div>
-                <div class="step-desc">From your balance</div>
+                <div class="step-label">@lang('credits.credits_deducted')</div>
+                <div class="step-desc">@lang('credits.from_balance')</div>
             </div>
             <div class="step">
                 <div class="step-num">5</div>
-                <div class="step-label">Balance Updated</div>
-                <div class="step-desc">Visible on dashboard</div>
+                <div class="step-label">@lang('credits.balance_updated')</div>
+                <div class="step-desc">@lang('credits.visible_dashboard')</div>
             </div>
         </div>
 
@@ -876,15 +876,15 @@
             </thead>
             <tbody>
                 <tr>
-                    <td><span class="tier-badge standard">Standard</span></td>
+                    <td><span class="tier-badge standard">@lang('credits.standard')</span></td>
                     <td><strong>1 @lang('credits.credits')</strong></td>
                     <td>Llama, Qwen, Gemma, Mistral</td>
                     <td>@lang('credits.general_chat_coding_summarization')</td>
                 </tr>
                 <tr>
-                    <td><span class="tier-badge premium">Premium</span></td>
+                    <td><span class="tier-badge premium">@lang('credits.premium')</span></td>
                     <td><strong>2 @lang('credits.credits')</strong></td>
-                    <td>DeepSeek, large reasoning models</td>
+                    <td>DeepSeek, @lang('credits.large_reasoning_models')</td>
                     <td>@lang('credits.complex_reasoning')</td>
                 </tr>
             </tbody>
@@ -914,7 +914,7 @@
 
             <!-- Pack 2 (Featured) -->
             <div class="topup-card featured">
-                <div class="topup-ribbon">Best Value</div>
+                <div class="topup-ribbon">@lang('credits.best_value')</div>
                 <div class="topup-credits topup-credits-50k">50,000</div>
                 <div class="topup-credits-label">@lang('credits.credits')</div>
                 <div class="topup-price">15<span style="font-size: 1.5rem;"> KWD</span></div>

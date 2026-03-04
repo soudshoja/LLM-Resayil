@@ -1,25 +1,34 @@
 <?php
 
 return [
+    // General
+    'credits' => 'رموز',
     'how_credits_work' => 'كيف تعمل الرموز',
     'credits_system' => 'نظام الرموز',
     'simple_predictable' => 'بسيط ومتوقع',
     'no_complex_token' => 'لا حساب معقد للرموز، لا فواتير USD مفاجئة، لا ألغاز تسعير حسب النموذج. اشترِ رموز بـ KWD، أنفقها أثناء البناء. رصيدك واضح دائماً.',
     'view_top_up_packs' => 'عرض حزم الإضافة',
     'api_documentation' => 'وثائق API',
+
+    // Pricing model section
     'pricing_model' => 'نموذج التسعير',
     'one_system' => 'نظام واحد. بدون ارتباك.',
     'other_llm_providers' => 'مزودو LLM الآخرون يفرضون حسب النموذج بـ USD بمعدلات إدخال/إخراج منفصلة. قمنا بتبسيطها.',
+
+    // Token-based pricing (bad card)
     'token_based_pricing' => 'التسعير حسب الرمز (مزودو آخرون)',
     'complex_unpredictable' => 'معقد وغير متوقع',
     'different_rates_per_model' => 'معدلات مختلفة لكل نموذج. تُحسب رموز الإدخال منفصلة عن رموز الإخراج. الأسعار بـ USD تخضع لأسعار الصرف.',
     'example_gpt_4o' => 'مثال: GPT-4o، 1 طلب',
+    'input_tokens' => '~30 رمز إدخال، ~150 رمز إخراج تم توليدها',
     'total' => 'المجموع',
     'different_price_per_model' => 'سعر مختلف لكل نموذج',
     'separate_input_output' => 'معدلات إدخال وإخراج منفصلة',
     'usd_subject_to_fx' => 'أسعار USD تخضع لأسعار الصرف',
     'hard_predict_monthly' => 'صعب التنبؤ بالمصاريف الشهرية',
     'varies_with_update' => 'يتغير مع كل تحديث للنموذج',
+
+    // Credit-based pricing (good card)
     'credit_based_pricing' => 'التسعير حسب الرمز (Resayil)',
     'simple_transparent' => 'بسيط وشفاف',
     'one_credit_one_output' => 'رمز واحد = رمز إخراج واحد (Standard) أو رمزين (Premium). اشترِ حزم بـ KWD. بدون FX، بدون مفاجآت.',
@@ -32,7 +41,9 @@ return [
     'only_output_tokens' => 'رموز الإخراج فقط هي التي تحسب',
     'priced_in_kwd' => 'السعر بـ KWD — بدون FX',
     'clear_balance' => 'الرصيد واضح دائماً',
-    'credits_never_expire' => 'الرموز لا تنتهي أبداً',
+    'credits_never_expire' => 'الرموز لا تنتهي أبداً وهي منفصلة عن اشتراكك. أضف في أي وقت.',
+
+    // Billing flow section
     'billing_flow' => 'تدفق الفوترة',
     'how_request_charged' => 'كيف يتم تحميل الطلب',
     'every_api_call' => 'كل استدعاء API يتبع نفس المسار الخمسي.',
@@ -47,16 +58,26 @@ return [
     'balance_updated' => 'تم تحديث الرصيد',
     'visible_dashboard' => 'مرئي في لوحة التحكم',
     'only_output_count' => 'رموز الإخراج فقط هي التي تحسب. رموز الإدخال (طلبك) لا يتم تحميلها — لذا لا تكلفك عبء الإدخالات الطويلة.',
+
+    // Worked example section
     'real_example' => 'مثال حقيقي',
     'write_100_word_email' => 'أنت تسأل: "اكتب بريدًا مهنياً مكوّنًا من 100 كلمة"',
     'see_billed_under' => 'انظر تحديدًا كيف يتم تسوية نفس الطلب تحت كل نظام.',
     'write_professional_email' => 'اكتب بريدًا مهنياً مكوّنًا من 100 كلمة قدّم منتجنا.',
-    'input_tokens' => '~30 رمز إدخال، ~150 رمز إخراج تم توليدها',
     'complex' => 'معقد',
     'simple' => 'بسيط',
     'credit_based_resayil' => 'حسب الرمز (Resayil Standard)',
+    'input' => 'إدخال',
+    'output' => 'إخراج',
+    'fx_rate' => 'سعر الصرف',
+    'conversion_fee' => 'رسوم التحويل',
+    'usd' => 'دولار أمريكي',
     'varies_by_model' => 'يختلف حسب النموذج، بتغير المعدلات، بأسعار الصرف',
     'always_rate_no_surprises' => 'هذا المعدل دائماً. بدون مفاجآت.',
+    'pack' => 'حزمة',
+    'token' => 'رمز',
+
+    // Rates section
     'rates' => 'المعدلات',
     'credit_rates_by_model' => 'معدلات الرموز حسب مستوى النموذج',
     'api_models_endpoint' => 'نقطة نهاية /api/v1/models توضح أي مستوى ينتمي إليه كل نموذج.',
@@ -64,31 +85,23 @@ return [
     'credits_output_token' => 'رموز/رمز إخراج',
     'example_models' => 'نماذج مثال',
     'best_for' => 'الأفضل لـ',
+    'standard' => 'Standard',
+    'premium' => 'Premium',
+    'large_reasoning_models' => 'نماذج التفكير الكبيرة',
     'general_chat_coding_summarization' => 'محادثة عامة، برمجة، تلخيص',
     'complex_reasoning' => 'التفكير المعقد، السياق الطويل، المهام المتقدمة',
     'not_sure_tier' => 'غير متأكد من مستوى نموذج؟ اتصل بـ GET /api/v1/models — كل نموذج يحتوي على حقل credit_multiplier: 1 لـ Standard، 2 لـ Premium.',
+
+    // Top-up section
     'top_up_packs' => 'حزم الإضافة',
     'buy_credits' => 'اشترِ رموزاً، أنفق حسب الحاجة',
-    'credits_never_expire' => 'الرموز لا تنتهي أبداً وهي منفصلة عن اشتراكك. أضف في أي وقت.',
     'top_up' => 'إضافة',
+    'best_value' => 'أفضل قيمة',
     '0004_kwd_per_credit' => '0.0004 KWD لكل رمز',
     '0003_kwd_per_credit' => '0.0003 KWD لكل رمز',
-    'best_value' => 'أفضل قيمة',
     'available_billing_plans' => 'متوفر في الفواتير والخطط. الدفع عبر KNET أو بطاقة ائتمان دولية.',
+
+    // Footer
     'credits_documentation' => 'توثيق الرموز',
     'back_to_docs' => 'العودة إلى الوثائق',
-    'input' => 'إدخال',
-    'output' => 'إخراج',
-    'fx_rate' => 'سعر الصرف',
-    'conversion_fee' => 'رسوم التحويل',
-    'total' => 'المجموع',
-    'usd' => 'دولار أمريكي',
-    'varies_by_model' => 'يختلف حسب النموذج، بتغير المعدلات، بأسعار الصرف',
-    'always_rate_no_surprises' => 'هذا المعدل دائماً. بدون مفاجآت.',
-    'pack' => 'حزمة',
-    'token' => 'رمز',
-    'not_sure_tier' => 'غير متأكد من مستوى نموذج؟ اتصل بـ GET /api/v1/models — كل نموذج يحتوي على حقل credit_multiplier: 1 لـ Standard، 2 لـ Premium.',
-    'write_professional_email' => 'اكتب بريدًا مهنياً مكوّنًا من 100 كلمة قدّم منتجنا.',
-    'input_tokens' => '~30 رمز إدخال',
-    'credits_never_expire' => 'الرموز لا تنتهي أبداً وهي منفصلة عن اشتراكك. أضف في أي وقت.',
 ];
