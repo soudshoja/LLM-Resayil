@@ -488,4 +488,10 @@ eb44537 feat: AJAX toggle for admin models — no page reload on enable/disable
 
 ---
 
-*State file last updated: 2026-03-03 — Phase 7 complete, v1.1/v1.2/v1.3/v1.4 enhancements (Arabic support pending)*
+*State file last updated: 2026-03-04 — Quick task 1: API models hide type + filter embeddings
+
+### Quick Tasks Completed
+
+| # | Description | Date | Commit | Directory |
+|---|-------------|------|--------|-----------|
+| 1 | Fix API models endpoint: hide type field and filter embedding models | 2026-03-04 | 517f0c2 | [1-fix-api-models-endpoint-hide-type-field-](./quick/1-fix-api-models-endpoint-hide-type-field-/) |
