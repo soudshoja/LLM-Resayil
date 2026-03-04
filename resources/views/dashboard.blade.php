@@ -98,9 +98,9 @@
     <div class="dash-header">
         <h1>{{ __('dashboard.welcome_back') }}, {{ auth()->user()->name ?: auth()->user()->email }}</h1>
         <div class="text-secondary text-sm">
-            Plan: <span class="badge badge-gold">{{ ucfirst(auth()->user()->subscription_tier) }}</span>
+            {{ __('dashboard.plan') }}: <span class="badge badge-gold">{{ ucfirst(auth()->user()->subscription_tier) }}</span>
             @if(auth()->user()->subscription_expiry)
-            &nbsp;· Expires: {{ auth()->user()->subscription_expiry->format('d M Y') }}
+            &nbsp;· {{ __('dashboard.expires') }}: {{ auth()->user()->subscription_expiry->format('d M Y') }}
             @endif
         </div>
     </div>
@@ -334,7 +334,7 @@ response = requests.post(
             <div id="create-key-form" style="display:none;margin-top:1rem;padding-top:1rem;border-top:1px solid var(--border)">
                 <div class="form-group">
                     <label class="form-label">{{ __('dashboard.key_name') }}</label>
-                    <input type="text" id="key-name" class="form-input" placeholder="My App Key">
+                    <input type="text" id="key-name" class="form-input" placeholder="{{ __('dashboard.my_app_key') }}">
                 </div>
                 <div style="display:flex;gap:0.5rem">
                     <button onclick="submitKey()" class="btn btn-gold" style="padding:0.5rem 1rem;font-size:0.85rem">{{ __('dashboard.create') }}</button>
@@ -416,15 +416,20 @@ let allModels = [];
 let selectedModel = null;
 
 // Translation strings for JavaScript
-const translations = {
-    loadingModels: "{{ __('dashboard.loading_models') }}",
-    noModelsAvailable: "{{ __('dashboard.no_models_available') }}",
-    errorLoadingModels: "{{ __('dashboard.error_loading_models', [':message' => ':message']) }}",
-    noModelsMatch: "{{ __('dashboard.no_models_match') }}",
-    modelNotFound: "{{ __('dashboard.model_not_found') }}",
-    copied: "{{ __('dashboard.copied') }}",
-    pleaseEnterApiKey: "{{ __('dashboard.please_enter_api_key', ['link' => 'dashboard']) }}"
-};
+const LANG = @json([
+    'loading_models' => __('dashboard.loading_models'),
+    'no_models_available' => __('dashboard.no_models_available'),
+    'error_loading_models' => __('dashboard.error_loading_models'),
+    'no_models_match' => __('dashboard.no_models_match'),
+    'model_not_found' => __('dashboard.model_not_found'),
+    'copied' => __('dashboard.copied'),
+    'copy' => __('dashboard.copy'),
+    'please_enter_api_key' => __('dashboard.please_enter_api_key'),
+    'tokens' => __('dashboard.tokens'),
+    'credits_per_token_unit' => __('dashboard.credits_per_token_unit'),
+    'default_key_name' => __('dashboard.default_key_name'),
+    'key_created_successfully' => __('dashboard.key_created_successfully'),
+]);
 
 // Initialize on page load
 document.addEventListener('DOMContentLoaded', function() {
@@ -440,7 +445,11 @@ document.addEventListener('DOMContentLoaded', function() {
 // Load models from API
 async function loadModels() {
     const container = document.getElementById('models-container');
-    container.innerHTML = '<div class="empty-state">Loading models...</div>';
+    container.textContent = '';
+    const loadingDiv = document.createElement('div');
+    loadingDiv.className = 'empty-state';
+    loadingDiv.textContent = LANG.loading_models;
+    container.appendChild(loadingDiv);
 
     try {
         const res = await fetch('/models/catalog', {
@@ -455,13 +464,21 @@ async function loadModels() {
         allModels = data.data || [];
 
         if (allModels.length === 0) {
-            container.innerHTML = '<div class="empty-state">No models available. Your plan may not include any models.</div>';
+            container.textContent = '';
+            const emptyDiv = document.createElement('div');
+            emptyDiv.className = 'empty-state';
+            emptyDiv.textContent = LANG.no_models_available;
+            container.appendChild(emptyDiv);
             return;
         }
 
         renderModels();
     } catch (error) {
-        container.innerHTML = `<div class="empty-state">Error loading models: ${error.message}. Please check your API key and try again.</div>`;
+        container.textContent = '';
+        const errorDiv = document.createElement('div');
+        errorDiv.className = 'empty-state';
+        errorDiv.textContent = LANG.error_loading_models.replace(':message', error.message);
+        container.appendChild(errorDiv);
     }
 }
 
@@ -490,7 +507,11 @@ function renderModelGrid(models) {
     const container = document.getElementById('models-container');
 
     if (models.length === 0) {
-        container.innerHTML = '<div class="empty-state">No models match your filters.</div>';
+        container.textContent = '';
+        const noMatchDiv = document.createElement('div');
+        noMatchDiv.className = 'empty-state';
+        noMatchDiv.textContent = LANG.no_models_match;
+        container.appendChild(noMatchDiv);
         return;
     }
 
@@ -535,7 +556,7 @@ async function showModelDetail(modelId) {
     }
 
     if (!selectedModel) {
-        alert('Model not found');
+        alert(LANG.model_not_found);
         return;
     }
 
@@ -545,10 +566,10 @@ async function showModelDetail(modelId) {
     document.getElementById('detail-family').textContent = selectedModel.family || '-';
     document.getElementById('detail-category').textContent = selectedModel.category || '-';
     document.getElementById('detail-size').textContent = selectedModel.size || '-';
-    document.getElementById('detail-context').textContent = selectedModel.context_window ? `${selectedModel.context_window.toLocaleString()} tokens` : '-';
+    document.getElementById('detail-context').textContent = selectedModel.context_window ? `${selectedModel.context_window.toLocaleString()} ${LANG.tokens}` : '-';
     document.getElementById('detail-params').textContent = selectedModel.params || '-';
     document.getElementById('detail-quant').textContent = selectedModel.quantization || '-';
-    document.getElementById('detail-credits').textContent = selectedModel.credit_multiplier ? `${selectedModel.credit_multiplier} credits/token` : '-';
+    document.getElementById('detail-credits').textContent = selectedModel.credit_multiplier ? `${selectedModel.credit_multiplier} ${LANG.credits_per_token_unit}` : '-';
     document.getElementById('detail-license').textContent = selectedModel.license || '-';
     document.getElementById('detail-desc').textContent = selectedModel.description || '-';
 
@@ -627,7 +648,7 @@ function copyCode(type) {
     navigator.clipboard.writeText(text).then(() => {
         const btn = document.querySelector(`#code-${type} .btn-copy`);
         const originalText = btn.textContent;
-        btn.textContent = 'Copied!';
+        btn.textContent = LANG.copied;
         btn.classList.add('copied');
 
         setTimeout(() => {
@@ -675,7 +696,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const apiKey = localStorage.getItem('llm_api_key');
     if (!apiKey && window.location.pathname === '/dashboard') {
         setTimeout(() => {
-            alert('Please enter your API key to view models. You can find your key in your dashboard.');
+            alert(LANG.please_enter_api_key);
         }, 1000);
     }
 });
@@ -687,7 +708,7 @@ function createKey() {
 }
 
 async function submitKey() {
-    const name = document.getElementById('key-name').value || 'Default';
+    const name = document.getElementById('key-name').value || LANG.default_key_name;
     const res = await fetch('/api-keys', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': '{{ csrf_token() }}' },
@@ -699,7 +720,7 @@ async function submitKey() {
         localStorage.setItem('llm_api_key', json.key);
 
         document.getElementById('new-key-display').style.display = 'block';
-        document.getElementById('new-key-value').textContent = json.key || json.api_key || 'Key created successfully!';
+        document.getElementById('new-key-value').textContent = json.key || json.api_key || LANG.key_created_successfully;
         setTimeout(() => location.reload(), 5000);
     }
 }

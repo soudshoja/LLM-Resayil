@@ -110,5 +110,60 @@ return [
     'multiplier'         => 'Multiplier',
     'credits_col'        => 'Credits',
     'time'               => 'Time',
-    'no_api_calls'       => 'No API calls yet. Create an API key and make your first request!',
+    'no_api_calls'       => 'No API calls yet.',
+    'create_api_key_first' => 'Create an API key and make your first request!',
+
+    // Filter option values
+    'all_families_value' => 'All Families',
+    'all_categories_value' => 'All Categories',
+    'all_types_value'    => 'All Types',
+
+    // Category filters
+    'chat'               => 'Chat',
+    'code'               => 'Code',
+    'embedding'          => 'Embedding',
+    'vision'             => 'Vision',
+    'thinking'           => 'Thinking',
+    'tools'              => 'Tools',
+
+    // Model detail - click hint
+    'click_to_view'      => 'Click any model to view details and usage examples.',
+
+    // Code example tabs
+    'curl'               => 'cURL',
+    'python'             => 'Python',
+    'n8n'                => 'n8n',
+
+    // API Keys section (table + actions)
+    'api_keys_title'     => 'API Keys',
+    'api_keys_table_name' => 'Name',
+    'api_keys_table_key' => 'Key',
+    'api_keys_table_created' => 'Created',
+    'delete_key'         => 'Delete this key?',
+    'no_api_keys'        => 'No API keys yet.',
+    'create_first_key'   => 'Create one to start making requests.',
+    'my_app_key'         => 'My App Key',
+    'key_not_shown_again' => "Copy this key now -- it won't be shown again.",
+    'default_key_name'   => 'Default',
+    'key_created_successfully' => 'Key created successfully!',
+
+    // Top up cards
+    'topup_500'          => '500',
+    'topup_1100'         => '1,100',
+    'topup_3000'         => '3,000',
+    'topup_5k_price'     => '5 KWD',
+    'topup_10k_price'    => '10 KWD',
+    'topup_25k_price'    => '25 KWD',
+    'topup_bonus'        => '+10% bonus',
+    'topup_bonus_20'     => '+20% bonus',
+
+    // Usage table
+    'credits_used'       => 'Credits',
+
+    // JS translation strings
+    'no_models_available' => 'No models available. Your plan may not include any models.',
+    'error_loading_models' => 'Error loading models: :message. Please check your API key and try again.',
+    'model_not_found'    => 'Model not found',
+    'please_enter_api_key' => 'Please enter your API key to view models. You can find your key in your dashboard.',
+    'credits_per_token_unit' => 'credits/token',
 ];
