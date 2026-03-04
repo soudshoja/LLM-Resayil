@@ -474,7 +474,7 @@ response = requests.post(
                     <td class="text-muted">{{ is_null($log->prompt_tokens) ? '&mdash;' : number_format($log->prompt_tokens) }}</td>
                     <td class="text-muted">{{ is_null($log->completion_tokens) ? '&mdash;' : number_format($log->completion_tokens) }}</td>
                     <td>{{ number_format($log->tokens_used) }}</td>
-                    <td class="text-gold">${{ number_format($log->credits_deducted * 0.001, 4) }}</td>
+                    <td class="text-gold">${{ number_format($row['our_cost_usd'], 4) }}</td>
                     <td class="text-muted">{{ $row['is_estimate'] ? '~' : '' }}${{ number_format($row['gpt4o_cost_usd'], 4) }}</td>
                     <td class="text-gold">{{ $log->credits_deducted }}</td>
                     <td class="text-muted">{{ $log->created_at->diffForHumans() }}</td>

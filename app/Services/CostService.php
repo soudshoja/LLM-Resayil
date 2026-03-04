@@ -176,10 +176,15 @@ class CostService
                 );
             }
 
+            $multiplier   = (float) (config('models.models.' . $log->model . '.credit_multiplier')
+                ?? ($log->provider === 'cloud' ? 2.0 : 1.0));
+            $ourCostUsd   = round(($log->tokens_used * $multiplier / 1000) * 0.001, 6);
+
             $result[] = [
-                'log'           => $log,
+                'log'            => $log,
+                'our_cost_usd'   => $ourCostUsd,
                 'gpt4o_cost_usd' => round($gpt4oCostUsd, 6),
-                'is_estimate'   => $isBlended,
+                'is_estimate'    => $isBlended,
             ];
         }
 
