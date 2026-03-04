@@ -33,6 +33,14 @@ Route::get('/locale/{locale}', function ($locale) {
     return redirect()->back();
 })->name('locale')->where('locale', 'en|ar');
 
+// Also accept POST (used by JS form submit)
+Route::post('/locale/{locale}', function ($locale) {
+    if (in_array($locale, ['en', 'ar'])) {
+        session(['locale' => $locale]);
+    }
+    return redirect()->back();
+})->where('locale', 'en|ar');
+
 // Web routes group
 Route::group([], function () {
 
