@@ -740,8 +740,9 @@
                 <div class="code-box">
                     <div class="code-box-label">@lang('credits.example_gpt_4o')</div>
                     <div class="code-line">@lang('credits.input_tokens')...</div>
+                </div>
 
-                <div class="bullet-list">
+                <ul class="bullet-list">
                     <li><span class="bullet-icon">✗</span> @lang('credits.different_price_per_model')</li>
                     <li><span class="bullet-icon">✗</span> @lang('credits.separate_input_output')</li>
                     <li><span class="bullet-icon">✗</span> @lang('credits.usd_subject_to_fx')</li>
