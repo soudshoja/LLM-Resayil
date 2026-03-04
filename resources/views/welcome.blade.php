@@ -12,6 +12,19 @@
     .hero h1 span { background: linear-gradient(135deg, var(--gold), var(--gold-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
     .hero p { font-size: 1.125rem; color: var(--text-secondary); max-width: 560px; margin: 0 auto 2rem; line-height: 1.7; }
     .hero-cta { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .hero-slider-container { position: relative; width: 100%; max-width: 1000px; margin: 0 auto; height: 400px; }
+    .hero-slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; transition: opacity 0.5s ease-in-out; display: flex; align-items: center; justify-content: center; flex-direction: column; }
+    .hero-slide.active { opacity: 1; }
+    .hero-slide-content { text-align: center; }
+    .hero-slide h2 { font-size: 2.5rem; font-weight: 700; margin-bottom: 1rem; color: var(--gold); }
+    .hero-slide p { font-size: 1.125rem; color: var(--text-secondary); max-width: 560px; margin: 0 auto 1.5rem; line-height: 1.7; }
+    .hero-slide-badge { display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(212,175,55,0.1); border: 1px solid rgba(212,175,55,0.25); color: var(--gold); padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.8rem; font-weight: 600; margin-bottom: 1rem; }
+    .hero-slide-model { font-size: 3rem; font-weight: 700; color: var(--text-primary); margin: 0.5rem 0; }
+    .hero-slide-model span { background: linear-gradient(135deg, var(--gold), var(--gold-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .hero-slider-controls { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); display: flex; gap: 0.75rem; }
+    .hero-slider-dot { width: 12px; height: 12px; border-radius: 50%; background: rgba(212,175,55,0.3); border: 2px solid var(--gold); cursor: pointer; transition: all 0.3s; }
+    .hero-slider-dot.active { background: var(--gold); transform: scale(1.2); }
+    .hero-slider-dot:hover { background: rgba(212,175,55,0.6); }
     .section { padding: 4rem 2rem; max-width: 1200px; margin: 0 auto; }
     .section-title { text-align: center; margin-bottom: 3rem; }
     .section-title h2 { font-size: 1.875rem; font-weight: 700; margin-bottom: 0.75rem; }
@@ -38,6 +51,11 @@
     .trial-cta-btn { display: block; width: 100%; padding: 0.8rem 1.5rem; border-radius: 8px; font-weight: 700; font-size: 0.9rem; text-align: center; text-decoration: none; background: linear-gradient(135deg, #28a745, #20c997); color: #fff; border: none; transition: all 0.2s; cursor: pointer; }
     .trial-cta-btn:hover { opacity: 0.9; transform: translateY(-1px); box-shadow: 0 4px 18px rgba(40,167,69,0.4); color: #fff; }
     .trial-footer { font-size: 0.72rem; color: var(--text-muted); text-align: center; margin-top: 1.25rem; }
+    .trial-section-title { font-size: 1.2rem; font-weight: 700; margin-bottom: 1.5rem; }
+    .trial-card-title { font-size: 1rem; font-weight: 600; margin-bottom: 0.85rem; }
+    /* ── Button sizes ── */
+    .btn-lg { padding: 0.75rem 2rem; font-size: 1rem; }
+    .btn-xl { padding: 0.85rem 2.5rem; font-size: 1.05rem; }
     /* ── Pricing cards ── */
     .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
     .plan-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px; padding: 2rem; display: flex; flex-direction: column; position: relative; transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s; }
@@ -97,9 +115,57 @@
     @media(max-width: 900px) { .ml-grid { grid-template-columns: repeat(2, 1fr); } }
     @media(max-width: 560px) { .ml-grid { grid-template-columns: 1fr; } }
     .cta-section { text-align: center; padding: 5rem 2rem; background: linear-gradient(135deg, rgba(212,175,55,0.05) 0%, transparent 100%); border-top: 1px solid var(--border); }
+    .cta-title { font-size: 2rem; font-weight: 700; margin-bottom: 0.75rem; }
+    .cta-subtitle { color: var(--text-secondary); margin-bottom: 2rem; }
     @media(max-width: 900px) { .pricing-grid { grid-template-columns: 1fr; } .trial-grid { grid-template-columns: 1fr; } }
-    @media(max-width: 768px) { .hero h1 { font-size: 2rem; } .steps { grid-template-columns: 1fr; } }
+    @media(max-width: 768px) { .hero h1 { font-size: 2rem; } .steps { grid-template-columns: 1fr; } .hero-slider-container { height: 300px; } .hero-slide h2 { font-size: 1.75rem; } }
 </style>
+@endpush
+
+@push('scripts')
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const slides = document.querySelectorAll('.hero-slide');
+    const dots = document.querySelectorAll('.hero-slider-dot');
+    let currentSlide = 0;
+    let autoPlay = null;
+
+    function showSlide(index) {
+        slides.forEach((slide, i) => {
+            slide.classList.remove('active');
+            if (dots[i]) dots[i].classList.remove('active');
+            if (i === index) {
+                slide.classList.add('active');
+                if (dots[i]) dots[i].classList.add('active');
+            }
+        });
+        currentSlide = index;
+    }
+
+    function nextSlide() {
+        const next = (currentSlide + 1) % slides.length;
+        showSlide(next);
+    }
+
+    function prevSlide() {
+        const prev = (currentSlide - 1 + slides.length) % slides.length;
+        showSlide(prev);
+    }
+
+    dots.forEach((dot, index) => {
+        dot.addEventListener('click', () => showSlide(index));
+    });
+
+    document.querySelector('.hero-slider-prev')?.addEventListener('click', prevSlide);
+    document.querySelector('.hero-slider-next')?.addEventListener('click', nextSlide);
+
+    // Keyboard navigation
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'ArrowLeft') prevSlide();
+        if (e.key === 'ArrowRight') nextSlide();
+    });
+});
+</script>
 @endpush
 
 @section('content')
@@ -107,11 +173,38 @@
 <!-- Hero -->
 <section class="hero">
     <div class="hero-badge">{{ __('welcome.hero_badge') }}</div>
-    <h1>{{ str_replace(':span', '<span>', __('welcome.hero_title')) }}</h1>
-    <p>{{ __('welcome.hero_description') }}</p>
+    <div class="hero-slider-container">
+        <!-- Slide 1: Lightweight & Fast -->
+        <div class="hero-slide active">
+            <div class="hero-slide-content">
+                <div class="hero-slide-badge">
+                    <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                    {{ __('welcome.lightweight') }}
+                </div>
+                <h2 class="hero-slide-model">{{ str_replace(':span', '<span>', __('welcome.llama_32_3b')) }}</h2>
+                <p>{{ __('welcome.lightweight_fast') }}</p>
+            </div>
+        </div>
+        <!-- Slide 2: Frontier Model -->
+        <div class="hero-slide">
+            <div class="hero-slide-content">
+                <div class="hero-slide-badge">
+                    <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                    {{ __('welcome.frontier_model') }}
+                </div>
+                <h2 class="hero-slide-model">{{ str_replace(':span', '<span>', __('welcome.deepseek_v31_671b')) }}</h2>
+                <p>{{ __('welcome.frontier_reasoning') }}</p>
+            </div>
+        </div>
+        <!-- Navigation Controls -->
+        <div class="hero-slider-controls">
+            <button class="hero-slider-dot" aria-label="Slide 1"></button>
+            <button class="hero-slider-dot" aria-label="Slide 2"></button>
+        </div>
+    </div>
     <div class="hero-cta">
-        <a href="/register" class="btn btn-gold" style="padding:0.75rem 2rem;font-size:1rem">{{ __('welcome.cta_start_free_trial') }}</a>
-        <a href="#pricing" class="btn btn-outline" style="padding:0.75rem 2rem;font-size:1rem">{{ __('welcome.cta_view_pricing') }}</a>
+        <a href="/register" class="btn btn-gold btn-lg">{{ __('welcome.cta_start_free_trial') }}</a>
+        <a href="#pricing" class="btn btn-outline btn-lg">{{ __('welcome.cta_view_pricing') }}</a>
     </div>
 </section>
 
@@ -152,11 +245,11 @@
     {{-- Free Trial Box --}}
     <div class="trial-section">
         <div class="trial-badge">{{ __('welcome.free_trial_badge') }}</div>
-        <h2 style="font-size:1.2rem;font-weight:700;margin-bottom:1.5rem;">{{ __('welcome.try_before_buy') }}</h2>
+        <h2 class="trial-section-title">{{ __('welcome.try_before_buy') }}</h2>
         <div class="trial-grid">
             <div class="trial-card">
                 <div class="trial-icon">⚡</div>
-                <h3 style="font-size:1rem;font-weight:600;margin-bottom:0.85rem;">{{ __('welcome.seven_day_trial') }}</h3>
+                <h3 class="trial-card-title">{{ __('welcome.seven_day_trial') }}</h3>
                 <ul class="trial-features">
                     <li><svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>{{ __('welcome.full_starter_features') }}</li>
                     <li><svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>{{ __('welcome.one_thousand_credits') }}</li>
@@ -428,9 +521,9 @@ print(response.choices[0].message.content)
 
 <!-- CTA -->
 <section class="cta-section">
-    <h2 style="font-size:2rem;font-weight:700;margin-bottom:0.75rem">{{ __('welcome.ready_to_get_started') }}</h2>
-    <p style="color:var(--text-secondary);margin-bottom:2rem">{{ __('welcome.join_developers') }}</p>
-    <a href="/register" class="btn btn-gold" style="padding:0.85rem 2.5rem;font-size:1.05rem">{{ __('welcome.create_free_account') }}</a>
+    <h2 class="cta-title">{{ __('welcome.ready_to_get_started') }}</h2>
+    <p class="cta-subtitle">{{ __('welcome.join_developers') }}</p>
+    <a href="/register" class="btn btn-gold btn-xl">{{ __('welcome.create_free_account') }}</a>
 </section>
 
 @endsection

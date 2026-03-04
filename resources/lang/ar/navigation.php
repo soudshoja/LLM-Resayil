@@ -21,5 +21,8 @@ return [
     ],
 
     'brand' => 'LLM Resayil',
+    'language' => 'اللغة',
+    'english' => 'الإنجليزية',
+    'arabic' => 'العربية',
 
 ];
