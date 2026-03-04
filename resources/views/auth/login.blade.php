@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', __('auth.login'))
+@section('title', __('auth.login_title'))
 
 @push('styles')
 <style>
@@ -26,18 +26,18 @@
         <form method="POST" action="/login" id="loginForm">
             @csrf
             <div class="form-group">
-                <label class="form-label">{{ __('auth.email') }}</label>
+                <label class="form-label">{{ __('auth.email_address') }}</label>
                 <input type="email" name="email" class="form-input" placeholder="you@example.com" value="{{ old('email') }}" required>
             </div>
             <div class="form-group">
-                <label class="form-label">{{ __('auth.password_label') }}</label>
+                <label class="form-label">{{ __('auth.password') }}</label>
                 <input type="password" name="password" class="form-input" placeholder="••••••••" required>
             </div>
             <div class="form-group" style="display:flex;align-items:center;gap:0.5rem">
                 <input type="checkbox" name="remember" id="remember" style="accent-color:var(--gold)">
                 <label for="remember" style="font-size:0.875rem;color:var(--text-secondary);cursor:pointer">{{ __('auth.remember_me') }}</label>
             </div>
-            <button type="submit" class="btn btn-gold" style="width:100%;justify-content:center;padding:0.75rem;font-size:0.95rem">{{ __('auth.sign_in') }}</button>
+            <button type="submit" class="btn btn-gold" style="width:100%;justify-content:center;padding:0.75rem;font-size:0.95rem">{{ __('auth.sign_in_button') }}</button>
         </form>
 
         <div class="auth-footer">
@@ -53,7 +53,7 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
     e.preventDefault();
     const form = e.target;
     const btn = form.querySelector('button[type="submit"]');
-    btn.textContent = @json(__('auth.signing_in'));
+    btn.textContent = '{{ __('auth.signing_in') }}';
     btn.disabled = true;
 
     const data = {
@@ -74,12 +74,12 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
             window.location.href = '/dashboard';
         } else {
             document.querySelector('.auth-card').insertAdjacentHTML('afterbegin',
-                `<div class="alert alert-error">${json.message || @json(__('auth.login_failed'))}</div>`);
-            btn.textContent = @json(__('auth.sign_in'));
+                `<div class="alert alert-error">${json.message || '{{ __('auth.login_failed') }}'}</div>`);
+            btn.textContent = '{{ __('auth.sign_in_button') }}';
             btn.disabled = false;
         }
     } catch(err) {
-        btn.textContent = @json(__('auth.sign_in'));
+        btn.textContent = '{{ __('auth.sign_in_button') }}';
         btn.disabled = false;
     }
 });

@@ -3,41 +3,6 @@
 @section('title', __('welcome.title'))
 
 @push('styles')
-{{-- JSON-LD Structured Data --}}
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Organization",
-  "name": "LLM Resayil",
-  "url": "https://llm.resayil.io",
-  "description": "OpenAI-compatible LLM API with 45+ models. Pay per token. KNET payments accepted.",
-  "logo": "https://llm.resayil.io/favicon.ico",
-  "contactPoint": {
-    "@type": "ContactPoint",
-    "contactType": "customer support",
-    "url": "https://llm.resayil.io/contact"
-  },
-  "sameAs": []
-}
-</script>
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "SoftwareApplication",
-  "name": "LLM Resayil API",
-  "applicationCategory": "DeveloperApplication",
-  "operatingSystem": "Any",
-  "description": "OpenAI-compatible REST API providing access to 45+ AI models including Llama, DeepSeek, Qwen. Local GPU inference and cloud proxies. Pay-per-token pricing. KNET payments.",
-  "url": "https://llm.resayil.io",
-  "offers": {
-    "@type": "Offer",
-    "price": "0",
-    "priceCurrency": "KWD",
-    "description": "Pay per token. Start with 5,000 credits for 2 KWD."
-  },
-  "featureList": ["OpenAI-compatible API", "45+ AI models", "Local GPU inference", "KNET payments", "Pay per token"]
-}
-</script>
 <style>
     body { background: var(--bg-secondary); }
     .hero { text-align: center; padding: 6rem 2rem 4rem; position: relative; overflow: hidden; }
@@ -47,75 +12,11 @@
     .hero h1 span { background: linear-gradient(135deg, var(--gold), var(--gold-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
     .hero p { font-size: 1.125rem; color: var(--text-secondary); max-width: 560px; margin: 0 auto 2rem; line-height: 1.7; }
     .hero-cta { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
-    .hero-subcta { margin-top: 1.5rem; display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap; font-size: 0.85rem; color: var(--text-secondary); }
-    .hero-subcta a { color: var(--gold); text-decoration: none; transition: all 0.2s; }
-    .hero-subcta a:hover { color: var(--gold-light); }
-    .hero-subcta span { opacity: 0.4; }
-    /* ── Hero Model Carousel ── */
-    .hmc-section { padding: 4rem 2rem 3rem; max-width: 1200px; margin: 0 auto; }
-    .hmc-header { text-align: center; margin-bottom: 2.75rem; }
-    .hmc-header h2 { font-size: 1.75rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.6rem; letter-spacing: -0.01em; }
-    .hmc-header h2 em { font-style: normal; background: linear-gradient(135deg, var(--gold), var(--gold-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-    .hmc-header-underline { width: 56px; height: 3px; background: linear-gradient(90deg, var(--gold), var(--gold-light)); border-radius: 2px; margin: 0 auto; }
-    /* Outer track */
-    .hmc-track-outer { position: relative; overflow: hidden; }
-    /* Slides container — no gap so translateX(-N*100%) aligns exactly */
-    .hmc-track { display: flex; gap: 0; transition: transform 0.55s cubic-bezier(0.4,0,0.2,1); will-change: transform; }
-    @media (prefers-reduced-motion: reduce) { .hmc-track { transition: none; } }
-    /* Individual slide — glassmorphism card */
-    .hmc-slide { flex: 0 0 100%; min-width: 0; padding: 0 0.25rem; }
-    .hmc-card { background: linear-gradient(145deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.01) 100%); border: 1px solid rgba(212,175,55,0.22); border-radius: 20px; padding: 2.5rem 2.75rem; display: flex; align-items: center; gap: 2.75rem; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); box-shadow: 0 8px 40px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.06); position: relative; overflow: hidden; transition: border-color 0.3s; }
-    .hmc-card::before { content: ''; position: absolute; top: 0; right: 0; width: 280px; height: 280px; background: radial-gradient(circle at 100% 0%, rgba(212,175,55,0.07) 0%, transparent 65%); pointer-events: none; }
-    .hmc-card::after { content: ''; position: absolute; bottom: 0; left: 0; width: 200px; height: 200px; background: radial-gradient(circle at 0% 100%, rgba(212,175,55,0.04) 0%, transparent 65%); pointer-events: none; }
-    /* Icon panel */
-    .hmc-icon-panel { flex-shrink: 0; width: 112px; height: 112px; border-radius: 18px; background: linear-gradient(140deg, rgba(212,175,55,0.12) 0%, rgba(212,175,55,0.04) 100%); border: 1px solid rgba(212,175,55,0.28); display: flex; align-items: center; justify-content: center; position: relative; z-index: 1; }
-    .hmc-icon-panel svg { width: 52px; height: 52px; color: var(--gold); filter: drop-shadow(0 0 14px rgba(212,175,55,0.45)); }
-    /* Text body */
-    .hmc-body { flex: 1; min-width: 0; position: relative; z-index: 1; }
-    .hmc-badges { display: flex; gap: 0.5rem; align-items: center; margin-bottom: 0.85rem; flex-wrap: wrap; }
-    .hmc-badge { display: inline-flex; align-items: center; padding: 0.22rem 0.7rem; border-radius: 20px; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
-    .hmc-badge-local { background: rgba(5,150,105,0.15); color: #6ee7b7; border: 1px solid rgba(5,150,105,0.35); }
-    .hmc-badge-cloud { background: rgba(99,102,241,0.15); color: #a5b4fc; border: 1px solid rgba(99,102,241,0.35); }
-    .hmc-badge-api { background: rgba(59,130,246,0.15); color: #93c5fd; border: 1px solid rgba(59,130,246,0.35); }
-    .hmc-badge-all { background: rgba(212,175,55,0.13); color: var(--gold); border: 1px solid rgba(212,175,55,0.32); }
-    .hmc-credit-pill { display: inline-flex; align-items: center; gap: 0.35rem; background: rgba(212,175,55,0.09); border: 1px solid rgba(212,175,55,0.2); border-radius: 20px; padding: 0.22rem 0.75rem; font-size: 0.7rem; font-weight: 600; color: var(--gold-light); }
-    .hmc-credit-pill svg { width: 11px; height: 11px; opacity: 0.8; }
-    .hmc-model-name { font-size: 1.85rem; font-weight: 800; color: #f0f4ff; line-height: 1.2; margin-bottom: 0.6rem; letter-spacing: -0.02em; }
-    .hmc-stat { font-size: 1rem; font-weight: 600; color: var(--gold); margin-bottom: 0.5rem; }
-    .hmc-desc { font-size: 0.935rem; color: var(--text-secondary); line-height: 1.65; max-width: 520px; }
-    /* Controls bar */
-    .hmc-controls { display: flex; align-items: center; justify-content: center; gap: 1.5rem; margin-top: 2rem; }
-    .hmc-arrow { width: 44px; height: 44px; border-radius: 50%; background: transparent; border: 1.5px solid rgba(212,175,55,0.4); color: var(--gold); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s, border-color 0.2s, box-shadow 0.2s; flex-shrink: 0; }
-    .hmc-arrow:hover { background: rgba(212,175,55,0.12); border-color: var(--gold); box-shadow: 0 0 18px rgba(212,175,55,0.2); }
-    .hmc-arrow svg { width: 18px; height: 18px; }
-    .hmc-dots { display: flex; gap: 0.5rem; align-items: center; }
-    .hmc-dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(212,175,55,0.2); cursor: pointer; transition: all 0.3s cubic-bezier(0.4,0,0.2,1); border: none; padding: 0; }
-    .hmc-dot.active { background: var(--gold); width: 26px; border-radius: 4px; }
-    /* Progress bar */
-    .hmc-progress { position: absolute; bottom: 0; left: 0; height: 2px; background: linear-gradient(90deg, var(--gold), var(--gold-light)); border-radius: 1px; transition: width 0.1s linear; }
-    /* Responsive */
-    @media(max-width: 768px) {
-        .hmc-card { flex-direction: column; align-items: flex-start; gap: 1.5rem; padding: 1.75rem; }
-        .hmc-icon-panel { width: 72px; height: 72px; border-radius: 14px; }
-        .hmc-icon-panel svg { width: 34px; height: 34px; }
-        .hmc-model-name { font-size: 1.35rem; }
-        .hmc-stat { font-size: 0.9rem; }
-        .hmc-desc { font-size: 0.875rem; }
-        .hmc-header h2 { font-size: 1.35rem; }
-    }
-    @media(max-width: 480px) {
-        .hmc-section { padding: 2.5rem 1rem 2rem; }
-        .hmc-card { padding: 1.25rem; }
-        .hmc-model-name { font-size: 1.15rem; }
-    }
     .section { padding: 4rem 2rem; max-width: 1200px; margin: 0 auto; }
     .section-title { text-align: center; margin-bottom: 3rem; }
     .section-title h2 { font-size: 1.875rem; font-weight: 700; margin-bottom: 0.75rem; }
     .section-title p { color: var(--text-secondary); font-size: 1rem; max-width: 500px; margin: 0 auto; }
     .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
-    /* RTL fix: ensure steps always go 1→2→3 left-to-right */
-    [dir="rtl"] .steps { direction: ltr; }
-    [dir="rtl"] .step-num { direction: ltr; }
     .step { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 1.75rem; text-align: center; position: relative; }
     .step-num { width: 44px; height: 44px; background: linear-gradient(135deg, var(--gold), var(--gold-light)); color: #0a0d14; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1.1rem; margin: 0 auto 1rem; }
     .step h3 { font-size: 1rem; font-weight: 600; margin-bottom: 0.5rem; }
@@ -193,59 +94,11 @@
     .ml-footer p { color: var(--text-muted); font-size: 0.875rem; }
     .ml-footer a { color: var(--gold); text-decoration: none; font-weight: 600; }
     .ml-footer a:hover { text-decoration: underline; }
-    .contact-form-section { padding: 5rem 2rem; max-width: 1200px; margin: 0 auto; }
-    .contact-container { display: grid; grid-template-columns: 1.2fr 1fr; gap: 3rem; align-items: center; }
-    .contact-info h2 { font-size: 2.25rem; font-weight: 700; margin-bottom: 1.25rem; }
-    .contact-info p { color: var(--text-secondary); font-size: 1rem; line-height: 1.7; margin-bottom: 2rem; }
-    .contact-info-item { display: flex; align-items: flex-start; gap: 1rem; margin-bottom: 1.5rem; }
-    .contact-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.25rem; flex-shrink: 0; }
-    .contact-icon.email { background: rgba(212,175,55,0.1); color: var(--gold); }
-    .contact-icon.phone { background: rgba(5,150,105,0.1); color: #6ee7b7; }
-    .contact-icon.message { background: rgba(59,130,246,0.1); color: #60a5fa; }
-    .site-footer {
-        background: var(--bg-card, #13161d);
-        border-top: 1px solid var(--border, #1e2330);
-        padding: 2rem 1.5rem;
-        margin-top: 4rem;
-        text-align: center;
-    }
-    .footer-inner { max-width: 900px; margin: 0 auto; }
-    .footer-links {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-wrap: wrap;
-        gap: 0.5rem 1rem;
-        margin-bottom: 1rem;
-    }
-    .footer-links a {
-        color: var(--text-muted, #888);
-        text-decoration: none;
-        font-size: 0.875rem;
-        transition: color 0.2s;
-    }
-    .footer-links a:hover { color: var(--gold, #d4af37); }
-    .footer-sep { color: var(--border, #333); font-size: 0.75rem; }
-    .footer-copy { color: var(--text-muted, #888); font-size: 0.8rem; margin: 0; }
-    [dir="rtl"] .footer-links { flex-direction: row-reverse; }
-    .contact-info-item strong { color: var(--text-primary); font-weight: 600; }
-    .contact-info-item span { color: var(--text-secondary); font-size: 0.925rem; }
-    .contact-form-wrapper { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 2.5rem; }
-    .contact-form-wrapper h3 { font-size: 1.25rem; font-weight: 700; margin-bottom: 1.75rem; color: var(--text-primary); }
-    .form-group { margin-bottom: 1.25rem; }
-    .form-label { display: block; font-size: 0.875rem; font-weight: 600; color: var(--text-secondary); margin-bottom: 0.5rem; }
-    .form-input { width: 100%; background: var(--bg-primary); border: 1px solid var(--border); border-radius: 10px; padding: 0.75rem 1rem; color: var(--text-primary); font-size: 0.925rem; transition: border-color 0.2s; }
-    .form-input:focus { outline: none; border-color: var(--gold-muted); }
-    .form-input::placeholder { color: var(--text-muted); }
-    .form-textarea { width: 100%; background: var(--bg-primary); border: 1px solid var(--border); border-radius: 10px; padding: 0.75rem 1rem; color: var(--text-primary); font-size: 0.925rem; min-height: 140px; resize: vertical; font-family: 'Inter', sans-serif; }
-    .form-textarea:focus { outline: none; border-color: var(--gold-muted); }
-    .btn-submit { display: block; width: 100%; padding: 0.9rem 1.5rem; border-radius: 10px; font-weight: 700; font-size: 0.95rem; text-align: center; text-decoration: none; cursor: pointer; border: none; transition: all 0.2s; background: linear-gradient(135deg, var(--gold), var(--gold-light)); color: #0a0d14; }
-    .btn-submit:hover { opacity: 0.9; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(212,175,55,0.35); color: #0a0d14; }
-    .form-success { display: none; padding: 1.25rem; background: rgba(5,150,105,0.1); border: 1px solid rgba(5,150,105,0.3); border-radius: 12px; color: #6ee7b7; text-align: center; margin-bottom: 1.5rem; }
-    @media(max-width: 900px) { .contact-container { grid-template-columns: 1fr; } }
-    @media(max-width: 768px) { .hero h1 { font-size: 2rem; } .steps { grid-template-columns: 1fr; } .contact-form-wrapper { padding: 1.75rem; } }
-    /* RTL mobile fix: steps remain LTR order even on small screens */
-    @media(max-width: 768px) { [dir="rtl"] .steps { direction: ltr; } [dir="rtl"] .step-num { direction: ltr; } }
+    @media(max-width: 900px) { .ml-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media(max-width: 560px) { .ml-grid { grid-template-columns: 1fr; } }
+    .cta-section { text-align: center; padding: 5rem 2rem; background: linear-gradient(135deg, rgba(212,175,55,0.05) 0%, transparent 100%); border-top: 1px solid var(--border); }
+    @media(max-width: 900px) { .pricing-grid { grid-template-columns: 1fr; } .trial-grid { grid-template-columns: 1fr; } }
+    @media(max-width: 768px) { .hero h1 { font-size: 2rem; } .steps { grid-template-columns: 1fr; } }
 </style>
 @endpush
 
@@ -253,210 +106,36 @@
 
 <!-- Hero -->
 <section class="hero">
-    <div class="hero-badge">✦ {{ __('welcome.openai_compatible') }}</div>
-    <h1>{!! __('welcome.hero_title') !!}</h1>
-    <p>{{ __('welcome.hero_subtitle') }}</p>
+    <div class="hero-badge">{{ __('welcome.hero_badge') }}</div>
+    <h1>{{ str_replace(':span', '<span>', __('welcome.hero_title')) }}</h1>
+    <p>{{ __('welcome.hero_description') }}</p>
     <div class="hero-cta">
-        <a href="/register" class="btn btn-gold" style="padding:0.75rem 2rem;font-size:1rem">{{ __('welcome.get_started') }}</a>
-        <a href="#pricing" class="btn btn-outline" style="padding:0.75rem 2rem;font-size:1rem">{{ __('welcome.view_plans') }}</a>
-        <a href="/docs" class="btn btn-outline" style="padding:0.75rem 2rem;font-size:1rem">{{ __('welcome.documentation') }}</a>
-    </div>
-    <div class="hero-subcta">
-        <a href="/credits">{{ __('welcome.how_credits_work') }}</a>
-        <span>|</span>
-        <a href="/docs">{{ __('welcome.api_docs') }}</a>
-        <span>|</span>
-        <a href="/billing/plans">{{ __('welcome.pricing_details') }}</a>
-    </div>
-</section>
-
-<!-- Model Carousel -->
-<section class="hmc-section" aria-label="Model showcase carousel">
-    <div class="hmc-header">
-        <h2>{!! __('welcome.explore_model_lineup') !!}</h2>
-        <div class="hmc-header-underline"></div>
-    </div>
-
-    <div class="hmc-track-outer" id="hmcTrackOuter">
-        <div class="hmc-track" id="hmcTrack" role="list">
-
-            <!-- Slide 1: Llama 3.2 3B -->
-            <div class="hmc-slide" role="listitem" aria-label="Llama 3.2 3B — fastest lightweight model">
-                <div class="hmc-card">
-                    <div class="hmc-icon-panel" aria-hidden="true">
-                        <!-- Lightning bolt SVG — speed -->
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
-                        </svg>
-                    </div>
-                    <div class="hmc-body">
-                        <div class="hmc-badges">
-                            <span class="hmc-badge hmc-badge-local">{!! __('welcome.lightweight') !!}</span>
-                            <span class="hmc-credit-pill">
-                                <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/><path d="M12 6v12M9 9h4.5a1.5 1.5 0 010 3H9m0 0h4.5a1.5 1.5 0 010 3H9" stroke="white" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg>
-                                {{ __('welcome.per_1k_tokens') }}
-                            </span>
-                        </div>
-                        <div class="hmc-model-name">Llama 3.2 3B</div>
-                        <div class="hmc-stat">{!! __('welcome.fastest_model') !!}</div>
-                        <div class="hmc-desc">{!! __('welcome.lightweight_powerhouse') !!}</div>
-                    </div>
-                    <div class="hmc-progress" id="hmcProgress" style="width:0%"></div>
-                </div>
-            </div>
-
-            <!-- Slide 2: DeepSeek V3.1 671B -->
-            <div class="hmc-slide" role="listitem" aria-label="DeepSeek V3.1 671B — frontier reasoning">
-                <div class="hmc-card">
-                    <div class="hmc-icon-panel" aria-hidden="true">
-                        <!-- Neural network / brain SVG -->
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="12" cy="4" r="2"/>
-                            <circle cx="4" cy="12" r="2"/>
-                            <circle cx="20" cy="12" r="2"/>
-                            <circle cx="8" cy="20" r="2"/>
-                            <circle cx="16" cy="20" r="2"/>
-                            <path d="M12 6v4m0 0l-6.5 4m6.5-4l6.5 4M5.5 13.5l2 5m9-5l-2 5"/>
-                            <circle cx="12" cy="10" r="1.5" fill="currentColor"/>
-                        </svg>
-                    </div>
-                    <div class="hmc-body">
-                        <div class="hmc-badges">
-                            <span class="hmc-badge hmc-badge-cloud">{!! __('welcome.frontier_model') !!}</span>
-                            <span class="hmc-credit-pill">
-                                <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/><path d="M12 6v12M9 9h4.5a1.5 1.5 0 010 3H9m0 0h4.5a1.5 1.5 0 010 3H9" stroke="white" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg>
-                                2 {{ __('welcome.per_1k_tokens') }}
-                            </span>
-                        </div>
-                        <div class="hmc-model-name">DeepSeek V3.1 671B</div>
-                        <div class="hmc-stat">{!! __('welcome.frontier_reasoning_scale') !!}</div>
-                        <div class="hmc-desc">{!! __('welcome.frontier_intelligence') !!}</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Slide 3: Qwen 3.5 397B -->
-            <div class="hmc-slide" role="listitem" aria-label="Qwen 3.5 397B — largest MoE, multilingual">
-                <div class="hmc-card">
-                    <div class="hmc-icon-panel" aria-hidden="true">
-                        <!-- Crystal / MoE lattice SVG -->
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                            <polygon points="12,2 20,7 20,17 12,22 4,17 4,7"/>
-                            <polygon points="12,7 16,9.5 16,14.5 12,17 8,14.5 8,9.5"/>
-                            <line x1="12" y1="2" x2="12" y2="7"/>
-                            <line x1="20" y1="7" x2="16" y2="9.5"/>
-                            <line x1="20" y1="17" x2="16" y2="14.5"/>
-                            <line x1="12" y1="22" x2="12" y2="17"/>
-                            <line x1="4" y1="17" x2="8" y2="14.5"/>
-                            <line x1="4" y1="7" x2="8" y2="9.5"/>
-                        </svg>
-                    </div>
-                    <div class="hmc-body">
-                        <div class="hmc-badges">
-                            <span class="hmc-badge hmc-badge-cloud">{!! __('welcome.frontier_model') !!}</span>
-                            <span class="hmc-credit-pill">
-                                <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/><path d="M12 6v12M9 9h4.5a1.5 1.5 0 010 3H9m0 0h4.5a1.5 1.5 0 010 3H9" stroke="white" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg>
-                                2 {{ __('welcome.per_1k_tokens') }}
-                            </span>
-                        </div>
-                        <div class="hmc-model-name">Qwen 3.5 397B</div>
-                        <div class="hmc-stat">{!! __('welcome.largest_moe_multilingual') !!}</div>
-                        <div class="hmc-desc">{!! __('welcome.moe_flagship') !!}</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Slide 4: OpenAI-Compatible API -->
-            <div class="hmc-slide" role="listitem" aria-label="OpenAI-Compatible API — drop-in replacement">
-                <div class="hmc-card">
-                    <div class="hmc-icon-panel" aria-hidden="true">
-                        <!-- Plug / connector SVG -->
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                            <rect x="7" y="2" width="10" height="8" rx="2"/>
-                            <path d="M9 2V0M15 2V0"/>
-                            <path d="M12 10v4"/>
-                            <path d="M9 14h6a3 3 0 010 6H9a3 3 0 010-6z"/>
-                            <path d="M12 20v2"/>
-                        </svg>
-                    </div>
-                    <div class="hmc-body">
-                        <div class="hmc-badges">
-                            <span class="hmc-badge hmc-badge-api">{!! __('welcome.openai_sdk') !!}</span>
-                            <span class="hmc-credit-pill">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
-                                Zero code changes
-                            </span>
-                        </div>
-                        <div class="hmc-model-name">OpenAI-Compatible API</div>
-                        <div class="hmc-stat">{!! __('welcome.drop_in_api') !!}</div>
-                        <div class="hmc-desc">{!! __('welcome.compatible_api_desc') !!}</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Slide 5: 45+ Models -->
-            <div class="hmc-slide" role="listitem" aria-label="45+ models — one API, every model">
-                <div class="hmc-card">
-                    <div class="hmc-icon-panel" aria-hidden="true">
-                        <!-- Grid / catalog SVG -->
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                            <rect x="3" y="3" width="7" height="7" rx="1"/>
-                            <rect x="14" y="3" width="7" height="7" rx="1"/>
-                            <rect x="3" y="14" width="7" height="7" rx="1"/>
-                            <rect x="14" y="14" width="7" height="7" rx="1"/>
-                        </svg>
-                    </div>
-                    <div class="hmc-body">
-                        <div class="hmc-badges">
-                            <span class="hmc-badge hmc-badge-all">{!! __('welcome.all_tiers') !!}</span>
-                            <span class="hmc-credit-pill">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-                                {{ __('welcome.transparent_pricing') }}
-                            </span>
-                        </div>
-                        <div class="hmc-model-name">45+ Models</div>
-                        <div class="hmc-stat">{!! __('welcome.one_api_all_models') !!}</div>
-                        <div class="hmc-desc">{!! __('welcome.all_models_access') !!}</div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </div>
-
-    <!-- Carousel controls -->
-    <div class="hmc-controls">
-        <button class="hmc-arrow" id="hmcPrev" aria-label="Previous model">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
-        </button>
-        <div class="hmc-dots" id="hmcDots" role="tablist" aria-label="Carousel navigation"></div>
-        <button class="hmc-arrow" id="hmcNext" aria-label="Next model">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
-        </button>
+        <a href="/register" class="btn btn-gold" style="padding:0.75rem 2rem;font-size:1rem">{{ __('welcome.cta_start_free_trial') }}</a>
+        <a href="#pricing" class="btn btn-outline" style="padding:0.75rem 2rem;font-size:1rem">{{ __('welcome.cta_view_pricing') }}</a>
     </div>
 </section>
 
 <!-- How It Works -->
 <section class="section">
     <div class="section-title">
-        <h2>{!! __('welcome.how_it_works') !!}</h2>
-        <p>{!! __('welcome.three_simple_steps') !!}</p>
+        <h2>{{ __('welcome.how_it_works_title') }}</h2>
+        <p>{{ __('welcome.how_it_works_subtitle') }}</p>
     </div>
     <div class="steps">
         <div class="step">
             <div class="step-num">1</div>
-            <h3>{!! __('welcome.step_1_title') !!}</h3>
-            <p>{!! __('welcome.step_1_desc') !!}</p>
+            <h3>{{ __('welcome.step_1_title') }}</h3>
+            <p>{{ __('welcome.step_1_description') }}</p>
         </div>
         <div class="step">
             <div class="step-num">2</div>
-            <h3>{!! __('welcome.step_2_title') !!}</h3>
-            <p>{!! __('welcome.step_2_desc') !!}</p>
+            <h3>{{ __('welcome.step_2_title') }}</h3>
+            <p>{{ __('welcome.step_2_description') }}</p>
         </div>
         <div class="step">
             <div class="step-num">3</div>
-            <h3>{!! __('welcome.step_3_title') !!}</h3>
-            <p>{!! __('welcome.step_3_desc') !!}</p>
+            <h3>{{ __('welcome.step_3_title') }}</h3>
+            <p>{{ __('welcome.step_3_description') }}</p>
         </div>
     </div>
 </section>
@@ -466,131 +145,134 @@
 <!-- Pricing -->
 <section class="section" id="pricing">
     <div class="section-title">
-        <h2>{!! __('welcome.transparent_pricing') !!} <span class="text-gold">{!! __('welcome.transparent') !!}</span></h2>
-        <p>{!! __('welcome.all_prices_kwd') !!}</p>
+        <h2>{{ str_replace(':span', '<span class="text-gold">', __('welcome.pricing_title')) }}</h2>
+        <p>{{ __('welcome.pricing_subtitle') }}</p>
     </div>
 
     {{-- Free Trial Box --}}
     <div class="trial-section">
-        <div class="trial-badge">{!! __('welcome.free_trial') !!}</div>
-        <h2 style="font-size:1.2rem;font-weight:700;margin-bottom:1.5rem;">{!! __('welcome.try_before_buy') !!}</h2>
+        <div class="trial-badge">{{ __('welcome.free_trial_badge') }}</div>
+        <h2 style="font-size:1.2rem;font-weight:700;margin-bottom:1.5rem;">{{ __('welcome.try_before_buy') }}</h2>
         <div class="trial-grid">
             <div class="trial-card">
                 <div class="trial-icon">⚡</div>
-                <h3 style="font-size:1rem;font-weight:600;margin-bottom:0.85rem;">{!! __('welcome.7_day_trial') !!}</h3>
+                <h3 style="font-size:1rem;font-weight:600;margin-bottom:0.85rem;">{{ __('welcome.seven_day_trial') }}</h3>
                 <ul class="trial-features">
-                    <li><svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>{!! __('welcome.full_starter_features') !!}</li>
-                    <li><svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>{!! __('welcome.1000_credits') !!}</li>
-                    <li><svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>{!! __('welcome.small_models') !!}</li>
-                    <li><svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>{!! __('welcome.free_api_key') !!}</li>
-                    <li><svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>{!! __('welcome.cancel_anytime') !!}</li>
+                    <li><svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>{{ __('welcome.full_starter_features') }}</li>
+                    <li><svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>{{ __('welcome.one_thousand_credits') }}</li>
+                    <li><svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>{{ __('welcome.small_models_only') }}</li>
+                    <li><svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>{{ __('welcome.one_free_api_key') }}</li>
+                    <li><svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>{{ __('welcome.cancel_anytime_trial') }}</li>
                 </ul>
             </div>
             <div class="trial-cta-col">
-                <div class="trial-after-label">{!! __('welcome.after_trial') !!}</div>
-                <div class="trial-after-plan">{!! __('welcome.auto_bill_starter') !!}</div>
-                <div class="trial-after-details">{!! __('welcome.15_kwd_month') !!}<br>{!! __('welcome.card_required') !!}<br>{!! __('welcome.cancel_anytime') !!}</div>
-                <a href="/register" class="trial-cta-btn">{!! __('welcome.start_free_trial') !!} — {!! __('welcome.card_required') !!}</a>
+                <div class="trial-after-label">{{ __('welcome.after_trial_label') }}</div>
+                <div class="trial-after-plan">{{ __('welcome.auto_bill_to_starter') }}</div>
+                <div class="trial-after-details">{{ __('welcome.card_required_for_trial') }}<br>{{ __('welcome.cancel_anytime') }}</div>
+                <a href="/register" class="trial-cta-btn">{{ __('welcome.start_free_trial_card_required') }}</a>
             </div>
         </div>
-        <p class="trial-footer">{!! __('welcome.trial_cancel_info') !!}</p>
+        <p class="trial-footer">{{ __('welcome.payments_secure') }}</p>
     </div>
 
     <div class="pricing-grid">
 
         {{-- Starter Tier --}}
         <div class="plan-card">
-            <div class="plan-badge">{!! __('welcome.most_popular') !!}</div>
-            <div class="plan-name">{!! __('welcome.starter_tier') !!}</div>
+            <div class="plan-badge">{{ __('welcome.most_popular') }}</div>
+            <div class="plan-name">{{ __('welcome.starter_tier') }}</div>
             <div class="plan-price">15 <span>KWD</span></div>
-            <div class="plan-billing">{!! __('welcome.per_month') !!} &nbsp;&middot;&nbsp; {!! __('welcome.billed_monthly') !!}</div>
+            <div class="plan-billing">{{ __('welcome.per_month') }} &nbsp;&middot;&nbsp; {{ __('welcome.billed_monthly') }}</div>
             <hr class="plan-divider">
             <ul class="plan-features">
                 <li>
                     <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                    1,000 {{ __('welcome.credits_month') }}
+                    {{ __('welcome.one_thousand_credits_month') }}
                 </li>
                 <li>
                     <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                    10 {{ __('welcome.requests_minute') }}
+                    {{ __('welcome.ten_requests_minute') }}
                 </li>
                 <li>
                     <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                    1 {{ __('welcome.free_api_key') }}
+                    {{ __('welcome.one_free_api_key') }}
                 </li>
                 <li>
                     <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
                     {{ __('welcome.small_models_only') }}
                 </li>
             </ul>
-            <a href="/register" class="plan-cta plan-cta-outline">{!! __('welcome.start_monthly') !!}</a>
+            <div class="plan-cta-row">
+                <a href="/register" class="plan-cta plan-cta-outline">{{ __('welcome.start_monthly_plan') }}</a>
+                <a href="/register" class="plan-cta plan-cta-outline">{{ __('welcome.start_free_trial') }}</a>
+            </div>
         </div>
 
         {{-- Basic Tier (featured) --}}
         <div class="plan-card featured">
-            <div class="plan-badge">{!! __('welcome.best_value') !!}</div>
-            <div class="plan-name">{!! __('welcome.basic_tier') !!}</div>
+            <div class="plan-badge">{{ __('welcome.best_value') }}</div>
+            <div class="plan-name">{{ __('welcome.basic_tier') }}</div>
             <div class="plan-price">25 <span>KWD</span></div>
-            <div class="plan-billing">{!! __('welcome.per_month') !!} &nbsp;&middot;&nbsp; {!! __('welcome.billed_monthly') !!}</div>
+            <div class="plan-billing">{{ __('welcome.per_month') }} &nbsp;&middot;&nbsp; {{ __('welcome.billed_monthly') }}</div>
             <hr class="plan-divider">
             <ul class="plan-features">
                 <li>
                     <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                    3,000 {{ __('welcome.credits_month') }}
+                    {{ __('welcome.three_thousand_credits_month') }}
                 </li>
                 <li>
                     <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                    30 {{ __('welcome.requests_minute') }}
+                    {{ __('welcome.thirty_requests_minute') }}
                 </li>
                 <li>
                     <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                    1 {{ __('welcome.free_api_key') }}
+                    {{ __('welcome.one_free_api_key') }}
                 </li>
                 <li>
                     <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
                     {{ __('welcome.all_model_sizes') }}
                 </li>
             </ul>
-            <a href="/register" class="plan-cta plan-cta-gold">{!! __('welcome.start_monthly') !!}</a>
+            <a href="/register" class="plan-cta plan-cta-gold">{{ __('welcome.start_monthly_plan') }}</a>
         </div>
 
         {{-- Pro Tier --}}
         <div class="plan-card">
-            <div class="plan-name">{!! __('welcome.pro_tier') !!}</div>
+            <div class="plan-name">{{ __('welcome.pro_tier') }}</div>
             <div class="plan-price">45 <span>KWD</span></div>
-            <div class="plan-billing">{!! __('welcome.per_month') !!} &nbsp;&middot;&nbsp; {!! __('welcome.billed_monthly') !!}</div>
+            <div class="plan-billing">{{ __('welcome.per_month') }} &nbsp;&middot;&nbsp; {{ __('welcome.billed_monthly') }}</div>
             <hr class="plan-divider">
             <ul class="plan-features">
                 <li>
                     <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                    10,000 {{ __('welcome.credits_month') }}
+                    {{ __('welcome.ten_thousand_credits_month') }}
                 </li>
                 <li>
                     <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                    60 {{ __('welcome.requests_minute') }}
+                    {{ __('welcome.sixty_requests_minute') }}
                 </li>
                 <li>
                     <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                    2 {{ __('welcome.free_api_keys') }}
+                    {{ __('welcome.two_free_api_keys') }}
                 </li>
                 <li>
                     <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                    {{ __('welcome.priority_support') }}
+                    {{ __('welcome.priority_cloud_failover') }}
                 </li>
             </ul>
-            <a href="/register" class="plan-cta plan-cta-outline">{!! __('welcome.start_monthly') !!}</a>
+            <a href="/register" class="plan-cta plan-cta-outline">{{ __('welcome.start_monthly_plan') }}</a>
         </div>
 
     </div>
-    <p class="trial-note">{!! __('welcome.card_required_trial') !!}</p>
+    <p class="trial-note">{{ __('welcome.card_required_for_trial') }} {{ __('welcome.cancel_anytime') }} {{ __('welcome.payments_secure') }}</p>
 
     <!-- Credit top-up & addons info -->
     <div class="addon-box">
-        <h4>{!! __('welcome.credit_topup_addons') !!}</h4>
-        <div class="addon-row"><span>{!! __('welcome.5k_credits') !!}</span><span>2 KWD</span></div>
-        <div class="addon-row"><span>{!! __('welcome.15k_credits') !!}</span><span>5 KWD</span></div>
-        <div class="addon-row"><span>{!! __('welcome.50k_credits') !!}</span><span>15 KWD</span></div>
-        <div class="addon-row"><span>{!! __('welcome.credits_per_token') !!}</span><span>{!! __('welcome.credit_range') !!}</span></div>
+        <h4>{{ __('welcome.credit_top_ups_title') }}</h4>
+        <div class="addon-row"><span>{{ __('welcome.five_hundred_credits') }}</span><span>{{ __('welcome.five_kwd') }}</span></div>
+        <div class="addon-row"><span>{{ __('welcome.one_thousand_one_hundred_credits') }}</span><span>{{ __('welcome.ten_kwd') }} <span style="color:#28a745;font-size:0.8em;font-weight:600">{{ __('welcome.bonus_ten') }}</span></span></div>
+        <div class="addon-row"><span>{{ __('welcome.three_thousand_credits') }}</span><span>{{ __('welcome.twenty_five_kwd') }} <span style="color:#28a745;font-size:0.8em;font-weight:600">{{ __('welcome.bonus_twenty') }}</span></span></div>
+        <div class="addon-row"><span>{{ __('welcome.credits_per_one_k_tokens') }}</span><span>{{ __('welcome.local_cloud_pricing') }}</span></div>
     </div>
 </section>
 
@@ -599,15 +281,15 @@
 <!-- Available Models -->
 <section class="section" id="models">
     <div class="section-title">
-        <h2>{!! __('welcome.available_models') !!}</h2>
-        <p>{!! __('welcome.45_plus_models') !!}</p>
+        <h2>{{ __('welcome.available_models_title') }}</h2>
+        <p>{{ __('welcome.available_models_description') }}</p>
     </div>
 
     <!-- General Chat -->
     <div class="ml-category-group">
         <div class="ml-category-header">
             <span class="ml-category-diamond">&#9670;</span>
-            <span class="ml-category-label">{!! __('welcome.general_chat') !!}</span>
+            <span class="ml-category-label">{{ __('welcome.general_chat_category') }}</span>
             <span class="ml-category-line"></span>
         </div>
         <div class="ml-grid">
@@ -615,18 +297,18 @@
             <div class="ml-card">
                 <div class="ml-avatar ml-av-meta">M</div>
                 <div class="ml-body">
-                    <div class="ml-model-name">Llama 3.2 3B</div>
-                    <div class="ml-company">Meta &middot; 3B</div>
-                    <div class="ml-tagline">{!! __('welcome.lightweight_fast') !!}</div>
+                    <div class="ml-model-name">{{ __('welcome.llama_32_3b') }}</div>
+                    <div class="ml-company">{{ __('welcome.llama_32_3b_company') }}</div>
+                    <div class="ml-tagline">{{ __('welcome.llama_32_3b_description') }}</div>
                 </div>
             </div>
 
             <div class="ml-card">
                 <div class="ml-avatar ml-av-mistral">Mi</div>
                 <div class="ml-body">
-                    <div class="ml-model-name">Mistral Small 3.2 24B</div>
-                    <div class="ml-company">Mistral AI &middot; 24B</div>
-                    <div class="ml-tagline">{!! __('welcome.balanced_quality_speed') !!}</div>
+                    <div class="ml-model-name">{{ __('welcome.mistral_small_32_24b') }}</div>
+                    <div class="ml-company">{{ __('welcome.mistral_small_32_24b_company') }}</div>
+                    <div class="ml-tagline">{{ __('welcome.mistral_small_32_24b_description') }}</div>
                 </div>
             </div>
 
@@ -637,7 +319,7 @@
     <div class="ml-category-group">
         <div class="ml-category-header">
             <span class="ml-category-diamond">&#9670;</span>
-            <span class="ml-category-label">{!! __('welcome.code') !!}</span>
+            <span class="ml-category-label">{{ __('welcome.code_category') }}</span>
             <span class="ml-category-line"></span>
         </div>
         <div class="ml-grid">
@@ -645,18 +327,18 @@
             <div class="ml-card">
                 <div class="ml-avatar ml-av-qwen">Q</div>
                 <div class="ml-body">
-                    <div class="ml-model-name">Qwen 2.5 Coder 14B</div>
-                    <div class="ml-company">Alibaba / Qwen &middot; 14B</div>
-                    <div class="ml-tagline">{!! __('welcome.code_specialist') !!}</div>
+                    <div class="ml-model-name">{{ __('welcome.qwen_25_coder_14b') }}</div>
+                    <div class="ml-company">{{ __('welcome.qwen_25_coder_14b_company') }}</div>
+                    <div class="ml-tagline">{{ __('welcome.qwen_25_coder_14b_description') }}</div>
                 </div>
             </div>
 
             <div class="ml-card">
                 <div class="ml-avatar ml-av-deepseek">D</div>
                 <div class="ml-body">
-                    <div class="ml-model-name">DeepSeek Coder 6.7B</div>
-                    <div class="ml-company">DeepSeek &middot; 6.7B</div>
-                    <div class="ml-tagline">{!! __('welcome.fast_code_generation') !!}</div>
+                    <div class="ml-model-name">{{ __('welcome.deepseek_coder_67b') }}</div>
+                    <div class="ml-company">{{ __('welcome.deepseek_coder_67b_company') }}</div>
+                    <div class="ml-tagline">{{ __('welcome.deepseek_coder_67b_description') }}</div>
                 </div>
             </div>
 
@@ -667,7 +349,7 @@
     <div class="ml-category-group">
         <div class="ml-category-header">
             <span class="ml-category-diamond">&#9670;</span>
-            <span class="ml-category-label">{!! __('welcome.vision_multimodal') !!}</span>
+            <span class="ml-category-label">{{ __('welcome.vision_multimodal_category') }}</span>
             <span class="ml-category-line"></span>
         </div>
         <div class="ml-grid">
@@ -675,9 +357,9 @@
             <div class="ml-card">
                 <div class="ml-avatar ml-av-qwen">Q</div>
                 <div class="ml-body">
-                    <div class="ml-model-name">Qwen3-VL 32B</div>
-                    <div class="ml-company">Alibaba / Qwen &middot; 32B</div>
-                    <div class="ml-tagline">{!! __('welcome.understand_images') !!}</div>
+                    <div class="ml-model-name">{{ __('welcome.qwen3_vl_32b') }}</div>
+                    <div class="ml-company">{{ __('welcome.qwen3_vl_32b_company') }}</div>
+                    <div class="ml-tagline">{{ __('welcome.qwen3_vl_32b_description') }}</div>
                 </div>
             </div>
 
@@ -688,7 +370,7 @@
     <div class="ml-category-group">
         <div class="ml-category-header">
             <span class="ml-category-diamond">&#9670;</span>
-            <span class="ml-category-label">{!! __('welcome.frontier') !!}</span>
+            <span class="ml-category-label">{{ __('welcome.frontier_category') }}</span>
             <span class="ml-category-line"></span>
         </div>
         <div class="ml-grid">
@@ -696,18 +378,18 @@
             <div class="ml-card">
                 <div class="ml-avatar ml-av-deepseek">D</div>
                 <div class="ml-body">
-                    <div class="ml-model-name">DeepSeek V3.1 671B</div>
-                    <div class="ml-company">DeepSeek &middot; 671B</div>
-                    <div class="ml-tagline">{!! __('welcome.frontier_reasoning') !!}</div>
+                    <div class="ml-model-name">{{ __('welcome.deepseek_v31_671b') }}</div>
+                    <div class="ml-company">{{ __('welcome.deepseek_v31_671b_company') }}</div>
+                    <div class="ml-tagline">{{ __('welcome.deepseek_v31_671b_description') }}</div>
                 </div>
             </div>
 
             <div class="ml-card">
                 <div class="ml-avatar ml-av-qwen">Q</div>
                 <div class="ml-body">
-                    <div class="ml-model-name">Qwen 3.5 397B</div>
-                    <div class="ml-company">Alibaba / Qwen &middot; 397B MoE</div>
-                    <div class="ml-tagline">{!! __('welcome.largest_model_available') !!}</div>
+                    <div class="ml-model-name">{{ __('welcome.qwen_35_397b') }}</div>
+                    <div class="ml-company">{{ __('welcome.qwen_35_397b_company') }}</div>
+                    <div class="ml-tagline">{{ __('welcome.qwen_35_397b_description') }}</div>
                 </div>
             </div>
 
@@ -715,7 +397,7 @@
     </div>
 
     <div class="ml-footer">
-        <p>{!! __('welcome.curated_selection') !!} &mdash; <a href="/dashboard">{!! __('welcome.explore_all_models') !!}</a> {{ __('welcome.after_signing_in') }}.</p>
+        <p>{{ str_replace(':link', '<a href="/dashboard">', __('welcome.model_selection_notice')) }}</p>
     </div>
 </section>
 
@@ -724,11 +406,11 @@
 <!-- Code Example -->
 <section class="section" id="docs">
     <div class="section-title">
-        <h2>{!! __('welcome.drop_in_replacement') !!}</h2>
-        <p>{!! __('welcome.works_with_openai') !!}</p>
+        <h2>{{ __('welcome.drop_in_replacement_title') }}</h2>
+        <p>{{ __('welcome.drop_in_replacement_description') }}</p>
     </div>
     <div class="code-block">
-<span class="comment">{!! __('welcome.python_example') !!}</span>
+<span class="comment"># Python example using openai SDK</span>
 from openai import OpenAI
 
 client = OpenAI(
@@ -744,196 +426,11 @@ print(response.choices[0].message.content)
     </div>
 </section>
 
-<!-- Contact Us -->
-<section class="contact-form-section" id="contact">
-    <div class="section-title">
-        <h2 style="color:var(--text-primary)">{!! __('welcome.need_help') !!}</h2>
-        <p>{!! __('welcome.contact_subtitle') !!}</p>
-    </div>
-    <div class="contact-container">
-        <div class="contact-info">
-            <h2>{!! __('welcome.get_in_touch') !!}</h2>
-            <p>{!! str_replace(':email', '<strong style="color:var(--gold)">support@resayil.io</strong>', __('welcome.contact_form_response')) !!}</p>
-
-            <div class="contact-info-item">
-                <div class="contact-icon email">
-                    <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
-                </div>
-                <div>
-                    <strong>{!! __('welcome.email') !!}</strong>
-                    <br>
-                    <span>{!! __('welcome.use_contact_form') !!}</span>
-                </div>
-            </div>
-
-        </div>
-
-        <div class="contact-form-wrapper">
-            <h3>{!! __('welcome.send_message') !!}</h3>
-            <div id="contact-form-success" class="form-success">
-                <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="display:block;margin:0 auto 0.75rem;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                <strong>{!! __('welcome.message_sent') !!}</strong> {!! str_replace(':email', '<strong style="color:var(--gold)">support@resayil.io</strong>', __('welcome.contact_form_success')) !!}
-            </div>
-            <form id="contactForm" method="POST" action="/contact">
-                @csrf
-                <div class="form-group">
-                    <label for="full_name" class="form-label">{!! __('welcome.full_name') !!}</label>
-                    <input type="text" id="full_name" name="full_name" class="form-input" placeholder="{!! __('welcome.placeholder_full_name') !!}" required>
-                </div>
-                <div class="form-group">
-                    <label for="email" class="form-label">{!! __('welcome.email_address') !!}</label>
-                    <input type="email" id="email" name="email" class="form-input" placeholder="{!! __('welcome.placeholder_email') !!}" required>
-                </div>
-                <div class="form-group">
-                    <label for="message" class="form-label">{!! __('welcome.message') !!}</label>
-                    <textarea id="message" name="message" class="form-textarea" placeholder="{!! __('welcome.placeholder_message') !!}" required></textarea>
-                </div>
-                <button type="submit" class="btn-submit">{!! __('welcome.send_message_btn') !!}</button>
-            </form>
-        </div>
-    </div>
-</section>
-
 <!-- CTA -->
 <section class="cta-section">
-    <h2 style="font-size:2rem;font-weight:700;margin-bottom:0.75rem">{!! __('welcome.ready_to_start') !!}</h2>
-    <p style="color:var(--text-secondary);margin-bottom:2rem">{!! __('welcome.join_developers') !!}</p>
-    <a href="/register" class="btn btn-gold" style="padding:0.85rem 2.5rem;font-size:1.05rem">{!! __('welcome.create_free_account') !!}</a>
+    <h2 style="font-size:2rem;font-weight:700;margin-bottom:0.75rem">{{ __('welcome.ready_to_get_started') }}</h2>
+    <p style="color:var(--text-secondary);margin-bottom:2rem">{{ __('welcome.join_developers') }}</p>
+    <a href="/register" class="btn btn-gold" style="padding:0.85rem 2.5rem;font-size:1.05rem">{{ __('welcome.create_free_account') }}</a>
 </section>
 
-<footer class="site-footer">
-    <div class="footer-inner">
-        <div class="footer-links">
-            <a href="{{ route('about') }}">{{ __('navigation.about') }}</a>
-            <span class="footer-sep">·</span>
-            <a href="{{ route('privacy-policy') }}">{{ __('welcome.privacy_policy') }}</a>
-            <span class="footer-sep">·</span>
-            <a href="{{ route('terms-of-service') }}">{{ __('welcome.terms_of_service') }}</a>
-            <span class="footer-sep">·</span>
-            <a href="/docs">{{ __('navigation.docs') }}</a>
-            <span class="footer-sep">·</span>
-            <a href="/contact">{{ __('welcome.contact') }}</a>
-        </div>
-        <p class="footer-copy">© {{ date('Y') }} {{ __('welcome.footer_title') }}. {{ __('welcome.all_rights_reserved') }}</p>
-    </div>
-</footer>
-
 @endsection
-
-@push('scripts')
-<script>
-// ── Model Carousel ──────────────────────────────────────────────────────────
-(() => {
-    const track      = document.getElementById('hmcTrack');
-    const outer      = document.getElementById('hmcTrackOuter');
-    const dotsWrap   = document.getElementById('hmcDots');
-    const prevBtn    = document.getElementById('hmcPrev');
-    const nextBtn    = document.getElementById('hmcNext');
-    const progressEl = document.getElementById('hmcProgress');
-
-    if (!track) return;
-
-    const slides       = track.querySelectorAll('.hmc-slide');
-    const total        = slides.length;
-    const INTERVAL_MS  = 4500;
-    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-    let current   = 0;
-    let timer     = null;
-    let progTimer = null;
-    let progStart = null;
-    let touchX0   = 0;
-
-    // ── Build dots ──────────────────────────────────────────────────────────
-    slides.forEach((_, i) => {
-        const dot = document.createElement('button');
-        dot.className = 'hmc-dot' + (i === 0 ? ' active' : '');
-        dot.setAttribute('role', 'tab');
-        dot.setAttribute('aria-label', 'Go to slide ' + (i + 1));
-        dot.addEventListener('click', () => { goTo(i); pauseAutoplay(); });
-        dotsWrap.appendChild(dot);
-    });
-    const dots = dotsWrap.querySelectorAll('.hmc-dot');
-
-    // ── Core go-to ──────────────────────────────────────────────────────────
-    function goTo(index) {
-        current = (index + total) % total;
-        track.style.transform = 'translateX(-' + (current * 100) + '%)';
-        dots.forEach((d, i) => d.classList.toggle('active', i === current));
-        resetProgress();
-    }
-
-    // ── Progress bar ────────────────────────────────────────────────────────
-    function resetProgress() {
-        if (!progressEl || reducedMotion) return;
-        cancelAnimationFrame(progTimer);
-        progressEl.style.transition = 'none';
-        progressEl.style.width = '0%';
-        progStart = performance.now();
-        animProgress();
-    }
-
-    function animProgress(ts) {
-        if (!progStart) progStart = ts;
-        const elapsed = ts - progStart;
-        const pct = Math.min((elapsed / INTERVAL_MS) * 100, 100);
-        progressEl.style.width = pct + '%';
-        if (pct < 100) progTimer = requestAnimationFrame(animProgress);
-    }
-
-    // ── Autoplay ────────────────────────────────────────────────────────────
-    function startAutoplay() {
-        if (reducedMotion) return;
-        timer = setInterval(() => goTo(current + 1), INTERVAL_MS);
-        resetProgress();
-    }
-
-    function pauseAutoplay() {
-        clearInterval(timer);
-        timer = null;
-        cancelAnimationFrame(progTimer);
-        if (progressEl) progressEl.style.width = '0%';
-    }
-
-    function resumeAutoplay() {
-        if (reducedMotion || timer) return;
-        startAutoplay();
-    }
-
-    // ── Arrow buttons ───────────────────────────────────────────────────────
-    prevBtn.addEventListener('click', () => { goTo(current - 1); pauseAutoplay(); });
-    nextBtn.addEventListener('click', () => { goTo(current + 1); pauseAutoplay(); });
-
-    // ── Pause on hover ──────────────────────────────────────────────────────
-    outer.addEventListener('mouseenter', pauseAutoplay);
-    outer.addEventListener('mouseleave', resumeAutoplay);
-
-    // ── Touch / swipe ───────────────────────────────────────────────────────
-    outer.addEventListener('touchstart', (e) => {
-        touchX0 = e.changedTouches[0].clientX;
-    }, { passive: true });
-
-    outer.addEventListener('touchend', (e) => {
-        const delta = e.changedTouches[0].clientX - touchX0;
-        if (Math.abs(delta) < 40) return;
-        goTo(delta < 0 ? current + 1 : current - 1);
-        pauseAutoplay();
-    }, { passive: true });
-
-    // ── Keyboard accessibility ──────────────────────────────────────────────
-    outer.setAttribute('tabindex', '0');
-    outer.addEventListener('keydown', (e) => {
-        if (e.key === 'ArrowLeft')  { goTo(current - 1); pauseAutoplay(); }
-        if (e.key === 'ArrowRight') { goTo(current + 1); pauseAutoplay(); }
-    });
-
-    // ── Init ────────────────────────────────────────────────────────────────
-    // Set current to 0 explicitly and show first slide WITHOUT calling goTo()
-    // to avoid calling resetProgress() which could interfere with autoplay
-    current = 0;
-    track.style.transform = 'translateX(0%)';
-    if (dots.length > 0) dots[0].classList.add('active');
-    startAutoplay();
-})();
-</script>
-@endpush

@@ -85,34 +85,19 @@
     .btn-copy:hover { border-color: var(--gold); color: var(--gold); }
     .btn-copy.copied { background: var(--success); border-color: var(--success); color: white; }
     @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-    .weekly-summary, .usage-summary-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 1.5rem; }
-    .weekly-card, .stat-mini-card { background: var(--bg-card, #13161d); border: 1px solid var(--border, #1e2330); border-radius: 8px; padding: 1rem 1.25rem; }
-    .weekly-label, .stat-mini-label { font-size: 0.75rem; font-weight: 600; color: var(--text-muted, #888); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.4rem; }
-    .weekly-value, .stat-mini-value { font-size: 1.5rem; font-weight: 700; color: var(--gold, #d4af37); }
-    .weekly-sub { font-size: 0.75rem; color: var(--text-muted); margin-top: 0.2rem; }
-    .multiplier-badge { display: inline-block; padding: 0.15rem 0.5rem; border-radius: 4px; font-size: 0.8rem; font-weight: 600; }
-    .multiplier-badge.cloud { background: rgba(212,175,55,0.15); color: var(--gold, #d4af37); }
-    .multiplier-badge.local { background: rgba(99,202,183,0.12); color: #63cab7; }
-    .num-cell { text-align: right; font-family: monospace; }
-    .total-tokens { font-weight: 600; }
-    .credits-cell { color: var(--gold, #d4af37); font-weight: 600; font-family: monospace; }
-    .time-cell { color: var(--text-muted, #888); font-size: 0.82rem; white-space: nowrap; }
-    .model-cell { font-family: monospace; font-size: 0.8rem; }
-    @media(max-width: 900px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } .detail-grid { grid-template-columns: 1fr; } }
-    @media(max-width: 768px) { .section-grid { grid-template-columns: 1fr; } }
-    @media(max-width: 768px) { .usage-summary-cards { grid-template-columns: 1fr; } }
-    @media(max-width: 600px) { .stats-grid { grid-template-columns: 1fr; } .model-grid { grid-template-columns: 1fr; } .catalog-header { flex-direction: column; align-items: stretch; } .filter-group { flex-direction: column; align-items: stretch; } .weekly-summary { grid-template-columns: 1fr; } }
+    @media(max-width: 900px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } .section-grid { grid-template-columns: 1fr; } .detail-grid { grid-template-columns: 1fr; } }
+    @media(max-width: 600px) { .stats-grid { grid-template-columns: 1fr; } .model-grid { grid-template-columns: 1fr; } .catalog-header { flex-direction: column; align-items: stretch; } .filter-group { flex-direction: column; align-items: stretch; } }
 </style>
 @endpush
 
 @section('content')
 <main>
     <div class="dash-header">
-        <h1>{{ __('dashboard.welcome_back', ['name' => auth()->user()->name ?: auth()->user()->email]) }}</h1>
+        <h1>{{ __('dashboard.welcome_back') }}, {{ auth()->user()->name ?: auth()->user()->email }}</h1>
         <div class="text-secondary text-sm">
-            {{ __('dashboard.plan') }}: <span class="badge badge-gold">{{ ucfirst(auth()->user()->subscription_tier) }}</span>
+            Plan: <span class="badge badge-gold">{{ ucfirst(auth()->user()->subscription_tier) }}</span>
             @if(auth()->user()->subscription_expiry)
-            &nbsp;· {{ __('dashboard.expires') }}: {{ auth()->user()->subscription_expiry->format('d M Y') }}
+            &nbsp;· Expires: {{ auth()->user()->subscription_expiry->format('d M Y') }}
             @endif
         </div>
     </div>
@@ -153,7 +138,7 @@
                 <div class="filter-group">
                     <span class="filter-label">{{ __('dashboard.family') }}:</span>
                     <select id="filter-family" class="filter-select">
-                        <option value="">{{ __('dashboard.all_families') }}</option>
+                        <option value="">{{ __('dashboard.all_families_value') }}</option>
                         <option value="Llama 3">Llama 3</option>
                         <option value="Qwen">Qwen</option>
                         <option value="Mistral">Mistral</option>
@@ -179,26 +164,26 @@
                 <div class="filter-group">
                     <span class="filter-label">{{ __('dashboard.category') }}:</span>
                     <select id="filter-category" class="filter-select">
-                        <option value="">{{ __('dashboard.all_categories') }}</option>
-                        <option value="chat">Chat</option>
-                        <option value="code">Code</option>
-                        <option value="embedding">Embedding</option>
-                        <option value="vision">Vision</option>
-                        <option value="thinking">Thinking</option>
-                        <option value="tools">Tools</option>
+                        <option value="">{{ __('dashboard.all_categories_value') }}</option>
+                        <option value="chat">{{ __('dashboard.chat') }}</option>
+                        <option value="code">{{ __('dashboard.code') }}</option>
+                        <option value="embedding">{{ __('dashboard.embedding') }}</option>
+                        <option value="vision">{{ __('dashboard.vision') }}</option>
+                        <option value="thinking">{{ __('dashboard.thinking') }}</option>
+                        <option value="tools">{{ __('dashboard.tools') }}</option>
                     </select>
                 </div>
                 @if(auth()->user()->email === 'admin@llm.resayil.io')
                 <div class="filter-group">
                     <span class="filter-label">{{ __('dashboard.type') }}:</span>
                     <select id="filter-type" class="filter-select">
-                        <option value="">{{ __('dashboard.all_types') }}</option>
-                        <option value="local">Local</option>
-                        <option value="cloud">Cloud</option>
+                        <option value="">{{ __('dashboard.all_types_value') }}</option>
+                        <option value="local">{{ __('dashboard.local') }}</option>
+                        <option value="cloud">{{ __('dashboard.cloud') }}</option>
                     </select>
                 </div>
                 @else
-                <select id="filter-type" style="display:none"><option value="">{{ __('dashboard.all_types') }}</option></select>
+                <select id="filter-type" style="display:none"><option value="">{{ __('dashboard.all_types_value') }}</option></select>
                 @endif
                 <div class="filter-group" style="flex-grow:1">
                     <input type="text" id="search-models" class="search-input" placeholder="{{ __('dashboard.search_models') }}">
@@ -213,7 +198,7 @@
             <div id="model-detail-panel" class="detail-panel">
                 <div class="detail-header">
                     <div>
-                        <h3 class="detail-title" id="detail-name">Model Name</h3>
+                        <h3 class="detail-title" id="detail-name">{{ __('dashboard.model_info') }}</h3>
                         <code class="detail-id" id="detail-id">model-id</code>
                     </div>
                     <button class="detail-close" onclick="closeDetailPanel()">{{ __('dashboard.close') }}</button>
@@ -241,9 +226,9 @@
                 <div class="detail-section">
                     <h4>{{ __('dashboard.usage_examples') }}</h4>
                     <div class="code-tabs">
-                        <button class="code-tab active" onclick="switchCodeTab('curl')">cURL</button>
-                        <button class="code-tab" onclick="switchCodeTab('python')">Python</button>
-                        <button class="code-tab" onclick="switchCodeTab('n8n')">n8n</button>
+                        <button class="code-tab active" onclick="switchCodeTab('curl')">{{ __('dashboard.curl') }}</button>
+                        <button class="code-tab" onclick="switchCodeTab('python')">{{ __('dashboard.python') }}</button>
+                        <button class="code-tab" onclick="switchCodeTab('n8n')">{{ __('dashboard.n8n') }}</button>
                     </div>
                     <div id="code-curl" class="code-block">
                         <pre><code><span class="curl-kw">curl</span> -X POST http://llm.resayil.io/api/v1/chat/completions \
@@ -304,14 +289,14 @@ response = requests.post(
                 </div>
             </div>
         </div>
-        <p class="text-xs text-muted" style="margin-top:0.75rem">{{ __('dashboard.click_model_hint') }}</p>
+        <p class="text-xs text-muted" style="margin-top:0.75rem">{{ __('dashboard.click_to_view') }}</p>
     </div>
 
     <div class="section-grid">
         <!-- API Keys -->
         <div class="card">
             <div class="flex items-center justify-between mb-4">
-                <h2 style="font-size:1rem;font-weight:600">{{ __('dashboard.api_keys') }}</h2>
+                <h2 style="font-size:1rem;font-weight:600">{{ __('dashboard.api_keys_title') }}</h2>
                 <button onclick="createKey()" class="btn btn-gold" style="padding:0.4rem 0.9rem;font-size:0.8rem">{{ __('dashboard.new_key') }}</button>
             </div>
             <div id="keys-list">
@@ -319,7 +304,7 @@ response = requests.post(
                 @if($keys->count())
                 <div class="keys-wrapper">
                     <table class="keys-table">
-                        <thead><tr><th>{{ __('dashboard.name') }}</th><th>{{ __('dashboard.key') }}</th><th>{{ __('dashboard.created') }}</th><th></th></tr></thead>
+                        <thead><tr><th>{{ __('dashboard.api_keys_table_name') }}</th><th>{{ __('dashboard.api_keys_table_key') }}</th><th>{{ __('dashboard.api_keys_table_created') }}</th><th></th></tr></thead>
                         <tbody>
                         @foreach($keys as $key)
                         <tr>
@@ -327,7 +312,7 @@ response = requests.post(
                             <td><span class="key-prefix">{{ $key->prefix }}...****</span></td>
                             <td class="text-muted">{{ $key->created_at->format('d M Y') }}</td>
                             <td>
-                                <form method="POST" action="/api-keys/{{ $key->id }}" style="display:inline" onsubmit="return confirm('{{ __('dashboard.delete_key_confirm') }}')">
+                                <form method="POST" action="/api-keys/{{ $key->id }}" style="display:inline" onsubmit="return confirm('{{ __('dashboard.delete_key') }}')">
                                     @csrf @method('DELETE')
                                     <button type="submit" class="btn btn-danger" style="padding:0.25rem 0.6rem;font-size:0.75rem">{{ __('dashboard.delete') }}</button>
                                 </form>
@@ -338,7 +323,7 @@ response = requests.post(
                     </table>
                 </div>
                 @else
-                <div class="empty-state">{{ __('dashboard.no_keys_yet') }}</div>
+                <div class="empty-state">{{ __('dashboard.no_api_keys') }} {{ __('dashboard.create_first_key') }}</div>
                 @endif
             </div>
 
@@ -354,7 +339,7 @@ response = requests.post(
                 </div>
                 <div id="new-key-display" style="margin-top:0.75rem;display:none">
                     <div class="alert alert-success" style="font-family:monospace;word-break:break-all" id="new-key-value"></div>
-                    <p class="text-xs text-muted mt-2">{{ __('dashboard.copy_key_warning') }}</p>
+                    <p class="text-xs text-muted mt-2">{{ __('dashboard.key_not_shown_again') }}</p>
                 </div>
             </div>
         </div>
@@ -364,21 +349,21 @@ response = requests.post(
             <h2 style="font-size:1rem;font-weight:600;margin-bottom:1rem">{{ __('dashboard.top_up_credits') }}</h2>
             <div class="topup-grid">
                 <div class="topup-card" onclick="topup(500)">
-                    <div class="topup-credits">500</div>
-                    <div class="topup-price">5 KWD</div>
+                    <div class="topup-credits">{{ __('dashboard.topup_500') }}</div>
+                    <div class="topup-price">{{ __('dashboard.topup_5k_price') }}</div>
                 </div>
                 <div class="topup-card" onclick="topup(1100)">
-                    <div class="topup-credits">1,100</div>
-                    <div class="topup-price">10 KWD</div>
-                    <div class="topup-bonus">{{ __('dashboard.bonus_10') }}</div>
+                    <div class="topup-credits">{{ __('dashboard.topup_1100') }}</div>
+                    <div class="topup-price">{{ __('dashboard.topup_10k_price') }}</div>
+                    <div class="topup-bonus">{{ __('dashboard.topup_bonus') }}</div>
                 </div>
                 <div class="topup-card" onclick="topup(3000)">
-                    <div class="topup-credits">3,000</div>
-                    <div class="topup-price">25 KWD</div>
-                    <div class="topup-bonus">{{ __('dashboard.bonus_20') }}</div>
+                    <div class="topup-credits">{{ __('dashboard.topup_3000') }}</div>
+                    <div class="topup-price">{{ __('dashboard.topup_25k_price') }}</div>
+                    <div class="topup-bonus">{{ __('dashboard.topup_bonus_20') }}</div>
                 </div>
             </div>
-            <p class="text-xs text-muted mt-4">{{ __('dashboard.payments_secure') }} · <a href="/billing/plans" style="color:var(--gold)">{{ __('dashboard.view_plans') }} →</a> · <a href="/credits" style="color:var(--gold)">{{ __('dashboard.how_credits_work') }}</a></p>
+            <p class="text-xs text-muted mt-4">Payments processed securely via KNET / credit card · <a href="/billing/plans" style="color:var(--gold)">{{ __('dashboard.view_plans') }} →</a> · <a href="/credits" style="color:var(--gold)">{{ __('dashboard.how_credits_work') }}</a></p>
 
             <hr style="margin:1.25rem 0;border-color:var(--border)">
             <h3 style="font-size:0.875rem;font-weight:600;margin-bottom:0.75rem">{{ __('dashboard.recent_purchases') }}</h3>
@@ -386,7 +371,7 @@ response = requests.post(
             @if($purchases->count())
                 @foreach($purchases as $p)
                 <div class="flex justify-between items-center text-sm" style="padding:0.4rem 0;border-bottom:1px solid var(--border)">
-                    <span>+{{ number_format($p->credits) }} credits</span>
+                    <span>+{{ number_format($p->credits) }} {{ __('dashboard.credits') }}</span>
                     <span class="badge badge-green">{{ $p->price }} KWD</span>
                 </div>
                 @endforeach
@@ -397,73 +382,25 @@ response = requests.post(
     </div>
 
     <!-- Recent Usage -->
-    @php
-        $logs = \App\Models\UsageLog::where('user_id', auth()->user()->id)->orderByDesc('created_at')->take(10)->get();
-        $weekLogs = \App\Models\UsageLog::where('user_id', auth()->user()->id)->where('created_at', '>=', now()->subDays(7))->get();
-        $weekTokens = $weekLogs->sum('tokens_used');
-        $weekCredits = $weekLogs->sum('credits_deducted');
-        $weekCount = $weekLogs->count();
-        $avgCredits = $weekCount > 0 ? round($weekCredits / $weekCount, 1) : 0;
-        $allModels = config('models.models', []);
-    @endphp
-    <!-- Usage Summary Cards -->
-    <div class="usage-summary-cards">
-        <div class="stat-mini-card">
-            <div class="stat-mini-label">{{ __('dashboard.tokens_this_week') }}</div>
-            <div class="stat-mini-value">{{ number_format($weekTokens) }}</div>
-            <div class="weekly-sub">{{ $weekCount }} {{ $weekCount === 1 ? __('dashboard.request') : __('dashboard.requests') }}</div>
-        </div>
-        <div class="stat-mini-card">
-            <div class="stat-mini-label">{{ __('dashboard.credits_this_week') }}</div>
-            <div class="stat-mini-value">{{ number_format($weekCredits) }}</div>
-            <div class="weekly-sub">{{ __('dashboard.last_7_days') }}</div>
-        </div>
-        <div class="stat-mini-card">
-            <div class="stat-mini-label">{{ __('dashboard.avg_credits_req') }}</div>
-            <div class="stat-mini-value">{{ $avgCredits }}</div>
-            <div class="weekly-sub">{{ __('dashboard.weekly_average') }}</div>
-        </div>
-    </div>
     <div class="card">
         <h2 style="font-size:1rem;font-weight:600;margin-bottom:1rem">{{ __('dashboard.recent_api_usage') }}</h2>
+        @php $logs = \App\Models\UsageLog::where('user_id', auth()->user()->id)->orderByDesc('created_at')->take(10)->get(); @endphp
         @if($logs->count())
-        <div style="overflow-x:auto">
-        <table class="keys-table usage-table">
-            <thead>
-                <tr>
-                    <th>{{ __('dashboard.model') }}</th>
-                    <th>{{ __('dashboard.type') }}</th>
-                    <th style="text-align:right">{{ __('dashboard.tokens_used') }}</th>
-                    <th style="text-align:center">{{ __('dashboard.multiplier') }}</th>
-                    <th style="text-align:right">{{ __('dashboard.credits_col') }}</th>
-                    <th>{{ __('dashboard.time') }}</th>
-                </tr>
-            </thead>
+        <table class="keys-table">
+            <thead><tr><th>{{ __('dashboard.model') }}</th><th>{{ __('dashboard.tokens') }}</th><th>{{ __('dashboard.credits_used') }}</th><th>{{ __('dashboard.time') }}</th></tr></thead>
             <tbody>
             @foreach($logs as $log)
-            @php
-                $mConf = collect($allModels)->firstWhere('id', $log->model) ?? collect($allModels)->firstWhere('ollama_name', $log->model);
-                $isCloud = $mConf ? ($mConf['type'] ?? 'local') === 'cloud' : (str_contains($log->model, ':cloud') || str_contains($log->model, '-cloud'));
-                $multLabel = $isCloud ? '2×' : '1×';
-                $multClass = $isCloud ? 'cloud' : 'local';
-                $typeClass = $isCloud ? 'model-badge-cloud' : 'model-badge-local';
-                $typeLabel = $isCloud ? __('dashboard.cloud') : __('dashboard.local');
-                $cleanName = preg_replace('/(-cloud|:cloud)$/', '', $log->model);
-            @endphp
             <tr>
-                <td class="model-cell">{{ $cleanName }}</td>
-                <td><span class="model-badge {{ $typeClass }}">{{ $typeLabel }}</span></td>
-                <td class="num-cell total-tokens">{{ number_format($log->tokens_used) }}</td>
-                <td style="text-align:center"><span class="multiplier-badge {{ $multClass }}">{{ $multLabel }}</span></td>
-                <td class="num-cell credits-cell">{{ number_format($log->credits_deducted) }}</td>
-                <td class="time-cell">{{ $log->created_at->diffForHumans() }}</td>
+                <td style="font-family:monospace;font-size:0.8rem">{{ preg_replace('/(-cloud|:cloud)$/', '', $log->model) }}</td>
+                <td>{{ number_format($log->tokens_used) }}</td>
+                <td class="text-gold">{{ $log->credits_deducted }}</td>
+                <td class="text-muted">{{ $log->created_at->diffForHumans() }}</td>
             </tr>
             @endforeach
             </tbody>
         </table>
-        </div>
         @else
-        <div class="empty-state">{{ __('dashboard.no_api_calls') }}</div>
+        <div class="empty-state">{{ __('dashboard.no_api_calls') }} {{ __('dashboard.create_api_key_first') }}</div>
         @endif
     </div>
 </main>
@@ -474,6 +411,17 @@ response = requests.post(
 // Model Catalog State
 let allModels = [];
 let selectedModel = null;
+
+// Translation strings for JavaScript
+const translations = {
+    loadingModels: "{{ __('dashboard.loading_models') }}",
+    noModelsAvailable: "{{ __('dashboard.no_models_available') }}",
+    errorLoadingModels: "{{ __('dashboard.error_loading_models', [':message' => ':message']) }}",
+    noModelsMatch: "{{ __('dashboard.no_models_match') }}",
+    modelNotFound: "{{ __('dashboard.model_not_found') }}",
+    copied: "{{ __('dashboard.copied') }}",
+    pleaseEnterApiKey: "{{ __('dashboard.please_enter_api_key', ['link' => 'dashboard']) }}"
+};
 
 // Initialize on page load
 document.addEventListener('DOMContentLoaded', function() {

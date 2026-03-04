@@ -40,8 +40,8 @@
 @section('content')
 <main>
     <div class="payment-methods-header">
-        <h1>{{ __('billing.payment_methods') }}</h1>
-        <p class="text-secondary text-sm">{{ __('billing.manage_saved_methods') }}</p>
+        <h1>@lang('billing.payment_methods')</h1>
+        <p class="text-secondary text-sm">@lang('billing.manage_your_methods')</p>
     </div>
 
     @if(session('success'))
@@ -70,7 +70,7 @@
                     </div>
                 </div>
                 @if($method['IsDefault'] ?? false)
-                <span class="card-default">{{ __('billing.default') }}</span>
+                <span class="card-default">@lang('billing.default')</span>
                 @endif
             </div>
             <div class="card-icons">
@@ -86,7 +86,7 @@
             </div>
             <div class="card-footer">
                 <button type="button" class="btn-delete" onclick="confirmDelete('{{ $method['PaymentMethodId'] ?? '' }}')">
-                    {{ __('billing.delete_method') }}
+                    @lang('billing.delete_method')
                 </button>
             </div>
         </div>
@@ -95,54 +95,54 @@
     @else
     <div class="card" style="text-align: center; padding: 3rem;">
         <div style="display: flex; gap: 1rem; justify-content: center; margin-bottom: 1.5rem; flex-wrap: wrap;">
-            <div style="background: #0055a5; color: white; font-weight: 700; padding: 0.5rem 1.25rem; border-radius: 8px; font-size: 0.9rem; letter-spacing: 0.05em;">{{ __('billing.card_type_knet') }}</div>
-            <div style="background: #1a1f71; color: white; font-weight: 700; padding: 0.5rem 1.25rem; border-radius: 8px; font-size: 0.9rem; font-style: italic;">{{ __('billing.card_type_visa') }}</div>
-            <div style="background: #eb001b; color: white; font-weight: 700; padding: 0.5rem 1.25rem; border-radius: 8px; font-size: 0.9rem;">{{ __('billing.card_type_mastercard') }}</div>
+            <div style="background: #0055a5; color: white; font-weight: 700; padding: 0.5rem 1.25rem; border-radius: 8px; font-size: 0.9rem; letter-spacing: 0.05em;">KNET</div>
+            <div style="background: #1a1f71; color: white; font-weight: 700; padding: 0.5rem 1.25rem; border-radius: 8px; font-size: 0.9rem; font-style: italic;">VISA</div>
+            <div style="background: #eb001b; color: white; font-weight: 700; padding: 0.5rem 1.25rem; border-radius: 8px; font-size: 0.9rem;">Mastercard</div>
         </div>
-        <h2 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 0.5rem;">{{ __('billing.no_payment_methods_saved') }}</h2>
+        <h2 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 0.5rem;">@lang('billing.no_payment_methods_saved')</h2>
         <p class="text-secondary text-sm" style="margin-bottom: 1.5rem;">
-            {{ __('billing.add_card_enable_recurring') }}
+            @lang('billing.add_card_below')
         </p>
     </div>
     @endif
 
     <div class="add-method-section">
-        <h2 class="add-method-title">{{ __('billing.add_payment_method_title') }}</h2>
+        <h2 class="add-method-title">@lang('billing.add_payment_method')</h2>
         <p class="text-secondary text-sm" style="margin-bottom: 1.5rem;">
-            {{ __('billing.redirect_to_secure') }}
+            @lang('billing.redirect_secure')
         </p>
         <div style="display: flex; gap: 1rem; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap;">
-            <div style="background: #0055a5; color: white; font-weight: 700; padding: 0.5rem 1rem; border-radius: 6px; font-size: 0.9rem; letter-spacing: 0.05em;">{{ __('billing.card_type_knet') }}</div>
-            <div style="background: #1a1f71; color: white; font-weight: 700; padding: 0.5rem 1rem; border-radius: 6px; font-size: 0.9rem; font-style: italic;">{{ __('billing.card_type_visa') }}</div>
-            <div style="background: #eb001b; color: white; font-weight: 700; padding: 0.5rem 1rem; border-radius: 6px; font-size: 0.9rem;">{{ __('billing.card_type_mastercard') }}</div>
+            <div style="background: #0055a5; color: white; font-weight: 700; padding: 0.5rem 1rem; border-radius: 6px; font-size: 0.9rem; letter-spacing: 0.05em;">KNET</div>
+            <div style="background: #1a1f71; color: white; font-weight: 700; padding: 0.5rem 1rem; border-radius: 6px; font-size: 0.9rem; font-style: italic;">VISA</div>
+            <div style="background: #eb001b; color: white; font-weight: 700; padding: 0.5rem 1rem; border-radius: 6px; font-size: 0.9rem;">Mastercard</div>
         </div>
         <form method="POST" action="{{ route('billing.payment-methods.store') }}">
             @csrf
             <input type="hidden" name="customer_name" value="{{ auth()->user()->name }}">
             <input type="hidden" name="customer_email" value="{{ auth()->user()->email }}">
             <button type="submit" class="btn-add btn-add-primary">
-                {{ __('billing.add_card_button') }}
+                @lang('billing.add_card')
             </button>
         </form>
         <p class="text-xs text-muted" style="margin-top: 0.75rem;">
-            {{ __('billing.card_verification_text') }}
+            @lang('billing.card_verification')
         </p>
     </div>
 
     <div style="margin-top: 2rem; padding: 1.5rem; background: var(--bg-card); border-radius: 12px; border: 1px solid var(--border);">
-        <h3 style="font-size: 0.9rem; font-weight: 600; margin-bottom: 0.75rem;">{{ __('billing.payment_security_title') }}</h3>
+        <h3 style="font-size: 0.9rem; font-weight: 600; margin-bottom: 0.75rem;">@lang('billing.payment_security')</h3>
         <p class="text-secondary text-sm" style="margin: 0;">
-            {{ __('billing.payment_security_text') }}
+            @lang('billing.myfatoorah_processed') @lang('billing.no_full_card')
         </p>
     </div>
 </main>
 
 <script>
 function confirmDelete(paymentMethodId) {
-    if (confirm('{{ __('billing.confirm_delete_payment_method') }}')) {
+    if (confirm('@lang('billing.are_you_sure_delete')')) {
         // For now, we need a delete route
         // In production, this would call the delete endpoint
-        alert('{{ __('billing.delete_requires_api') }}');
+        alert('@lang('billing.payment_method_deletion_requires_myfatoorah')');
     }
 }
 </script>

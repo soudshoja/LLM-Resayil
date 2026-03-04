@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', __('auth.register'))
+@section('title', __('auth.register_title'))
 
 @push('styles')
 <style>
@@ -20,7 +20,7 @@
     <div class="auth-card">
         <div id="step-register">
             <div class="auth-title">{{ __('auth.create_account') }}</div>
-            <div class="auth-subtitle">{{ __('auth.start_accessing') }}</div>
+            <div class="auth-subtitle">{{ __('auth.register_subtitle') }}</div>
 
             <div id="alert-area-register"></div>
 
@@ -28,23 +28,23 @@
                 @csrf
                 <div class="form-group">
                     <label class="form-label">{{ __('auth.full_name') }}</label>
-                    <input type="text" name="name" class="form-input" placeholder="Ahmad Al-Rashidi">
+                    <input type="text" name="name" class="form-input" placeholder="{{ __('auth.placeholder_name') }}">
                 </div>
                 <div class="form-group">
-                    <label class="form-label">{{ __('auth.email') }}</label>
-                    <input type="email" name="email" class="form-input" placeholder="you@example.com">
+                    <label class="form-label">{{ __('auth.email_address') }}</label>
+                    <input type="email" name="email" class="form-input" placeholder="{{ __('auth.placeholder_email') }}">
                 </div>
                 <div class="form-group">
-                    <label class="form-label">{{ __('auth.phone') }} <span style="color:var(--error,#ff5050)">*</span></label>
-                    <input type="tel" name="phone" class="form-input" placeholder="96550000000" required>
+                    <label class="form-label">{{ __('auth.phone_number') }} <span style="color:var(--error,#ff5050)">*</span></label>
+                    <input type="tel" name="phone" class="form-input" placeholder="{{ __('auth.placeholder_phone') }}" required>
                 </div>
                 <div class="form-group">
-                    <label class="form-label">{{ __('auth.password_label') }} <span style="color:var(--error,#ff5050)">*</span></label>
-                    <input type="password" name="password" class="form-input" placeholder="{{ __('auth.min_8_chars') }}" required>
+                    <label class="form-label">{{ __('auth.password') }} <span style="color:var(--error,#ff5050)">*</span></label>
+                    <input type="password" name="password" class="form-input" placeholder="{{ __('auth.placeholder_password') }}" required>
                 </div>
                 <div class="form-group">
                     <label class="form-label">{{ __('auth.confirm_password') }} <span style="color:var(--error,#ff5050)">*</span></label>
-                    <input type="password" name="password_confirmation" class="form-input" placeholder="{{ __('auth.repeat_password') }}" required>
+                    <input type="password" name="password_confirmation" class="form-input" placeholder="{{ __('auth.placeholder_password') }}" required>
                 </div>
                 <button type="submit" id="btn-register" class="btn btn-gold" style="width:100%;justify-content:center;padding:0.75rem;font-size:0.95rem">
                     {{ __('auth.send_verification_code') }}
@@ -52,13 +52,13 @@
             </form>
 
             <div class="auth-footer">
-                {{ __('auth.already_have_account') }} <a href="/login">{{ __('auth.sign_in_link') }}</a>
+                {{ __('auth.already_have_account') }} <a href="/login">{{ __('auth.sign_in_here') }}</a>
             </div>
         </div>
 
         <div id="step-verify">
             <div class="auth-title">{{ __('auth.verify_phone') }}</div>
-            <div class="auth-subtitle" id="verify-subtitle">{{ __('auth.enter_code_sent') }}</div>
+            <div class="auth-subtitle" id="verify-subtitle">{{ __('auth.verify_subtitle') }}</div>
 
             <div id="alert-area-verify"></div>
 
@@ -69,7 +69,7 @@
                            maxlength="6" inputmode="numeric" pattern="[0-9]{6}" placeholder="------" required>
                 </div>
                 <button type="submit" id="btn-verify" class="btn btn-gold" style="width:100%;justify-content:center;padding:0.75rem;font-size:0.95rem">
-                    {{ __('auth.create_account') }}
+                    {{ __('auth.create_account_button') }}
                 </button>
             </form>
 
@@ -94,7 +94,7 @@ document.getElementById('registerForm').addEventListener('submit', async functio
     const btn = document.getElementById('btn-register');
     const alertArea = document.getElementById('alert-area-register');
     alertArea.innerHTML = '';
-    btn.textContent = @json(__('auth.sending_code'));
+    btn.textContent = '{{ __('auth.sending_code') }}';
     btn.disabled = true;
 
     formData = {
@@ -114,27 +114,19 @@ document.getElementById('registerForm').addEventListener('submit', async functio
         const json = await res.json();
         if (res.ok && json.step === 'verify') {
             document.getElementById('verify-subtitle').textContent =
-                @json(__('auth.enter_code_sent_to', ['phone' => ''])) + formData.phone + '.';
+                '{{ __('auth.enter_verification_code') }} ' + formData.phone + '.';
             document.getElementById('step-register').style.display = 'none';
             document.getElementById('step-verify').style.display = 'block';
             document.getElementById('otp-input').focus();
         } else {
-            const msgs = json.errors ? Object.values(json.errors).flat().join('<br>') : (json.message || @json(__('auth.failed_send_code')));
-            alertArea.textContent = '';
-            const errDiv1 = document.createElement('div');
-            errDiv1.className = 'alert alert-error';
-            errDiv1.textContent = msgs;
-            alertArea.appendChild(errDiv1);
-            btn.textContent = @json(__('auth.send_verification_code'));
+            const msgs = json.errors ? Object.values(json.errors).flat().join('<br>') : (json.message || '{{ __('auth.failed_to_send') }}');
+            alertArea.innerHTML = '<div class="alert alert-error">' + msgs + '</div>';
+            btn.textContent = '{{ __('auth.send_verification_code') }}';
             btn.disabled = false;
         }
     } catch (err) {
-        alertArea.textContent = '';
-        const errDiv2 = document.createElement('div');
-        errDiv2.className = 'alert alert-error';
-        errDiv2.textContent = @json(__('auth.error_occurred'));
-        alertArea.appendChild(errDiv2);
-        btn.textContent = @json(__('auth.send_verification_code'));
+        alertArea.innerHTML = '<div class="alert alert-error">{{ __('auth.an_error_occurred') }}</div>';
+        btn.textContent = '{{ __('auth.send_verification_code') }}';
         btn.disabled = false;
     }
 });
@@ -144,7 +136,7 @@ document.getElementById('verifyForm').addEventListener('submit', async function(
     const btn = document.getElementById('btn-verify');
     const alertArea = document.getElementById('alert-area-verify');
     alertArea.innerHTML = '';
-    btn.textContent = @json(__('auth.verifying'));
+    btn.textContent = '{{ __('auth.creating_account') }}';
     btn.disabled = true;
 
     const payload = Object.assign({}, formData, { otp_code: document.getElementById('otp-input').value });
@@ -159,22 +151,14 @@ document.getElementById('verifyForm').addEventListener('submit', async function(
         if (res.ok || res.status === 201) {
             window.location.href = '/dashboard';
         } else {
-            const msgs = json.errors ? Object.values(json.errors).flat().join('<br>') : (json.message || @json(__('auth.verification_failed')));
-            alertArea.textContent = '';
-            const eDiv = document.createElement('div');
-            eDiv.className = 'alert alert-error';
-            eDiv.textContent = msgs;
-            alertArea.appendChild(eDiv);
-            btn.textContent = @json(__('auth.create_account'));
+            const msgs = json.errors ? Object.values(json.errors).flat().join('<br>') : (json.message || '{{ __('auth.verification_failed') }}');
+            alertArea.innerHTML = '<div class="alert alert-error">' + msgs + '</div>';
+            btn.textContent = '{{ __('auth.create_account_button') }}';
             btn.disabled = false;
         }
     } catch (err) {
-        alertArea.textContent = '';
-        const eDiv2 = document.createElement('div');
-        eDiv2.className = 'alert alert-error';
-        eDiv2.textContent = @json(__('auth.error_occurred'));
-        alertArea.appendChild(eDiv2);
-        btn.textContent = @json(__('auth.create_account'));
+        alertArea.innerHTML = '<div class="alert alert-error">{{ __('auth.an_error_occurred') }}</div>';
+        btn.textContent = '{{ __('auth.create_account_button') }}';
         btn.disabled = false;
     }
 });
@@ -183,7 +167,7 @@ document.getElementById('btn-back').addEventListener('click', function(e) {
     e.preventDefault();
     document.getElementById('step-verify').style.display = 'none';
     document.getElementById('step-register').style.display = 'block';
-    document.getElementById('btn-register').textContent = @json(__('auth.send_verification_code'));
+    document.getElementById('btn-register').textContent = '{{ __('auth.send_verification_code') }}';
     document.getElementById('btn-register').disabled = false;
 });
 
@@ -191,7 +175,7 @@ document.getElementById('btn-resend').addEventListener('click', async function(e
     e.preventDefault();
     const alertArea = document.getElementById('alert-area-verify');
     alertArea.innerHTML = '';
-    this.textContent = @json(__('auth.sending'));
+    this.textContent = '{{ __('auth.resending') }}';
 
     try {
         const res = await fetch('/register/otp', {
@@ -201,15 +185,15 @@ document.getElementById('btn-resend').addEventListener('click', async function(e
         });
         const json = await res.json();
         if (res.ok && json.step === 'verify') {
-            alertArea.innerHTML = '<div class="alert alert-success">' + @json(__('auth.new_code_sent')) + '</div>';
+            alertArea.innerHTML = '<div class="alert alert-success">{{ __('auth.code_sent') }}</div>';
             document.getElementById('otp-input').value = '';
         } else {
-            alertArea.innerHTML = '<div class="alert alert-error">' + (json.message || @json(__('auth.failed_resend'))) + '</div>';
+            alertArea.innerHTML = '<div class="alert alert-error">' + (json.message || '{{ __('auth.failed_to_send') }}') + '</div>';
         }
     } catch (err) {
-        alertArea.innerHTML = '<div class="alert alert-error">' + @json(__('auth.error_occurred')) + '</div>';
+        alertArea.innerHTML = '<div class="alert alert-error">{{ __('auth.an_error_occurred') }}</div>';
     }
-    this.textContent = @json(__('auth.resend_code'));
+    this.textContent = '{{ __('auth.resend_code') }}';
 });
 </script>
 @endpush

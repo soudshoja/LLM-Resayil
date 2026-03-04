@@ -33,8 +33,8 @@
                     wire:model="role"
                     class="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
                 >
-                    <option value="member">@lang('roles.member')</option>
-                    <option value="admin">@lang('roles.admin')</option>
+                    <option value="member">@lang('teams.roles.member')</option>
+                    <option value="admin">@lang('teams.roles.admin')</option>
                 </select>
                 @error('role')
                     <p class="mt-1 text-sm text-red-400">{{ $message }}</p>
@@ -55,7 +55,7 @@
                 wire:click="cancel"
                 class="px-6 py-2 bg-gray-700 hover:bg-gray-600 text-gray-300 font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 focus:ring-offset-gray-900 transition-colors"
             >
-                @lang('actions.cancel')
+                @lang('teams.actions.cancel')
             </button>
         </div>
     </form>

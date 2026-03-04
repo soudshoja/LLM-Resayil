@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" dir="{{ app()->getLocale() === 'ar' ? 'rtl' : 'ltr' }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>How Credits Work — LLM Resayil</title>
+    <title>@lang('credits.how_credits_work') — LLM Resayil</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -703,78 +703,74 @@
     <nav class="navbar">
         <div class="navbar-brand">LLM Resayil</div>
         <div class="navbar-nav">
-            <a href="/docs" class="navbar-link">← Back to Docs</a>
+            <a href="/docs" class="navbar-link">@lang('credits.back_to_docs')</a>
             @if(auth()->check())
-                <a href="/dashboard" class="navbar-link">Dashboard</a>
+                <a href="/dashboard" class="navbar-link">@lang('navigation.dashboard')</a>
             @else
-                <a href="/login" class="navbar-link">Login</a>
-                <a href="/register" class="btn-gold">Get Started</a>
+                <a href="/login" class="navbar-link">@lang('navigation.login')</a>
+                <a href="/register" class="btn-gold">@lang('navigation.get_started')</a>
             @endif
         </div>
     </nav>
 
     <!-- Hero Section -->
     <section class="hero">
-        <div class="badge">Credits System</div>
-        <h1>Simple, Predictable <span class="text-gold">Credits</span></h1>
-        <p class="hero-lead">No complex token math, no surprise USD bills, no per-model pricing puzzles. Buy credits in KWD, spend them as you build. Your balance stays clear.</p>
+        <div class="badge">@lang('credits.credits_system')</div>
+        <h1>@lang('credits.simple_predictable') <span class="text-gold">@lang('credits.credits')</span></h1>
+        <p class="hero-lead">@lang('credits.no_complex_token')</p>
         <div class="hero-buttons">
-            <a href="#topup" class="btn-gold">View Top-Up Packs</a>
-            <a href="/docs" class="btn-outline">API Documentation</a>
+            <a href="#topup" class="btn-gold">@lang('credits.view_top_up_packs')</a>
+            <a href="/docs" class="btn-outline">@lang('credits.api_documentation')</a>
         </div>
     </section>
 
     <!-- Why Credits Section -->
     <section class="section">
-        <div class="section-label">Pricing Model</div>
-        <h2 class="section-title">One system. Zero confusion.</h2>
-        <p class="section-subtitle">Other LLM providers charge per-model in USD with separate input/output rates. We simplified it.</p>
+        <div class="section-label">@lang('credits.pricing_model')</div>
+        <h2 class="section-title">@lang('credits.one_system')</h2>
+        <p class="section-subtitle">@lang('credits.other_llm_providers')</p>
 
         <div class="comparison-grid">
             <!-- Bad Card -->
             <div class="comparison-card bad">
-                <div class="card-badge bad">✗ Token-based pricing (other providers)</div>
-                <h3 class="card-title">Complex & unpredictable</h3>
-                <p class="card-subtitle">Different rates per model. Input tokens priced separately from output tokens. Prices in USD subject to exchange rates.</p>
+                <div class="card-badge bad">@lang('credits.token_based_pricing')</div>
+                <h3 class="card-title">@lang('credits.complex_unpredictable')</h3>
+                <p class="card-subtitle">@lang('credits.different_rates_per_model')</p>
 
                 <div class="code-box">
-                    <div class="code-box-label">Example: GPT-4o, 1 request</div>
-                    <div class="code-line">Input tokens:   30 × $0.0000025 = $0.000075</div>
-                    <div class="code-line">Output tokens: 150 × $0.0000100 = $0.001500</div>
-                    <div class="code-line">FX (KWD/USD):              0.307</div>
-                    <div class="code-line">Total:                   ~$0.001575 <span class="highlight">(red)</span></div>
-                </div>
+                    <div class="code-box-label">@lang('credits.example_gpt_4o')</div>
+                    <div class="code-line">@lang('credits.input_tokens')...</div>
 
-                <ul class="bullet-list">
-                    <li><span class="bullet-icon">✗</span> Different price per model</li>
-                    <li><span class="bullet-icon">✗</span> Separate input & output rates</li>
-                    <li><span class="bullet-icon">✗</span> USD prices subject to FX</li>
-                    <li><span class="bullet-icon">✗</span> Hard to predict monthly spend</li>
-                    <li><span class="bullet-icon">✗</span> Varies with each model update</li>
+                <div class="bullet-list">
+                    <li><span class="bullet-icon">✗</span> @lang('credits.different_price_per_model')</li>
+                    <li><span class="bullet-icon">✗</span> @lang('credits.separate_input_output')</li>
+                    <li><span class="bullet-icon">✗</span> @lang('credits.usd_subject_to_fx')</li>
+                    <li><span class="bullet-icon">✗</span> @lang('credits.hard_predict_monthly')</li>
+                    <li><span class="bullet-icon">✗</span> @lang('credits.varies_with_update')</li>
                 </ul>
             </div>
 
             <!-- Good Card -->
             <div class="comparison-card good">
-                <div class="card-badge good">✓ Credit-based pricing (Resayil)</div>
-                <h3 class="card-title">Simple & transparent</h3>
-                <p class="card-subtitle">One credit = one output token (Standard) or two credits (Premium). Buy packs in KWD. No FX, no surprises.</p>
+                <div class="card-badge good">@lang('credits.credit_based_pricing')</div>
+                <h3 class="card-title">@lang('credits.simple_transparent')</h3>
+                <p class="card-subtitle">@lang('credits.one_credit_one_output')</p>
 
                 <div class="code-box">
-                    <div class="code-box-label">Same Request: Standard Model, 1 request</div>
-                    <div class="code-line">Output tokens:     150</div>
-                    <div class="code-line">Rate:      × 1 credit</div>
-                    <div class="code-line">Credits used:      <span class="highlight">150</span></div>
-                    <div class="code-line">Balance left: 4,850 of 5,000</div>
-                    <div class="code-line">Total:         <span class="highlight">150 credits</span></div>
+                    <div class="code-box-label">@lang('credits.same_request_standard')</div>
+                    <div class="code-line">@lang('credits.output_tokens'):     150</div>
+                    <div class="code-line">@lang('credits.rate'):      × 1 @lang('credits.credits')</div>
+                    <div class="code-line">@lang('credits.credits_used'):      <span class="highlight">150</span></div>
+                    <div class="code-line">@lang('credits.balance_left'): 4,850 of 5,000</div>
+                    <div class="code-line">@lang('credits.total'):         <span class="highlight">150 @lang('credits.credits')</span></div>
                 </div>
 
                 <ul class="bullet-list">
-                    <li><span class="bullet-icon">✓</span> Same rate for all Standard models</li>
-                    <li><span class="bullet-icon">✓</span> Only output tokens count</li>
-                    <li><span class="bullet-icon">✓</span> Priced in KWD — no FX</li>
-                    <li><span class="bullet-icon">✓</span> Clear balance always visible</li>
-                    <li><span class="bullet-icon">✓</span> Credits never expire</li>
+                    <li><span class="bullet-icon">✓</span> @lang('credits.same_rate_standard')</li>
+                    <li><span class="bullet-icon">✓</span> @lang('credits.only_output_tokens')</li>
+                    <li><span class="bullet-icon">✓</span> @lang('credits.priced_in_kwd')</li>
+                    <li><span class="bullet-icon">✓</span> @lang('credits.clear_balance')</li>
+                    <li><span class="bullet-icon">✓</span> @lang('credits.credits_never_expire')</li>
                 </ul>
             </div>
         </div>
@@ -816,135 +812,135 @@
 
         <div class="tip-box">
             <div class="tip-icon">ℹ</div>
-            <div class="tip-text">Only output tokens count toward credits. Input tokens (your prompt) are not charged — so longer system prompts don't cost extra.</div>
+            <div class="tip-text">@lang('credits.only_output_count')</div>
         </div>
     </section>
 
     <!-- Worked Example Section -->
     <section class="section" id="example">
-        <div class="section-label">Real Example</div>
-        <h2 class="section-title">You ask: <span class="text-gold">"Write a 100-word email"</span></h2>
-        <p class="section-subtitle">See exactly how the same request is billed under each system.</p>
+        <div class="section-label">@lang('credits.real_example')</div>
+        <h2 class="section-title">@lang('credits.write_100_word_email') <span class="text-gold"></span></h2>
+        <p class="section-subtitle">@lang('credits.see_billed_under')</p>
 
         <div class="example-prompt">
             <div class="example-prompt-icon">📄</div>
             <div class="example-prompt-text">
-                <div class="example-prompt-title">Write a professional 100-word email introducing our product.</div>
-                <div class="example-prompt-detail">~30 input tokens, ~150 output tokens generated</div>
+                <div class="example-prompt-title">@lang('credits.write_professional_email')</div>
+                <div class="example-prompt-detail">@lang('credits.input_tokens')</div>
             </div>
         </div>
 
         <div class="example-comparison">
             <div class="example-card complex">
-                <div class="example-card-tag">Complex</div>
-                <div class="example-card-title">Token-based (e.g. GPT-4o)</div>
+                <div class="example-card-tag">@lang('credits.complex')</div>
+                <div class="example-card-title">@lang('credits.token_based_pricing')</div>
                 <div class="example-breakdown">
-                    Input: 30 tokens × $0.0000025 = $0.000075
-                    Output: 150 tokens × $0.000010 = $0.001500
-                    FX rate: 0.307 KWD/USD
-                    Conversion fee: ~included
-                    Total: ~$0.001575 <span class="highlight">USD</span>
+                    @lang('credits.input'): 30 tokens × $0.0000025 = $0.000075
+                    @lang('credits.output'): 150 tokens × $0.000010 = $0.001500
+                    @lang('credits.fx_rate'): 0.307 KWD/USD
+                    @lang('credits.conversion_fee'): ~included
+                    @lang('credits.total'): ~$0.001575 <span class="highlight">@lang('credits.usd')</span>
                 </div>
-                <div class="example-note">Varies by model, by rate changes, by FX</div>
+                <div class="example-note">@lang('credits.varies_by_model')</div>
             </div>
 
             <div class="example-card simple">
-                <div class="example-card-tag">Simple</div>
-                <div class="example-card-title">Credit-based (Resayil Standard)</div>
+                <div class="example-card-tag">@lang('credits.simple')</div>
+                <div class="example-card-title">@lang('credits.credit_based_resayil')</div>
                 <div class="example-breakdown">
-                    Output tokens: 150
-                    Rate: 1 credit / token
-                    Credits used: <span class="highlight">150</span>
-                    Pack: 5,000 credits (2 KWD)
-                    Total: <span class="highlight">150 credits</span>
+                    @lang('credits.output_tokens'): 150
+                    @lang('credits.rate'): 1 @lang('credits.credits') / @lang('credits.token')
+                    @lang('credits.credits_used'): <span class="highlight">150</span>
+                    @lang('credits.pack'): 5,000 @lang('credits.credits') (2 KWD)
+                    @lang('credits.total'): <span class="highlight">150 @lang('credits.credits')</span>
                 </div>
-                <div class="example-note">Always this rate. No surprises.</div>
+                <div class="example-note">@lang('credits.always_rate_no_surprises')</div>
             </div>
         </div>
     </section>
 
     <!-- Rates Section -->
     <section class="section" id="rates">
-        <div class="section-label">Rates</div>
-        <h2 class="section-title">Credit rates by model tier</h2>
-        <p class="section-subtitle">All models fall into one of two tiers. The /api/v1/models endpoint shows which tier each model is.</p>
+        <div class="section-label">@lang('credits.rates')</div>
+        <h2 class="section-title">@lang('credits.credit_rates_by_model')</h2>
+        <p class="section-subtitle">@lang('credits.api_models_endpoint')</p>
 
         <table class="rates-table">
             <thead>
                 <tr>
-                    <th>Model Tier</th>
-                    <th>Credits/Output Token</th>
-                    <th>Example Models</th>
-                    <th>Best For</th>
+                    <th>@lang('credits.model_tier')</th>
+                    <th>@lang('credits.credits_output_token')</th>
+                    <th>@lang('credits.example_models')</th>
+                    <th>@lang('credits.best_for')</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
                     <td><span class="tier-badge standard">Standard</span></td>
-                    <td><strong>1 credit</strong></td>
+                    <td><strong>1 @lang('credits.credits')</strong></td>
                     <td>Llama, Qwen, Gemma, Mistral</td>
-                    <td>General chat, coding, summarization</td>
+                    <td>@lang('credits.general_chat_coding_summarization')</td>
                 </tr>
                 <tr>
                     <td><span class="tier-badge premium">Premium</span></td>
-                    <td><strong>2 credits</strong></td>
+                    <td><strong>2 @lang('credits.credits')</strong></td>
                     <td>DeepSeek, large reasoning models</td>
-                    <td>Complex reasoning, long context, advanced tasks</td>
+                    <td>@lang('credits.complex_reasoning')</td>
                 </tr>
             </tbody>
         </table>
 
         <div class="tip-box">
             <div class="tip-icon">💡</div>
-            <div class="tip-text">Not sure which tier a model is? Call <strong>GET /api/v1/models</strong> — each model includes a <strong>credit_multiplier</strong> field: 1 for Standard, 2 for Premium.</div>
+            <div class="tip-text">@lang('credits.not_sure_tier')</div>
         </div>
     </section>
 
     <!-- Top-Up Section -->
     <section class="section" id="topup">
-        <div class="section-label">Top-Up Packs</div>
-        <h2 class="section-title">Buy credits, spend as you go</h2>
-        <p class="section-subtitle">Credits never expire and are separate from your subscription. Top up anytime.</p>
+        <div class="section-label">@lang('credits.top_up_packs')</div>
+        <h2 class="section-title">@lang('credits.buy_credits')</h2>
+        <p class="section-subtitle">@lang('credits.credits_never_expire')</p>
 
         <div class="topup-grid">
             <!-- Pack 1 -->
             <div class="topup-card">
                 <div class="topup-credits topup-credits-5k">5,000</div>
-                <div class="topup-credits-label">credits</div>
+                <div class="topup-credits-label">@lang('credits.credits')</div>
                 <div class="topup-price">2<span style="font-size: 1.5rem;"> KWD</span></div>
-                <div class="topup-per-credit">0.0004 KWD per credit</div>
-                <a href="/billing/plans" class="btn-gold">Top Up</a>
+                <div class="topup-per-credit">@lang('credits.0004_kwd_per_credit')</div>
+                <a href="/billing/plans" class="btn-gold">@lang('credits.top_up')</a>
             </div>
 
             <!-- Pack 2 (Featured) -->
             <div class="topup-card featured">
                 <div class="topup-ribbon">Best Value</div>
                 <div class="topup-credits topup-credits-50k">50,000</div>
-                <div class="topup-credits-label">credits</div>
+                <div class="topup-credits-label">@lang('credits.credits')</div>
                 <div class="topup-price">15<span style="font-size: 1.5rem;"> KWD</span></div>
-                <div class="topup-per-credit">0.0003 KWD per credit</div>
-                <a href="/billing/plans" class="btn-gold">Top Up</a>
+                <div class="topup-per-credit">@lang('credits.0003_kwd_per_credit')</div>
+                <a href="/billing/plans" class="btn-gold">@lang('credits.top_up')</a>
             </div>
 
             <!-- Pack 3 -->
             <div class="topup-card">
                 <div class="topup-credits topup-credits-15k">15,000</div>
-                <div class="topup-credits-label">credits</div>
+                <div class="topup-credits-label">@lang('credits.credits')</div>
                 <div class="topup-price">5<span style="font-size: 1.5rem;"> KWD</span></div>
-                <div class="topup-per-credit">0.00033 KWD per credit</div>
-                <a href="/billing/plans" class="btn-gold">Top Up</a>
+                <div class="topup-per-credit">@lang('credits.0003_kwd_per_credit')</div>
+                <a href="/billing/plans" class="btn-gold">@lang('credits.top_up')</a>
             </div>
         </div>
 
         <div class="tip-box">
             <div class="tip-icon">💳</div>
-            <div class="tip-text">Available at <a href="/billing/plans" style="color: var(--gold);">Billing & Plans</a>. Payment via KNET or international credit card.</div>
+            <div class="tip-text">@lang('credits.available_billing_plans')</div>
         </div>
     </section>
 
     <!-- Footer -->
     <footer class="footer">
-        <p>LLM Resayil · Credits Documentation · <a href="/docs">Back to Docs</a></p>
+        <p>LLM Resayil · @lang('credits.credits_documentation') · <a href="/docs">@lang('credits.back_to_docs')</a></p>
     </footer>
 
     <script>

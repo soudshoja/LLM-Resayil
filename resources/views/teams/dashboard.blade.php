@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>@lang('teams.team_management') - LLM Resayil</title>
+    <title>@lang('teams.team_management') - @lang('teams.brand')</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         .gradient-text {
@@ -26,7 +26,7 @@
                         </svg>
                     </div>
                     <div>
-                        <h1 class="text-xl font-bold gradient-text">LLM Resayil</h1>
+                        <h1 class="text-xl font-bold gradient-text">@lang('teams.brand')</h1>
                         <span class="text-xs text-amber-500 font-medium uppercase tracking-wider">@lang('teams.enterprise')</span>
                     </div>
                 </div>

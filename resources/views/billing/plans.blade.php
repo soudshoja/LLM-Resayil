@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', __('billing.title'))
+@section('title', __('billing.subscription_plans'))
 
 @push('styles')
 <style>
@@ -78,13 +78,13 @@
 @if(auth()->user()->trial_started_at && !auth()->user()->myfatoorah_subscription_id)
     @php $trialExpiry = auth()->user()->trial_started_at->addDays(7); @endphp
     <div style="background: rgba(5,150,105,0.1); border: 1px solid rgba(5,150,105,0.3); border-radius: 8px; padding: 0.75rem 1.25rem; max-width: 1200px; margin: 1rem auto; font-size: 0.875rem; color: #6ee7b7; display: flex; align-items: center; gap: 0.5rem;">
-        ✅ <strong>{{ __('billing.free_trial_active') }}</strong> — {{ __('billing.trial_expires', ['date' => $trialExpiry->format('d M Y')]) }}
+        ✅ <strong>{{ __('billing.trial_active') }}</strong> — {{ __('billing.trial_expires') }} {{ $trialExpiry->format('d M Y') }}
         ({{ $trialExpiry->diffForHumans() }})
     </div>
 @elseif(auth()->user()->subscription_expiry)
     <div style="background: rgba(212,175,55,0.1); border: 1px solid rgba(212,175,55,0.3); border-radius: 8px; padding: 0.75rem 1.25rem; max-width: 1200px; margin: 1rem auto; font-size: 0.875rem; color: var(--gold); display: flex; align-items: center; gap: 0.5rem;">
-        ⚡ <strong>{{ __('billing.current_plan_label') }}</strong> {{ ucfirst(auth()->user()->subscription_tier) }}
-        — {{ __('billing.renews_date', ['date' => auth()->user()->subscription_expiry->format('d M Y')]) }}
+        ⚡ <strong>{{ __('billing.current_plan') }}</strong>: {{ ucfirst(auth()->user()->subscription_tier) }}
+        — {{ __('billing.renews') }} {{ auth()->user()->subscription_expiry->format('d M Y') }}
     </div>
 @endif
 <main>
@@ -96,8 +96,8 @@
     @endif
 
     <div class="plans-header">
-        <h1>{{ __('billing.choose_plan') }} <span class="text-gold">{{ __('billing.plan') }}</span></h1>
-        <p>{{ __('billing.choose_plan_subtitle') }}</p>
+        <h1>{{ __('billing.choose_your_plan') }} <span class="text-gold">{{ __('billing.plan') }}</span></h1>
+        <p>{{ __('billing.unlock_llm_power') }}</p>
     </div>
 
     {{-- Free Trial Card --}}
@@ -115,15 +115,15 @@
                     </li>
                     <li>
                         <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                        1,000 {{ __('billing.1000_credits') }}
+                        {{ __('billing.1000_credits') }}
                     </li>
                     <li>
                         <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                        {{ __('billing.small_models_only_3_14b') }}
+                        {{ __('billing.small_models_only') }}
                     </li>
                     <li>
                         <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                        {{ __('billing.1_free_key') }}
+                        {{ __('billing.1_free_api_key') }}
                     </li>
                 </ul>
                 <p style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 1rem; text-align: center;">
@@ -131,17 +131,17 @@
                 </p>
             </div>
             <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
-                <div style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 1rem;">{{ __('billing.after_trial_text') }}</div>
+                <div style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 1rem;">{{ __('billing.after_trial') }}</div>
                 <div style="font-size: 2rem; font-weight: 700; color: var(--gold); margin-bottom: 1.5rem;">{{ __('billing.auto_bill_to_starter') }}</div>
                 <div style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1.5rem; text-align: left;">
-                    <p style="margin: 0.25rem 0;">{{ __('billing.credit_card_required_text') }}</p>
-                    <p style="margin: 0.25rem 0;">{{ __('billing.trial_cancel_anytime') }}</p>
+                    <p style="margin: 0.25rem 0;">{{ __('billing.card_required') }}</p>
+                    <p style="margin: 0.25rem 0;">{{ __('billing.cancel_anytime') }}</p>
                 </div>
-                <button type="button" class="plan-cta plan-cta-gold" style="width: 100%;" onclick="openPaymentModal('trial')">{{ __('billing.start_trial_card_required') }}</button>
+                <button type="button" class="plan-cta plan-cta-gold" style="width: 100%;" onclick="openPaymentModal('trial')">{{ __('billing.start_free_trial') }}</button>
             </div>
         </div>
         <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 1rem; text-align: center;">
-            ⚠️ {{ __('billing.trial_payment_note_full') }}
+            {{ __('billing.payments_secure') }}
         </p>
     </div>
 
@@ -150,8 +150,8 @@
         <div class="plan-card">
             <div class="plan-badge">{{ __('billing.most_popular') }}</div>
             <div class="plan-name">{{ __('billing.starter') }}</div>
-            <div class="plan-price">15 <span>{{ __('billing.kwd_currency') }}</span></div>
-            <div class="plan-billing">{{ __('billing.per_month_full') }}</div>
+            <div class="plan-price">15 <span>KWD</span></div>
+            <div class="plan-billing">{{ __('billing.per_month') }} &nbsp;&middot;&nbsp; {{ __('billing.billed_monthly') }}</div>
             <hr class="plan-divider">
             <ul class="plan-features">
                 <li>
@@ -160,7 +160,7 @@
                 </li>
                 <li>
                     <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                    {{ __('billing.10_requests_per_min') }}
+                    {{ __('billing.10_requests_minute') }}
                 </li>
                 <li>
                     <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
@@ -171,15 +171,15 @@
                     {{ __('billing.small_models_only') }}
                 </li>
             </ul>
-            <button type="button" class="plan-cta plan-cta-outline" onclick="openPaymentModal('subscription', 'starter')">{{ __('billing.start_monthly') }}</button>
+            <button type="button" class="plan-cta plan-cta-outline" onclick="openPaymentModal('subscription', 'starter')">{{ __('billing.start_monthly_plan') }}</button>
         </div>
 
         {{-- Basic Tier (featured) --}}
         <div class="plan-card featured">
             <div class="plan-badge">{{ __('billing.best_value') }}</div>
             <div class="plan-name">{{ __('billing.basic') }}</div>
-            <div class="plan-price">25 <span>{{ __('billing.kwd_currency') }}</span></div>
-            <div class="plan-billing">{{ __('billing.per_month_full') }}</div>
+            <div class="plan-price">25 <span>KWD</span></div>
+            <div class="plan-billing">{{ __('billing.per_month') }} &nbsp;&middot;&nbsp; {{ __('billing.billed_monthly') }}</div>
             <hr class="plan-divider">
             <ul class="plan-features">
                 <li>
@@ -188,7 +188,7 @@
                 </li>
                 <li>
                     <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                    {{ __('billing.30_requests_per_min') }}
+                    {{ __('billing.30_requests_minute') }}
                 </li>
                 <li>
                     <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
@@ -199,14 +199,14 @@
                     {{ __('billing.all_model_sizes') }}
                 </li>
             </ul>
-            <button type="button" class="plan-cta plan-cta-gold" onclick="openPaymentModal('subscription', 'basic')">{{ __('billing.start_monthly') }}</button>
+            <button type="button" class="plan-cta plan-cta-gold" onclick="openPaymentModal('subscription', 'basic')">{{ __('billing.start_monthly_plan') }}</button>
         </div>
 
         {{-- Pro Tier --}}
         <div class="plan-card">
             <div class="plan-name">{{ __('billing.pro') }}</div>
-            <div class="plan-price">45 <span>{{ __('billing.kwd_currency') }}</span></div>
-            <div class="plan-billing">{{ __('billing.per_month_full') }}</div>
+            <div class="plan-price">45 <span>KWD</span></div>
+            <div class="plan-billing">{{ __('billing.per_month') }} &nbsp;&middot;&nbsp; {{ __('billing.billed_monthly') }}</div>
             <hr class="plan-divider">
             <ul class="plan-features">
                 <li>
@@ -215,7 +215,7 @@
                 </li>
                 <li>
                     <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                    {{ __('billing.60_requests_per_min') }}
+                    {{ __('billing.60_requests_minute') }}
                 </li>
                 <li>
                     <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
@@ -226,35 +226,35 @@
                     {{ __('billing.priority_cloud_failover') }}
                 </li>
             </ul>
-            <button type="button" class="plan-cta plan-cta-outline" onclick="openPaymentModal('subscription', 'pro')">{{ __('billing.start_monthly') }}</button>
+            <button type="button" class="plan-cta plan-cta-outline" onclick="openPaymentModal('subscription', 'pro')">{{ __('billing.start_monthly_plan') }}</button>
         </div>
     </div>
 
     {{-- Credit Top-Up Packs --}}
     <div class="card topup-section">
-        <h2>{{ __('billing.top_up_credits_title') }}</h2>
+        <h2>{{ __('billing.top_up_credits') }}</h2>
         <p class="text-secondary text-sm mb-4">{{ __('billing.need_extra_credits') }}</p>
         <div class="topup-grid">
             <div class="topup-card">
                 <div class="topup-credits">500</div>
-                <div class="topup-price">{{ __('billing.credits_label') }}</div>
-                <div class="topup-bonus">{{ __('billing.no_bonus') }}</div>
-                <button type="button" class="topup-buy" onclick="openPaymentModal('topup', '500')">5 {{ __('billing.kwd_currency') }}</button>
+                <div class="topup-price">{{ __('billing.credits') }}</div>
+                <div class="topup-bonus">{{ __('billing.topup_no_bonus') }}</div>
+                <button type="button" class="topup-buy" onclick="openPaymentModal('topup', '500')">5 KWD</button>
             </div>
             <div class="topup-card">
                 <div class="topup-credits">1,100</div>
-                <div class="topup-price">{{ __('billing.credits_label') }}</div>
-                <div class="topup-bonus">{{ __('billing.bonus_10_percent') }}</div>
-                <button type="button" class="topup-buy" onclick="openPaymentModal('topup', '1100')">10 {{ __('billing.kwd_currency') }}</button>
+                <div class="topup-price">{{ __('billing.credits') }}</div>
+                <div class="topup-bonus">{{ __('billing.topup_bonus') }}</div>
+                <button type="button" class="topup-buy" onclick="openPaymentModal('topup', '1100')">10 KWD</button>
             </div>
             <div class="topup-card">
                 <div class="topup-credits">3,000</div>
-                <div class="topup-price">{{ __('billing.credits_label') }}</div>
-                <div class="topup-bonus">{{ __('billing.bonus_20_percent') }}</div>
-                <button type="button" class="topup-buy" onclick="openPaymentModal('topup', '3000')">25 {{ __('billing.kwd_currency') }}</button>
+                <div class="topup-price">{{ __('billing.credits') }}</div>
+                <div class="topup-bonus">{{ __('billing.topup_bonus_20') }}</div>
+                <button type="button" class="topup-buy" onclick="openPaymentModal('topup', '3000')">25 KWD</button>
             </div>
         </div>
-        <p class="text-xs text-muted mt-4">{{ __('billing.payments_secure_knet') }}</p>
+        <p class="text-xs text-muted mt-4">{{ __('billing.payments_secure') }}</p>
     </div>
 
     {{-- Additional API Keys --}}
@@ -270,45 +270,45 @@
     @endphp
     <div class="card extra-key-section">
         <h2>{{ __('billing.additional_api_keys') }}</h2>
-        <p class="text-secondary text-sm mb-4">{{ __('billing.need_more_api_keys', ['tier' => ucfirst(__('billing.' . $userTier))]) }}</p>
+        <p class="text-secondary text-sm mb-4">{{ __('billing.need_more_keys') }} {{ ucfirst($userTier) }}</p>
         <div class="extra-key-card">
             <div class="extra-key-info">
-                <strong>{{ __('billing.your_keys_label') }}</strong>
+                <strong>{{ __('billing.your_keys') }}</strong>
                 @if($isAdmin)
-                <p>{{ __('billing.unlimited_keys_available') }}</p>
+                <p>{{ __('billing.unlimited_keys') }}</p>
                 @else
-                <p>{{ __('billing.keys_used_plan', ['count' => $currentKeyCount, 'max' => $maxKeys, 'tier' => ucfirst(__('billing.' . $userTier))]) }}</p>
+                <p>{{ $currentKeyCount }} {{ __('billing.keys_used') }} {{ $maxKeys }} {{ __('billing.on_your_plan') }}</p>
                 @endif
             </div>
             @if($nextKeyCost !== null)
                 <div style="text-align: right;">
                     @if($nextKeyCost == 0)
-                    <div class="extra-key-price">{{ __('billing.free_label') }}</div>
-                    <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.2rem;">{{ __('billing.included_with_plan_label') }}</div>
+                    <div class="extra-key-price">{{ __('billing.free') }}</div>
+                    <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.2rem;">{{ __('billing.included_with_plan') }}</div>
                     @else
-                    <div class="extra-key-price">{{ number_format($nextKeyCost, 3) }} {{ __('billing.kwd_currency') }}</div>
-                    <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.2rem;">{{ __('billing.one_time_purchase_label') }}</div>
+                    <div class="extra-key-price">{{ number_format($nextKeyCost, 3) }} KWD</div>
+                    <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.2rem;">{{ __('billing.one_time_purchase') }}</div>
                     @endif
                 </div>
                 <button type="button" class="extra-key-buy" onclick="openPaymentModal('extra-key')">
                     @if($nextKeyCost == 0)
                     {{ __('billing.create_free_api_key') }}
                     @else
-                    {{ __('billing.additional_key_cost', ['price' => number_format($nextKeyCost, 3)]) }}
+                    {{ __('billing.buy_extra_api_key') }} {{ number_format($nextKeyCost, 3) }} KWD
                     @endif
                 </button>
             @else
-                <span class="extra-key-maxed">{{ __('billing.max_keys_reached_plan') }}</span>
+                <span class="extra-key-maxed">{{ __('billing.max_keys_reached') }}</span>
             @endif
         </div>
-        <p class="text-xs text-muted mt-4">{{ __('billing.payments_secure_knet') }}</p>
+        <p class="text-xs text-muted mt-4">{{ __('billing.payments_secure') }}</p>
     </div>
 
     {{-- Payment Method Modal --}}
     <div class="pm-modal-overlay" id="pmModal">
         <div class="pm-modal">
             <h3>{{ __('billing.choose_payment_method') }}</h3>
-            <p id="pmModalDesc">{{ __('billing.select_how_to_pay_label') }}</p>
+            <p id="pmModalDesc">{{ __('billing.select_payment_method') }}</p>
             <div class="pm-methods" id="pmMethods">
                 @forelse($paymentMethods as $method)
                 <div class="pm-method" onclick="selectPaymentMethod({{ $method['PaymentMethodId'] }})">
@@ -319,7 +319,7 @@
                 <p style="color:var(--text-muted); font-size:0.85rem;">{{ __('billing.loading_payment_methods') }}</p>
                 @endforelse
             </div>
-            <span class="pm-cancel" onclick="closePaymentModal()">{{ __('billing.cancel_label') }}</span>
+            <span class="pm-cancel" onclick="closePaymentModal()">{{ __('billing.cancel') }}</span>
         </div>
     </div>
 
@@ -353,12 +353,12 @@ function openPaymentModal(type, value) {
     pendingType = type;
     pendingValue = value || null;
 
-    const descs = @json([
-        'trial' => __('billing.trial_description'),
-        'subscription' => __('billing.subscription_description'),
-        'topup' => __('billing.topup_description'),
-        'extra-key' => __('billing.extra_key_description'),
-    ]);
+    const descs = {
+        trial: '{{ __('billing.trial_starting') }}',
+        subscription: '{{ __('billing.subscription_starting') }}',
+        topup: '{{ __('billing.topup_purchasing') }}',
+        'extra-key': '{{ __('billing.extra_key_purchasing') }}',
+    };
     document.getElementById('pmModalDesc').textContent = descs[type] || '';
     document.getElementById('pmModal').classList.add('active');
 }

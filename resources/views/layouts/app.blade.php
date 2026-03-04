@@ -1,22 +1,10 @@
 <!DOCTYPE html>
-<html lang="{{ app()->getLocale() }}" dir="{{ app()->getLocale() === 'ar' ? 'rtl' : 'ltr' }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" dir="{{ app()->getLocale() === 'ar' ? 'rtl' : 'ltr' }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('title', __('navigation.portal_title'))</title>
-    {{-- Open Graph / Social --}}
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="{{ url()->current() }}">
-    <meta property="og:title" content="@yield('title', __('navigation.brand')) — AI API for Developers">
-    <meta property="og:description" content="@yield('og_description', __('navigation.og_description_default'))">
-    <meta property="og:image" content="{{ asset('og-image.png') }}">
-    <meta property="og:site_name" content="{{ __('navigation.brand') }}">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="@yield('title', __('navigation.brand'))">
-    <meta name="twitter:description" content="@yield('og_description', __('navigation.og_description_short'))">
-    <meta name="twitter:image" content="{{ asset('og-image.png') }}">
-    <meta name="description" content="@yield('meta_description', __('navigation.meta_description_default'))">
+    <title>@yield('title', 'LLM Resayil') - LLM Portal</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
     <style>
@@ -83,47 +71,19 @@
         .badge-gold { background: rgba(212,175,55,0.15); color: var(--gold); border: 1px solid rgba(212,175,55,0.3); }
         .badge-green { background: rgba(5,150,105,0.15); color: #6ee7b7; border: 1px solid rgba(5,150,105,0.3); }
         @media(max-width: 768px) { .grid-cols-2, .grid-cols-3 { grid-template-columns: 1fr; } main { padding: 1rem; } }
-        /* Locale switcher */
-        .locale-switcher { display: flex; align-items: center; gap: 0.5rem; font-size: 0.875rem; margin-left: 0.5rem; }
-        .locale-switcher a { color: var(--text-muted); text-decoration: none; transition: color 0.2s; }
-        .locale-switcher a:hover { color: var(--text-primary); }
-        .locale-switcher a.active { color: var(--gold); font-weight: 600; }
-        .locale-switcher span { color: var(--border); }
-        /* RTL support */
-        [dir="rtl"] body { font-family: 'Tajawal', 'Inter', sans-serif; }
-        [dir="rtl"] .nav-links { flex-direction: row-reverse; }
-        [dir="rtl"] .sidebar { right: 0; left: auto; }
-        [dir="rtl"] .card { text-align: right; }
-        [dir="rtl"] .locale-switcher { margin-left: 0; margin-right: 0.5rem; order: -1; }
-        [dir="rtl"] .hero-content { text-align: right; }
-        [dir="rtl"] .code-block { direction: ltr; } /* keep code LTR */
-        [dir="rtl"] .stat-card { text-align: right; }
-        [dir="rtl"] .feature-item { flex-direction: row-reverse; }
-        [dir="rtl"] .btn-group { flex-direction: row-reverse; }
-        [dir="rtl"] .input-group .input-label { text-align: right; }
-        [dir="rtl"] .form-label { text-align: right; }
-        [dir="rtl"] .alert { text-align: right; }
-        [dir="rtl"] .nav-brand { margin-left: auto; margin-right: 0; }
     </style>
     @stack('styles')
 </head>
-<body dir="{{ app()->getLocale() === 'ar' ? 'rtl' : 'ltr' }}">
+<body>
 <nav>
-    <a href="/" class="nav-brand">⚡ {{ __('navigation.brand') }}</a>
+    <a href="/" class="nav-brand">⚡ LLM Resayil</a>
     <div class="nav-links">
-        <!-- Language Switcher -->
-        <div class="locale-switcher">
-            <a href="{{ route('locale', 'en') }}" class="{{ app()->getLocale() === 'en' ? 'active' : '' }}">EN</a>
-            <span>|</span>
-            <a href="{{ route('locale', 'ar') }}" class="{{ app()->getLocale() === 'ar' ? 'active' : '' }}">ع</a>
-        </div>
         @auth
             <a href="/dashboard">{{ __('navigation.dashboard') }}</a>
             <a href="/api-keys">{{ __('navigation.api_keys') }}</a>
             <a href="/billing/plans" style="color:var(--gold)">{{ __('navigation.billing') }}</a>
             <a href="/docs">{{ __('navigation.docs') }}</a>
             <a href="/credits">{{ __('navigation.credits') }}</a>
-            <a href="/contact">{{ __('navigation.contact') }}</a>
             <a href="/billing/payment-methods">{{ __('navigation.payment_methods') }}</a>
             @if(auth()->user()->subscription_tier === 'enterprise')
             <a href="/teams">{{ __('navigation.team') }}</a>

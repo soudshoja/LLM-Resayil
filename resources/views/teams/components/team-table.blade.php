@@ -37,25 +37,25 @@
                                         <span class="text-gray-300 text-sm font-medium">{{ strtoupper(substr($member['member']['name'] ?? '?', 0, 1)) }}</span>
                                     </div>
                                     <div class="ml-4">
-                                        <div class="text-sm font-medium text-white">{{ $member['member']['name'] ?? 'N/A' }}</div>
-                                        <div class="text-xs text-gray-500">ID: {{ Str::limit($member['member']['id'] ?? '', 8) }}</div>
+                                        <div class="text-sm font-medium text-white">{{ $member['member']['name'] ?? __d('teams', 'not_applicable') }}</div>
+                                        <div class="text-xs text-gray-500">@lang('teams.id_prefix'): {{ Str::limit($member['member']['id'] ?? '', 8) }}</div>
                                     </div>
                                 </div>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="text-sm text-gray-300">{{ $member['member']['email'] ?? 'N/A' }}</div>
+                                <div class="text-sm text-gray-300">{{ $member['member']['email'] ?? __d('teams', 'not_applicable') }}</div>
                                 <div class="text-xs text-gray-500">{{ $member['member']['phone'] ?? '' }}</div>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 @include('teams.components.role-badge', ['role' => $member['role']])
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="text-sm text-gray-300">{{ $member['added_by']['name'] ?? 'System' }}</div>
+                                <div class="text-sm text-gray-300">{{ $member['added_by']['name'] ?? __d('teams', 'system') }}</div>
                                 <div class="text-xs text-gray-500">{{ $member['added_by']['email'] ?? '' }}</div>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <div class="text-sm text-gray-300">
-                                    {{ $member['joined_at'] ? \Carbon\Carbon::parse($member['joined_at'])->format('M d, Y') : 'N/A' }}
+                                    {{ $member['joined_at'] ? \Carbon\Carbon::parse($member['joined_at'])->format('M d, Y') : __d('teams', 'not_applicable') }}
                                 </div>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
@@ -64,7 +64,7 @@
                                         onclick="confirmDelete('{{ $member['id'] }}')"
                                         class="text-red-400 hover:text-red-300 transition-colors"
                                     >
-                                        @lang('actions.remove')
+                                        @lang('teams.actions.remove')
                                     </button>
                                 @endif
                             </td>

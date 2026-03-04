@@ -13,5 +13,5 @@
     @if($isAdmin)
         <span class="mr-1">👑</span>
     @endif
-    @lang($isAdmin ? 'roles.admin' : 'roles.member')
+    @lang($isAdmin ? 'teams.roles.admin' : 'teams.roles.member')
 </span>
