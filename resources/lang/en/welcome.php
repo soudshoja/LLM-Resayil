@@ -121,10 +121,13 @@ return [
     'three_simple_steps' => 'Three simple steps to access powerful AI models',
     'step_1_title' => 'Register & Top Up',
     'step_1_desc' => 'Create an account, choose a subscription tier, and top up with credits via KNET or credit card.',
+    'step_1_description' => 'Create an account, choose a subscription tier, and top up with credits via KNET or credit card.',
     'step_2_title' => 'Get Your API Key',
     'step_2_desc' => 'Generate an API key from your dashboard. Use it exactly like you would with OpenAI\'s API.',
+    'step_2_description' => 'Generate an API key from your dashboard. Use it exactly like you would with OpenAI\'s API.',
     'step_3_title' => 'Make API Calls',
     'step_3_desc' => 'Point your app to our endpoint. High-performance inference, fully automatic.',
+    'step_3_description' => 'Point your app to our endpoint. High-performance inference, fully automatic.',
     // Pricing section
     'pricing' => 'Pricing',
     'transparent' => 'Transparent',
@@ -253,6 +256,7 @@ return [
     'slide_1_label' => 'Slide 1',
     'slide_2_label' => 'Slide 2',
     // Pricing section headline split
+    'pricing_subtitle' => 'All prices in Kuwaiti Dinar. Billed monthly. No hidden fees.',
     'pricing_title_plain' => 'Simple, Transparent',
     'pricing_title_gold' => 'Pricing',
     // CTA section
