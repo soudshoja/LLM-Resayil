@@ -108,7 +108,7 @@ class RegisteredUserController extends Controller
                         ->from(config('mail.from.address'), config('mail.from.name'));
             });
         } catch (\Exception $e) {
-            \Log::error('Admin registration notification failed: ' . $e->getMessage());
+            Log::error('Admin registration notification failed: ' . $e->getMessage());
         }
 
         return response()->json([
