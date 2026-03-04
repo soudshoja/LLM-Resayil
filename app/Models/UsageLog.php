@@ -37,6 +37,8 @@ class UsageLog extends Model
         'api_key_id',
         'model',
         'tokens_used',
+        'prompt_tokens',
+        'completion_tokens',
         'credits_deducted',
         'provider',
         'response_time_ms',
@@ -50,6 +52,8 @@ class UsageLog extends Model
      */
     protected $casts = [
         'tokens_used' => 'integer',
+        'prompt_tokens' => 'integer',
+        'completion_tokens' => 'integer',
         'credits_deducted' => 'integer',
         'response_time_ms' => 'integer',
         'status_code' => 'integer',
