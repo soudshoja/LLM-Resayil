@@ -5,37 +5,51 @@
 @push('styles')
 <style>
     body { background: var(--bg-secondary); }
-    .hero { text-align: center; padding: 6rem 2rem 4rem; position: relative; overflow: hidden; }
-    .hero::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 400px; background: radial-gradient(ellipse at 50% 0%, rgba(212,175,55,0.08) 0%, transparent 70%); pointer-events: none; }
-    .hero-badge { display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(212,175,55,0.1); border: 1px solid rgba(212,175,55,0.25); color: var(--gold); padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.8rem; font-weight: 600; margin-bottom: 1.5rem; }
-    .hero h1 { font-size: 3rem; font-weight: 700; line-height: 1.15; margin-bottom: 1.25rem; max-width: 700px; margin-left: auto; margin-right: auto; }
-    .hero h1 span { background: linear-gradient(135deg, var(--gold), var(--gold-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-    .hero p { font-size: 1.125rem; color: var(--text-secondary); max-width: 560px; margin: 0 auto 2rem; line-height: 1.7; }
-    .hero-cta { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
-    .hero-slider-container { position: relative; width: 100%; max-width: 1000px; margin: 0 auto; height: 400px; }
-    .hero-slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; transition: opacity 0.5s ease-in-out; display: flex; align-items: center; justify-content: center; flex-direction: column; }
+
+    /* ── Hero ── */
+    .hero { text-align: center; padding: 5rem 2rem 3rem; position: relative; overflow: hidden; }
+    .hero::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 500px; background: radial-gradient(ellipse at 50% 0%, rgba(212,175,55,0.1) 0%, transparent 70%); pointer-events: none; }
+    .hero::after { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: radial-gradient(ellipse at 20% 60%, rgba(212,175,55,0.04) 0%, transparent 50%); pointer-events: none; }
+    .hero-badge { display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(212,175,55,0.1); border: 1px solid rgba(212,175,55,0.25); color: var(--gold); padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.8rem; font-weight: 600; margin-bottom: 1.75rem; }
+    .hero h1 { font-size: 3.5rem; font-weight: 800; line-height: 1.12; margin-bottom: 1.25rem; max-width: 760px; margin-left: auto; margin-right: auto; letter-spacing: -0.02em; }
+    .hero h1 .text-gradient { background: linear-gradient(135deg, var(--gold), var(--gold-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .hero-lead { font-size: 1.15rem; color: var(--text-secondary); max-width: 580px; margin: 0 auto 2.25rem; line-height: 1.75; }
+    .hero-cta { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-bottom: 3rem; }
+    .hero-trust { display: flex; gap: 2rem; justify-content: center; flex-wrap: wrap; margin-bottom: 2.5rem; }
+    .hero-trust-item { display: flex; align-items: center; gap: 0.5rem; font-size: 0.8rem; color: var(--text-muted); }
+    .hero-trust-item svg { color: var(--gold); flex-shrink: 0; }
+
+    /* ── Featured Models (slider card) ── */
+    .featured-models-label { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); text-align: center; margin-bottom: 0.75rem; }
+    .hero-slider-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 0; overflow: hidden; max-width: 820px; margin: 0 auto; position: relative; box-shadow: 0 0 0 1px rgba(212,175,55,0.06), 0 20px 60px rgba(0,0,0,0.35); }
+    .hero-slider-container { position: relative; width: 100%; height: 260px; }
+    .hero-slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; transition: opacity 0.5s ease-in-out; display: flex; align-items: center; justify-content: center; flex-direction: column; padding: 2rem; }
     .hero-slide.active { opacity: 1; }
     .hero-slide-content { text-align: center; }
-    .hero-slide h2 { font-size: 2.5rem; font-weight: 700; margin-bottom: 1rem; color: var(--gold); }
-    .hero-slide p { font-size: 1.125rem; color: var(--text-secondary); max-width: 560px; margin: 0 auto 1.5rem; line-height: 1.7; }
-    .hero-slide-badge { display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(212,175,55,0.1); border: 1px solid rgba(212,175,55,0.25); color: var(--gold); padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.8rem; font-weight: 600; margin-bottom: 1rem; }
-    .hero-slide-model { font-size: 3rem; font-weight: 700; color: var(--text-primary); margin: 0.5rem 0; }
-    .hero-slide-model span { background: linear-gradient(135deg, var(--gold), var(--gold-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-    .hero-slider-controls { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); display: flex; gap: 0.75rem; }
-    .hero-slider-dot { width: 12px; height: 12px; border-radius: 50%; background: rgba(212,175,55,0.3); border: 2px solid var(--gold); cursor: pointer; transition: all 0.3s; }
-    .hero-slider-dot.active { background: var(--gold); transform: scale(1.2); }
+    .hero-slide-logo { display: inline-flex; align-items: center; justify-content: center; width: 46px; height: 46px; border-radius: 12px; font-size: 0.85rem; font-weight: 800; color: #fff; margin-bottom: 0.85rem; letter-spacing: -0.01em; }
+    .slide-logo-meta    { background: linear-gradient(140deg, #0866FF 0%, #3b8fff 100%); }
+    .slide-logo-deepseek{ background: linear-gradient(140deg, #3a58e8 0%, #6f88ff 100%); }
+    .hero-slide-badge { display: inline-flex; align-items: center; gap: 0.4rem; background: rgba(212,175,55,0.1); border: 1px solid rgba(212,175,55,0.22); color: var(--gold); padding: 0.3rem 0.75rem; border-radius: 20px; font-size: 0.72rem; font-weight: 600; margin-bottom: 0.75rem; }
+    .hero-slide-model { font-size: 1.75rem; font-weight: 700; color: var(--text-primary); margin: 0 0 0.6rem; line-height: 1.2; }
+    .hero-slide-model .text-gradient { background: linear-gradient(135deg, var(--gold), var(--gold-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .hero-slide p { font-size: 0.9rem; color: var(--text-secondary); max-width: 420px; margin: 0 auto; line-height: 1.6; }
+    .hero-slider-footer { display: flex; align-items: center; justify-content: center; gap: 0.75rem; padding: 0.9rem 1.5rem; border-top: 1px solid var(--border); background: rgba(0,0,0,0.15); }
+    .hero-slider-dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(212,175,55,0.3); border: 1.5px solid rgba(212,175,55,0.5); cursor: pointer; transition: all 0.3s; padding: 0; }
+    .hero-slider-dot.active { background: var(--gold); border-color: var(--gold); transform: scale(1.3); }
     .hero-slider-dot:hover { background: rgba(212,175,55,0.6); }
-    .hero-slide-logo { margin-bottom: 1rem; opacity: 0.9; }
-    .hero-slider-counter { text-align: center; margin-top: 0.75rem; font-size: 0.8rem; color: var(--text-muted); letter-spacing: 0.05em; }
+    .hero-slider-counter { font-size: 0.72rem; color: var(--text-muted); letter-spacing: 0.08em; }
+
+    /* ── Sections ── */
     .section { padding: 4rem 2rem; max-width: 1200px; margin: 0 auto; }
     .section-title { text-align: center; margin-bottom: 3rem; }
-    .section-title h2 { font-size: 1.875rem; font-weight: 700; margin-bottom: 0.75rem; }
+    .section-title h2 { font-size: 2rem; font-weight: 700; margin-bottom: 0.75rem; }
     .section-title p { color: var(--text-secondary); font-size: 1rem; max-width: 500px; margin: 0 auto; }
     .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
     .step { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 1.75rem; text-align: center; position: relative; }
     .step-num { width: 44px; height: 44px; background: linear-gradient(135deg, var(--gold), var(--gold-light)); color: #0a0d14; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1.1rem; margin: 0 auto 1rem; }
     .step h3 { font-size: 1rem; font-weight: 600; margin-bottom: 0.5rem; }
     .step p { color: var(--text-secondary); font-size: 0.875rem; line-height: 1.6; }
+
     /* ── Trial section ── */
     .trial-section { margin-bottom: 2.5rem; padding: 2rem; background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px; position: relative; overflow: hidden; }
     .trial-section::before { content: ''; position: absolute; top: 0; right: 0; width: 340px; height: 100%; background: radial-gradient(ellipse at 100% 50%, rgba(40,167,69,0.07) 0%, transparent 70%); pointer-events: none; }
@@ -55,9 +69,12 @@
     .trial-footer { font-size: 0.72rem; color: var(--text-muted); text-align: center; margin-top: 1.25rem; }
     .trial-section-title { font-size: 1.2rem; font-weight: 700; margin-bottom: 1.5rem; }
     .trial-card-title { font-size: 1rem; font-weight: 600; margin-bottom: 0.85rem; }
+    .trial-note { font-size: 0.75rem; color: var(--text-muted); text-align: center; margin-top: 0.85rem; }
+
     /* ── Button sizes ── */
     .btn-lg { padding: 0.75rem 2rem; font-size: 1rem; }
     .btn-xl { padding: 0.85rem 2.5rem; font-size: 1.05rem; }
+
     /* ── Pricing cards ── */
     .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
     .plan-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px; padding: 2rem; display: flex; flex-direction: column; position: relative; transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s; }
@@ -77,20 +94,20 @@
     .plan-cta-gold:hover { opacity: 0.9; transform: translateY(-1px); box-shadow: 0 4px 18px rgba(212,175,55,0.35); color: #0a0d14; }
     .plan-cta-outline { background: transparent; border: 1px solid var(--gold-muted); color: var(--gold); }
     .plan-cta-outline:hover { background: rgba(212,175,55,0.08); color: var(--gold); }
+
+    /* ── Addon box ── */
     .addon-box { background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 10px; padding: 1.25rem 1.5rem; margin-top: 2rem; }
     .addon-box h4 { font-size: 0.78rem; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.09em; margin-bottom: 0.75rem; }
     .addon-row { display: flex; justify-content: space-between; font-size: 0.85rem; padding: 0.4rem 0; border-bottom: 1px solid var(--border); color: var(--text-secondary); }
     .addon-row:last-child { border-bottom: none; }
     .addon-row span:last-child { color: var(--gold); font-weight: 600; }
+    .text-bonus { color: #28a745; font-size: 0.8em; font-weight: 600; }
+
+    /* ── Code block ── */
     .code-block { background: #0a0d14; border: 1px solid var(--border); border-radius: 10px; padding: 1.5rem; overflow-x: auto; font-family: monospace; font-size: 0.85rem; line-height: 1.7; color: #e0e5ec; }
     .code-block .comment { color: #4b5563; }
     .code-block .string { color: #86efac; }
     .code-block .key { color: #93c5fd; }
-    .models-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem; }
-    .model-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; padding: 1rem; }
-    .model-name { font-weight: 600; font-size: 0.9rem; margin-bottom: 0.25rem; }
-    .model-meta { font-size: 0.75rem; color: var(--text-muted); }
-    .divider { border: none; border-top: 1px solid var(--border); margin: 0; }
 
     /* ── Model List (ml-) premium redesign ── */
     .ml-category-group { margin-bottom: 2.75rem; }
@@ -112,15 +129,45 @@
     .ml-tagline { font-size: 0.76rem; color: var(--text-secondary); line-height: 1.55; }
     .ml-footer { text-align: center; margin-top: 2.5rem; padding-top: 2rem; border-top: 1px solid var(--border); }
     .ml-footer p { color: var(--text-muted); font-size: 0.875rem; }
-    .ml-footer a { color: var(--gold); text-decoration: none; font-weight: 600; }
+    .ml-footer a { color: var(--gold); font-weight: 600; }
     .ml-footer a:hover { text-decoration: underline; }
-    @media(max-width: 900px) { .ml-grid { grid-template-columns: repeat(2, 1fr); } }
-    @media(max-width: 560px) { .ml-grid { grid-template-columns: 1fr; } }
+
+    /* ── CTA section ── */
     .cta-section { text-align: center; padding: 5rem 2rem; background: linear-gradient(135deg, rgba(212,175,55,0.05) 0%, transparent 100%); border-top: 1px solid var(--border); }
-    .cta-title { font-size: 2rem; font-weight: 700; margin-bottom: 0.75rem; }
-    .cta-subtitle { color: var(--text-secondary); margin-bottom: 2rem; }
-    @media(max-width: 900px) { .pricing-grid { grid-template-columns: 1fr; } .trial-grid { grid-template-columns: 1fr; } }
-    @media(max-width: 768px) { .hero h1 { font-size: 2rem; } .steps { grid-template-columns: 1fr; } .hero-slider-container { height: 300px; } .hero-slide h2 { font-size: 1.75rem; } }
+    .cta-title { font-size: 2.25rem; font-weight: 700; margin-bottom: 0.75rem; }
+    .cta-subtitle { color: var(--text-secondary); margin-bottom: 2rem; font-size: 1.05rem; }
+
+    /* ── Site footer ── */
+    .site-footer { border-top: 1px solid var(--border); padding: 2rem; background: var(--bg-secondary); }
+    .site-footer-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+    .site-footer-brand { font-weight: 700; font-size: 0.95rem; background: linear-gradient(135deg, var(--gold), var(--gold-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .site-footer-links { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+    .site-footer-links a { font-size: 0.825rem; color: var(--text-muted); transition: color 0.2s; }
+    .site-footer-links a:hover { color: var(--gold); }
+    .site-footer-copy { font-size: 0.78rem; color: var(--text-muted); }
+
+    /* ── Dividers ── */
+    .divider { border: none; border-top: 1px solid var(--border); margin: 0; }
+
+    /* ── Responsive ── */
+    @media(max-width: 900px) {
+        .pricing-grid { grid-template-columns: 1fr; }
+        .trial-grid { grid-template-columns: 1fr; }
+        .ml-grid { grid-template-columns: repeat(2, 1fr); }
+        .site-footer-inner { flex-direction: column; text-align: center; }
+    }
+    @media(max-width: 768px) {
+        .hero h1 { font-size: 2.25rem; }
+        .steps { grid-template-columns: 1fr; }
+        .hero-slider-container { height: 220px; }
+        .hero-slide h2, .hero-slide-model { font-size: 1.4rem; }
+        .hero-trust { gap: 1rem; }
+    }
+    @media(max-width: 560px) {
+        .ml-grid { grid-template-columns: 1fr; }
+        .hero h1 { font-size: 1.875rem; }
+        .site-footer-links { justify-content: center; }
+    }
 </style>
 @endpush
 
@@ -157,7 +204,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function startAutoPlay() {
-        autoPlay = setInterval(nextSlide, 4000);
+        autoPlay = setInterval(nextSlide, 4500);
     }
 
     function stopAutoPlay() {
@@ -168,8 +215,13 @@ document.addEventListener('DOMContentLoaded', function() {
         dot.addEventListener('click', () => { stopAutoPlay(); showSlide(index); startAutoPlay(); });
     });
 
-    document.querySelector('.hero-slider-prev')?.addEventListener('click', () => { stopAutoPlay(); prevSlide(); startAutoPlay(); });
-    document.querySelector('.hero-slider-next')?.addEventListener('click', () => { stopAutoPlay(); nextSlide(); startAutoPlay(); });
+    document.querySelectorAll('.hero-slider-prev, .hero-slider-next').forEach(btn => {
+        btn.addEventListener('click', function() {
+            stopAutoPlay();
+            this.classList.contains('hero-slider-prev') ? prevSlide() : nextSlide();
+            startAutoPlay();
+        });
+    });
 
     // Keyboard navigation
     document.addEventListener('keydown', function(e) {
@@ -177,14 +229,14 @@ document.addEventListener('DOMContentLoaded', function() {
         if (e.key === 'ArrowRight') { stopAutoPlay(); nextSlide(); startAutoPlay(); }
     });
 
-    // Initialize: activate first dot + start auto-play
+    // Initialize
     showSlide(0);
     startAutoPlay();
 
     // Pause on hover
-    const sliderContainer = document.querySelector('.hero-slider-container');
-    sliderContainer?.addEventListener('mouseenter', stopAutoPlay);
-    sliderContainer?.addEventListener('mouseleave', startAutoPlay);
+    const sliderCard = document.querySelector('.hero-slider-card');
+    sliderCard?.addEventListener('mouseenter', stopAutoPlay);
+    sliderCard?.addEventListener('mouseleave', startAutoPlay);
 });
 </script>
 @endpush
@@ -193,55 +245,70 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <!-- Hero -->
 <section class="hero">
-    <div class="hero-badge">{{ __('welcome.hero_badge') }}</div>
-    <div class="hero-slider-container">
-        <!-- Slide 1: Lightweight & Fast -->
-        <div class="hero-slide active">
-            <div class="hero-slide-content">
-                <div class="hero-slide-logo">
-                    <svg width="40" height="40" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M30 20c-5.523 0-10 4.477-10 10s4.477 10 10 10c2.761 0 5.26-1.12 7.071-2.929" stroke="#d4af37" stroke-width="3" stroke-linecap="round" fill="none"/>
-                        <path d="M30 20c5.523 0 10 4.477 10 10s-4.477 10-10 10c-2.761 0-5.26-1.12-7.071-2.929" stroke="#d4af37" stroke-width="3" stroke-linecap="round" fill="none"/>
-                        <text x="50%" y="56" text-anchor="middle" fill="#d4af37" font-size="8" font-family="Inter, sans-serif" font-weight="700">Meta</text>
-                    </svg>
-                </div>
-                <div class="hero-slide-badge">
-                    <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-                    {{ __('welcome.lightweight') }}
-                </div>
-                <h2 class="hero-slide-model">{{ str_replace(':span', '<span>', __('welcome.llama_32_3b')) }}</h2>
-                <p>{{ __('welcome.lightweight_fast') }}</p>
-            </div>
-        </div>
-        <!-- Slide 2: Frontier Model -->
-        <div class="hero-slide">
-            <div class="hero-slide-content">
-                <div class="hero-slide-logo">
-                    <svg width="40" height="40" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="30" cy="30" r="18" stroke="#d4af37" stroke-width="2.5" fill="none"/>
-                        <path d="M22 30c0-4.418 3.582-8 8-8s8 3.582 8 8-3.582 8-8 8" stroke="#d4af37" stroke-width="2.5" stroke-linecap="round" fill="none"/>
-                        <circle cx="30" cy="30" r="3" fill="#d4af37"/>
-                        <text x="50%" y="56" text-anchor="middle" fill="#d4af37" font-size="7" font-family="Inter, sans-serif" font-weight="700">DeepSeek</text>
-                    </svg>
-                </div>
-                <div class="hero-slide-badge">
-                    <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
-                    {{ __('welcome.frontier_model') }}
-                </div>
-                <h2 class="hero-slide-model">{{ str_replace(':span', '<span>', __('welcome.deepseek_v31_671b')) }}</h2>
-                <p>{{ __('welcome.frontier_reasoning') }}</p>
-            </div>
-        </div>
-        <!-- Navigation Controls -->
-        <div class="hero-slider-controls">
-            <button class="hero-slider-dot" aria-label="Slide 1"></button>
-            <button class="hero-slider-dot" aria-label="Slide 2"></button>
-        </div>
-        <div class="hero-slider-counter" id="heroSlideCounter">1 / 2</div>
+    <div class="hero-badge">
+        <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+        {{ __('welcome.hero_badge') }}
     </div>
+    <h1>{{ __('welcome.hero_headline_before') }} <span class="text-gradient">{{ __('welcome.hero_headline_gold') }}</span> {{ __('welcome.hero_headline_after') }}</h1>
+    <p class="hero-lead">{{ __('welcome.hero_subtitle') }}</p>
     <div class="hero-cta">
         <a href="/register" class="btn btn-gold btn-lg">{{ __('welcome.cta_start_free_trial') }}</a>
         <a href="#pricing" class="btn btn-outline btn-lg">{{ __('welcome.cta_view_pricing') }}</a>
+    </div>
+    <div class="hero-trust">
+        <div class="hero-trust-item">
+            <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+            {{ __('welcome.trust_openai_compatible') }}
+        </div>
+        <div class="hero-trust-item">
+            <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            {{ __('welcome.trust_pay_per_use') }}
+        </div>
+        <div class="hero-trust-item">
+            <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064"/></svg>
+            {{ __('welcome.trust_kuwait_based') }}
+        </div>
+        <div class="hero-trust-item">
+            <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+            {{ __('welcome.trust_free_trial') }}
+        </div>
+    </div>
+
+    <!-- Featured Models Slider -->
+    <div class="featured-models-label">{{ __('welcome.featured_models_label') }}</div>
+    <div class="hero-slider-card">
+        <div class="hero-slider-container">
+            <!-- Slide 1: Lightweight & Fast -->
+            <div class="hero-slide active">
+                <div class="hero-slide-content">
+                    <div class="hero-slide-logo slide-logo-meta">M</div>
+                    <div class="hero-slide-badge">
+                        <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                        {{ __('welcome.lightweight') }}
+                    </div>
+                    <div class="hero-slide-model">{{ __('welcome.llama_32_3b_plain') }} <span class="text-gradient">{{ __('welcome.llama_32_3b_highlight') }}</span></div>
+                    <p>{{ __('welcome.lightweight_fast') }}</p>
+                </div>
+            </div>
+            <!-- Slide 2: Frontier Model -->
+            <div class="hero-slide">
+                <div class="hero-slide-content">
+                    <div class="hero-slide-logo slide-logo-deepseek">D</div>
+                    <div class="hero-slide-badge">
+                        <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                        {{ __('welcome.frontier_model') }}
+                    </div>
+                    <div class="hero-slide-model">{{ __('welcome.deepseek_v31_671b_plain') }} <span class="text-gradient">{{ __('welcome.deepseek_v31_671b_highlight') }}</span></div>
+                    <p>{{ __('welcome.frontier_reasoning') }}</p>
+                </div>
+            </div>
+        </div>
+        <!-- Slider Footer with Controls -->
+        <div class="hero-slider-footer">
+            <button class="hero-slider-dot" aria-label="{{ __('welcome.slide_1_label') }}"></button>
+            <button class="hero-slider-dot" aria-label="{{ __('welcome.slide_2_label') }}"></button>
+            <span class="hero-slider-counter" id="heroSlideCounter">1 / 2</span>
+        </div>
     </div>
 </section>
 
@@ -275,7 +342,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <!-- Pricing -->
 <section class="section" id="pricing">
     <div class="section-title">
-        <h2>{{ str_replace(':span', '<span class="text-gold">', __('welcome.pricing_title')) }}</h2>
+        <h2>{{ __('welcome.pricing_title_plain') }} <span class="text-gold">{{ __('welcome.pricing_title_gold') }}</span></h2>
         <p>{{ __('welcome.pricing_subtitle') }}</p>
     </div>
 
@@ -285,7 +352,9 @@ document.addEventListener('DOMContentLoaded', function() {
         <h2 class="trial-section-title">{{ __('welcome.try_before_buy') }}</h2>
         <div class="trial-grid">
             <div class="trial-card">
-                <div class="trial-icon">⚡</div>
+                <div class="trial-icon">
+                    <svg width="28" height="28" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="color:#28a745"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                </div>
                 <h3 class="trial-card-title">{{ __('welcome.seven_day_trial') }}</h3>
                 <ul class="trial-features">
                     <li><svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>{{ __('welcome.full_starter_features') }}</li>
@@ -332,10 +401,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     {{ __('welcome.small_models_only') }}
                 </li>
             </ul>
-            <div class="plan-cta-row">
-                <a href="/register" class="plan-cta plan-cta-outline">{{ __('welcome.start_monthly_plan') }}</a>
-                <a href="/register" class="plan-cta plan-cta-outline">{{ __('welcome.start_free_trial') }}</a>
-            </div>
+            <a href="/register" class="plan-cta plan-cta-outline">{{ __('welcome.start_monthly_plan') }}</a>
         </div>
 
         {{-- Basic Tier (featured) --}}
@@ -400,8 +466,8 @@ document.addEventListener('DOMContentLoaded', function() {
     <div class="addon-box">
         <h4>{{ __('welcome.credit_top_ups_title') }}</h4>
         <div class="addon-row"><span>{{ __('welcome.five_hundred_credits') }}</span><span>{{ __('welcome.five_kwd') }}</span></div>
-        <div class="addon-row"><span>{{ __('welcome.one_thousand_one_hundred_credits') }}</span><span>{{ __('welcome.ten_kwd') }} <span style="color:#28a745;font-size:0.8em;font-weight:600">{{ __('welcome.bonus_ten') }}</span></span></div>
-        <div class="addon-row"><span>{{ __('welcome.three_thousand_credits') }}</span><span>{{ __('welcome.twenty_five_kwd') }} <span style="color:#28a745;font-size:0.8em;font-weight:600">{{ __('welcome.bonus_twenty') }}</span></span></div>
+        <div class="addon-row"><span>{{ __('welcome.one_thousand_one_hundred_credits') }}</span><span>{{ __('welcome.ten_kwd') }} <span class="text-bonus">{{ __('welcome.bonus_ten') }}</span></span></div>
+        <div class="addon-row"><span>{{ __('welcome.three_thousand_credits') }}</span><span>{{ __('welcome.twenty_five_kwd') }} <span class="text-bonus">{{ __('welcome.bonus_twenty') }}</span></span></div>
         <div class="addon-row"><span>{{ __('welcome.credits_per_one_k_tokens') }}</span><span>{{ __('welcome.local_cloud_pricing') }}</span></div>
     </div>
 </section>
@@ -423,7 +489,6 @@ document.addEventListener('DOMContentLoaded', function() {
             <span class="ml-category-line"></span>
         </div>
         <div class="ml-grid">
-
             <div class="ml-card">
                 <div class="ml-avatar ml-av-meta">M</div>
                 <div class="ml-body">
@@ -432,7 +497,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     <div class="ml-tagline">{{ __('welcome.llama_32_3b_description') }}</div>
                 </div>
             </div>
-
             <div class="ml-card">
                 <div class="ml-avatar ml-av-mistral">Mi</div>
                 <div class="ml-body">
@@ -441,7 +505,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     <div class="ml-tagline">{{ __('welcome.mistral_small_32_24b_description') }}</div>
                 </div>
             </div>
-
         </div>
     </div>
 
@@ -453,7 +516,6 @@ document.addEventListener('DOMContentLoaded', function() {
             <span class="ml-category-line"></span>
         </div>
         <div class="ml-grid">
-
             <div class="ml-card">
                 <div class="ml-avatar ml-av-qwen">Q</div>
                 <div class="ml-body">
@@ -462,7 +524,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     <div class="ml-tagline">{{ __('welcome.qwen_25_coder_14b_description') }}</div>
                 </div>
             </div>
-
             <div class="ml-card">
                 <div class="ml-avatar ml-av-deepseek">D</div>
                 <div class="ml-body">
@@ -471,7 +532,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     <div class="ml-tagline">{{ __('welcome.deepseek_coder_67b_description') }}</div>
                 </div>
             </div>
-
         </div>
     </div>
 
@@ -483,7 +543,6 @@ document.addEventListener('DOMContentLoaded', function() {
             <span class="ml-category-line"></span>
         </div>
         <div class="ml-grid">
-
             <div class="ml-card">
                 <div class="ml-avatar ml-av-qwen">Q</div>
                 <div class="ml-body">
@@ -492,7 +551,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     <div class="ml-tagline">{{ __('welcome.qwen3_vl_32b_description') }}</div>
                 </div>
             </div>
-
         </div>
     </div>
 
@@ -504,7 +562,6 @@ document.addEventListener('DOMContentLoaded', function() {
             <span class="ml-category-line"></span>
         </div>
         <div class="ml-grid">
-
             <div class="ml-card">
                 <div class="ml-avatar ml-av-deepseek">D</div>
                 <div class="ml-body">
@@ -513,7 +570,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     <div class="ml-tagline">{{ __('welcome.deepseek_v31_671b_description') }}</div>
                 </div>
             </div>
-
             <div class="ml-card">
                 <div class="ml-avatar ml-av-qwen">Q</div>
                 <div class="ml-body">
@@ -522,12 +578,11 @@ document.addEventListener('DOMContentLoaded', function() {
                     <div class="ml-tagline">{{ __('welcome.qwen_35_397b_description') }}</div>
                 </div>
             </div>
-
         </div>
     </div>
 
     <div class="ml-footer">
-        <p>{{ str_replace(':link', '<a href="/dashboard">', __('welcome.model_selection_notice')) }}</p>
+        <p>{!! str_replace(':link', '<a href="/dashboard">', __('welcome.model_selection_notice')) !!}</p>
     </div>
 </section>
 
@@ -562,5 +617,21 @@ print(response.choices[0].message.content)
     <p class="cta-subtitle">{{ __('welcome.join_developers') }}</p>
     <a href="/register" class="btn btn-gold btn-xl">{{ __('welcome.create_free_account') }}</a>
 </section>
+
+<!-- Site Footer -->
+<footer class="site-footer">
+    <div class="site-footer-inner">
+        <span class="site-footer-brand">LLM Resayil</span>
+        <nav class="site-footer-links">
+            <a href="/docs">{{ __('navigation.docs') }}</a>
+            <a href="/credits">{{ __('navigation.credits') }}</a>
+            <a href="#pricing">{{ __('welcome.cta_view_pricing') }}</a>
+            <a href="/privacy-policy">{{ __('welcome.footer_privacy') }}</a>
+            <a href="/terms-of-service">{{ __('welcome.footer_terms') }}</a>
+            <a href="/contact">{{ __('welcome.footer_contact') }}</a>
+        </nav>
+        <span class="site-footer-copy">&copy; {{ date('Y') }} LLM Resayil</span>
+    </div>
+</footer>
 
 @endsection

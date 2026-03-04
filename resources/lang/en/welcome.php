@@ -234,4 +234,41 @@ return [
     'drop_in_replacement_description' => 'Works with any OpenAI-compatible SDK. Just change the base URL and API key.',
     'ready_to_get_started' => 'Ready to get started?',
     'create_free_account' => 'Create Free Account',
+    // Hero headline split for gold gradient
+    'hero_headline_before' => "Kuwait's Premium",
+    'hero_headline_gold' => 'LLM API',
+    'hero_headline_after' => 'Platform',
+    'hero_subtitle' => 'Access 45+ state-of-the-art language models via an OpenAI-compatible API. Credit-based billing, no subscriptions, priced in Kuwaiti Dinar.',
+    // Trust strip
+    'trust_openai_compatible' => 'OpenAI-Compatible API',
+    'trust_pay_per_use' => 'Pay-Per-Use Credits',
+    'trust_kuwait_based' => 'Kuwait-Based',
+    'trust_free_trial' => '7-Day Free Trial',
+    // Slider card
+    'featured_models_label' => 'Featured Models',
+    'llama_32_3b_plain' => 'Llama 3.2',
+    'llama_32_3b_highlight' => '3B',
+    'deepseek_v31_671b_plain' => 'DeepSeek V3.1',
+    'deepseek_v31_671b_highlight' => '671B',
+    'slide_1_label' => 'Slide 1',
+    'slide_2_label' => 'Slide 2',
+    // Pricing section headline split
+    'pricing_title_plain' => 'Simple, Transparent',
+    'pricing_title_gold' => 'Pricing',
+    // CTA section
+    'cta_start_free_trial' => 'Start Free Trial',
+    'cta_view_pricing' => 'View Pricing',
+    // Footer links
+    'footer_privacy' => 'Privacy Policy',
+    'footer_terms' => 'Terms of Service',
+    'footer_contact' => 'Contact',
+    // Extra keys referenced in template
+    'full_starter_features' => 'Full Starter tier features',
+    'per_month' => 'per month',
+    'billed_monthly' => 'billed monthly',
+    'most_popular' => 'Most Popular',
+    'best_value' => 'Best Value',
+    'start_monthly_plan' => 'Start Monthly Plan',
+    'try_before_buy' => 'Try Before You Buy',
+    'join_developers' => 'Join developers already using LLM Resayil. Pay with KNET or credit card.',
 ];

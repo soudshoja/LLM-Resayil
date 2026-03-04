@@ -234,4 +234,41 @@ return [
     'drop_in_replacement_description' => 'يعمل مع أي SDK متوافق مع OpenAI. غيّر فقط عنوان URL الأساسي ومفتاح API.',
     'ready_to_get_started' => 'هل أنت مستعد للبدء؟',
     'join_developers' => 'انضم إلى المطورين الذين يستخدمون LLM Resayil بالفعل. ادفع عبر KNET أو بطاقة ائتمان.',
+    // Hero headline split
+    'hero_headline_before' => 'منصة',
+    'hero_headline_gold' => 'API للنماذج اللغوية',
+    'hero_headline_after' => 'المميزة في الكويت',
+    'hero_subtitle' => 'وصول إلى أكثر من 45 نموذجًا لغويًا متطورًا عبر واجهة برمجية متوافقة مع OpenAI. فوترة بالرصيد بدون اشتراكات، بالدينار الكويتي.',
+    // Trust strip
+    'trust_openai_compatible' => 'متوافق مع OpenAI',
+    'trust_pay_per_use' => 'ادفع حسب الاستخدام',
+    'trust_kuwait_based' => 'مقره الكويت',
+    'trust_free_trial' => 'تجربة مجانية 7 أيام',
+    // Slider card
+    'featured_models_label' => 'النماذج المميزة',
+    'llama_32_3b_plain' => 'Llama 3.2',
+    'llama_32_3b_highlight' => '3B',
+    'deepseek_v31_671b_plain' => 'DeepSeek V3.1',
+    'deepseek_v31_671b_highlight' => '671B',
+    'slide_1_label' => 'الشريحة 1',
+    'slide_2_label' => 'الشريحة 2',
+    // Pricing section headline split
+    'pricing_title_plain' => 'أسعار بسيطة وشفافة',
+    'pricing_title_gold' => '',
+    // CTA section
+    'cta_start_free_trial' => 'ابدأ التجربة المجانية',
+    'cta_view_pricing' => 'عرض الأسعار',
+    // Footer links
+    'footer_privacy' => 'سياسة الخصوصية',
+    'footer_terms' => 'شروط الخدمة',
+    'footer_contact' => 'تواصل معنا',
+    // Extra
+    'full_starter_features' => 'ميزات خطة Starter كاملة',
+    'per_month' => 'في الشهر',
+    'billed_monthly' => 'فوترة شهرية',
+    'most_popular' => 'الأكثر شعبية',
+    'best_value' => 'أفضل قيمة',
+    'start_monthly_plan' => 'ابدأ الخطة الشهرية',
+    'try_before_buy' => 'جرّب قبل الشراء',
+    'create_free_account' => 'أنشئ حسابًا مجانيًا',
 ];
