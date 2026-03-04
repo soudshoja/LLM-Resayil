@@ -127,6 +127,22 @@ return [
     'no_api_calls_yet' => 'لا توجد استدعاءات API بعد',
     'make_first_request' => 'أنشئ مفتاح API وأرسل أول طلب لك!',
 
+    // Savings dashboard
+    'savings_this_month'       => 'المدخرات هذا الشهر',
+    'savings_vs_gpt4o'         => 'وفرت مقارنة بـ GPT-4o',
+    'savings_this_month_label' => 'هذا الشهر',
+    'savings_estimate_note'    => '~ تقدير بناءً على معدل مدمج',
+    'savings_show_all'         => 'مقارنة جميع النماذج',
+    'savings_hide'             => 'إخفاء المقارنة',
+    'savings_no_data'          => 'أجرِ أول استدعاء API هذا الشهر لترى مدخراتك.',
+    'savings_col_model'        => 'النموذج العام',
+    'savings_col_public_cost'  => 'سعرهم',
+    'savings_col_our_cost'     => 'تكلفتك',
+    'savings_col_saved'        => 'وفرت',
+    'usage_input_tokens'       => 'إدخال',
+    'usage_output_tokens'      => 'إخراج',
+    'usage_vs_gpt4o'           => 'مقابل GPT-4o',
+
     // Filter options - keep model names in English
     'llama_3' => 'Llama 3',
     'qwen' => 'Qwen',

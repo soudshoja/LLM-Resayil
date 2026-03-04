@@ -166,4 +166,20 @@ return [
     'model_not_found'    => 'Model not found',
     'please_enter_api_key' => 'Please enter your API key to view models. You can find your key in your dashboard.',
     'credits_per_token_unit' => 'credits/token',
+
+    // Savings dashboard
+    'savings_this_month'       => 'Savings This Month',
+    'savings_vs_gpt4o'         => 'saved vs GPT-4o',
+    'savings_this_month_label' => 'this month',
+    'savings_estimate_note'    => '~ estimated (blended rate for older calls)',
+    'savings_show_all'         => 'Compare all models',
+    'savings_hide'             => 'Hide comparison',
+    'savings_no_data'          => 'Make your first API call this month to see your savings.',
+    'savings_col_model'        => 'Public Model',
+    'savings_col_public_cost'  => 'Their Price',
+    'savings_col_our_cost'     => 'Your Cost',
+    'savings_col_saved'        => 'You Saved',
+    'usage_input_tokens'       => 'Input',
+    'usage_output_tokens'      => 'Output',
+    'usage_vs_gpt4o'           => 'vs GPT-4o',
 ];

@@ -11,6 +11,22 @@
     .stat-label { font-size: 0.75rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem; }
     .stat-value { font-size: 1.75rem; font-weight: 700; color: var(--gold); }
     .stat-sub { font-size: 0.8rem; color: var(--text-muted); margin-top: 0.25rem; }
+    .savings-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem; margin-bottom: 2rem; }
+    .savings-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
+    .savings-title { font-size: 1rem; font-weight: 600; }
+    .savings-benchmark { display: flex; align-items: baseline; gap: 0.5rem; }
+    .savings-amount { font-size: 2rem; font-weight: 700; color: #28a745; }
+    .savings-label { font-size: 0.875rem; color: var(--text-muted); }
+    .savings-kwd { font-size: 0.85rem; color: var(--text-muted); margin-top: 0.15rem; }
+    .savings-estimate-note { font-size: 0.75rem; color: var(--text-muted); font-style: italic; margin-top: 0.25rem; }
+    .savings-toggle { font-size: 0.75rem; color: var(--gold); cursor: pointer; text-decoration: none; border: none; background: none; padding: 0; }
+    .savings-table-wrapper { display: none; margin-top: 1rem; border-top: 1px solid var(--border); padding-top: 1rem; }
+    .savings-table-wrapper.expanded { display: block; }
+    .savings-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
+    .savings-table th { font-size: 0.7rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; padding: 0.4rem 0; border-bottom: 1px solid var(--border); text-align: left; }
+    .savings-table td { padding: 0.5rem 0; border-bottom: 1px solid rgba(30,34,48,0.3); }
+    .savings-positive { color: #28a745; font-weight: 600; }
+    .savings-no-data { color: var(--text-muted); font-size: 0.875rem; }
     .section-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2rem; }
     .keys-wrapper { overflow-x: auto; }
     .keys-table { width: 100%; border-collapse: collapse; }
@@ -131,6 +147,53 @@
             </div>
             <div class="stat-sub">{{ __('dashboard.last_30_days') }}</div>
         </div>
+    </div>
+
+    @php
+        $costService = app(\App\Services\CostService::class);
+        $savings = $costService->getMonthlySavings(auth()->user());
+    @endphp
+    <div class="savings-card">
+        <div class="savings-header">
+            <h2 class="savings-title">{{ __('dashboard.savings_this_month') }}</h2>
+            @if($savings['total_calls'] > 0)
+            <button class="savings-toggle" onclick="toggleSavingsTable(this)">{{ __('dashboard.savings_show_all') }} &darr;</button>
+            @endif
+        </div>
+        @if($savings['total_calls'] > 0 && $savings['benchmark'])
+            <div class="savings-benchmark">
+                <span class="savings-amount">{{ $savings['benchmark']['is_estimate'] ? '~' : '' }}${{ number_format($savings['benchmark']['savings_usd'], 2) }}</span>
+                <span class="savings-label">{{ __('dashboard.savings_vs_gpt4o') }}</span>
+            </div>
+            <div class="savings-kwd">{{ $savings['benchmark']['is_estimate'] ? '~' : '' }}{{ number_format($savings['benchmark']['savings_kwd'], 3) }} KWD {{ __('dashboard.savings_this_month_label') }}</div>
+            @if($savings['benchmark']['is_estimate'])
+            <div class="savings-estimate-note">{{ __('dashboard.savings_estimate_note') }}</div>
+            @endif
+            <div id="savings-table-wrapper" class="savings-table-wrapper">
+                <table class="savings-table">
+                    <thead>
+                        <tr>
+                            <th>{{ __('dashboard.savings_col_model') }}</th>
+                            <th>{{ __('dashboard.savings_col_public_cost') }}</th>
+                            <th>{{ __('dashboard.savings_col_our_cost') }}</th>
+                            <th>{{ __('dashboard.savings_col_saved') }}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($savings['comparisons'] as $cmp)
+                        <tr>
+                            <td>{{ $cmp['name'] }}</td>
+                            <td class="text-muted">{{ $cmp['is_estimate'] ? '~' : '' }}${{ number_format($cmp['public_cost_usd'], 4) }}</td>
+                            <td class="text-muted">${{ number_format($savings['our_cost_usd'], 4) }}</td>
+                            <td class="savings-positive">{{ $cmp['is_estimate'] ? '~' : '' }}${{ number_format($cmp['savings_usd'], 4) }}</td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        @else
+            <div class="savings-no-data">{{ __('dashboard.savings_no_data') }}</div>
+        @endif
     </div>
 
     <!-- Model Catalog -->
@@ -387,21 +450,37 @@ response = requests.post(
     <!-- Recent Usage -->
     <div class="card">
         <h2 class="card-heading-mb">{{ __('dashboard.recent_api_usage') }}</h2>
-        @php $logs = \App\Models\UsageLog::where('user_id', auth()->user()->id)->orderByDesc('created_at')->take(10)->get(); @endphp
-        @if($logs->count())
+        @php $recentComparisons = $costService->getRecentCallComparisons(auth()->user(), 10); @endphp
+        @if(count($recentComparisons) > 0)
+        <div style="overflow-x:auto">
         <table class="keys-table">
-            <thead><tr><th>{{ __('dashboard.model') }}</th><th>{{ __('dashboard.tokens') }}</th><th>{{ __('dashboard.credits_used') }}</th><th>{{ __('dashboard.time') }}</th></tr></thead>
+            <thead>
+                <tr>
+                    <th>{{ __('dashboard.model') }}</th>
+                    <th>{{ __('dashboard.usage_input_tokens') }}</th>
+                    <th>{{ __('dashboard.usage_output_tokens') }}</th>
+                    <th>{{ __('dashboard.tokens') }}</th>
+                    <th>{{ __('dashboard.usage_vs_gpt4o') }}</th>
+                    <th>{{ __('dashboard.credits_used') }}</th>
+                    <th>{{ __('dashboard.time') }}</th>
+                </tr>
+            </thead>
             <tbody>
-            @foreach($logs as $log)
-            <tr>
-                <td style="font-family:monospace;font-size:0.8rem">{{ preg_replace('/(-cloud|:cloud)$/', '', $log->model) }}</td>
-                <td>{{ number_format($log->tokens_used) }}</td>
-                <td class="text-gold">{{ $log->credits_deducted }}</td>
-                <td class="text-muted">{{ $log->created_at->diffForHumans() }}</td>
-            </tr>
+            @foreach($recentComparisons as $row)
+                @php $log = $row['log']; @endphp
+                <tr>
+                    <td style="font-family:monospace;font-size:0.8rem">{{ preg_replace('/(-cloud|:cloud)$/', '', $log->model) }}</td>
+                    <td class="text-muted">{{ is_null($log->prompt_tokens) ? '&mdash;' : number_format($log->prompt_tokens) }}</td>
+                    <td class="text-muted">{{ is_null($log->completion_tokens) ? '&mdash;' : number_format($log->completion_tokens) }}</td>
+                    <td>{{ number_format($log->tokens_used) }}</td>
+                    <td class="text-muted">{{ $row['is_estimate'] ? '~' : '' }}${{ number_format($row['gpt4o_cost_usd'], 4) }}</td>
+                    <td class="text-gold">{{ $log->credits_deducted }}</td>
+                    <td class="text-muted">{{ $log->created_at->diffForHumans() }}</td>
+                </tr>
             @endforeach
             </tbody>
         </table>
+        </div>
         @else
         <div class="empty-state">{{ __('dashboard.no_api_calls') }} {{ __('dashboard.create_api_key_first') }}</div>
         @endif
@@ -727,6 +806,17 @@ async function submitKey() {
 
 function topup(credits) {
     window.location.href = '/billing/plans';
+}
+
+function toggleSavingsTable(btn) {
+    var wrapper = document.getElementById('savings-table-wrapper');
+    if (wrapper && wrapper.classList.contains('expanded')) {
+        wrapper.classList.remove('expanded');
+        btn.textContent = '{{ __("dashboard.savings_show_all") }} \u2193';
+    } else if (wrapper) {
+        wrapper.classList.add('expanded');
+        btn.textContent = '{{ __("dashboard.savings_hide") }} \u2191';
+    }
 }
 </script>
 @endpush
