@@ -148,8 +148,16 @@
             });
 
             document.querySelectorAll('.lang-option-btn').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    window.location.href = '/locale/' + this.getAttribute('data-lang');
+                btn.addEventListener('click', async function() {
+                    const lang = this.getAttribute('data-lang');
+                    const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
+                    try {
+                        await fetch('/locale/ajax/' + lang, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': csrfToken }
+                        });
+                    } catch (e) {}
+                    location.reload();
                 });
             });
 

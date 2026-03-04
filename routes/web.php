@@ -41,6 +41,14 @@ Route::post('/locale/{locale}', function ($locale) {
     return redirect()->back();
 })->where('locale', 'en|ar');
 
+// AJAX locale switcher — sets session locale, returns JSON (no redirect)
+Route::post('/locale/ajax/{locale}', function ($locale) {
+    if (in_array($locale, ['en', 'ar'])) {
+        session(['locale' => $locale]);
+    }
+    return response()->json(['locale' => $locale]);
+})->where('locale', 'en|ar');
+
 // Web routes group
 Route::group([], function () {
 

@@ -130,7 +130,7 @@
     .ml-footer { text-align: center; margin-top: 2.5rem; padding-top: 2rem; border-top: 1px solid var(--border); }
     .ml-footer p { color: var(--text-muted); font-size: 0.875rem; }
     .ml-footer a { color: var(--gold); font-weight: 600; }
-    .ml-footer a:hover { text-decoration: underline; }
+    .ml-footer a:hover { color: var(--gold-light); }
 
     /* ── CTA section ── */
     .cta-section { text-align: center; padding: 5rem 2rem; background: linear-gradient(135deg, rgba(212,175,55,0.05) 0%, transparent 100%); border-top: 1px solid var(--border); }
@@ -281,7 +281,9 @@ document.addEventListener('DOMContentLoaded', function() {
             <!-- Slide 1: Lightweight & Fast -->
             <div class="hero-slide active">
                 <div class="hero-slide-content">
-                    <div class="hero-slide-logo slide-logo-meta">M</div>
+                    <div class="hero-slide-logo slide-logo-meta">
+                        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 19V5l9 8.5L21 5v14" stroke="white" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </div>
                     <div class="hero-slide-badge">
                         <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
                         {{ __('welcome.lightweight') }}
@@ -293,7 +295,9 @@ document.addEventListener('DOMContentLoaded', function() {
             <!-- Slide 2: Frontier Model -->
             <div class="hero-slide">
                 <div class="hero-slide-content">
-                    <div class="hero-slide-logo slide-logo-deepseek">D</div>
+                    <div class="hero-slide-logo slide-logo-deepseek">
+                        <svg width="26" height="26" viewBox="0 0 24 24" fill="white" aria-hidden="true"><path d="M6 4h6c4.418 0 8 3.582 8 8s-3.582 8-8 8H6V4z"/></svg>
+                    </div>
                     <div class="hero-slide-badge">
                         <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
                         {{ __('welcome.frontier_model') }}
@@ -490,7 +494,9 @@ document.addEventListener('DOMContentLoaded', function() {
         </div>
         <div class="ml-grid">
             <div class="ml-card">
-                <div class="ml-avatar ml-av-meta">M</div>
+                <div class="ml-avatar ml-av-meta">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 19V5l9 8.5L21 5v14" stroke="white" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
                 <div class="ml-body">
                     <div class="ml-model-name">{{ __('welcome.llama_32_3b') }}</div>
                     <div class="ml-company">{{ __('welcome.llama_32_3b_company') }}</div>
@@ -498,7 +504,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 </div>
             </div>
             <div class="ml-card">
-                <div class="ml-avatar ml-av-mistral">Mi</div>
+                <div class="ml-avatar ml-av-mistral">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="white" aria-hidden="true"><rect x="3" y="6" width="18" height="2.5" rx="1.25"/><rect x="3" y="10.75" width="18" height="2.5" rx="1.25"/><rect x="3" y="15.5" width="18" height="2.5" rx="1.25"/></svg>
+                </div>
                 <div class="ml-body">
                     <div class="ml-model-name">{{ __('welcome.mistral_small_32_24b') }}</div>
                     <div class="ml-company">{{ __('welcome.mistral_small_32_24b_company') }}</div>
@@ -517,7 +525,9 @@ document.addEventListener('DOMContentLoaded', function() {
         </div>
         <div class="ml-grid">
             <div class="ml-card">
-                <div class="ml-avatar ml-av-qwen">Q</div>
+                <div class="ml-avatar ml-av-qwen">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="7" stroke="white" stroke-width="2.2"/><path d="M15.5 15.5l3 3" stroke="white" stroke-width="2.4" stroke-linecap="round"/></svg>
+                </div>
                 <div class="ml-body">
                     <div class="ml-model-name">{{ __('welcome.qwen_25_coder_14b') }}</div>
                     <div class="ml-company">{{ __('welcome.qwen_25_coder_14b_company') }}</div>
@@ -525,7 +535,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 </div>
             </div>
             <div class="ml-card">
-                <div class="ml-avatar ml-av-deepseek">D</div>
+                <div class="ml-avatar ml-av-deepseek">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="white" aria-hidden="true"><path d="M6 4h6c4.418 0 8 3.582 8 8s-3.582 8-8 8H6V4z"/></svg>
+                </div>
                 <div class="ml-body">
                     <div class="ml-model-name">{{ __('welcome.deepseek_coder_67b') }}</div>
                     <div class="ml-company">{{ __('welcome.deepseek_coder_67b_company') }}</div>
@@ -544,7 +556,9 @@ document.addEventListener('DOMContentLoaded', function() {
         </div>
         <div class="ml-grid">
             <div class="ml-card">
-                <div class="ml-avatar ml-av-qwen">Q</div>
+                <div class="ml-avatar ml-av-qwen">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="7" stroke="white" stroke-width="2.2"/><path d="M15.5 15.5l3 3" stroke="white" stroke-width="2.4" stroke-linecap="round"/></svg>
+                </div>
                 <div class="ml-body">
                     <div class="ml-model-name">{{ __('welcome.qwen3_vl_32b') }}</div>
                     <div class="ml-company">{{ __('welcome.qwen3_vl_32b_company') }}</div>
@@ -563,7 +577,9 @@ document.addEventListener('DOMContentLoaded', function() {
         </div>
         <div class="ml-grid">
             <div class="ml-card">
-                <div class="ml-avatar ml-av-deepseek">D</div>
+                <div class="ml-avatar ml-av-deepseek">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="white" aria-hidden="true"><path d="M6 4h6c4.418 0 8 3.582 8 8s-3.582 8-8 8H6V4z"/></svg>
+                </div>
                 <div class="ml-body">
                     <div class="ml-model-name">{{ __('welcome.deepseek_v31_671b') }}</div>
                     <div class="ml-company">{{ __('welcome.deepseek_v31_671b_company') }}</div>
@@ -571,7 +587,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 </div>
             </div>
             <div class="ml-card">
-                <div class="ml-avatar ml-av-qwen">Q</div>
+                <div class="ml-avatar ml-av-qwen">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="7" stroke="white" stroke-width="2.2"/><path d="M15.5 15.5l3 3" stroke="white" stroke-width="2.4" stroke-linecap="round"/></svg>
+                </div>
                 <div class="ml-body">
                     <div class="ml-model-name">{{ __('welcome.qwen_35_397b') }}</div>
                     <div class="ml-company">{{ __('welcome.qwen_35_397b_company') }}</div>
