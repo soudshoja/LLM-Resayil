@@ -56,6 +56,9 @@
         .btn { display: inline-flex; align-items: center; justify-content: center; padding: 0.5rem 1.25rem; border-radius: 8px; font-weight: 600; font-size: 0.875rem; text-decoration: none; border: none; cursor: pointer; transition: all 0.2s; gap: 0.4rem; }
         .btn-gold { background: linear-gradient(135deg, var(--gold), var(--gold-light)); color: #0a0d14; }
         .btn-gold:hover { opacity: 0.9; transform: translateY(-1px); box-shadow: 0 4px 15px rgba(212,175,55,0.3); color: #0a0d14; }
+        /* Nav Get Started — outlined style so gold text is visible on dark navbar */
+        .nav-links .btn-gold { background: transparent; border: 1px solid var(--gold); color: var(--gold); }
+        .nav-links .btn-gold:hover { background: rgba(212,175,55,0.1); color: var(--gold); transform: none; box-shadow: none; opacity: 1; }
         .btn-outline { border: 1px solid var(--gold-muted); color: var(--gold); background: transparent; }
         .btn-outline:hover { background: rgba(212,175,55,0.1); color: var(--gold); }
         .btn-danger { background: var(--error); color: white; }
@@ -212,10 +215,9 @@
         <!-- Language Switcher -->
         <div class="lang-switch">
             <button class="lang-btn" type="button" aria-label="{{ __('navigation.language') }}">
-                <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"/>
-                </svg>
-                <span>{{ app()->getLocale() === 'ar' ? 'AR' : 'EN' }}</span>
+                <span style="font-weight:600;letter-spacing:0.03em">{{ app()->getLocale() === 'ar' ? 'AR' : 'EN' }}</span>
+                <span style="color:var(--border);margin:0 1px">|</span>
+                <span style="color:var(--text-muted);font-size:0.8rem">{{ app()->getLocale() === 'ar' ? 'EN' : 'AR' }}</span>
             </button>
             <div class="lang-dropdown">
                 <button class="lang-option-btn{{ app()->getLocale() === 'en' ? ' active' : '' }}" data-lang="en">
