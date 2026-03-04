@@ -488,10 +488,11 @@ eb44537 feat: AJAX toggle for admin models — no page reload on enable/disable
 
 ---
 
-*State file last updated: 2026-03-04 — Quick task 1: API models hide type + filter embeddings
+*State file last updated: 2026-03-05 — Quick task 3: Admin email notification on new user registration
 
 ### Quick Tasks Completed
 
 | # | Description | Date | Commit | Directory |
 |---|-------------|------|--------|-----------|
 | 1 | Fix API models endpoint: hide type field and filter embedding models | 2026-03-04 | 517f0c2 | [1-fix-api-models-endpoint-hide-type-field-](./quick/1-fix-api-models-endpoint-hide-type-field-/) |
+| 3 | Admin email notification when new user registers (soud@alphia.net) | 2026-03-05 | b6d626e | [3-add-admin-email-notification-when-a-new-](./quick/3-add-admin-email-notification-when-a-new-/) |
