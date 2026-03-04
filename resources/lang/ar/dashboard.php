@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'welcome_back' => 'مرحباً بعودتك',
+    'welcome_back' => 'مرحباً بعودتك، :name',
     'credits_remaining' => 'الرصيد المتبقي',
     'available_for_api' => 'متوفر لاستخدام API',
     'api_keys' => 'مفاتيح API',
