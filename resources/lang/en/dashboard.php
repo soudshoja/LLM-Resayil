@@ -181,5 +181,6 @@ return [
     'savings_col_saved'        => 'You Saved',
     'usage_input_tokens'       => 'Input',
     'usage_output_tokens'      => 'Output',
+    'usage_our_cost'           => 'Our Cost',
     'usage_vs_gpt4o'           => 'vs GPT-4o',
 ];
