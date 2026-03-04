@@ -45,6 +45,11 @@ class ModelsController extends Controller
             $models = $this->fallbackToConfig();
         }
 
+        // Filter out embedding models — they are not chat LLMs
+        $models = array_filter($models, function (array $modelData) {
+            return ($modelData['category'] ?? 'chat') !== 'embedding';
+        });
+
         $data = array_map(function (string $modelId, array $modelData) {
             return [
                 'id'       => $modelId,
@@ -52,7 +57,6 @@ class ModelsController extends Controller
                 'created'  => 1740000000,
                 'owned_by' => 'llm-resayil',
                 'family'   => $modelData['family'] ?? null,
-                'type'     => $modelData['type'] ?? null,
                 'category' => $modelData['category'] ?? 'chat',
                 'size'     => $modelData['size'] ?? null,
             ];
