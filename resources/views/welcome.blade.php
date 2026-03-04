@@ -75,6 +75,18 @@
     .btn-lg { padding: 0.75rem 2rem; font-size: 1rem; }
     .btn-xl { padding: 0.85rem 2.5rem; font-size: 1.05rem; }
 
+    /* ── Hero CTA: Get Started button — gold text on dark bg ── */
+    .hero-cta .btn-gold {
+        background: transparent;
+        border: 1px solid var(--gold);
+        color: var(--gold);
+    }
+    .hero-cta .btn-gold:hover {
+        background: rgba(212,175,55,0.1);
+        color: var(--gold);
+        box-shadow: 0 4px 18px rgba(212,175,55,0.25);
+    }
+
     /* ── Pricing cards ── */
     .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
     .plan-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px; padding: 2rem; display: flex; flex-direction: column; position: relative; transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s; }
