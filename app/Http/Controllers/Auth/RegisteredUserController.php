@@ -8,6 +8,7 @@ use App\Services\OtpService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 
 class RegisteredUserController extends Controller
@@ -92,6 +93,22 @@ class RegisteredUserController extends Controller
         ]);
 
         Auth::login($user);
+
+        // Notify admin of new registration
+        try {
+            Mail::send('emails.new-user-registered', [
+                'name'         => $user->name,
+                'email'        => $user->email,
+                'phone'        => $user->phone,
+                'registeredAt' => $user->created_at->format('Y-m-d H:i:s T'),
+            ], function ($message) {
+                $message->to('soud@alphia.net')
+                        ->subject('New User Registration — LLM Resayil')
+                        ->from(config('mail.from.address'), config('mail.from.name'));
+            });
+        } catch (\Exception $e) {
+            \Log::error('Admin registration notification failed: ' . $e->getMessage());
+        }
 
         return response()->json([
             'message' => 'Registration successful.',
