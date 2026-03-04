@@ -122,39 +122,75 @@ class OllamaProxy
             if ($request->input('stream', false)) {
                 return response()->stream(function () use ($response, $request, $provider, $model, $responseTime) {
                     $totalTokens = 0;
-                    $content = '';
+                    $promptTokens = null;
+                    $completionTokens = null;
+                    $chatId = 'chatcmpl-' . Str::uuid();
+                    $created = time();
+                    $firstChunk = true;
 
                     foreach ($response->getIterator() as $chunk) {
                         $data = json_decode($chunk, true);
 
-                        if ($data) {
-                            if (isset($data['message']['content'])) {
-                                $content .= $data['message']['content'];
-                            }
-                            if (isset($data['message']['tool_calls'])) {
-                                $content .= json_encode($data['message']['tool_calls']);
-                            }
-                            if (isset($data['prompt_eval_count'])) {
-                                $totalTokens += $data['prompt_eval_count'];
-                            }
-                            if (isset($data['eval_count'])) {
-                                $totalTokens += $data['eval_count'];
-                            }
+                        if (!$data) {
+                            continue;
                         }
 
-                        echo 'data: ' . json_encode($data) . "\n\n";
+                        if (isset($data['prompt_eval_count'])) {
+                            $promptTokens = (int) $data['prompt_eval_count'];
+                        }
+                        if (isset($data['eval_count'])) {
+                            $completionTokens = (int) $data['eval_count'];
+                        }
+
+                        if (!empty($data['done'])) {
+                            $totalTokens = ($promptTokens ?? 0) + ($completionTokens ?? 0);
+
+                            // Final chunk with finish_reason
+                            $openAiChunk = [
+                                'id'      => $chatId,
+                                'object'  => 'chat.completion.chunk',
+                                'created' => $created,
+                                'model'   => $model,
+                                'choices' => [[
+                                    'index'        => 0,
+                                    'delta'        => [],
+                                    'finish_reason' => $data['done_reason'] ?? 'stop',
+                                ]],
+                            ];
+                        } else {
+                            $delta = [];
+                            if ($firstChunk) {
+                                $delta['role'] = $data['message']['role'] ?? 'assistant';
+                                $firstChunk = false;
+                            }
+                            $delta['content'] = $data['message']['content'] ?? '';
+
+                            $openAiChunk = [
+                                'id'      => $chatId,
+                                'object'  => 'chat.completion.chunk',
+                                'created' => $created,
+                                'model'   => $model,
+                                'choices' => [[
+                                    'index'        => 0,
+                                    'delta'        => $delta,
+                                    'finish_reason' => null,
+                                ]],
+                            ];
+                        }
+
+                        echo 'data: ' . json_encode($openAiChunk) . "\n\n";
                         ob_flush();
                         flush();
                     }
 
                     // Log usage after stream completes
-                    $this->logUsage($request->user(), $request->input('api_key_id'), $model, $totalTokens, $provider, $responseTime, 200);
+                    $this->logUsage($request->user(), $request->input('api_key_id'), $model, $totalTokens, $provider, $responseTime, 200, $promptTokens, $completionTokens);
 
-                    echo 'data: {"done": true}' . "\n\n";
+                    echo "data: [DONE]\n\n";
                     ob_flush();
                     flush();
                 }, 200, [
-                    'Content-Type' => 'text/event-stream',
+                    'Content-Type'    => 'text/event-stream',
                     'X-Accel-Buffering' => 'no',
                 ]);
             }
