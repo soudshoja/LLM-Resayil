@@ -12,6 +12,10 @@
     .auth-footer a { color: var(--gold); text-decoration: none; }
     .otp-input { font-size: 2rem; text-align: center; letter-spacing: 0.5rem; font-weight: 700; }
     #step-verify { display: none; }
+    .phone-row { display: flex; gap: 0.5rem; }
+    .dial-select { background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 8px; color: var(--text-primary); padding: 0.625rem 0.5rem; font-size: 0.875rem; min-width: 100px; flex-shrink: 0; cursor: pointer; }
+    .dial-select:focus { outline: none; border-color: var(--gold); }
+    .phone-row .form-input { flex: 1; }
 </style>
 @endpush
 
@@ -36,7 +40,41 @@
                 </div>
                 <div class="form-group">
                     <label class="form-label">{{ __('auth.phone_number') }} <span style="color:var(--error,#ff5050)">*</span></label>
-                    <input type="tel" name="phone" class="form-input" placeholder="{{ __('auth.placeholder_phone') }}" required>
+                    <div class="phone-row">
+                        <select id="dial_code_select" class="dial-select">
+                            <option value="965">🇰🇼 +965</option>
+                            <option value="966">🇸🇦 +966</option>
+                            <option value="971">🇦🇪 +971</option>
+                            <option value="973">🇧🇭 +973</option>
+                            <option value="974">🇶🇦 +974</option>
+                            <option value="968">🇴🇲 +968</option>
+                            <option value="962">🇯🇴 +962</option>
+                            <option value="961">🇱🇧 +961</option>
+                            <option value="20">🇪🇬 +20</option>
+                            <option value="212">🇲🇦 +212</option>
+                            <option value="964">🇮🇶 +964</option>
+                            <option value="963">🇸🇾 +963</option>
+                            <option value="967">🇾🇪 +967</option>
+                            <option value="249">🇸🇩 +249</option>
+                            <option value="91">🇮🇳 +91</option>
+                            <option value="92">🇵🇰 +92</option>
+                            <option value="880">🇧🇩 +880</option>
+                            <option value="94">🇱🇰 +94</option>
+                            <option value="63">🇵🇭 +63</option>
+                            <option value="44">🇬🇧 +44</option>
+                            <option value="1">🇺🇸 +1</option>
+                            <option value="49">🇩🇪 +49</option>
+                            <option value="33">🇫🇷 +33</option>
+                            <option value="7">🇷🇺 +7</option>
+                            <option value="86">🇨🇳 +86</option>
+                            <option value="81">🇯🇵 +81</option>
+                            <option value="82">🇰🇷 +82</option>
+                            <option value="55">🇧🇷 +55</option>
+                            <option value="27">🇿🇦 +27</option>
+                            <option value="234">🇳🇬 +234</option>
+                        </select>
+                        <input type="tel" id="phone_number_input" class="form-input" placeholder="99800027" inputmode="numeric" required>
+                    </div>
                 </div>
                 <div class="form-group">
                     <label class="form-label">{{ __('auth.password') }} <span style="color:var(--error,#ff5050)">*</span></label>
@@ -88,6 +126,28 @@
 const CSRF = '{{ csrf_token() }}';
 let formData = {};
 
+// Auto-detect country code via IP geolocation
+(function() {
+    fetch('https://ipapi.co/json/')
+        .then(r => r.json())
+        .then(data => {
+            if (data.country_calling_code) {
+                const code = data.country_calling_code.replace('+', '');
+                const sel = document.getElementById('dial_code_select');
+                for (let i = 0; i < sel.options.length; i++) {
+                    if (sel.options[i].value === code) { sel.selectedIndex = i; break; }
+                }
+            }
+        })
+        .catch(() => {});
+})();
+
+function buildPhone() {
+    const dialCode = document.getElementById('dial_code_select').value;
+    const localNum = document.getElementById('phone_number_input').value.replace(/^0+/, '');
+    return dialCode + localNum;
+}
+
 document.getElementById('registerForm').addEventListener('submit', async function(e) {
     e.preventDefault();
     const form = e.target;
@@ -100,7 +160,7 @@ document.getElementById('registerForm').addEventListener('submit', async functio
     formData = {
         name: form.name.value,
         email: form.email.value,
-        phone: form.phone.value,
+        phone: buildPhone(),
         password: form.password.value,
         password_confirmation: form.password_confirmation.value,
     };
