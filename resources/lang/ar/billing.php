@@ -7,7 +7,7 @@ return [
     'free_trial' => 'تجربة مجانية',
     'trial_active' => 'التجربة النشطة',
     'trial_expires' => 'تنتهي التجربة',
-    'auto_bill_to_starter' => 'تautomatic إعادة الشحن لـ Starter',
+    'auto_bill_to_starter' => 'تلقائية إعادة الشحن لـ Starter',
     'current_plan' => 'الخطة الحالية',
     'renews' => 'يتجدد في',
     'payment_not_successful' => 'فشل الدفع. يرجى المحاولة مرة أخرى.',
@@ -37,7 +37,7 @@ return [
     '30_requests_minute' => '30 طلبات / دقيقة',
     '60_requests_minute' => '60 طلبات / دقيقة',
     'all_model_sizes' => 'جميع أحجام النماذج',
-    'priority_cloud_failover' => '.failover سحابي أولوي',
+    'priority_cloud_failover' => 'التحويل التلقائي سحابي أولوي',
 
     'start_monthly_plan' => 'ابدأ الخطة الشهرية',
     'start_free_trial' => 'ابدأ التجربة المجانية',
@@ -59,7 +59,7 @@ return [
     'max_keys_reached' => 'تم الوصول لحد المفاتيح',
 
     'payment_methods' => 'طرق الدفع',
-    'manage_your_methods' => 'إدارة طرق الدفع للilles',
+    'manage_your_methods' => 'إدارة طرق الدفع للاشتراكات',
     'default' => 'الافتراضي',
     'delete_method' => 'حذف',
     'are_you_sure_delete' => 'هل أنت متأكد من حذف طريقة الدفع هذه؟',

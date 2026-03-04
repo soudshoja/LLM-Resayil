@@ -170,7 +170,7 @@ return [
     'how_it_works_subtitle' => 'ثلاث خطوات بسيطة لبدء استخدام نماذج الذكاء الاصطناعي القوية',
     'free_trial_badge' => 'تجربة مجانية',
     'seven_day_trial' => '7 أيام تجربة مجانية',
-    'one_thousand_credits' => '1,000 رصيد م含まれ',
+    'one_thousand_credits' => '1,000 رصيد مجاني',
     'one_free_api_key' => 'مفتاح API مجاني',
     'cancel_anytime_trial' => 'إلغاء في أي وقت خلال التجربة',
     'after_trial_label' => 'بعد التجربة',

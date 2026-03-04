@@ -59,7 +59,7 @@ return [
     'always_rate_no_surprises' => 'هذا المعدل دائماً. بدون مفاجآت.',
     'rates' => 'المعدلات',
     'credit_rates_by_model' => 'معدلات الرموز حسب مستوى النموذج',
-    'api_models_endpoint' => '终结 /api/v1/models يوضح أي مستوى ينتمي إليه كل نموذج.',
+    'api_models_endpoint' => 'نقطة نهاية /api/v1/models توضح أي مستوى ينتمي إليه كل نموذج.',
     'model_tier' => 'مستوى النموذج',
     'credits_output_token' => 'رموز/رمز إخراج',
     'example_models' => 'نماذج مثال',
