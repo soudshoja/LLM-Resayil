@@ -49,7 +49,7 @@ class CreditService
     /**
      * Deduct credits for a request.
      */
-    public function deductCredits($user, int $tokensUsed, string $provider, string $model): array
+    public function deductCredits($user, int $tokensUsed, string $provider, string $model, ?int $promptTokens = null, ?int $completionTokens = null): array
     {
         $creditMultiplier = $this->resolveMultiplier($provider, $model);
         $creditsDeducted = (int) ceil($tokensUsed * $creditMultiplier / 1000);
@@ -77,6 +77,8 @@ class CreditService
                 'tokens_used' => $tokensUsed,
                 'credits_deducted' => $creditsDeducted,
                 'provider' => $provider,
+                'prompt_tokens'     => $promptTokens,
+                'completion_tokens' => $completionTokens,
             ]);
 
             DB::commit();
@@ -100,7 +102,7 @@ class CreditService
     /**
      * Log usage to database.
      */
-    public function logUsage($user, ?string $apiKeyId, string $model, int $tokensUsed, int $credits, string $provider, int $responseTime = 0, int $statusCode = 200): UsageLog
+    public function logUsage($user, ?string $apiKeyId, string $model, int $tokensUsed, int $credits, string $provider, int $responseTime = 0, int $statusCode = 200, ?int $promptTokens = null, ?int $completionTokens = null): UsageLog
     {
         return UsageLog::create([
             'user_id' => $user->id,
@@ -111,6 +113,8 @@ class CreditService
             'provider' => $provider,
             'response_time_ms' => $responseTime,
             'status_code' => $statusCode,
+            'prompt_tokens'     => $promptTokens,
+            'completion_tokens' => $completionTokens,
         ]);
     }
 

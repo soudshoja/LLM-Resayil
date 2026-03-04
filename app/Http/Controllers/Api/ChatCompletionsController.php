@@ -140,11 +140,22 @@ class ChatCompletionsController extends Controller
         // Deduct credits on successful response (bypass for admin)
         if ($response->getStatusCode() === 200 && !$isAdmin) {
             $content = json_decode($response->getContent(), true);
-            $tokensUsed = $this->estimateTokens($content);
+
+            // Use real Ollama token counts — NOT character estimate
+            $promptTokens     = isset($content['prompt_eval_count']) ? (int) $content['prompt_eval_count'] : null;
+            $completionTokens = isset($content['eval_count'])        ? (int) $content['eval_count']        : null;
+            $tokensUsed       = ($promptTokens ?? 0) + ($completionTokens ?? 0);
+
+            // Fallback if Ollama returned no token counts
+            if ($tokensUsed === 0 && isset($content['message']['content'])) {
+                $tokensUsed = (int) (mb_strlen($content['message']['content']) / 3);
+            }
+
             $cost = $this->creditService->calculateCost($tokensUsed, $provider, $modelId);
 
             if ($cost > 0) {
-                $this->creditService->deductCredits($user, $tokensUsed, $provider, $modelId);
+                $this->creditService->deductCredits($user, $tokensUsed, $provider, $modelId,
+                    $promptTokens, $completionTokens);
             }
         }
 
@@ -256,12 +267,25 @@ class ChatCompletionsController extends Controller
             // Deduct credits on successful response (bypass for admin)
             if ($response->getStatusCode() === 200 && !$isAdmin) {
                 $content = json_decode($response->getContent(), true);
-                $tokensUsed = $this->estimateTokens($content);
+
+                // Streaming: token split not tracked per-chunk — pass null for prompt/completion split
+                $tokensUsed = 0;
+                if (isset($content['prompt_eval_count'])) {
+                    $tokensUsed += (int) $content['prompt_eval_count'];
+                }
+                if (isset($content['eval_count'])) {
+                    $tokensUsed += (int) $content['eval_count'];
+                }
+                if ($tokensUsed === 0 && isset($content['message']['content'])) {
+                    $tokensUsed = (int) (mb_strlen($content['message']['content']) / 3);
+                }
+
                 // Use the provider determined before the request (cloud vs local)
                 $cost = $this->creditService->calculateCost($tokensUsed, $provider, $modelId);
 
                 if ($cost > 0) {
-                    $this->creditService->deductCredits($user, $tokensUsed, $provider, $modelId);
+                    $this->creditService->deductCredits($user, $tokensUsed, $provider, $modelId,
+                        null, null);
                 }
             }
         }, 200, [
@@ -551,27 +575,4 @@ class ChatCompletionsController extends Controller
         return array_filter($models, fn($model) => $model['is_active'] ?? true);
     }
 
-    /**
-     * Estimate token count from response.
-     */
-    protected function estimateTokens(?array $response): int
-    {
-        if (!$response || !isset($response['message']['content'])) {
-            return 0;
-        }
-
-        // Estimate tokens from content (rough approximation: 3 chars = 1 token)
-        $content = $response['message']['content'] ?? '';
-        $tokenEstimate = (int) (mb_strlen($content) / 3);
-
-        // Add prompt tokens if available
-        if (isset($response['prompt_eval_count'])) {
-            $tokenEstimate += $response['prompt_eval_count'];
-        }
-        if (isset($response['eval_count'])) {
-            $tokenEstimate += $response['eval_count'];
-        }
-
-        return max($tokenEstimate, 10); // Minimum 10 tokens
-    }
 }

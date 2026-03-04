@@ -162,19 +162,19 @@ class OllamaProxy
             $responseTime = now()->timestamp * 1000 - $startTime;
             $body = json_decode($response->getBody(), true);
 
-            // Extract token usage from response
-            $totalTokens = 0;
-            if (isset($body['prompt_eval_count'])) {
-                $totalTokens += $body['prompt_eval_count'];
-            }
-            if (isset($body['eval_count'])) {
-                $totalTokens += $body['eval_count'];
-            }
-            if (isset($body['message']['content'])) {
-                $totalTokens += (int) (mb_strlen($body['message']['content']) / 3);
+            // Capture real Ollama token split — do NOT add char estimate on top
+            $promptTokens     = isset($body['prompt_eval_count']) ? (int) $body['prompt_eval_count'] : null;
+            $completionTokens = isset($body['eval_count'])        ? (int) $body['eval_count']        : null;
+            $totalTokens      = ($promptTokens ?? 0) + ($completionTokens ?? 0);
+
+            // Fallback to content length estimate only if Ollama returned no counts at all
+            if ($totalTokens === 0 && isset($body['message']['content'])) {
+                $totalTokens = (int) (mb_strlen($body['message']['content']) / 3);
             }
 
-            $this->logUsage($request->user(), $request->input('api_key_id'), $model, $totalTokens, $provider, $responseTime, $response->getStatusCode());
+            $this->logUsage($request->user(), $request->input('api_key_id'), $model,
+                $totalTokens, $provider, $responseTime, $response->getStatusCode(),
+                $promptTokens, $completionTokens);
 
             return response()->json($body, $response->getStatusCode());
         } catch (GuzzleException $e) {
@@ -267,7 +267,7 @@ class OllamaProxy
     /**
      * Log usage to database.
      */
-    protected function logUsage($user, ?string $apiKeyId, string $model, int $tokensUsed, string $provider, int $responseTime, int $statusCode): void
+    protected function logUsage($user, ?string $apiKeyId, string $model, int $tokensUsed, string $provider, int $responseTime, int $statusCode, ?int $promptTokens = null, ?int $completionTokens = null): void
     {
         $credits = $provider === 'cloud' ? $tokensUsed * 2 : $tokensUsed;
 
@@ -280,6 +280,8 @@ class OllamaProxy
             'provider' => $provider,
             'response_time_ms' => $responseTime,
             'status_code' => $statusCode,
+            'prompt_tokens'     => $promptTokens,
+            'completion_tokens' => $completionTokens,
         ]);
     }
 }
