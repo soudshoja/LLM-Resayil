@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Terms of Service')
+@section('title', __('terms.title'))
 
 @push('styles')
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -136,20 +136,20 @@
 
     {{-- ── Sidebar ── --}}
     <aside class="legal-sidebar">
-        <div class="toc-header">Contents</div>
-        <a class="toc-link active" href="#acceptance" onclick="scrollTo('acceptance')">1. Acceptance</a>
-        <a class="toc-link" href="#service" onclick="scrollTo('service')">2. Description of Service</a>
-        <a class="toc-link" href="#account" onclick="scrollTo('account')">3. Account Registration</a>
-        <a class="toc-link" href="#credits" onclick="scrollTo('credits')">4. Credits & Payments</a>
-        <a class="toc-link" href="#usage" onclick="scrollTo('usage')">5. API Usage & Rate Limits</a>
-        <a class="toc-link" href="#prohibited" onclick="scrollTo('prohibited')">6. Prohibited Uses</a>
-        <a class="toc-link" href="#availability" onclick="scrollTo('availability')">7. Service Availability</a>
-        <a class="toc-link" href="#termination" onclick="scrollTo('termination')">8. Termination</a>
-        <a class="toc-link" href="#changes" onclick="scrollTo('changes')">9. Changes to Terms</a>
-        <a class="toc-link" href="#contact" onclick="scrollTo('contact')">10. Contact</a>
+        <div class="toc-header">{{ __('terms.toc_header') }}</div>
+        <a class="toc-link active" href="#acceptance" onclick="scrollTo('acceptance')">{{ __('terms.toc_acceptance') }}</a>
+        <a class="toc-link" href="#service" onclick="scrollTo('service')">{{ __('terms.toc_service') }}</a>
+        <a class="toc-link" href="#account" onclick="scrollTo('account')">{{ __('terms.toc_account') }}</a>
+        <a class="toc-link" href="#credits" onclick="scrollTo('credits')">{{ __('terms.toc_credits') }}</a>
+        <a class="toc-link" href="#usage" onclick="scrollTo('usage')">{{ __('terms.toc_usage') }}</a>
+        <a class="toc-link" href="#prohibited" onclick="scrollTo('prohibited')">{{ __('terms.toc_prohibited') }}</a>
+        <a class="toc-link" href="#availability" onclick="scrollTo('availability')">{{ __('terms.toc_availability') }}</a>
+        <a class="toc-link" href="#termination" onclick="scrollTo('termination')">{{ __('terms.toc_termination') }}</a>
+        <a class="toc-link" href="#changes" onclick="scrollTo('changes')">{{ __('terms.toc_changes') }}</a>
+        <a class="toc-link" href="#contact" onclick="scrollTo('contact')">{{ __('terms.toc_contact') }}</a>
         <div class="toc-meta">
-            <p><strong>Last updated</strong><br>March 2026</p>
-            <p><strong>Version</strong><br>1.0</p>
+            <p><strong>{{ __('terms.toc_last_updated') }}</strong><br>{{ __('terms.toc_last_updated_value') }}</p>
+            <p><strong>{{ __('terms.toc_version') }}</strong><br>{{ __('terms.toc_version_value') }}</p>
         </div>
     </aside>
 
@@ -157,99 +157,99 @@
     <main class="legal-main" id="legalContent">
 
         <div class="legal-hero">
-            <span class="legal-eyebrow">Legal</span>
-            <h1>Terms of Service</h1>
+            <span class="legal-eyebrow">{{ __('terms.eyebrow') }}</span>
+            <h1>{{ __('terms.title') }}</h1>
             <div class="legal-meta-row">
                 <span class="legal-meta-item">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
-                    Last updated: March 2026
+                    {{ __('terms.last_updated') }}
                 </span>
                 <span class="legal-meta-item">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-                    ~5 min read
+                    {{ __('terms.read_time') }}
                 </span>
-                <span class="legal-meta-item">LLM Resayil</span>
+                <span class="legal-meta-item">{{ __('terms.brand') }}</span>
             </div>
         </div>
 
         <div class="legal-section" id="acceptance">
-            <h2><span class="sec-num">01</span> Acceptance of Terms</h2>
-            <p>By creating an account or using the LLM Resayil API or web portal ("Service"), you agree to be bound by these Terms of Service. If you do not agree, do not use the Service.</p>
+            <h2><span class="sec-num">{{ __('terms.sec_01') }}</span> {{ __('terms.acceptance_title') }}</h2>
+            <p>{{ __('terms.acceptance_desc') }}</p>
         </div>
 
         <div class="legal-section" id="service">
-            <h2><span class="sec-num">02</span> Description of Service</h2>
-            <p>LLM Resayil provides access to large language models (LLMs) via an OpenAI-compatible REST API. The Service includes:</p>
+            <h2><span class="sec-num">{{ __('terms.sec_02') }}</span> {{ __('terms.service_title') }}</h2>
+            <p>{{ __('terms.service_desc') }}</p>
             <ul>
-                <li>API access to 45+ AI models (local GPU inference and cloud proxies)</li>
-                <li>A web portal for managing API keys, credits, and usage history</li>
-                <li>Credit-based billing processed via MyFatoorah (KNET / credit card)</li>
-                <li>Account verification via WhatsApp OTP through Resayil messaging platform</li>
+                <li>{{ __('terms.service_item_api') }}</li>
+                <li>{{ __('terms.service_item_portal') }}</li>
+                <li>{{ __('terms.service_item_billing') }}</li>
+                <li>{{ __('terms.service_item_otp') }}</li>
             </ul>
         </div>
 
         <div class="legal-section" id="account">
-            <h2><span class="sec-num">03</span> Account Registration</h2>
-            <p>You must provide a valid phone number for WhatsApp OTP verification to create an account. You are responsible for maintaining the confidentiality of your API keys and account credentials.</p>
-            <p>You must notify us immediately of any unauthorised use of your account or API keys. We are not liable for losses caused by unauthorised use where you failed to notify us promptly.</p>
+            <h2><span class="sec-num">{{ __('terms.sec_03') }}</span> {{ __('terms.account_title') }}</h2>
+            <p>{{ __('terms.account_desc') }}</p>
+            <p>{{ __('terms.account_unauthorized') }}</p>
         </div>
 
         <div class="legal-section" id="credits">
-            <h2><span class="sec-num">04</span> Credits &amp; Payments</h2>
-            <p>Access to the API is credit-based. Credits are purchased in KWD via KNET or credit card through MyFatoorah. Current top-up tiers:</p>
+            <h2><span class="sec-num">{{ __('terms.sec_04') }}</span> {{ __('terms.credits_title') }}</h2>
+            <p>{{ __('terms.credits_desc') }}</p>
             <ul>
-                <li>5,000 credits — 2.000 KWD</li>
-                <li>15,000 credits — 5.000 KWD</li>
-                <li>50,000 credits — 15.000 KWD</li>
+                <li>{{ __('terms.credits_tier_1') }}</li>
+                <li>{{ __('terms.credits_tier_2') }}</li>
+                <li>{{ __('terms.credits_tier_3') }}</li>
             </ul>
             <div class="legal-callout">
-                <p><strong>Important:</strong> Credits are non-refundable once used. Unused credits do not expire. Prices are subject to change with 14 days' notice.</p>
+                <p>{!! __('terms.credits_callout') !!}</p>
             </div>
         </div>
 
         <div class="legal-section" id="usage">
-            <h2><span class="sec-num">05</span> API Usage &amp; Rate Limits</h2>
-            <p>API usage is subject to per-minute rate limits based on your account tier. Credit multipliers apply: local models consume 1 credit per token; cloud models consume 2 credits per token.</p>
-            <p>Attempting to circumvent rate limits or abuse the Service — including automated scraping, denial-of-service attacks, or reselling access without authorisation — will result in immediate account suspension.</p>
+            <h2><span class="sec-num">{{ __('terms.sec_05') }}</span> {{ __('terms.usage_title') }}</h2>
+            <p>{{ __('terms.usage_desc') }}</p>
+            <p>{{ __('terms.usage_abuse') }}</p>
         </div>
 
         <div class="legal-section" id="prohibited">
-            <h2><span class="sec-num">06</span> Prohibited Uses</h2>
-            <p>You must not use the Service to:</p>
+            <h2><span class="sec-num">{{ __('terms.sec_06') }}</span> {{ __('terms.prohibited_title') }}</h2>
+            <p>{{ __('terms.prohibited_desc') }}</p>
             <ul>
-                <li>Generate illegal, harmful, or deceptive content</li>
-                <li>Violate any applicable law or regulation</li>
-                <li>Infringe intellectual property or privacy rights of others</li>
-                <li>Attempt to reverse-engineer, probe, or exploit Service infrastructure</li>
-                <li>Resell or sublicense API access without written permission</li>
-                <li>Bypass security controls or authentication mechanisms</li>
+                <li>{{ __('terms.prohibited_illegal') }}</li>
+                <li>{{ __('terms.prohibited_law') }}</li>
+                <li>{{ __('terms.prohibited_ip') }}</li>
+                <li>{{ __('terms.prohibited_reverse') }}</li>
+                <li>{{ __('terms.prohibited_resell') }}</li>
+                <li>{{ __('terms.prohibited_bypass') }}</li>
             </ul>
         </div>
 
         <div class="legal-section" id="availability">
-            <h2><span class="sec-num">07</span> Service Availability</h2>
-            <p>We strive for high availability but do not guarantee uninterrupted access. The Service is provided "as is" without warranties of any kind. We are not liable for losses resulting from downtime, model output errors, or data loss.</p>
+            <h2><span class="sec-num">{{ __('terms.sec_07') }}</span> {{ __('terms.availability_title') }}</h2>
+            <p>{{ __('terms.availability_desc') }}</p>
         </div>
 
         <div class="legal-section" id="termination">
-            <h2><span class="sec-num">08</span> Termination</h2>
-            <p>We reserve the right to suspend or terminate accounts that violate these terms, at our sole discretion, with or without notice. You may close your account at any time by contacting us. Unused credits are non-refundable upon termination.</p>
+            <h2><span class="sec-num">{{ __('terms.sec_08') }}</span> {{ __('terms.termination_title') }}</h2>
+            <p>{{ __('terms.termination_desc') }}</p>
         </div>
 
         <div class="legal-section" id="changes">
-            <h2><span class="sec-num">09</span> Changes to Terms</h2>
-            <p>We may update these terms at any time. Continued use of the Service after changes constitutes acceptance. Material changes will be communicated via email or a notice on the portal.</p>
+            <h2><span class="sec-num">{{ __('terms.sec_09') }}</span> {{ __('terms.changes_title') }}</h2>
+            <p>{{ __('terms.changes_desc') }}</p>
         </div>
 
         <div class="legal-section" id="contact">
-            <h2><span class="sec-num">10</span> Contact</h2>
-            <p>For questions about these terms, please use our <a href="/contact" style="color:var(--legal-gold)">contact form</a>.</p>
+            <h2><span class="sec-num">{{ __('terms.sec_10') }}</span> {{ __('terms.contact_title') }}</h2>
+            <p>{!! __('terms.contact_desc') !!}</p>
         </div>
 
         <div class="legal-footer">
-            <a href="/about">About</a>
-            <a href="/privacy-policy">Privacy Policy</a>
-            <a href="/contact">Contact</a>
+            <a href="/about">{{ __('terms.footer_about') }}</a>
+            <a href="/privacy-policy">{{ __('terms.footer_privacy') }}</a>
+            <a href="/contact">{{ __('terms.footer_contact') }}</a>
         </div>
 
     </main>
