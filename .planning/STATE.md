@@ -496,3 +496,4 @@ eb44537 feat: AJAX toggle for admin models — no page reload on enable/disable
 |---|-------------|------|--------|-----------|
 | 1 | Fix API models endpoint: hide type field and filter embedding models | 2026-03-04 | 517f0c2 | [1-fix-api-models-endpoint-hide-type-field-](./quick/1-fix-api-models-endpoint-hide-type-field-/) |
 | 3 | Admin email notification when new user registers (soud@alphia.net) | 2026-03-05 | b6d626e | [3-add-admin-email-notification-when-a-new-](./quick/3-add-admin-email-notification-when-a-new-/) |
+| 4 | Remove Kuwait/KWD/KNET references from welcome page marketing copy (EN + AR) | 2026-03-05 | b2bdca6 | [4-remove-kuwait-kwd-knet-references-from-w](./quick/4-remove-kuwait-kwd-knet-references-from-w/) |
