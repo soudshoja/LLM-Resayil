@@ -97,4 +97,123 @@ return [
     'credits' => 'الرموز',
     'time' => 'الوقت',
     'no_api_calls_yet' => 'لا توجد استدعاءات API بعد.',
+
+    // Dashboard - stats cards
+    'total_users' => 'إجمالي المستخدمين',
+    'active_subscriptions' => 'الاشتراكات النشطة',
+    'total_api_calls' => 'إجمالي طلبات API',
+    'cloud_budget_used' => 'ميزانية السحابة المستخدمة',
+
+    // Dashboard - users table
+    'all_users' => 'جميع المستخدمين',
+    'name_email' => 'الاسم / البريد الإلكتروني',
+    'phone' => 'الهاتف',
+    'plan' => 'الخطة',
+    'joined' => 'تاريخ الانضمام',
+    'actions' => 'الإجراءات',
+
+    // Dashboard - action buttons
+    'credits_action' => 'الرصيد',
+    'tier_action' => 'الخطة',
+    'expiry_action' => 'الانتهاء',
+    'api_key_action' => 'مفتاح API',
+
+    // Dashboard - credits modal
+    'set_credits' => 'تعيين الرصيد',
+    'user_id' => 'معرف المستخدم',
+    'enter_credits' => 'أدخل عدد النقاط',
+    'cancel' => 'إلغاء',
+    'save' => 'حفظ',
+
+    // Dashboard - tier modal
+    'set_subscription_tier' => 'تعيين مستوى الاشتراك',
+    'tier' => 'المستوى',
+    'starter' => 'مبتدئ',
+    'basic' => 'أساسي',
+    'pro' => 'محترف',
+    'enterprise' => 'مؤسسي',
+
+    // Dashboard - expiry modal
+    'set_subscription_expiry' => 'تعيين تاريخ انتهاء الاشتراك',
+    'expiry_date' => 'تاريخ الانتهاء',
+    'clear_expiry' => 'إلغاء تاريخ الانتهاء',
+
+    // Dashboard - API key modal
+    'create_api_key' => 'إنشاء مفتاح API',
+    'key_name' => 'اسم المفتاح',
+    'enter_key_name' => 'أدخل اسم المفتاح',
+    'admin_created_key' => 'مفتاح منشأ من الإدارة',
+    'api_key_created' => 'تم إنشاء مفتاح API',
+    'copy_to_clipboard' => 'نسخ إلى الحافظة',
+    'close' => 'إغلاق',
+    'create_key' => 'إنشاء المفتاح',
+
+    // Dashboard - JS alerts
+    'invalid_credits' => 'يرجى إدخال رصيد صحيح',
+    'credits_error' => 'فشل تحديث الرصيد',
+    'tier_error' => 'فشل تحديث مستوى الاشتراك',
+    'expiry_error' => 'فشل تحديث تاريخ الانتهاء',
+    'key_error' => 'فشل إنشاء مفتاح API',
+    'key_copied' => 'تم نسخ المفتاح',
+
+    // Models page - headers & stats
+    'model_management' => 'إدارة النماذج',
+    'configure_models' => 'تكوين النماذج المتاحة',
+    'total_models' => 'إجمالي النماذج',
+    'active_models' => 'النماذج النشطة',
+    'local_models' => 'النماذج المحلية',
+    'cloud_models' => 'نماذج السحابة',
+
+    // Models page - filter labels
+    'family' => 'العائلة',
+    'category' => 'الفئة',
+    'type' => 'النوع',
+    'size' => 'الحجم',
+    'all' => 'الكل',
+    'chat' => 'محادثة',
+    'code' => 'برمجة',
+    'embedding' => 'تضمين',
+    'vision' => 'رؤية',
+    'thinking' => 'تفكير',
+    'tools' => 'أدوات',
+    'local' => 'محلي',
+    'cloud' => 'سحابي',
+    'small' => 'صغير',
+    'medium' => 'متوسط',
+    'large' => 'كبير',
+    'search_models' => 'ابحث عن النماذج...',
+
+    // Models page - bulk actions
+    'enable' => 'تفعيل',
+    'disable' => 'تعطيل',
+    'bulk_update' => 'تحديث جماعي',
+
+    // Models page - table headers
+    'model_id' => 'معرف النموذج',
+    'multiplier' => 'المضاعف',
+    'status' => 'الحالة',
+    'override_label' => 'تجاوز',
+    'edit' => 'تعديل',
+    'models' => 'نماذج',
+
+    // Models page - edit modal
+    'edit_model_settings' => 'تعديل إعدادات النموذج',
+    'credit_multiplier_override' => 'تجاوز مضاعف الرصيد',
+    'leave_empty_default' => 'اتركه فارغًا للقيمة الافتراضية',
+    'use_default_from_config' => 'استخدام الإعداد الافتراضي',
+    'active' => 'نشط',
+    'inactive' => 'غير نشط',
+    'save_changes' => 'حفظ التغييرات',
+
+    // Models page - JS toast & strings
+    'model_enabled' => 'تم تفعيل النموذج',
+    'model_disabled' => 'تم تعطيل النموذج',
+    'update_failed' => 'فشل التحديث',
+    'select_models_update' => 'يرجى اختيار نماذج للتحديث',
+    'enable_models' => 'تفعيل النماذج',
+    'showing' => 'عرض',
+    'of' => 'من',
+    'saving' => 'جاري الحفظ...',
+    'model_settings_saved' => 'تم حفظ إعدادات النموذج',
+    'failed_save' => 'فشل الحفظ',
 ];
