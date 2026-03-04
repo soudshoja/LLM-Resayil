@@ -258,7 +258,7 @@ class ChatCompletionsController extends Controller
         }
 
         // Return streaming response
-        return response()->stream(function () use ($request, $provider, $modelName, $user, $validated, $modelId) {
+        return response()->stream(function () use ($request, $provider, $modelName, $user, $validated, $modelId, $isAdmin) {
             $response = $this->proxy->proxyChatCompletions($request, $provider, $modelName);
 
             // Stream the response
