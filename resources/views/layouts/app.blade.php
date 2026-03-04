@@ -103,7 +103,7 @@
                 // Create hidden form and submit
                 const form = document.createElement('form');
                 form.method = 'POST';
-                form.action = '/language/' + lang;
+                form.action = '/locale/' + lang;
 
                 // Add CSRF token
                 const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
