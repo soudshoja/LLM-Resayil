@@ -2,13 +2,13 @@
 
 namespace App\Services;
 
-use Illuminate\Support\Facades\Redis;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
 
 class RateLimiter
 {
     /**
-     * Rate limits per tier.
+     * Rate limits per tier (requests per minute).
      */
     protected array $rateLimits = [
         'basic' => 10,
@@ -33,17 +33,7 @@ class RateLimiter
         $key = "rate_limit:{$userId}:" . now()->format('Y-m-d-H-i');
 
         try {
-            $current = Redis::get($key);
-
-            if ($current === false) {
-                return [
-                    'allowed' => true,
-                    'remaining' => $limit,
-                    'limit' => $limit,
-                ];
-            }
-
-            $current = (int) $current;
+            $current = (int) Cache::get($key, 0);
 
             if ($current >= $limit) {
                 return [
@@ -61,7 +51,7 @@ class RateLimiter
         } catch (\Exception $e) {
             Log::error('RateLimiter check error', ['error' => $e->getMessage()]);
 
-            // Allow request if Redis fails (fail open)
+            // Allow request if cache fails (fail open)
             return [
                 'allowed' => true,
                 'remaining' => $limit,
@@ -75,33 +65,29 @@ class RateLimiter
      */
     public function incrementRateLimit(string $userId, string $tier): bool
     {
-        $key = "rate_limit:{$userId}:" . now()->format('Y-m-d-H-i');
         $limit = $this->getRateLimit($tier);
+        $key = "rate_limit:{$userId}:" . now()->format('Y-m-d-H-i');
 
         try {
-            $current = Redis::get($key);
-
-            if ($current === false) {
-                Redis::setex($key, 60 - now()->format('s'), 1);
-                return true;
+            // TTL: remaining seconds in the current minute
+            $ttl = 60 - (int) now()->format('s');
+            if ($ttl <= 0) {
+                $ttl = 60;
             }
 
-            $current = (int) $current;
+            $current = (int) Cache::get($key, 0);
 
             if ($current >= $limit) {
                 return false;
             }
 
-            Redis::incr($key);
-
-            // Extend expiry if we're still within the window
-            Redis::expire($key, 60 - now()->format('s'));
+            Cache::put($key, $current + 1, $ttl);
 
             return true;
         } catch (\Exception $e) {
             Log::error('RateLimiter increment error', ['error' => $e->getMessage()]);
 
-            // Allow request if Redis fails (fail open)
+            // Allow request if cache fails (fail open)
             return true;
         }
     }
@@ -115,14 +101,13 @@ class RateLimiter
         $key = "rate_limit:{$userId}:" . now()->format('Y-m-d-H-i');
 
         try {
-            $current = Redis::get($key);
-            $ttl = Redis::ttl($key);
+            $current = (int) Cache::get($key, 0);
 
             return [
                 'limit' => $limit,
-                'current' => $current ? (int) $current : 0,
-                'remaining' => $current ? max(0, $limit - (int) $current) : $limit,
-                'ttl' => $ttl,
+                'current' => $current,
+                'remaining' => max(0, $limit - $current),
+                'ttl' => 60 - (int) now()->format('s'),
             ];
         } catch (\Exception $e) {
             Log::error('RateLimiter status error', ['error' => $e->getMessage()]);
@@ -144,7 +129,7 @@ class RateLimiter
         $key = "rate_limit:{$userId}:" . now()->format('Y-m-d-H-i');
 
         try {
-            return (bool) Redis::del($key);
+            return Cache::forget($key);
         } catch (\Exception $e) {
             Log::error('RateLimiter reset error', ['error' => $e->getMessage()]);
 

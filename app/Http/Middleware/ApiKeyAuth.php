@@ -57,8 +57,12 @@ class ApiKeyAuth
             }
         }
 
-        // Update last_used_at timestamp
-        $apiKey->update(['last_used_at' => now()]);
+        // Update last_used_at at most once per minute to avoid a synchronous DB write
+        // on every single API request (which adds a round-trip to every call).
+        $lastUsed = $apiKey->last_used_at;
+        if (!$lastUsed || $lastUsed->diffInSeconds(now()) >= 60) {
+            $apiKey->update(['last_used_at' => now()]);
+        }
 
         // Set authenticated user so $request->user() works in controllers
         $user = $apiKey->user;

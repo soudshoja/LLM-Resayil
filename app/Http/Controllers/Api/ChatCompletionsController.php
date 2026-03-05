@@ -10,6 +10,7 @@ use App\Services\CreditService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Cache;
 use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
 
 class ChatCompletionsController extends Controller
@@ -342,21 +343,37 @@ class ChatCompletionsController extends Controller
 
     /**
      * Fetch models from Ollama GPU server and infer metadata (mirrors ModelsController).
+     * Result is cached for 60 seconds to avoid an extra HTTP round-trip on every API call.
      */
     protected function fetchModelsFromOllama(): ?array
     {
         $ollamaUrl = env('OLLAMA_GPU_URL', 'http://localhost:11434');
 
+        // Cache the model list for 60 seconds — avoids ~380ms HTTP call on every request.
+        // We use Cache::has() + Cache::get() so a null Ollama response doesn't force
+        // a fresh HTTP call on every subsequent request during an outage.
+        if (Cache::has('ollama_model_list')) {
+            $cached = Cache::get('ollama_model_list');
+
+            // false stored as sentinel means Ollama was unreachable last attempt
+            return $cached === false ? null : $cached;
+        }
+
         try {
             $response = \Illuminate\Support\Facades\Http::timeout(5)->get($ollamaUrl . '/api/tags');
 
             if (!$response->successful()) {
+                // Cache the unreachable state briefly so we don't retry on every request
+                Cache::put('ollama_model_list', false, 10);
+
                 return null;
             }
 
             $data = $response->json();
 
             if (!isset($data['models']) || !is_array($data['models'])) {
+                Cache::put('ollama_model_list', false, 10);
+
                 return null;
             }
 
@@ -398,8 +415,14 @@ class ChatCompletionsController extends Controller
                 $models[$displayId] = $metadata;
             }
 
+            // Cache for 60 seconds — models don't change frequently
+            Cache::put('ollama_model_list', $models, 60);
+
             return $models;
         } catch (\Exception $e) {
+            // Cache the failure briefly so we don't retry on every request
+            Cache::put('ollama_model_list', false, 10);
+
             return null;
         }
     }
