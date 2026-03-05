@@ -1,5 +1,13 @@
 # LLM Resayil — Project Instructions for Claude
 
+## ⛔ ABSOLUTE RULES — NEVER VIOLATE
+
+- **NEVER run `migrate:fresh`, `migrate:reset`, `db:seed`, TRUNCATE, or DROP on prod** — destroys real user data
+- **NEVER delete, overwrite, or modify user records on prod DB** — even for testing
+- **NEVER create test accounts or seed data on prod** — use dev only
+- **Only `migrate --force` is allowed on prod** — additive migrations only
+- Prod DB (`resayili_llm_resayil`) contains real users. Any agent violating these rules causes unrecoverable data loss.
+
 ## Project Overview
 
 Laravel SaaS at https://llm.resayil.io — OpenAI-compatible LLM API with pay-per-use credits.
