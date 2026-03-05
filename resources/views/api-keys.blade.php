@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'API Keys')
+@section('title', __('api_keys.title'))
 
 @push('styles')
 <style>
@@ -56,20 +56,20 @@
 <main>
     <div class="ak-header">
         <div>
-            <h1>API Keys</h1>
-            <p>Manage your API keys for accessing the LLM API.</p>
+            <h1>{{ __('api_keys.title') }}</h1>
+            <p>{{ __('api_keys.subtitle') }}</p>
         </div>
-        <button class="btn-gold" onclick="openCreateModal()">+ New Key</button>
+        <button class="btn-gold" onclick="openCreateModal()">{{ __('api_keys.new_key') }}</button>
     </div>
 
     <div class="ak-table-wrap">
         <table class="ak-table">
             <thead>
                 <tr>
-                    <th>Name</th>
-                    <th>Key Prefix</th>
-                    <th>Created</th>
-                    <th>Last Used</th>
+                    <th>{{ __('api_keys.col_name') }}</th>
+                    <th>{{ __('api_keys.col_prefix') }}</th>
+                    <th>{{ __('api_keys.col_created') }}</th>
+                    <th>{{ __('api_keys.col_last_used') }}</th>
                     <th></th>
                 </tr>
             </thead>
@@ -83,16 +83,16 @@
                         @if($key->last_used_at)
                             <span class="ak-date">{{ \Carbon\Carbon::parse($key->last_used_at)->diffForHumans() }}</span>
                         @else
-                            <span class="ak-never">Never</span>
+                            <span class="ak-never">{{ __('api_keys.never_used') }}</span>
                         @endif
                     </td>
                     <td>
-                        <button class="btn-delete" data-id="{{ $key->id }}" data-name="{{ $key->name }}">Delete</button>
+                        <button class="btn-delete" data-id="{{ $key->id }}" data-name="{{ $key->name }}">{{ __('api_keys.delete') }}</button>
                     </td>
                 </tr>
                 @empty
                 <tr id="emptyRow">
-                    <td colspan="5" class="ak-empty">No API keys yet. Create your first key to get started.</td>
+                    <td colspan="5" class="ak-empty">{{ __('api_keys.empty_state') }}</td>
                 </tr>
                 @endforelse
             </tbody>
@@ -100,19 +100,19 @@
     </div>
 
     <p style="font-size:0.8rem; color:var(--text-muted); margin-top:1rem;">
-        Your full API key is shown only once at creation. Store it securely — it cannot be retrieved later.
+        {{ __('api_keys.shown_once_note') }}
     </p>
 </main>
 
 {{-- Create Key Modal --}}
 <div class="modal-overlay" id="createModal">
     <div class="modal-box">
-        <h3>Create New API Key</h3>
-        <p>Give your key a memorable name (e.g. "My App", "Production").</p>
-        <input type="text" class="modal-input" id="keyNameInput" placeholder="Key name" maxlength="50" autocomplete="off">
+        <h3>{{ __('api_keys.create_title') }}</h3>
+        <p>{{ __('api_keys.create_subtitle') }}</p>
+        <input type="text" class="modal-input" id="keyNameInput" placeholder="{{ __('api_keys.key_name_placeholder') }}" maxlength="50" autocomplete="off">
         <div class="modal-actions">
-            <button class="btn-cancel" onclick="closeCreateModal()">Cancel</button>
-            <button class="btn-gold" onclick="submitCreateKey()" id="createBtn">Create Key</button>
+            <button class="btn-cancel" onclick="closeCreateModal()">{{ __('api_keys.cancel') }}</button>
+            <button class="btn-gold" onclick="submitCreateKey()" id="createBtn">{{ __('api_keys.create_key') }}</button>
         </div>
     </div>
 </div>
@@ -120,18 +120,18 @@
 {{-- Key Reveal Modal --}}
 <div class="modal-overlay" id="revealModal">
     <div class="modal-box">
-        <h3>API Key Created</h3>
-        <p>Copy your key now — it will not be shown again.</p>
+        <h3>{{ __('api_keys.reveal_title') }}</h3>
+        <p>{{ __('api_keys.reveal_subtitle') }}</p>
         <div class="key-reveal">
-            <label>Your API Key</label>
+            <label>{{ __('api_keys.your_api_key') }}</label>
             <div class="key-reveal-row">
                 <textarea class="key-reveal-value" id="revealKeyValue" rows="2" readonly></textarea>
-                <button class="btn-copy" onclick="copyKey()">Copy</button>
+                <button class="btn-copy" onclick="copyKey()">{{ __('api_keys.copy') }}</button>
             </div>
         </div>
-        <p class="key-warning">Save this key somewhere safe. You cannot view it again after closing this dialog.</p>
+        <p class="key-warning">{{ __('api_keys.key_warning') }}</p>
         <div class="modal-actions">
-            <button class="btn-gold" onclick="closeRevealModal()">Done</button>
+            <button class="btn-gold" onclick="closeRevealModal()">{{ __('api_keys.done') }}</button>
         </div>
     </div>
 </div>
@@ -175,7 +175,7 @@ document.getElementById('keysBody').addEventListener('click', function(e) {
                 const td = document.createElement('td');
                 td.colSpan = 5;
                 td.className = 'ak-empty';
-                td.textContent = 'No API keys yet. Create your first key to get started.';
+                td.textContent = '{{ __('api_keys.empty_state') }}';
                 tr.appendChild(td);
                 document.getElementById('keysBody').appendChild(tr);
             }
@@ -219,7 +219,7 @@ function submitCreateKey() {
     .then(function(r) { return r.json().then(function(d) { return { status: r.status, data: d }; }); })
     .then(function(res) {
         btn.disabled = false;
-        btn.textContent = 'Create Key';
+        btn.textContent = '{{ __('api_keys.create_key') }}';
         if (res.status === 201) {
             closeCreateModal();
             addKeyRow(res.data, name);
@@ -232,7 +232,7 @@ function submitCreateKey() {
     })
     .catch(function() {
         btn.disabled = false;
-        btn.textContent = 'Create Key';
+        btn.textContent = '{{ __('api_keys.create_key') }}';
         showToast('Network error. Please try again.', 'error');
     });
 }
@@ -267,7 +267,7 @@ function addKeyRow(data, fallbackName) {
     var tdLastUsed = document.createElement('td');
     var neverSpan = document.createElement('span');
     neverSpan.className = 'ak-never';
-    neverSpan.textContent = 'Never';
+    neverSpan.textContent = '{{ __('api_keys.never_used') }}';
     tdLastUsed.appendChild(neverSpan);
 
     var tdAction = document.createElement('td');
@@ -275,7 +275,7 @@ function addKeyRow(data, fallbackName) {
     delBtn.className = 'btn-delete';
     delBtn.dataset.id = id;
     delBtn.dataset.name = keyName;
-    delBtn.textContent = 'Delete';
+    delBtn.textContent = '{{ __('api_keys.delete') }}';
     tdAction.appendChild(delBtn);
 
     tr.appendChild(tdName);

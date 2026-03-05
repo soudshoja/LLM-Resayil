@@ -21,6 +21,7 @@ return [
     'after_trial' => 'After Trial',
     'card_required' => 'Card Required',
     'cancel_anytime' => 'Cancel anytime during trial',
+    'how_credits_work' => 'How credits work',
     'payments_secure' => 'Payments processed securely via KNET / credit card. Cancel anytime during the trial period.',
 
     'most_popular' => 'Most Popular',
