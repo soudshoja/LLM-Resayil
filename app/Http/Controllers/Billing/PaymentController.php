@@ -4,10 +4,12 @@ namespace App\Http\Controllers\Billing;
 
 use App\Http\Controllers\Controller;
 use App\Models\ApiKeys;
+use App\Models\TopupPurchase;
 use App\Services\MyFatoorahService;
 use App\Services\BillingService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 
 class PaymentController extends Controller
@@ -115,41 +117,117 @@ class PaymentController extends Controller
             $credits = (int) $validated['credits'];
             $price = $this->billingService->getCreditPackPrice($credits);
 
-            // Calculate callback URLs
-            $callbackUrl = route('billing.webhook');
+            // Calculate callback URLs — dedicated topup callback (mirrors trial pattern)
+            $callbackUrl = route('billing.topup.callback');
             $errorCallbackUrl = route('billing.plans') . '?error=payment_failed';
 
             // Create MyFatoorah invoice
             $invoiceData = [
-                'user_id' => $user->id,
-                'amount' => $price,
-                'currency_code' => 'KWD',
-                'invoice_expiry' => now()->addDays(7)->toDateTimeString(),
-                'customer_name' => $user->name,
-                'customer_email' => $user->email,
-                'callback_url' => $callbackUrl,
+                'user_id'            => $user->id,
+                'amount'             => $price,
+                'item_name'          => 'Credit Top-up — ' . $credits . ' credits',
+                'type'               => 'topup',
+                'customer_name'      => $user->name,
+                'customer_email'     => $user->email,
+                'callback_url'       => $callbackUrl,
                 'error_callback_url' => $errorCallbackUrl,
-                'payment_method_id' => $validated['payment_method_id'],
+                'payment_method_id'  => $validated['payment_method_id'],
             ];
 
             $invoice = $this->myfatoorahService->createInvoice($invoiceData);
 
-            // Store pending top-up in session
+            // Create a pending TopupPurchase record so the callback can find it
+            TopupPurchase::create([
+                'user_id'        => $user->id,
+                'credits'        => $credits,
+                'price'          => $price,
+                'status'         => 'pending',
+                'transaction_id' => $invoice['invoice_id'],
+                'payment_method' => 'myfatoorah',
+            ]);
+
+            // Also store in session as backup reference
             Session::put('pending_topup', [
-                'user_id' => $user->id,
-                'credits' => $credits,
-                'price' => $price,
+                'user_id'    => $user->id,
+                'credits'    => $credits,
+                'price'      => $price,
                 'invoice_id' => $invoice['invoice_id'],
                 'created_at' => now()->toDateTimeString(),
             ]);
 
-            // Redirect to MyFatoorah invoice URL
+            // Redirect to MyFatoorah payment URL
             return redirect()->away($invoice['invoice_url']);
 
         } catch (\Exception $e) {
             return redirect()
                 ->back()
                 ->with('error', 'Failed to create payment invoice: ' . $e->getMessage());
+        }
+    }
+
+    /**
+     * Handle top-up payment callback from MyFatoorah.
+     * MyFatoorah redirects here after payment with ?paymentId=XXX
+     */
+    public function handleTopupCallback(Request $request)
+    {
+        $paymentId = $request->get('paymentId');
+
+        if (!$paymentId) {
+            return redirect()->route('billing.plans')->with('error', 'Invalid callback. No payment ID.');
+        }
+
+        try {
+            $status = $this->myfatoorahService->verifyPayment($paymentId);
+
+            if ($status['payment_status'] !== 'Paid') {
+                return redirect()->route('billing.plans')->with('error', 'Payment was not successful. Please try again.');
+            }
+
+            $user = Auth::user();
+
+            // Find the pending topup by invoice ID from session
+            $pending = Session::get('pending_topup');
+
+            if (!$pending || $pending['user_id'] !== $user->id) {
+                // Session may have expired — try to find by transaction_id from status
+                Log::warning('TopupCallback: session mismatch or missing', [
+                    'paymentId' => $paymentId,
+                    'userId'    => $user ? $user->id : null,
+                ]);
+                return redirect()->route('billing.plans')->with('error', 'Session expired. If credits were not added, please contact support.');
+            }
+
+            // Find the pending DB record and mark it completed
+            $topup = TopupPurchase::where('transaction_id', $pending['invoice_id'])
+                ->where('user_id', $user->id)
+                ->where('status', 'pending')
+                ->first();
+
+            if ($topup) {
+                $topup->status = 'completed';
+                $topup->paid_at = now();
+                $topup->save();
+            }
+
+            Session::forget('pending_topup');
+
+            // Add credits to user
+            $credits = (int) $pending['credits'];
+            $user->increment('credits', $credits);
+
+            Log::info('TopupCallback: credits added', [
+                'userId'    => $user->id,
+                'credits'   => $credits,
+                'paymentId' => $paymentId,
+            ]);
+
+            return redirect()->route('billing.plans')
+                ->with('success', number_format($credits) . ' credits added to your account successfully!');
+
+        } catch (\Exception $e) {
+            Log::error('TopupCallback: failed', ['error' => $e->getMessage(), 'paymentId' => $paymentId]);
+            return redirect()->route('billing.plans')->with('error', 'Top-up activation failed: ' . $e->getMessage());
         }
     }
 
