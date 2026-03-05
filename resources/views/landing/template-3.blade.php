@@ -1220,6 +1220,14 @@
             .navbar-cta .btn-ghost { display: none; }
         }
     </style>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-M0T3YYQP7X"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-M0T3YYQP7X');
+    </script>
 </head>
 <body>
 
