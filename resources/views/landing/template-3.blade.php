@@ -707,6 +707,11 @@ response = client.chat.completions.create(
     // Mobile nav
     var mobileNav = document.getElementById('mobile-nav');
     var navToggle = document.getElementById('nav-toggle');
+    window.closeMnav = function () {
+        mobileNav.classList.remove('open');
+        navToggle.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
+    };
     document.getElementById('mnav-close').addEventListener('click', closeMnav);
     navToggle.addEventListener('click', function () {
         mobileNav.classList.add('open');
@@ -715,11 +720,6 @@ response = client.chat.completions.create(
     });
     mobileNav.addEventListener('click', function (e) { if (e.target === mobileNav) closeMnav(); });
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeMnav(); });
-    window.closeMnav = function () {
-        mobileNav.classList.remove('open');
-        navToggle.setAttribute('aria-expanded', 'false');
-        document.body.style.overflow = '';
-    };
 
     // Scroll animations
     var fuEls = document.querySelectorAll('.fu');
