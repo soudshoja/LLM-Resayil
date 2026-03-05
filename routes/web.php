@@ -106,6 +106,9 @@ Route::group([], function () {
         Route::post('/billing/payment/extra-key', [PaymentController::class, 'initiateExtraKeyPayment'])->name('billing.extra-key.pay');
         Route::get('/billing/extra-key/callback', [PaymentController::class, 'handleExtraKeyCallback'])->name('billing.extra-key.callback');
 
+        // Topup callback — MyFatoorah redirects here after payment with ?paymentId=XXX
+        Route::get('/billing/topup/callback', [PaymentController::class, 'handleTopupCallback'])->name('billing.topup.callback');
+
     });
 
     // Webhook handler (outside auth — MyFatoorah calls this without session)
