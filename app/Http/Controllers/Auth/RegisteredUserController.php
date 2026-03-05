@@ -95,20 +95,25 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
-        // Notify admin of new registration
-        try {
-            Mail::send('emails.new-user-registered', [
-                'name'         => $user->name,
-                'email'        => $user->email,
-                'phone'        => $user->phone,
-                'registeredAt' => $user->created_at->format('Y-m-d H:i:s T'),
-            ], function ($message) {
-                $message->to('soud@alphia.net')
-                        ->subject('New User Registration — LLM Resayil')
-                        ->from(config('mail.from.address'), config('mail.from.name'));
-            });
-        } catch (\Exception $e) {
-            Log::error('Admin registration notification failed: ' . $e->getMessage());
+        // Notify admins of new registration
+        $adminEmails = ['soud@alphia.net', 'admin@llm.resayil.io'];
+        $mailData = [
+            'name'         => $user->name,
+            'email'        => $user->email,
+            'phone'        => $user->phone,
+            'registeredAt' => $user->created_at->format('Y-m-d H:i:s T'),
+        ];
+        foreach ($adminEmails as $adminEmail) {
+            try {
+                Mail::send('emails.new-user-registered', $mailData, function ($message) use ($adminEmail) {
+                    $message->to($adminEmail)
+                            ->subject('New User Registration — LLM Resayil')
+                            ->from(config('mail.from.address'), config('mail.from.name'));
+                });
+                Log::info('Admin registration notification sent to ' . $adminEmail);
+            } catch (\Exception $e) {
+                Log::error('Admin registration notification failed for ' . $adminEmail . ': ' . $e->getMessage());
+            }
         }
 
         return response()->json([
