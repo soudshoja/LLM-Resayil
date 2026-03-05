@@ -107,7 +107,7 @@ class User extends Authenticatable
      */
     public function isAdmin(): bool
     {
-        return in_array($this->email, [
+        return $this->subscription_tier === 'admin' || in_array($this->email, [
             'admin@llm.resayil.io',
             'shoja.soud@gmail.com',
         ]);
