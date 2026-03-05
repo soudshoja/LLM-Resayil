@@ -116,11 +116,11 @@
         <!-- Mobile Accordion -->
         <div class="comparison-accordion">
             <div class="accordion-item">
-                <div class="accordion-header resayil">
+                <button class="accordion-header resayil" aria-expanded="false" aria-controls="accordion-content-resayil">
                     <span>LLM Resayil</span>
-                    <span class="accordion-toggle">▼</span>
-                </div>
-                <div class="accordion-content">
+                    <span class="accordion-toggle" aria-hidden="true">▼</span>
+                </button>
+                <div class="accordion-content" id="accordion-content-resayil">
                     <div class="accordion-row">
                         <span class="accordion-label">Pricing (/1K tokens)</span>
                         <span class="accordion-value">From $0.0001</span>
@@ -149,11 +149,11 @@
             </div>
 
             <div class="accordion-item">
-                <div class="accordion-header">
+                <button class="accordion-header" aria-expanded="false" aria-controls="accordion-content-openrouter">
                     <span>OpenRouter</span>
-                    <span class="accordion-toggle">▼</span>
-                </div>
-                <div class="accordion-content">
+                    <span class="accordion-toggle" aria-hidden="true">▼</span>
+                </button>
+                <div class="accordion-content" id="accordion-content-openrouter">
                     <div class="accordion-row">
                         <span class="accordion-label">Pricing (/1K tokens)</span>
                         <span class="accordion-value">$0.0008–$0.02</span>
@@ -178,11 +178,11 @@
             </div>
 
             <div class="accordion-item">
-                <div class="accordion-header">
+                <button class="accordion-header" aria-expanded="false" aria-controls="accordion-content-claude">
                     <span>Claude API</span>
-                    <span class="accordion-toggle">▼</span>
-                </div>
-                <div class="accordion-content">
+                    <span class="accordion-toggle" aria-hidden="true">▼</span>
+                </button>
+                <div class="accordion-content" id="accordion-content-claude">
                     <div class="accordion-row">
                         <span class="accordion-label">Pricing (/1K tokens)</span>
                         <span class="accordion-value">$0.003–$0.03</span>
@@ -207,11 +207,11 @@
             </div>
 
             <div class="accordion-item">
-                <div class="accordion-header">
+                <button class="accordion-header" aria-expanded="false" aria-controls="accordion-content-ollama">
                     <span>Ollama</span>
-                    <span class="accordion-toggle">▼</span>
-                </div>
-                <div class="accordion-content">
+                    <span class="accordion-toggle" aria-hidden="true">▼</span>
+                </button>
+                <div class="accordion-content" id="accordion-content-ollama">
                     <div class="accordion-row">
                         <span class="accordion-label">Pricing (/1K tokens)</span>
                         <span class="accordion-value">Free (local)</span>
@@ -236,11 +236,11 @@
             </div>
 
             <div class="accordion-item">
-                <div class="accordion-header">
+                <button class="accordion-header" aria-expanded="false" aria-controls="accordion-content-together">
                     <span>Together AI</span>
-                    <span class="accordion-toggle">▼</span>
-                </div>
-                <div class="accordion-content">
+                    <span class="accordion-toggle" aria-hidden="true">▼</span>
+                </button>
+                <div class="accordion-content" id="accordion-content-together">
                     <div class="accordion-row">
                         <span class="accordion-label">Pricing (/1K tokens)</span>
                         <span class="accordion-value">$0.0005–$0.01</span>
@@ -622,6 +622,9 @@ function toggleAccordion(header) {
     const isOpen = item.classList.contains('open');
     item.classList.toggle('open');
     header.setAttribute('aria-expanded', !isOpen);
+    // Update aria-expanded to reflect current state after toggle
+    const currentlyOpen = item.classList.contains('open');
+    header.setAttribute('aria-expanded', currentlyOpen);
 }
 
 // FAQ questions with keyboard support
