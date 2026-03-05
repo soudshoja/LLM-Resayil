@@ -918,6 +918,7 @@ response = client.chat.completions.create(
     }
 
     function showErrors(errors) {
+        clearErrors();
         var hasField = false;
         Object.keys(errors).forEach(function (field) {
             var m = fmap[field];
@@ -993,10 +994,7 @@ response = client.chat.completions.create(
                 var ce2 = {};
                 if (!otpCode || otpCode.length !== 6) ce2.otp_code = ['Please enter the 6-digit code sent to your WhatsApp.'];
                 if (Object.keys(ce2).length) {
-                    var otpErr = document.getElementById('e-otp');
-                    var otpInp = document.getElementById('r-otp');
-                    if (otpInp) otpInp.classList.add('err');
-                    if (otpErr) { otpErr.querySelector('span').textContent = ce2.otp_code[0]; otpErr.classList.add('on'); }
+                    showErrors(ce2);
                     return;
                 }
                 otpBtn.disabled = true;
@@ -1015,10 +1013,7 @@ response = client.chat.completions.create(
                     } else {
                         var d2 = await res2.json().catch(function () { return {}; });
                         if (d2.errors && d2.errors.otp_code) {
-                            var otpErr2 = document.getElementById('e-otp');
-                            var otpInp2 = document.getElementById('r-otp');
-                            if (otpInp2) otpInp2.classList.add('err');
-                            if (otpErr2) { otpErr2.querySelector('span').textContent = d2.errors.otp_code[0]; otpErr2.classList.add('on'); }
+                            showErrors(d2.errors);
                         } else if (d2.errors) {
                             showErrors(d2.errors);
                             goToStep1();
