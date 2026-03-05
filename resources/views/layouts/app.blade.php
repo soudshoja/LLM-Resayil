@@ -138,6 +138,39 @@
         }
     </style>
     @stack('styles')
+    <!-- Organization Schema -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "LLM Resayil",
+        "url": "https://llm.resayil.io",
+        "logo": "https://llm.resayil.io/logo.png",
+        "description": "Powerful AI assistant platform with 50+ models. Write faster, answer anything, and get results instantly. 1,000 free credits—no credit card required.",
+        "foundingDate": "2024-01-01",
+        "headquarters": {
+            "@type": "Place",
+            "address": {
+                "@type": "PostalAddress",
+                "addressCountry": "KW"
+            }
+        },
+        "contactPoint": {
+            "@type": "ContactPoint",
+            "contactType": "Customer Support",
+            "email": "support@resayil.io",
+            "availableLanguage": ["en", "ar"]
+        },
+        "areaServed": {
+            "@type": "Country",
+            "name": "Worldwide"
+        },
+        "sameAs": [
+            "https://twitter.com/LLMResayil",
+            "https://facebook.com/LLMResayil"
+        ]
+    }
+    </script>
     @if(app()->isProduction())
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-M0T3YYQP7X"></script>

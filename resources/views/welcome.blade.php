@@ -10,6 +10,71 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
+    <!-- SoftwareApplication Schema -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "LLM Resayil",
+        "description": "Powerful AI assistant platform with 50+ models. Write faster, answer anything, and get results instantly.",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Web",
+        "url": "https://llm.resayil.io",
+        "image": "https://llm.resayil.io/og-image.png",
+        "offers": [
+            {
+                "@type": "Offer",
+                "priceCurrency": "KWD",
+                "price": "0",
+                "name": "Free Trial",
+                "description": "Start free with 1,000 credits. No credit card required. Valid for 7 days."
+            },
+            {
+                "@type": "Offer",
+                "priceCurrency": "KWD",
+                "price": "15",
+                "pricingModel": "Subscription",
+                "name": "Starter Plan",
+                "description": "1,000 credits per month. 10 requests per minute."
+            },
+            {
+                "@type": "Offer",
+                "priceCurrency": "KWD",
+                "price": "25",
+                "pricingModel": "Subscription",
+                "name": "Basic Plan",
+                "description": "3,000 credits per month. 30 requests per minute. All model sizes."
+            },
+            {
+                "@type": "Offer",
+                "priceCurrency": "KWD",
+                "price": "45",
+                "pricingModel": "Subscription",
+                "name": "Pro Plan",
+                "description": "10,000 credits per month. 60 requests per minute. Priority cloud failover."
+            }
+        ],
+        "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.8",
+            "ratingCount": "250",
+            "bestRating": "5",
+            "worstRating": "1"
+        },
+        "featureList": [
+            "50+ AI Models",
+            "Write Faster",
+            "Answer Anything",
+            "Multiple Languages",
+            "Available 24/7",
+            "Private & Secure",
+            "OpenAI Compatible API"
+        ],
+        "downloadUrl": "https://llm.resayil.io/register",
+        "screenshot": "https://llm.resayil.io/screenshot.png"
+    }
+    </script>
+
     @if(app()->isProduction())
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-M0T3YYQP7X"></script>
