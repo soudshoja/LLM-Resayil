@@ -211,6 +211,19 @@
         .gerr { display: none; background: var(--red-dim); border: 1px solid rgba(239,68,68,0.25); border-radius: var(--r-sm); padding: 0.75rem 1rem; font-size: 0.88rem; color: #fca5a5; margin-bottom: 1rem; align-items: center; gap: 0.5rem; }
         .gerr.on { display: flex; }
         .gerr svg { width: 16px; height: 16px; flex-shrink: 0; }
+        /* OTP STEP */
+        .otp-step { display: none; }
+        .otp-step.on { display: block; }
+        .reg-step { display: block; }
+        .reg-step.off { display: none; }
+        .otp-fi { font-size: 1.8rem; text-align: center; letter-spacing: 0.5rem; font-weight: 700; }
+        .otp-info { font-size: 0.88rem; color: var(--text-muted); text-align: center; margin-bottom: 1.25rem; }
+        .otp-info strong { color: var(--text-secondary); }
+        .otp-back { background: none; border: none; color: var(--gold); font-size: 0.88rem; font-weight: 600; cursor: pointer; padding: 0; margin-top: 0.75rem; display: block; text-align: center; width: 100%; }
+        .otp-back:hover { text-decoration: underline; }
+        .gsuccess { display: none; background: rgba(34,197,94,0.10); border: 1px solid rgba(34,197,94,0.25); border-radius: var(--r-sm); padding: 0.75rem 1rem; font-size: 0.88rem; color: #86efac; margin-bottom: 1rem; align-items: center; gap: 0.5rem; }
+        .gsuccess.on { display: flex; }
+        .gsuccess svg { width: 16px; height: 16px; flex-shrink: 0; }
 
         /* TESTIMONIALS */
         .t-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; }
@@ -607,39 +620,58 @@
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
                 <span id="gerr-msg">Something went wrong. Please try again.</span>
             </div>
-            <form id="reg-form" novalidate>
-                <div class="ff">
-                    <label class="fl" for="r-name">Full Name</label>
-                    <input class="fi" type="text" id="r-name" name="name" placeholder="Ahmad Al-Mansouri" autocomplete="name" required aria-required="true" aria-describedby="e-name">
-                    <div class="ferr" id="e-name" role="alert"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span></span></div>
-                </div>
-                <div class="ff">
-                    <label class="fl" for="r-email">Email Address</label>
-                    <input class="fi" type="email" id="r-email" name="email" placeholder="ahmad@example.com" autocomplete="email" required aria-required="true" aria-describedby="e-email">
-                    <div class="ferr" id="e-email" role="alert"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span></span></div>
-                </div>
-                <div class="ff">
-                    <label class="fl" for="r-phone">Phone Number</label>
-                    <div class="phone-row">
-                        <div class="ph-pfx" aria-label="+965 Kuwait">+965</div>
-                        <input class="fi" type="tel" id="r-phone" name="phone_local" placeholder="9XXXXXXX" autocomplete="tel-national" inputmode="numeric" required aria-required="true" aria-describedby="e-phone" aria-label="Local phone number">
+            <div class="gsuccess" id="gsuccess" role="status" aria-live="polite">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                <span id="gsuccess-msg">Code sent successfully.</span>
+            </div>
+            <!-- STEP 1: Registration fields -->
+            <form id="reg-form" novalidate method="post">
+                <div id="reg-step1" class="reg-step">
+                    <div class="ff">
+                        <label class="fl" for="r-name">Full Name</label>
+                        <input class="fi" type="text" id="r-name" name="name" placeholder="Ahmad Al-Mansouri" autocomplete="name" required aria-required="true" aria-describedby="e-name">
+                        <div class="ferr" id="e-name" role="alert"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span></span></div>
                     </div>
-                    <div class="ferr" id="e-phone" role="alert"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span></span></div>
-                </div>
-                <div class="ff">
-                    <label class="fl" for="r-pw">Password</label>
-                    <div class="pw-wrap">
-                        <input class="fi" type="password" id="r-pw" name="password" placeholder="At least 8 characters" autocomplete="new-password" required aria-required="true" aria-describedby="e-pw">
-                        <button type="button" class="pw-tog" id="pw-tog" aria-label="Show password" aria-pressed="false">
-                            <svg id="eye-on"  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
-                            <svg id="eye-off" class="eye-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"/><path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"/><path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"/><line x1="2" y1="2" x2="22" y2="22"/></svg>
-                        </button>
+                    <div class="ff">
+                        <label class="fl" for="r-email">Email Address</label>
+                        <input class="fi" type="email" id="r-email" name="email" placeholder="ahmad@example.com" autocomplete="email" required aria-required="true" aria-describedby="e-email">
+                        <div class="ferr" id="e-email" role="alert"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span></span></div>
                     </div>
-                    <div class="ferr" id="e-pw" role="alert"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span></span></div>
+                    <div class="ff">
+                        <label class="fl" for="r-phone">Phone Number</label>
+                        <div class="phone-row">
+                            <div class="ph-pfx" aria-label="+965 Kuwait">+965</div>
+                            <input class="fi" type="tel" id="r-phone" name="phone_local" placeholder="9XXXXXXX" autocomplete="tel-national" inputmode="numeric" required aria-required="true" aria-describedby="e-phone" aria-label="Local phone number">
+                        </div>
+                        <div class="ferr" id="e-phone" role="alert"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span></span></div>
+                    </div>
+                    <div class="ff">
+                        <label class="fl" for="r-pw">Password</label>
+                        <div class="pw-wrap">
+                            <input class="fi" type="password" id="r-pw" name="password" placeholder="At least 8 characters" autocomplete="new-password" required aria-required="true" aria-describedby="e-pw">
+                            <button type="button" class="pw-tog" id="pw-tog" aria-label="Show password" aria-pressed="false">
+                                <svg id="eye-on"  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+                                <svg id="eye-off" class="eye-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"/><path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"/><path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"/><line x1="2" y1="2" x2="22" y2="22"/></svg>
+                            </button>
+                        </div>
+                        <div class="ferr" id="e-pw" role="alert"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span></span></div>
+                    </div>
+                    <button type="submit" class="sub-btn" id="reg-btn">Start My Free Trial &rarr;</button>
+                    <p class="f-legal">By signing up you agree to our <a href="/terms" target="_blank" rel="noopener">Terms of Service</a> and <a href="/privacy" target="_blank" rel="noopener">Privacy Policy</a></p>
+                    <p class="f-signin">Already have an account? <a href="/login">Sign In</a></p>
                 </div>
-                <button type="submit" class="sub-btn" id="reg-btn">Start My Free Trial &rarr;</button>
-                <p class="f-legal">By signing up you agree to our <a href="/terms" target="_blank" rel="noopener">Terms of Service</a> and <a href="/privacy" target="_blank" rel="noopener">Privacy Policy</a></p>
-                <p class="f-signin">Already have an account? <a href="/login">Sign In</a></p>
+                <!-- STEP 2: OTP verification -->
+                <div id="reg-step2" class="otp-step">
+                    <p class="otp-info">We sent a 6-digit code to WhatsApp at <strong id="otp-phone-display"></strong>. Enter it below to verify your number.</p>
+                    <div class="ff">
+                        <label class="fl" for="r-otp">Verification Code</label>
+                        <input class="fi otp-fi" type="text" id="r-otp" name="otp_code" maxlength="6" inputmode="numeric" pattern="[0-9]{6}" placeholder="------" autocomplete="one-time-code" aria-describedby="e-otp">
+                        <div class="ferr" id="e-otp" role="alert"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span></span></div>
+                    </div>
+                    <button type="submit" class="sub-btn" id="otp-btn">Create My Account &rarr;</button>
+                    <button type="button" class="otp-back" id="otp-back">Wrong number? Go back</button>
+                    <button type="button" class="otp-back" id="otp-resend" style="margin-top:.35rem;color:var(--text-muted);">Resend code</button>
+                </div>
             </form>
         </div>
     </div>
@@ -876,6 +908,7 @@ response = client.chat.completions.create(
         email:    { inp: 'r-email', err: 'e-email' },
         phone:    { inp: 'r-phone', err: 'e-phone' },
         password: { inp: 'r-pw',    err: 'e-pw'    },
+        otp_code: { inp: 'r-otp',   err: 'e-otp'   },
     };
 
     function clearErrors() {
@@ -913,19 +946,103 @@ response = client.chat.completions.create(
         });
     });
 
-    // Registration submit
-    var regForm = document.getElementById('reg-form');
+    // Registration: 2-step OTP flow
+    var regForm  = document.getElementById('reg-form');
+    var step1    = document.getElementById('reg-step1');
+    var step2    = document.getElementById('reg-step2');
+    var regPayload = {};  // stored between step 1 and step 2
+
+    function showSuccess(msg) {
+        var el = document.getElementById('gsuccess');
+        document.getElementById('gsuccess-msg').textContent = msg;
+        el.classList.add('on');
+        setTimeout(function () { el.classList.remove('on'); }, 4000);
+    }
+
+    function goToStep2(phone) {
+        clearErrors();
+        document.getElementById('gerr').classList.remove('on');
+        step1.classList.add('off');
+        step2.classList.add('on');
+        document.getElementById('otp-phone-display').textContent = '+' + phone;
+        document.getElementById('r-otp').value = '';
+        document.getElementById('r-otp').focus();
+        var card = document.getElementById('reg-card');
+        if (card) card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    function goToStep1() {
+        step2.classList.remove('on');
+        step1.classList.remove('off');
+        document.getElementById('gerr').classList.remove('on');
+        document.getElementById('gsuccess').classList.remove('on');
+        var btn = document.getElementById('reg-btn');
+        btn.disabled = false;
+        btn.textContent = 'Start My Free Trial \u2192';
+    }
+
     if (regForm) {
+        // Step 1: send OTP
         regForm.addEventListener('submit', async function (e) {
             e.preventDefault();
+
+            // If on OTP step, handle OTP verification instead
+            if (step2.classList.contains('on')) {
+                var otpBtn  = document.getElementById('otp-btn');
+                var otpCode = (document.getElementById('r-otp').value || '').trim();
+                var ce2 = {};
+                if (!otpCode || otpCode.length !== 6) ce2.otp_code = ['Please enter the 6-digit code sent to your WhatsApp.'];
+                if (Object.keys(ce2).length) {
+                    var otpErr = document.getElementById('e-otp');
+                    var otpInp = document.getElementById('r-otp');
+                    if (otpInp) otpInp.classList.add('err');
+                    if (otpErr) { otpErr.querySelector('span').textContent = ce2.otp_code[0]; otpErr.classList.add('on'); }
+                    return;
+                }
+                otpBtn.disabled = true;
+                otpBtn.textContent = 'Creating your account...';
+                var payload2 = Object.assign({}, regPayload, { otp_code: otpCode });
+                try {
+                    var csrf2 = document.querySelector('meta[name="csrf-token"]');
+                    var res2  = await fetch('/register', {
+                        method: 'POST',
+                        headers: { 'X-CSRF-TOKEN': csrf2 ? csrf2.content : '', 'Accept': 'application/json', 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload2),
+                    });
+                    if (res2.ok || res2.status === 201) {
+                        otpBtn.textContent = 'Success! Redirecting...';
+                        window.location.href = '/dashboard';
+                    } else {
+                        var d2 = await res2.json().catch(function () { return {}; });
+                        if (d2.errors && d2.errors.otp_code) {
+                            var otpErr2 = document.getElementById('e-otp');
+                            var otpInp2 = document.getElementById('r-otp');
+                            if (otpInp2) otpInp2.classList.add('err');
+                            if (otpErr2) { otpErr2.querySelector('span').textContent = d2.errors.otp_code[0]; otpErr2.classList.add('on'); }
+                        } else if (d2.errors) {
+                            showErrors(d2.errors);
+                            goToStep1();
+                        } else {
+                            showErrors({ message: d2.message || 'Verification failed. Please try again.' });
+                        }
+                        otpBtn.disabled = false; otpBtn.textContent = 'Create My Account \u2192';
+                    }
+                } catch (err2) {
+                    showErrors({ message: 'A network error occurred. Please check your connection and try again.' });
+                    otpBtn.disabled = false; otpBtn.textContent = 'Create My Account \u2192';
+                }
+                return;
+            }
+
+            // Step 1: validate fields and send OTP
             clearErrors();
             var btn  = document.getElementById('reg-btn');
             var orig = btn.textContent;
             btn.disabled = true;
-            btn.textContent = 'Creating your account...';
+            btn.textContent = 'Sending verification code...';
 
             var phoneLocal = (regForm.querySelector('[name="phone_local"]').value || '').trim().replace(/^0+/, '');
-            var payload = {
+            regPayload = {
                 name:                  regForm.querySelector('[name="name"]').value.trim(),
                 email:                 regForm.querySelector('[name="email"]').value.trim(),
                 phone:                 '965' + phoneLocal,
@@ -934,11 +1051,11 @@ response = client.chat.completions.create(
             };
 
             var ce = {};
-            if (!payload.name)                    ce.name     = ['Please enter your full name.'];
-            if (!payload.email)                   ce.email    = ['Please enter your email address.'];
-            if (!phoneLocal)                      ce.phone    = ['Please enter your phone number.'];
-            if (!payload.password)                ce.password = ['Please choose a password.'];
-            else if (payload.password.length < 8) ce.password = ['Password must be at least 8 characters.'];
+            if (!regPayload.name)                       ce.name     = ['Please enter your full name.'];
+            if (!regPayload.email)                      ce.email    = ['Please enter your email address.'];
+            if (!phoneLocal)                            ce.phone    = ['Please enter your phone number.'];
+            if (!regPayload.password)                   ce.password = ['Please choose a password.'];
+            else if (regPayload.password.length < 8)    ce.password = ['Password must be at least 8 characters.'];
 
             if (Object.keys(ce).length) {
                 showErrors(ce);
@@ -948,19 +1065,18 @@ response = client.chat.completions.create(
 
             try {
                 var csrf = document.querySelector('meta[name="csrf-token"]');
-                var res  = await fetch('/register', {
+                var res  = await fetch('/register/otp', {
                     method: 'POST',
                     headers: { 'X-CSRF-TOKEN': csrf ? csrf.content : '', 'Accept': 'application/json', 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload),
+                    body: JSON.stringify(regPayload),
                 });
-                if (res.ok || res.status === 201) {
-                    btn.textContent = 'Success! Redirecting...';
-                    window.location.href = '/dashboard';
+                var data = await res.json().catch(function () { return {}; });
+                if (res.ok && data.step === 'verify') {
+                    goToStep2(regPayload.phone);
                 } else {
-                    var data = await res.json().catch(function () { return {}; });
                     if (data.errors)       showErrors(data.errors);
                     else if (data.message) showErrors({ message: data.message });
-                    else                   showErrors({ message: 'Registration failed. Please check your details and try again.' });
+                    else                   showErrors({ message: 'Failed to send verification code. Please try again.' });
                     btn.disabled = false; btn.textContent = orig;
                 }
             } catch (err) {
@@ -968,6 +1084,37 @@ response = client.chat.completions.create(
                 btn.disabled = false; btn.textContent = orig;
             }
         });
+
+        // Back button
+        var otpBackBtn = document.getElementById('otp-back');
+        if (otpBackBtn) otpBackBtn.addEventListener('click', goToStep1);
+
+        // Resend code
+        var otpResendBtn = document.getElementById('otp-resend');
+        if (otpResendBtn) {
+            otpResendBtn.addEventListener('click', async function () {
+                otpResendBtn.disabled = true;
+                otpResendBtn.textContent = 'Resending...';
+                try {
+                    var csrf3 = document.querySelector('meta[name="csrf-token"]');
+                    var res3  = await fetch('/register/otp', {
+                        method: 'POST',
+                        headers: { 'X-CSRF-TOKEN': csrf3 ? csrf3.content : '', 'Accept': 'application/json', 'Content-Type': 'application/json' },
+                        body: JSON.stringify(regPayload),
+                    });
+                    var d3 = await res3.json().catch(function () { return {}; });
+                    if (res3.ok && d3.step === 'verify') {
+                        showSuccess('Code resent to your WhatsApp.');
+                    } else {
+                        showErrors({ message: d3.message || 'Failed to resend code. Please try again.' });
+                    }
+                } catch (err3) {
+                    showErrors({ message: 'A network error occurred.' });
+                }
+                otpResendBtn.disabled = false;
+                otpResendBtn.textContent = 'Resend code';
+            });
+        }
     }
 
 })();
