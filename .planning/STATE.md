@@ -517,3 +517,4 @@ See full report: `.planning/phases/09-enhancements/09-DEBUG-SESSION-2026-03-05.m
 | 4 | Remove Kuwait/KWD/KNET references from welcome page marketing copy (EN + AR) | 2026-03-05 | b2bdca6 | [4-remove-kuwait-kwd-knet-references-from-w](./quick/4-remove-kuwait-kwd-knet-references-from-w/) |
 | 5 | Fix @json Blade compiler bug in dashboard (pre-compute $dashLang in @php) | 2026-03-05 | f17fa94 | dev only |
 | 6 | Add "Our Cost ($)" column to Recent API Usage table (alongside vs GPT-4o) | 2026-03-05 | 429fe06 | dev only |
+| 7 | Rewrite how-it-works section to reflect actual product flow (phone OTP, credits, API key) | 2026-03-05 | a1acd6a | [6-rewrite-how-it-works-section-to-reflect-](./quick/6-rewrite-how-it-works-section-to-reflect-/) |
