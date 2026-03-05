@@ -25,6 +25,11 @@ use App\Http\Controllers\WelcomeController;
 |
 */
 
+// Landing page templates
+Route::get('/landing/1', fn() => view('landing.template-1'))->name('landing.1');
+Route::get('/landing/2', fn() => view('landing.template-2'))->name('landing.2');
+Route::get('/landing/3', fn() => view('landing.template-3'))->name('landing.3');
+
 // Locale switcher — sets session locale and redirects back (no auth required)
 Route::get('/locale/{locale}', function ($locale) {
     if (in_array($locale, ['en', 'ar'])) {
