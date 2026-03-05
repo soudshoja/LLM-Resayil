@@ -28,7 +28,7 @@ class ModelAccessControl
     public function canAccessModel(User $user, string $model): bool
     {
         // Admin bypasses all restrictions
-        if ($user->email === 'admin@llm.resayil.io') {
+        if ($user->isAdmin()) {
             return true;
         }
 

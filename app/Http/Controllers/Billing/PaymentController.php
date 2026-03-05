@@ -225,7 +225,7 @@ class PaymentController extends Controller
         $user = Auth::user();
 
         // Admin bypass: create key directly, no payment, no limit
-        if ($user->email === 'admin@llm.resayil.io') {
+        if ($user->isAdmin()) {
             ApiKeys::create([
                 'user_id' => $user->id,
                 'name' => 'Admin Key ' . now()->format('Y-m-d H:i'),

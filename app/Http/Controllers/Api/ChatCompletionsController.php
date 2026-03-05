@@ -64,8 +64,8 @@ class ChatCompletionsController extends Controller
             ], 401);
         }
 
-        // Admin bypass: admin@llm.resayil.io bypasses rate limits, credit checks, and model access
-        $isAdmin = $user->email === 'admin@llm.resayil.io';
+        // Admin bypass: admins bypass rate limits, credit checks, and model access
+        $isAdmin = $user->isAdmin();
 
         // Check rate limit (bypass for admin)
         if (!$isAdmin) {
@@ -193,8 +193,8 @@ class ChatCompletionsController extends Controller
             ], 401);
         }
 
-        // Admin bypass: admin@llm.resayil.io bypasses rate limits, credit checks, and model access
-        $isAdmin = $user->email === 'admin@llm.resayil.io';
+        // Admin bypass: admins bypass rate limits, credit checks, and model access
+        $isAdmin = $user->isAdmin();
 
         // Check rate limit (bypass for admin)
         if (!$isAdmin) {

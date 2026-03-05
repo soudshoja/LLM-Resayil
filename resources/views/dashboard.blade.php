@@ -239,7 +239,7 @@
                         <option value="tools">{{ __('dashboard.tools') }}</option>
                     </select>
                 </div>
-                @if(auth()->user()->email === 'admin@llm.resayil.io')
+                @if(auth()->user()->isAdmin())
                 <div class="filter-group">
                     <span class="filter-label">{{ __('dashboard.type') }}:</span>
                     <select id="filter-type" class="filter-select">
