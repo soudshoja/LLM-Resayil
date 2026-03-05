@@ -488,7 +488,25 @@ eb44537 feat: AJAX toggle for admin models — no page reload on enable/disable
 
 ---
 
-*State file last updated: 2026-03-05 — Phase 09-02 savings dashboard complete, deployed to dev
+*State file last updated: 2026-03-05 — Full-cycle debug session: 4 agents, 2 code fixes on dev, 1 prod .env fix*
+
+### Debug Session 2026-03-05 — Issues Found
+
+See full report: `.planning/phases/09-enhancements/09-DEBUG-SESSION-2026-03-05.md`
+
+| ID | Severity | Status | Issue |
+|----|----------|--------|-------|
+| BUG-01 | 🔴 CRITICAL | Open | Chat completions API returns Ollama-native format, not OpenAI — breaks all SDK clients |
+| BUG-02 | 🔴 CRITICAL | Open | Billing/plans page shows raw `billing.xxx` translation keys — page unusable |
+| BUG-03 | 🟡 MEDIUM | Open | Double UsageLog per non-streaming API call (proxy + controller both create log) |
+| BUG-04 | 🟡 MEDIUM | Open | Login error shows "Validation failed." — should be "These credentials do not match" |
+| BUG-05 | 🟢 LOW | Open | KNET text still in dashboard Top Up Credits widget |
+| BUG-06 | 🟢 LOW | Open | Native alert() dialog on model catalog (should be inline toast) |
+| BUG-07 | 🟢 LOW | Open | Admin nav overflow when logged in |
+| BUG-08 | 🟢 LOW | Open | No schedule:run cron on either server |
+| BUG-01-fix | ✅ FIXED | Dev | Our Cost column: tokens*multiplier calc (commit 19c5847) |
+| BUG-02-fix | ✅ FIXED | Dev | Dashboard :name placeholder interpolation (commit be360dc) |
+| BUG-03-fix | ✅ FIXED | Prod | MAIL_MAILER=log → sendmail on prod (.env only) |
 
 ### Quick Tasks Completed
 
@@ -496,3 +514,7 @@ eb44537 feat: AJAX toggle for admin models — no page reload on enable/disable
 |---|-------------|------|--------|-----------|
 | 1 | Fix API models endpoint: hide type field and filter embedding models | 2026-03-04 | 517f0c2 | [1-fix-api-models-endpoint-hide-type-field-](./quick/1-fix-api-models-endpoint-hide-type-field-/) |
 | 3 | Admin email notification when new user registers (soud@alphia.net) | 2026-03-05 | b6d626e | [3-add-admin-email-notification-when-a-new-](./quick/3-add-admin-email-notification-when-a-new-/) |
+| 4 | Remove Kuwait/KWD/KNET references from welcome page marketing copy (EN + AR) | 2026-03-05 | b2bdca6 | [4-remove-kuwait-kwd-knet-references-from-w](./quick/4-remove-kuwait-kwd-knet-references-from-w/) |
+| 5 | Fix @json Blade compiler bug in dashboard (pre-compute $dashLang in @php) | 2026-03-05 | f17fa94 | dev only |
+| 6 | Add "Our Cost ($)" column to Recent API Usage table (alongside vs GPT-4o) | 2026-03-05 | 429fe06 | dev only |
+| 7 | Rewrite how-it-works section to reflect actual product flow (phone OTP, credits, API key) | 2026-03-05 | a1acd6a | [6-rewrite-how-it-works-section-to-reflect-](./quick/6-rewrite-how-it-works-section-to-reflect-/) |

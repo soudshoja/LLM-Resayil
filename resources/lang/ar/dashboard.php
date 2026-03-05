@@ -141,6 +141,7 @@ return [
     'savings_col_saved'        => 'وفرت',
     'usage_input_tokens'       => 'إدخال',
     'usage_output_tokens'      => 'إخراج',
+    'usage_our_cost'           => 'تكلفتنا',
     'usage_vs_gpt4o'           => 'مقابل GPT-4o',
 
     // Filter options - keep model names in English

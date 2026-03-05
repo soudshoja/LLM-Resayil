@@ -73,12 +73,16 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
         if (res.ok) {
             window.location.href = '/dashboard';
         } else {
+            document.querySelectorAll('.auth-card .alert-error').forEach(el => el.remove());
             document.querySelector('.auth-card').insertAdjacentHTML('afterbegin',
                 `<div class="alert alert-error">${json.message || '{{ __('auth.login_failed') }}'}</div>`);
             btn.textContent = '{{ __('auth.sign_in_button') }}';
             btn.disabled = false;
         }
     } catch(err) {
+        document.querySelectorAll('.auth-card .alert-error').forEach(el => el.remove());
+        document.querySelector('.auth-card').insertAdjacentHTML('afterbegin',
+            `<div class="alert alert-error">{{ __('auth.login_failed') }}</div>`);
         btn.textContent = '{{ __('auth.sign_in_button') }}';
         btn.disabled = false;
     }

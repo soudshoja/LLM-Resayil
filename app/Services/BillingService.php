@@ -353,7 +353,7 @@ class BillingService
     public function getAdditionalApiKeyCost(string $tier, int $keyNumber): ?float
     {
         // Admin has no key limit
-        if (auth()->check() && auth()->user()->email === 'admin@llm.resayil.io') {
+        if (auth()->check() && auth()->user()->isAdmin()) {
             return 0.0;
         }
 

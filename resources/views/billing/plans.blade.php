@@ -284,11 +284,11 @@
         $nextKeyCost = app(\App\Services\BillingService::class)->getAdditionalApiKeyCost($userTier, $nextKeyNumber);
         $tierMaxKeys = ['starter' => 3, 'basic' => 3, 'pro' => 4];
         $maxKeys = $tierMaxKeys[$userTier] ?? 3;
-        $isAdmin = auth()->user()->email === 'admin@llm.resayil.io';
+        $isAdmin = auth()->user()->isAdmin();
     @endphp
     <div class="card extra-key-section">
         <h2>{{ __('billing.additional_api_keys') }}</h2>
-        <p class="text-secondary text-sm mb-4">{{ __('billing.need_more_keys') }} {{ ucfirst($userTier) }}</p>
+        <p class="text-secondary text-sm mb-4">{{ __('billing.need_more_keys', ['tier' => ucfirst($userTier)]) }}</p>
         <div class="extra-key-card">
             <div class="extra-key-info">
                 <strong>{{ __('billing.your_keys') }}</strong>

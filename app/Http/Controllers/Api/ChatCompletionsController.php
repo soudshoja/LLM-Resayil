@@ -64,8 +64,8 @@ class ChatCompletionsController extends Controller
             ], 401);
         }
 
-        // Admin bypass: admin@llm.resayil.io bypasses rate limits, credit checks, and model access
-        $isAdmin = $user->email === 'admin@llm.resayil.io';
+        // Admin bypass: admins bypass rate limits, credit checks, and model access
+        $isAdmin = $user->isAdmin();
 
         // Check rate limit (bypass for admin)
         if (!$isAdmin) {
@@ -141,14 +141,14 @@ class ChatCompletionsController extends Controller
         if ($response->getStatusCode() === 200 && !$isAdmin) {
             $content = json_decode($response->getContent(), true);
 
-            // Use real Ollama token counts — NOT character estimate
-            $promptTokens     = isset($content['prompt_eval_count']) ? (int) $content['prompt_eval_count'] : null;
-            $completionTokens = isset($content['eval_count'])        ? (int) $content['eval_count']        : null;
+            // Use token counts from OpenAI-format response
+            $promptTokens     = isset($content['usage']['prompt_tokens']) ? (int) $content['usage']['prompt_tokens'] : null;
+            $completionTokens = isset($content['usage']['completion_tokens']) ? (int) $content['usage']['completion_tokens'] : null;
             $tokensUsed       = ($promptTokens ?? 0) + ($completionTokens ?? 0);
 
-            // Fallback if Ollama returned no token counts
-            if ($tokensUsed === 0 && isset($content['message']['content'])) {
-                $tokensUsed = (int) (mb_strlen($content['message']['content']) / 3);
+            // Fallback if token counts not available
+            if ($tokensUsed === 0 && isset($content['choices'][0]['message']['content'])) {
+                $tokensUsed = (int) (mb_strlen($content['choices'][0]['message']['content']) / 3);
             }
 
             $cost = $this->creditService->calculateCost($tokensUsed, $provider, $modelId);
@@ -193,8 +193,8 @@ class ChatCompletionsController extends Controller
             ], 401);
         }
 
-        // Admin bypass: admin@llm.resayil.io bypasses rate limits, credit checks, and model access
-        $isAdmin = $user->email === 'admin@llm.resayil.io';
+        // Admin bypass: admins bypass rate limits, credit checks, and model access
+        $isAdmin = $user->isAdmin();
 
         // Check rate limit (bypass for admin)
         if (!$isAdmin) {

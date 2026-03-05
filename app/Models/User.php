@@ -101,4 +101,15 @@ class User extends Authenticatable
     {
         return $this->hasMany(PaymentMethod::class);
     }
+
+    /**
+     * Check if the user is an admin.
+     */
+    public function isAdmin(): bool
+    {
+        return in_array($this->email, [
+            'admin@llm.resayil.io',
+            'soud@alphia.net',
+        ]);
+    }
 }

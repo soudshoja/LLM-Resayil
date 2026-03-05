@@ -239,7 +239,7 @@
                         <option value="tools">{{ __('dashboard.tools') }}</option>
                     </select>
                 </div>
-                @if(auth()->user()->email === 'admin@llm.resayil.io')
+                @if(auth()->user()->isAdmin())
                 <div class="filter-group">
                     <span class="filter-label">{{ __('dashboard.type') }}:</span>
                     <select id="filter-type" class="filter-select">
@@ -460,6 +460,7 @@ response = requests.post(
                     <th>{{ __('dashboard.usage_input_tokens') }}</th>
                     <th>{{ __('dashboard.usage_output_tokens') }}</th>
                     <th>{{ __('dashboard.tokens') }}</th>
+                    <th>{{ __('dashboard.usage_our_cost') }}</th>
                     <th>{{ __('dashboard.usage_vs_gpt4o') }}</th>
                     <th>{{ __('dashboard.credits_used') }}</th>
                     <th>{{ __('dashboard.time') }}</th>
@@ -473,6 +474,7 @@ response = requests.post(
                     <td class="text-muted">{{ is_null($log->prompt_tokens) ? '&mdash;' : number_format($log->prompt_tokens) }}</td>
                     <td class="text-muted">{{ is_null($log->completion_tokens) ? '&mdash;' : number_format($log->completion_tokens) }}</td>
                     <td>{{ number_format($log->tokens_used) }}</td>
+                    <td class="text-gold">${{ number_format($row['our_cost_usd'], 4) }}</td>
                     <td class="text-muted">{{ $row['is_estimate'] ? '~' : '' }}${{ number_format($row['gpt4o_cost_usd'], 4) }}</td>
                     <td class="text-gold">{{ $log->credits_deducted }}</td>
                     <td class="text-muted">{{ $log->created_at->diffForHumans() }}</td>

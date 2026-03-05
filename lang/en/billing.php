@@ -21,6 +21,7 @@ return [
     'after_trial' => 'After Trial',
     'card_required' => 'Card Required',
     'cancel_anytime' => 'Cancel anytime during trial',
+    'how_credits_work' => 'How credits work',
     'payments_secure' => 'Payments processed securely via KNET / credit card. Cancel anytime during the trial period.',
 
     'most_popular' => 'Most Popular',
@@ -49,7 +50,7 @@ return [
     'top_up' => 'Top Up',
 
     'additional_api_keys' => 'Additional API Keys',
-    'need_more_keys' => 'Need more API keys? Purchase extra keys for your plan.',
+    'need_more_keys' => 'Need more API keys? Purchase extra keys for your :tier plan.',
     'your_keys' => 'Your Keys',
     'unlimited_keys' => 'Unlimited keys available',
     'keys_used' => 'keys used on your plan',
@@ -107,4 +108,16 @@ return [
     'we_accept' => 'We accept:',
     'billing' => 'Billing',
     'read_more' => 'Read more',
+    'plan' => 'Plan',
+    'topup_no_bonus' => 'No bonus',
+    'topup_bonus' => '+10% bonus',
+    'topup_bonus_20' => '+20% bonus',
+    'on_your_plan' => 'on your plan',
+    'free' => 'Free',
+    'credits' => 'Credits',
+    'buy_extra_api_key' => 'Buy Extra API Key',
+    'create_free_api_key' => 'Create Free API Key',
+    '2_free_api_keys' => '2 free API keys',
+    'keys_used_of' => 'keys used of',
+    'loading_payment_methods' => 'Loading payment methods...',
 ];

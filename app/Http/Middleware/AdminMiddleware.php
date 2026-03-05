@@ -16,7 +16,7 @@ class AdminMiddleware
     public function handle(Request $request, Closure $next): Response
     {
         // Check if user is authenticated and is the admin
-        if (auth()->check() && auth()->user()->email === 'admin@llm.resayil.io') {
+        if (auth()->check() && auth()->user()->isAdmin()) {
             return $next($request);
         }
 

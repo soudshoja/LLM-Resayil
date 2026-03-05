@@ -265,7 +265,7 @@
             @if(auth()->user()->subscription_tier === 'enterprise')
             <a href="/teams">{{ __('navigation.team') }}</a>
             @endif
-            @if(auth()->user()->email === 'admin@llm.resayil.io')
+            @if(auth()->user()->isAdmin())
             <a href="/admin" class="nav-link-gold">{{ __('navigation.admin') }}</a>
             <a href="/admin/monitoring" class="nav-link-gold">{{ __('navigation.monitor') }}</a>
             <a href="/admin/models" class="nav-link-gold">{{ __('navigation.models') }}</a>
