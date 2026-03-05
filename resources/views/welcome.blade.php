@@ -186,7 +186,7 @@
         .tr { font-size: 0.8rem; color: var(--text-muted); margin-top: 0.1rem; }
 
         /* PRICING */
-        .p-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; }
+        .p-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 1.25rem; }
         .pc { background: var(--bg-card); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid var(--border); border-radius: var(--r-lg); padding: 2rem; transition: all 0.3s; position: relative; overflow: hidden; display: flex; flex-direction: column; }
         .pc:hover { border-color: var(--gold-border); transform: translateY(-4px); box-shadow: 0 0 30px rgba(212,175,55,0.10), 0 12px 40px rgba(0,0,0,0.3); }
         .pc.feat { border-color: var(--gold-border); box-shadow: 0 0 40px rgba(212,175,55,0.12); }
@@ -228,7 +228,8 @@
         @media (max-width: 768px) {
             .nav-links, .nav-actions .btn-ghost, .nav-actions .btn-outline-gold { display: none; }
             .nav-toggle { display: flex; }
-            .bento, .t-grid, .p-grid, .steps-grid { grid-template-columns: 1fr; }
+            .bento, .t-grid, .steps-grid { grid-template-columns: 1fr; }
+            .p-grid { grid-template-columns: repeat(2,1fr); }
             .steps-grid::before { display: none; }
             .hero { padding: 7rem 0 4rem; }
             .sp { padding: 5rem 0; }
@@ -502,52 +503,41 @@
                 </ul>
                 <a href="/register" class="btn btn-outline-gold" style="width:100%;justify-content:center;padding:.85rem;">Start Free Trial</a>
             </div>
-            <div class="pc feat fu d1">
+            <div class="pc fu d1">
                 <div class="pbadge">Most Popular</div>
-                <div class="pname">Basic</div>
-                <div class="pprice">2 KWD<small> / month</small></div>
+                <div class="pname">Starter</div>
+                <div class="pprice">15 <small>KWD / mo</small></div>
                 <p class="pdesc">Great for daily personal use</p>
                 <ul class="pfeat">
-                    <li>
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
-                        5,000 credits / month
-                    </li>
-                    <li>
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
-                        ~2,500 AI responses
-                    </li>
-                    <li>
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
-                        All 50+ AI models
-                    </li>
-                    <li>
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
-                        Priority support
-                    </li>
+                    <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>1,000 credits / month</li>
+                    <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>10 requests / minute</li>
+                    <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>1 free API key</li>
+                    <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Small models only</li>
+                </ul>
+                <a href="/billing/plans" class="btn btn-outline-gold" style="width:100%;justify-content:center;padding:.85rem;">Get Started</a>
+            </div>
+            <div class="pc feat fu d2">
+                <div class="pbadge">Best Value</div>
+                <div class="pname">Basic</div>
+                <div class="pprice">25 <small>KWD / mo</small></div>
+                <p class="pdesc">More power, all model sizes</p>
+                <ul class="pfeat">
+                    <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>3,000 credits / month</li>
+                    <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>30 requests / minute</li>
+                    <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>1 free API key</li>
+                    <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>All model sizes</li>
                 </ul>
                 <a href="/billing/plans" class="btn btn-gold" style="width:100%;justify-content:center;padding:.85rem;">Get Started</a>
             </div>
-            <div class="pc fu d2">
+            <div class="pc fu d3">
                 <div class="pname">Pro</div>
-                <div class="pprice">5 KWD<small> / month</small></div>
-                <p class="pdesc">For power users and small teams</p>
+                <div class="pprice">45 <small>KWD / mo</small></div>
+                <p class="pdesc">For power users &amp; teams</p>
                 <ul class="pfeat">
-                    <li>
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
-                        15,000 credits / month
-                    </li>
-                    <li>
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
-                        ~7,500 AI responses
-                    </li>
-                    <li>
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
-                        All models + API access
-                    </li>
-                    <li>
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
-                        Dedicated support
-                    </li>
+                    <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>10,000 credits / month</li>
+                    <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>60 requests / minute</li>
+                    <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>2 free API keys</li>
+                    <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Priority cloud failover</li>
                 </ul>
                 <a href="/billing/plans" class="btn btn-ghost" style="width:100%;justify-content:center;padding:.85rem;">Get Started</a>
             </div>
