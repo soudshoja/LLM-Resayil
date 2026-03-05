@@ -100,6 +100,11 @@
         box-shadow: 0 12px 36px rgba(212,175,55,0.35);
     }
 
+    .btn-primary:focus-visible {
+        outline: 2px solid var(--ds-gold);
+        outline-offset: 2px;
+    }
+
     .btn-secondary {
         display: inline-flex;
         align-items: center;
@@ -121,6 +126,11 @@
         color: var(--ds-gold-light);
         border-color: var(--ds-gold-light);
         transform: translateY(-3px);
+    }
+
+    .btn-secondary:focus-visible {
+        outline: 2px solid var(--ds-gold);
+        outline-offset: 2px;
     }
 
     /* ── VALUE PROPOSITION CARDS ── */
@@ -601,6 +611,11 @@
         box-shadow: 0 8px 24px rgba(212,175,55,0.1);
     }
 
+    .ds-faq-item:focus-visible {
+        outline: 2px solid var(--ds-gold);
+        outline-offset: 2px;
+    }
+
     .ds-faq-question {
         font-size: 1.1rem;
         font-weight: 700;
@@ -848,17 +863,17 @@
         <h2 class="ds-section-title">Why Dedicated + API?</h2>
         <div class="ds-value-grid">
             <div class="ds-value-card">
-                <span class="ds-value-icon">⚡</span>
+                <span class="ds-value-icon" aria-label="lightning bolt - security">⚡</span>
                 <h3 class="ds-value-title">API Simplicity</h3>
                 <p class="ds-value-text">No model management overhead. Resayil handles updates, scaling, and reliability while you focus on your application logic.</p>
             </div>
             <div class="ds-value-card">
-                <span class="ds-value-icon">🔒</span>
+                <span class="ds-value-icon" aria-label="padlock - encrypted">🔒</span>
                 <h3 class="ds-value-title">Complete Control</h3>
                 <p class="ds-value-text">Your dedicated server runs your applications. Data stays within your infrastructure. Full compliance with regulatory requirements.</p>
             </div>
             <div class="ds-value-card">
-                <span class="ds-value-icon">💰</span>
+                <span class="ds-value-icon" aria-label="money bag - cost effective">💰</span>
                 <h3 class="ds-value-title">Cost Efficiency</h3>
                 <p class="ds-value-text">Pay-per-use API pricing with no monthly minimums. Dedicated hardware cost is predictable and scales with your needs.</p>
             </div>
@@ -875,23 +890,23 @@
                 <h3 class="ds-comparison-title">Self-Hosted Ollama</h3>
                 <div class="ds-comparison-items">
                     <div class="ds-comparison-item">
-                        <div class="ds-item-icon">✗</div>
+                        <div class="ds-item-icon" aria-label="x mark">✗</div>
                         <p class="ds-item-text">Complex setup & maintenance</p>
                     </div>
                     <div class="ds-comparison-item">
-                        <div class="ds-item-icon">✗</div>
+                        <div class="ds-item-icon" aria-label="x mark">✗</div>
                         <p class="ds-item-text">Model updates = downtime</p>
                     </div>
                     <div class="ds-comparison-item">
-                        <div class="ds-item-icon">✗</div>
+                        <div class="ds-item-icon" aria-label="x mark">✗</div>
                         <p class="ds-item-text">DevOps team required</p>
                     </div>
                     <div class="ds-comparison-item">
-                        <div class="ds-item-icon">✓</div>
+                        <div class="ds-item-icon" aria-label="checkmark">✓</div>
                         <p class="ds-item-text">100% data privacy</p>
                     </div>
                     <div class="ds-comparison-item">
-                        <div class="ds-item-icon">✓</div>
+                        <div class="ds-item-icon" aria-label="checkmark">✓</div>
                         <p class="ds-item-text">No cloud vendor lock-in</p>
                     </div>
                 </div>
@@ -903,23 +918,23 @@
                 <h3 class="ds-comparison-title">Generic Cloud API</h3>
                 <div class="ds-comparison-items">
                     <div class="ds-comparison-item">
-                        <div class="ds-item-icon">✓</div>
+                        <div class="ds-item-icon" aria-label="checkmark">✓</div>
                         <p class="ds-item-text">Easy to integrate</p>
                     </div>
                     <div class="ds-comparison-item">
-                        <div class="ds-item-icon">✓</div>
+                        <div class="ds-item-icon" aria-label="checkmark">✓</div>
                         <p class="ds-item-text">Zero infrastructure cost</p>
                     </div>
                     <div class="ds-comparison-item">
-                        <div class="ds-item-icon">✓</div>
+                        <div class="ds-item-icon" aria-label="checkmark">✓</div>
                         <p class="ds-item-text">Automatic scaling</p>
                     </div>
                     <div class="ds-comparison-item">
-                        <div class="ds-item-icon">✗</div>
+                        <div class="ds-item-icon" aria-label="x mark">✗</div>
                         <p class="ds-item-text">Higher per-token costs</p>
                     </div>
                     <div class="ds-comparison-item">
-                        <div class="ds-item-icon">✗</div>
+                        <div class="ds-item-icon" aria-label="x mark">✗</div>
                         <p class="ds-item-text">Data sent to vendor</p>
                     </div>
                 </div>
@@ -931,23 +946,23 @@
                 <h3 class="ds-comparison-title">Resayil + Dedicated</h3>
                 <div class="ds-comparison-items">
                     <div class="ds-comparison-item">
-                        <div class="ds-item-icon">✓</div>
+                        <div class="ds-item-icon" aria-label="checkmark">✓</div>
                         <p class="ds-item-text">Best of both worlds</p>
                     </div>
                     <div class="ds-comparison-item">
-                        <div class="ds-item-icon">✓</div>
+                        <div class="ds-item-icon" aria-label="checkmark">✓</div>
                         <p class="ds-item-text">API simplicity + control</p>
                     </div>
                     <div class="ds-comparison-item">
-                        <div class="ds-item-icon">✓</div>
+                        <div class="ds-item-icon" aria-label="checkmark">✓</div>
                         <p class="ds-item-text">Data stays on-premises</p>
                     </div>
                     <div class="ds-comparison-item">
-                        <div class="ds-item-icon">✓</div>
+                        <div class="ds-item-icon" aria-label="checkmark">✓</div>
                         <p class="ds-item-text">Predictable pricing</p>
                     </div>
                     <div class="ds-comparison-item">
-                        <div class="ds-item-icon">✓</div>
+                        <div class="ds-item-icon" aria-label="checkmark">✓</div>
                         <p class="ds-item-text">Enterprise support</p>
                     </div>
                 </div>
@@ -994,19 +1009,19 @@
 
                 <div class="ds-tier-features">
                     <div class="ds-feature-item">
-                        <span class="ds-feature-check">✓</span>
+                        <span class="ds-feature-check" aria-label="checkmark">✓</span>
                         <span>Resayil API access included</span>
                     </div>
                     <div class="ds-feature-item">
-                        <span class="ds-feature-check">✓</span>
+                        <span class="ds-feature-check" aria-label="checkmark">✓</span>
                         <span>Standard support (8h response)</span>
                     </div>
                     <div class="ds-feature-item">
-                        <span class="ds-feature-check">✓</span>
+                        <span class="ds-feature-check" aria-label="checkmark">✓</span>
                         <span>Basic monitoring</span>
                     </div>
                     <div class="ds-feature-item">
-                        <span class="ds-feature-check">✓</span>
+                        <span class="ds-feature-check" aria-label="checkmark">✓</span>
                         <span>1 public IP address</span>
                     </div>
                 </div>
@@ -1049,19 +1064,19 @@
 
                 <div class="ds-tier-features">
                     <div class="ds-feature-item">
-                        <span class="ds-feature-check">✓</span>
+                        <span class="ds-feature-check" aria-label="checkmark">✓</span>
                         <span>Priority API support</span>
                     </div>
                     <div class="ds-feature-item">
-                        <span class="ds-feature-check">✓</span>
+                        <span class="ds-feature-check" aria-label="checkmark">✓</span>
                         <span>4h SLA response time</span>
                     </div>
                     <div class="ds-feature-item">
-                        <span class="ds-feature-check">✓</span>
+                        <span class="ds-feature-check" aria-label="checkmark">✓</span>
                         <span>Advanced monitoring & alerts</span>
                     </div>
                     <div class="ds-feature-item">
-                        <span class="ds-feature-check">✓</span>
+                        <span class="ds-feature-check" aria-label="checkmark">✓</span>
                         <span>4 public IP addresses</span>
                     </div>
                 </div>
@@ -1104,19 +1119,19 @@
 
                 <div class="ds-tier-features">
                     <div class="ds-feature-item">
-                        <span class="ds-feature-check">✓</span>
+                        <span class="ds-feature-check" aria-label="checkmark">✓</span>
                         <span>Dedicated account manager</span>
                     </div>
                     <div class="ds-feature-item">
-                        <span class="ds-feature-check">✓</span>
+                        <span class="ds-feature-check" aria-label="checkmark">✓</span>
                         <span>1h SLA response time</span>
                     </div>
                     <div class="ds-feature-item">
-                        <span class="ds-feature-check">✓</span>
+                        <span class="ds-feature-check" aria-label="checkmark">✓</span>
                         <span>Custom configurations</span>
                     </div>
                     <div class="ds-feature-item">
-                        <span class="ds-feature-check">✓</span>
+                        <span class="ds-feature-check" aria-label="checkmark">✓</span>
                         <span>Unlimited IP addresses</span>
                     </div>
                 </div>
@@ -1131,27 +1146,27 @@
         <h2 class="ds-section-title">Perfect For</h2>
         <div class="ds-usecases-grid">
             <div class="ds-usecase-card">
-                <span class="ds-usecase-icon">🏦</span>
+                <span class="ds-usecase-icon" aria-label="bank">🏦</span>
                 <h3 class="ds-usecase-title">Financial Services</h3>
                 <p class="ds-usecase-desc">Regulatory compliance (SOC 2, HIPAA), data sovereignty, and zero data sharing requirements met with dedicated infrastructure.</p>
             </div>
             <div class="ds-usecase-card">
-                <span class="ds-usecase-icon">🏥</span>
+                <span class="ds-usecase-icon" aria-label="hospital">🏥</span>
                 <h3 class="ds-usecase-title">Healthcare</h3>
                 <p class="ds-usecase-desc">Patient data privacy, HIPAA compliance, and encrypted on-premise processing without cloud data exposure.</p>
             </div>
             <div class="ds-usecase-card">
-                <span class="ds-usecase-icon">🚀</span>
+                <span class="ds-usecase-icon" aria-label="rocket">🚀</span>
                 <h3 class="ds-usecase-title">Enterprise SaaS</h3>
                 <p class="ds-usecase-desc">White-label AI features, customer data isolation, and guaranteed uptime with multi-region failover.</p>
             </div>
             <div class="ds-usecase-card">
-                <span class="ds-usecase-icon">📊</span>
+                <span class="ds-usecase-icon" aria-label="analytics">📊</span>
                 <h3 class="ds-usecase-title">High-Volume Production</h3>
                 <p class="ds-usecase-desc">Millions of API calls, predictable costs, and dedicated compute resources without sharing capacity with others.</p>
             </div>
             <div class="ds-usecase-card">
-                <span class="ds-usecase-icon">🔐</span>
+                <span class="ds-usecase-icon" aria-label="security">🔐</span>
                 <h3 class="ds-usecase-title">Regulated Industries</h3>
                 <p class="ds-usecase-desc">Government, defense, and critical infrastructure needs with full audit trails and compliance reporting.</p>
             </div>
@@ -1211,7 +1226,7 @@
     <section class="ds-faq-section">
         <h2 class="ds-section-title">Frequently Asked Questions</h2>
         <div class="ds-faq-list">
-            <div class="ds-faq-item" onclick="this.classList.toggle('active')">
+            <div class="ds-faq-item" role="button" tabindex="0" aria-expanded="false">
                 <div class="ds-faq-question">
                     <span>Can I host Resayil models on my dedicated server?</span>
                     <span class="ds-faq-toggle">+</span>
@@ -1221,7 +1236,7 @@
                 </div>
             </div>
 
-            <div class="ds-faq-item" onclick="this.classList.toggle('active')">
+            <div class="ds-faq-item" role="button" tabindex="0" aria-expanded="false">
                 <div class="ds-faq-question">
                     <span>How is this different from self-hosted Ollama?</span>
                     <span class="ds-faq-toggle">+</span>
@@ -1231,7 +1246,7 @@
                 </div>
             </div>
 
-            <div class="ds-faq-item" onclick="this.classList.toggle('active')">
+            <div class="ds-faq-item" role="button" tabindex="0" aria-expanded="false">
                 <div class="ds-faq-question">
                     <span>What's included in the dedicated server pricing?</span>
                     <span class="ds-faq-toggle">+</span>
@@ -1241,7 +1256,7 @@
                 </div>
             </div>
 
-            <div class="ds-faq-item" onclick="this.classList.toggle('active')">
+            <div class="ds-faq-item" role="button" tabindex="0" aria-expanded="false">
                 <div class="ds-faq-question">
                     <span>Can I customize the server configuration?</span>
                     <span class="ds-faq-toggle">+</span>
@@ -1251,7 +1266,7 @@
                 </div>
             </div>
 
-            <div class="ds-faq-item" onclick="this.classList.toggle('active')">
+            <div class="ds-faq-item" role="button" tabindex="0" aria-expanded="false">
                 <div class="ds-faq-question">
                     <span>What SLA do you offer?</span>
                     <span class="ds-faq-toggle">+</span>
@@ -1261,7 +1276,7 @@
                 </div>
             </div>
 
-            <div class="ds-faq-item" onclick="this.classList.toggle('active')">
+            <div class="ds-faq-item" role="button" tabindex="0" aria-expanded="false">
                 <div class="ds-faq-question">
                     <span>How do I migrate from self-hosted Ollama?</span>
                     <span class="ds-faq-toggle">+</span>
@@ -1271,7 +1286,7 @@
                 </div>
             </div>
 
-            <div class="ds-faq-item" onclick="this.classList.toggle('active')">
+            <div class="ds-faq-item" role="button" tabindex="0" aria-expanded="false">
                 <div class="ds-faq-question">
                     <span>Is there a minimum contract?</span>
                     <span class="ds-faq-toggle">+</span>
@@ -1281,7 +1296,7 @@
                 </div>
             </div>
 
-            <div class="ds-faq-item" onclick="this.classList.toggle('active')">
+            <div class="ds-faq-item" role="button" tabindex="0" aria-expanded="false">
                 <div class="ds-faq-question">
                     <span>Can I run other workloads on the server?</span>
                     <span class="ds-faq-toggle">+</span>
@@ -1291,7 +1306,7 @@
                 </div>
             </div>
 
-            <div class="ds-faq-item" onclick="this.classList.toggle('active')">
+            <div class="ds-faq-item" role="button" tabindex="0" aria-expanded="false">
                 <div class="ds-faq-question">
                     <span>What if I need more capacity later?</span>
                     <span class="ds-faq-toggle">+</span>
@@ -1402,13 +1417,23 @@
 </script>
 
 <script>
-    // FAQ Accordion
+    // FAQ Accordion with Keyboard Support
     document.addEventListener('DOMContentLoaded', function() {
         const faqItems = document.querySelectorAll('.ds-faq-item');
         faqItems.forEach(item => {
-            item.addEventListener('click', function(e) {
-                e.preventDefault();
-                this.classList.toggle('active');
+            const toggleFAQ = function() {
+                item.classList.toggle('active');
+                const isExpanded = item.classList.contains('active');
+                item.setAttribute('aria-expanded', isExpanded);
+            };
+
+            item.addEventListener('click', toggleFAQ);
+
+            item.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    toggleFAQ();
+                }
             });
         });
     });
