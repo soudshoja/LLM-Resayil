@@ -1,667 +1,654 @@
-@extends('layouts.app')
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>LLM Resayil — AI Assistant Platform</title>
+    <meta name="description" content="Powerful AI assistant platform. Write faster, answer anything, and get results instantly. 1,000 free credits — no credit card required.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-@section('title', __('welcome.title'))
+    @if(app()->isProduction())
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-M0T3YYQP7X"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-M0T3YYQP7X');
+    </script>
+    @endif
 
-@push('styles')
-<style>
-    body { background: var(--bg-secondary); }
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        :root {
+            --bg:             #0f1115;
+            --bg-card:        rgba(19,22,29,0.82);
+            --gold:           #d4af37;
+            --gold-light:     #e8cc5a;
+            --gold-dim:       rgba(212,175,55,0.12);
+            --gold-border:    rgba(212,175,55,0.35);
+            --purple:         #7c3aed;
+            --border:         rgba(255,255,255,0.07);
+            --text:           #f0f2f7;
+            --text-secondary: #a1aab8;
+            --text-muted:     #6b7280;
+            --red:            #ef4444;
+            --red-dim:        rgba(239,68,68,0.12);
+            --font:           'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            --shadow-gold:    0 0 40px rgba(212,175,55,0.15), 0 4px 24px rgba(0,0,0,0.4);
+            --shadow-card:    0 4px 32px rgba(0,0,0,0.3);
+            --r-sm: 8px; --r-md: 12px; --r-lg: 20px; --r-xl: 28px;
+        }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font); background: var(--bg); color: var(--text); line-height: 1.65; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+        a { color: inherit; text-decoration: none; }
+        button { font-family: var(--font); cursor: pointer; border: none; background: none; }
+        ul { list-style: none; }
+        input { font-family: var(--font); }
+        body::before {
+            content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 0;
+            background-image: linear-gradient(rgba(255,255,255,0.022) 1px,transparent 1px), linear-gradient(90deg,rgba(255,255,255,0.022) 1px,transparent 1px);
+            background-size: 64px 64px;
+        }
+        .container    { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; position: relative; z-index: 1; }
+        .container-sm { max-width: 800px;  margin: 0 auto; padding: 0 1.5rem; position: relative; z-index: 1; }
+        .text-center { text-align: center; }
+        .text-gradient {
+            background: linear-gradient(135deg, var(--gold) 0%, #fff 55%, var(--gold-light) 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+        }
+        .text-gradient-gold {
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+        }
+        .glass {
+            background: var(--bg-card); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--border); border-radius: var(--r-lg); box-shadow: var(--shadow-card);
+        }
+        .glass-gold {
+            background: var(--bg-card); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--gold-border); border-radius: var(--r-xl); box-shadow: var(--shadow-gold);
+        }
+        .btn {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            padding: 0.75rem 1.5rem; border-radius: var(--r-md);
+            font-weight: 600; font-size: 0.95rem;
+            transition: all 0.2s ease; cursor: pointer; white-space: nowrap;
+            position: relative; overflow: hidden;
+        }
+        .btn-gold {
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            color: #0f1115;
+            box-shadow: 0 0 24px rgba(212,175,55,0.30), 0 4px 16px rgba(0,0,0,0.3);
+        }
+        .btn-gold:hover { transform: translateY(-2px); box-shadow: 0 0 40px rgba(212,175,55,0.50), 0 8px 24px rgba(0,0,0,0.3); color: #0f1115; }
+        .btn-gold::after { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg,transparent 40%,rgba(255,255,255,0.18) 100%); pointer-events: none; }
+        .btn-lg  { padding: 1.1rem 2.4rem; font-size: 1.1rem; }
+        .btn-ghost { background: transparent; color: var(--text-secondary); border: 1px solid var(--border); }
+        .btn-ghost:hover { border-color: var(--gold-border); color: var(--gold); background: var(--gold-dim); }
+        .btn-outline-gold { background: transparent; color: var(--gold); border: 1px solid var(--gold-border); }
+        .btn-outline-gold:hover { background: var(--gold-dim); color: var(--gold); }
 
-    /* ── Hero ── */
-    .hero { text-align: center; padding: 5rem 2rem 3rem; position: relative; overflow: hidden; }
-    .hero::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 500px; background: radial-gradient(ellipse at 50% 0%, rgba(212,175,55,0.1) 0%, transparent 70%); pointer-events: none; }
-    .hero::after { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: radial-gradient(ellipse at 20% 60%, rgba(212,175,55,0.04) 0%, transparent 50%); pointer-events: none; }
-    .hero-badge { display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(212,175,55,0.1); border: 1px solid rgba(212,175,55,0.25); color: var(--gold); padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.8rem; font-weight: 600; margin-bottom: 1.75rem; }
-    .hero h1 { font-size: 3.5rem; font-weight: 800; line-height: 1.12; margin-bottom: 1.25rem; max-width: 760px; margin-left: auto; margin-right: auto; letter-spacing: -0.02em; }
-    .hero h1 .text-gradient { background: linear-gradient(135deg, var(--gold), var(--gold-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-    .hero-lead { font-size: 1.15rem; color: var(--text-secondary); max-width: 580px; margin: 0 auto 2.25rem; line-height: 1.75; }
-    .hero-cta { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-bottom: 3rem; }
-    .hero-trust { display: flex; gap: 2rem; justify-content: center; flex-wrap: wrap; margin-bottom: 2.5rem; }
-    .hero-trust-item { display: flex; align-items: center; gap: 0.5rem; font-size: 0.8rem; color: var(--text-muted); }
-    .hero-trust-item svg { color: var(--gold); flex-shrink: 0; }
+        /* NAVBAR */
+        .navbar { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; padding: 1rem 0; transition: all 0.3s; }
+        .navbar.scrolled { background: rgba(15,17,21,0.92); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); padding: 0.65rem 0; }
+        .nav-inner { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; }
+        .logo { display: flex; align-items: center; gap: 0.6rem; font-weight: 800; font-size: 1.2rem; letter-spacing: -0.02em; }
+        .logo-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--gold); flex-shrink: 0; box-shadow: 0 0 12px rgba(212,175,55,0.8), 0 0 24px rgba(212,175,55,0.4); animation: pulse-dot 2.5s ease-in-out infinite; }
+        @keyframes pulse-dot { 0%,100% { box-shadow: 0 0 12px rgba(212,175,55,0.8), 0 0 24px rgba(212,175,55,0.4); } 50% { box-shadow: 0 0 20px rgba(212,175,55,1), 0 0 40px rgba(212,175,55,0.6); } }
+        .nav-links { display: flex; align-items: center; gap: 0.2rem; }
+        .nav-links a { color: var(--text-secondary); font-size: 0.9rem; font-weight: 500; padding: 0.5rem 0.9rem; border-radius: var(--r-sm); transition: all 0.2s; }
+        .nav-links a:hover { color: var(--text); background: rgba(255,255,255,0.04); }
+        .nav-actions { display: flex; align-items: center; gap: 0.75rem; }
+        .nav-toggle { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 0.4rem; }
+        .nav-toggle span { display: block; width: 22px; height: 2px; background: var(--text-secondary); border-radius: 2px; }
+        .mobile-nav { display: none; position: fixed; inset: 0; z-index: 999; background: rgba(15,17,21,0.97); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); flex-direction: column; align-items: center; justify-content: center; gap: 2rem; }
+        .mobile-nav.open { display: flex; }
+        .mobile-nav a { font-size: 1.5rem; font-weight: 700; color: var(--text-secondary); transition: color 0.2s; }
+        .mobile-nav a:hover { color: var(--gold); }
+        .mobile-nav-close { position: absolute; top: 1.5rem; right: 1.5rem; color: var(--text-muted); cursor: pointer; padding: 0.5rem; }
+        .mobile-nav-close svg { width: 24px; height: 24px; }
 
-    /* ── Featured Models (slider card) ── */
-    .featured-models-label { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); text-align: center; margin-bottom: 0.75rem; }
-    .hero-slider-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 0; overflow: hidden; max-width: 820px; margin: 0 auto; position: relative; box-shadow: 0 0 0 1px rgba(212,175,55,0.06), 0 20px 60px rgba(0,0,0,0.35); }
-    .hero-slider-container { position: relative; width: 100%; height: 260px; }
-    .hero-slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; transition: opacity 0.5s ease-in-out; display: flex; align-items: center; justify-content: center; flex-direction: column; padding: 2rem; }
-    .hero-slide.active { opacity: 1; }
-    .hero-slide-content { text-align: center; }
-    .hero-slide-logo { display: inline-flex; align-items: center; justify-content: center; width: 46px; height: 46px; border-radius: 12px; font-size: 0.85rem; font-weight: 800; color: #fff; margin-bottom: 0.85rem; letter-spacing: -0.01em; }
-    .slide-logo-meta    { background: linear-gradient(140deg, #0866FF 0%, #3b8fff 100%); }
-    .slide-logo-deepseek{ background: linear-gradient(140deg, #3a58e8 0%, #6f88ff 100%); }
-    .hero-slide-badge { display: inline-flex; align-items: center; gap: 0.4rem; background: rgba(212,175,55,0.1); border: 1px solid rgba(212,175,55,0.22); color: var(--gold); padding: 0.3rem 0.75rem; border-radius: 20px; font-size: 0.72rem; font-weight: 600; margin-bottom: 0.75rem; }
-    .hero-slide-model { font-size: 1.75rem; font-weight: 700; color: var(--text-primary); margin: 0 0 0.6rem; line-height: 1.2; }
-    .hero-slide-model .text-gradient { background: linear-gradient(135deg, var(--gold), var(--gold-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-    .hero-slide p { font-size: 0.9rem; color: var(--text-secondary); max-width: 420px; margin: 0 auto; line-height: 1.6; }
-    .hero-slider-footer { display: flex; align-items: center; justify-content: center; gap: 0.75rem; padding: 0.9rem 1.5rem; border-top: 1px solid var(--border); background: rgba(0,0,0,0.15); }
-    .hero-slider-dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(212,175,55,0.3); border: 1.5px solid rgba(212,175,55,0.5); cursor: pointer; transition: all 0.3s; padding: 0; }
-    .hero-slider-dot.active { background: var(--gold); border-color: var(--gold); transform: scale(1.3); }
-    .hero-slider-dot:hover { background: rgba(212,175,55,0.6); }
-    .hero-slider-counter { font-size: 0.72rem; color: var(--text-muted); letter-spacing: 0.08em; }
+        /* HERO */
+        .hero { min-height: 100vh; display: flex; align-items: center; padding: 8rem 0 6rem; position: relative; overflow: hidden; }
+        .orb { position: absolute; border-radius: 50%; filter: blur(80px); pointer-events: none; animation: orb-float 8s ease-in-out infinite; }
+        .orb-1 { width: 500px; height: 500px; background: radial-gradient(circle, rgba(212,175,55,0.18) 0%,transparent 70%); top: -100px; right: -100px; }
+        .orb-2 { width: 400px; height: 400px; background: radial-gradient(circle, rgba(124,58,237,0.20) 0%,transparent 70%); bottom: -80px; left: -80px; animation-delay: -3s; }
+        .orb-3 { width: 300px; height: 300px; background: radial-gradient(circle, rgba(212,175,55,0.10) 0%,transparent 70%); top: 40%; left: 30%; animation-delay: -5s; }
+        @keyframes orb-float { 0%,100% { transform: translate(0,0) scale(1); } 33% { transform: translate(20px,-30px) scale(1.05); } 66% { transform: translate(-15px,20px) scale(0.95); } }
+        .hero-content { position: relative; z-index: 2; text-align: center; }
+        .hero-badge { display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(212,175,55,0.10); border: 1px solid rgba(212,175,55,0.25); border-radius: 100px; padding: 0.45rem 1.1rem; font-size: 0.9rem; font-weight: 600; color: var(--gold); margin-bottom: 2rem; animation: badge-glow 3s ease-in-out infinite; }
+        .hero-badge svg { width: 18px; height: 18px; flex-shrink: 0; }
+        @keyframes badge-glow { 0%,100% { box-shadow: none; } 50% { box-shadow: 0 0 20px rgba(212,175,55,0.22); } }
+        .hero-h1 { font-size: clamp(2.5rem,6vw,4.5rem); font-weight: 900; line-height: 1.08; letter-spacing: -0.03em; margin-bottom: 1.5rem; }
+        .hero-sub { font-size: clamp(1.05rem,2.5vw,1.3rem); color: var(--text-secondary); max-width: 600px; margin: 0 auto 2.5rem; line-height: 1.7; }
+        .hero-cta-group { display: flex; align-items: center; justify-content: center; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
+        .hero-trust { font-size: 0.88rem; color: var(--text-muted); margin-bottom: 3rem; }
+        .hero-trust strong { color: var(--text-secondary); }
+        .stats-card { display: inline-flex; align-items: center; gap: 1.5rem; background: rgba(19,22,29,0.85); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid var(--border); border-radius: 100px; padding: 0.7rem 1.8rem; animation: stats-float 4s ease-in-out infinite; }
+        @keyframes stats-float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+        .h-stat { display: flex; align-items: center; gap: 0.4rem; font-size: 0.82rem; font-weight: 500; color: var(--text-secondary); }
+        .sdot { width: 6px; height: 6px; border-radius: 50%; animation: sdot-pulse 2s ease-in-out infinite; }
+        .sdot.g { background: #22c55e; box-shadow: 0 0 8px rgba(34,197,94,0.7); }
+        .sdot.y { background: var(--gold); box-shadow: 0 0 8px rgba(212,175,55,0.7); }
+        .sdot.b { background: #38bdf8; box-shadow: 0 0 8px rgba(56,189,248,0.7); }
+        @keyframes sdot-pulse { 0%,100% { opacity:1; } 50% { opacity:0.4; } }
+        .ssep { width: 1px; height: 16px; background: var(--border); }
 
-    /* ── Sections ── */
-    .section { padding: 4rem 2rem; max-width: 1200px; margin: 0 auto; }
-    .section-title { text-align: center; margin-bottom: 3rem; }
-    .section-title h2 { font-size: 2rem; font-weight: 700; margin-bottom: 0.75rem; }
-    .section-title p { color: var(--text-secondary); font-size: 1rem; max-width: 500px; margin: 0 auto; }
-    .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
-    .step { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 1.75rem; text-align: center; position: relative; }
-    .step-num { width: 44px; height: 44px; background: linear-gradient(135deg, var(--gold), var(--gold-light)); color: #0a0d14; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1.1rem; margin: 0 auto 1rem; }
-    .step h3 { font-size: 1rem; font-weight: 600; margin-bottom: 0.5rem; }
-    .step p { color: var(--text-secondary); font-size: 0.875rem; line-height: 1.6; }
+        /* SECTIONS */
+        section { position: relative; }
+        .sp  { padding: 7rem 0; }
+        .sps { padding: 5rem 0; }
+        .slabel { display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; }
+        .slabel::before { content: ''; display: block; width: 20px; height: 2px; background: var(--gold); border-radius: 2px; }
+        .sh2 { font-size: clamp(1.9rem,4vw,3rem); font-weight: 800; line-height: 1.15; letter-spacing: -0.025em; margin-bottom: 1rem; }
+        .ssub { font-size: 1.05rem; color: var(--text-secondary); max-width: 560px; line-height: 1.7; }
+        .sheader { margin-bottom: 4rem; }
 
-    /* ── Trial section ── */
-    .trial-section { margin-bottom: 2.5rem; padding: 2rem; background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px; position: relative; overflow: hidden; }
-    .trial-section::before { content: ''; position: absolute; top: 0; right: 0; width: 340px; height: 100%; background: radial-gradient(ellipse at 100% 50%, rgba(40,167,69,0.07) 0%, transparent 70%); pointer-events: none; }
-    .trial-badge { display: inline-block; background: linear-gradient(135deg, #28a745, #20c997); color: white; padding: 0.3rem 0.85rem; border-radius: 20px; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.85rem; }
-    .trial-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 2rem; }
-    .trial-card { background: var(--bg-secondary); border: 2px dashed rgba(40,167,69,0.3); border-radius: 12px; padding: 1.5rem; }
-    .trial-icon { font-size: 1.75rem; margin-bottom: 0.6rem; }
-    .trial-features { list-style: none; padding: 0; margin: 0; }
-    .trial-features li { display: flex; align-items: center; gap: 0.6rem; font-size: 0.875rem; color: var(--text-secondary); padding: 0.3rem 0; }
-    .trial-features li svg { flex-shrink: 0; color: #28a745; }
-    .trial-cta-col { display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; gap: 0.85rem; }
-    .trial-after-label { font-size: 0.68rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; }
-    .trial-after-plan { font-size: 1.35rem; font-weight: 700; color: var(--gold); }
-    .trial-after-details { font-size: 0.78rem; color: var(--text-muted); line-height: 1.65; }
-    .trial-cta-btn { display: block; width: 100%; padding: 0.8rem 1.5rem; border-radius: 8px; font-weight: 700; font-size: 0.9rem; text-align: center; text-decoration: none; background: linear-gradient(135deg, #28a745, #20c997); color: #fff; border: none; transition: all 0.2s; cursor: pointer; }
-    .trial-cta-btn:hover { opacity: 0.9; transform: translateY(-1px); box-shadow: 0 4px 18px rgba(40,167,69,0.4); color: #fff; }
-    .trial-footer { font-size: 0.72rem; color: var(--text-muted); text-align: center; margin-top: 1.25rem; }
-    .trial-section-title { font-size: 1.2rem; font-weight: 700; margin-bottom: 1.5rem; }
-    .trial-card-title { font-size: 1rem; font-weight: 600; margin-bottom: 0.85rem; }
-    .trial-note { font-size: 0.75rem; color: var(--text-muted); text-align: center; margin-top: 0.85rem; }
+        /* BENTO */
+        .bento { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.25rem; }
+        .bc { background: var(--bg-card); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid var(--border); border-radius: var(--r-lg); padding: 2rem; transition: all 0.3s; position: relative; overflow: hidden; }
+        .bc::before { content: ''; position: absolute; inset: 0; border-radius: var(--r-lg); background: linear-gradient(135deg, var(--gold-dim) 0%, transparent 60%); opacity: 0; transition: opacity 0.3s; }
+        .bc:hover { border-color: var(--gold-border); transform: translateY(-4px); box-shadow: 0 0 30px rgba(212,175,55,0.10), 0 12px 40px rgba(0,0,0,0.3); }
+        .bc:hover::before { opacity: 1; }
+        .bc.w2 { grid-column: span 2; }
+        .bi { width: 48px; height: 48px; background: var(--gold-dim); border: 1px solid rgba(212,175,55,0.20); border-radius: var(--r-sm); display: flex; align-items: center; justify-content: center; margin-bottom: 1.25rem; transition: all 0.3s; }
+        .bc:hover .bi { background: rgba(212,175,55,0.20); box-shadow: 0 0 16px rgba(212,175,55,0.25); }
+        .bi svg { width: 24px; height: 24px; color: var(--gold); }
+        .bc h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem; position: relative; }
+        .bc p  { font-size: 0.92rem; color: var(--text-secondary); line-height: 1.65; position: relative; }
 
-    /* ── Button sizes ── */
-    .btn-lg { padding: 0.75rem 2rem; font-size: 1rem; }
-    .btn-xl { padding: 0.85rem 2.5rem; font-size: 1.05rem; }
+        /* HOW IT WORKS */
+        .steps-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; position: relative; }
+        .steps-grid::before { content: ''; position: absolute; top: 30px; left: calc(16.66% + 1.25rem); right: calc(16.66% + 1.25rem); height: 1px; background: linear-gradient(90deg, transparent, var(--gold-border), transparent); pointer-events: none; z-index: 0; }
+        .step-card { background: var(--bg-card); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid var(--border); border-radius: var(--r-lg); padding: 2rem; text-align: center; position: relative; z-index: 1; transition: all 0.3s; }
+        .step-card:hover { border-color: var(--gold-border); transform: translateY(-4px); box-shadow: 0 0 24px rgba(212,175,55,0.08), 0 12px 40px rgba(0,0,0,0.3); }
+        .step-num { width: 52px; height: 52px; background: linear-gradient(135deg, var(--gold), var(--gold-light)); color: #0f1115; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 1.3rem; margin: 0 auto 1.25rem; box-shadow: 0 0 20px rgba(212,175,55,0.35); }
+        .step-card h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.5rem; }
+        .step-card p { color: var(--text-secondary); font-size: 0.9rem; line-height: 1.65; }
 
-    /* ── Hero CTA: Get Started button — gold text on dark bg ── */
-    .hero-cta .btn-gold {
-        background: transparent;
-        border: 1px solid var(--gold);
-        color: var(--gold);
-    }
-    .hero-cta .btn-gold:hover {
-        background: rgba(212,175,55,0.1);
-        color: var(--gold);
-        box-shadow: 0 4px 18px rgba(212,175,55,0.25);
-    }
+        /* TESTIMONIALS */
+        .t-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; }
+        .tc { background: var(--bg-card); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid var(--border); border-radius: var(--r-lg); padding: 1.75rem; transition: all 0.3s; }
+        .tc:hover { border-color: var(--gold-border); transform: translateY(-3px); box-shadow: 0 0 24px rgba(212,175,55,0.08); }
+        .tstars { display: flex; gap: 0.25rem; margin-bottom: 1rem; }
+        .tstars svg { width: 16px; height: 16px; color: var(--gold); }
+        .tq { font-size: 0.95rem; color: var(--text-secondary); line-height: 1.75; margin-bottom: 1.25rem; font-style: italic; }
+        .ta { display: flex; align-items: center; gap: 0.75rem; }
+        .tav { width: 42px; height: 42px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1rem; flex-shrink: 0; }
+        .av-p { background: rgba(124,58,237,0.25); color: #a78bfa; border: 1px solid rgba(124,58,237,0.35); }
+        .av-g { background: rgba(212,175,55,0.20); color: var(--gold); border: 1px solid var(--gold-border); }
+        .av-b { background: rgba(56,189,248,0.20); color: #38bdf8; border: 1px solid rgba(56,189,248,0.35); }
+        .tn { font-weight: 700; font-size: 0.9rem; }
+        .tr { font-size: 0.8rem; color: var(--text-muted); margin-top: 0.1rem; }
 
-    /* ── Pricing cards ── */
-    .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
-    .plan-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px; padding: 2rem; display: flex; flex-direction: column; position: relative; transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s; }
-    .plan-card:hover { border-color: var(--gold-muted); transform: translateY(-3px); box-shadow: 0 8px 32px rgba(0,0,0,0.28); }
-    .plan-card.featured { border-color: var(--gold-muted); box-shadow: 0 0 0 1px rgba(212,175,55,0.2), 0 8px 32px rgba(212,175,55,0.1); }
-    .plan-badge { position: absolute; top: -13px; left: 50%; transform: translateX(-50%); background: linear-gradient(135deg, var(--gold), var(--gold-light)); color: #0a0d14; font-size: 0.7rem; font-weight: 700; padding: 0.25rem 0.85rem; border-radius: 20px; text-transform: uppercase; letter-spacing: 0.05em; white-space: nowrap; }
-    .plan-name { font-size: 0.95rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-secondary); margin-bottom: 0.75rem; }
-    .plan-price { font-size: 2.75rem; font-weight: 800; color: var(--gold); line-height: 1; margin-bottom: 0.2rem; letter-spacing: -0.02em; }
-    .plan-price span { font-size: 1rem; font-weight: 500; color: var(--text-secondary); }
-    .plan-billing { font-size: 0.78rem; color: var(--text-muted); margin-bottom: 1.5rem; }
-    .plan-divider { border: none; border-top: 1px solid var(--border); margin-bottom: 1.25rem; }
-    .plan-features { list-style: none; flex: 1; margin-bottom: 1.75rem; padding: 0; }
-    .plan-features li { display: flex; align-items: center; gap: 0.6rem; font-size: 0.875rem; color: var(--text-secondary); padding: 0.4rem 0; }
-    .plan-features li svg { flex-shrink: 0; color: var(--gold); }
-    .plan-cta { display: block; width: 100%; padding: 0.8rem 1.5rem; border-radius: 8px; font-weight: 600; font-size: 0.9rem; cursor: pointer; border: none; transition: all 0.2s; text-align: center; text-decoration: none; }
-    .plan-cta-gold { background: linear-gradient(135deg, var(--gold), var(--gold-light)); color: #0a0d14; }
-    .plan-cta-gold:hover { opacity: 0.9; transform: translateY(-1px); box-shadow: 0 4px 18px rgba(212,175,55,0.35); color: #0a0d14; }
-    .plan-cta-outline { background: transparent; border: 1px solid var(--gold-muted); color: var(--gold); }
-    .plan-cta-outline:hover { background: rgba(212,175,55,0.08); color: var(--gold); }
+        /* PRICING */
+        .p-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; }
+        .pc { background: var(--bg-card); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid var(--border); border-radius: var(--r-lg); padding: 2rem; transition: all 0.3s; position: relative; overflow: hidden; display: flex; flex-direction: column; }
+        .pc:hover { border-color: var(--gold-border); transform: translateY(-4px); box-shadow: 0 0 30px rgba(212,175,55,0.10), 0 12px 40px rgba(0,0,0,0.3); }
+        .pc.feat { border-color: var(--gold-border); box-shadow: 0 0 40px rgba(212,175,55,0.12); }
+        .pc.feat::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg,transparent,var(--gold),transparent); }
+        .pbadge { display: inline-block; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #0f1115; background: linear-gradient(135deg,var(--gold),var(--gold-light)); border-radius: 100px; padding: 0.25rem 0.75rem; margin-bottom: 1rem; }
+        .pname  { font-size: 1.15rem; font-weight: 700; margin-bottom: 0.25rem; }
+        .pprice { font-size: 2.4rem; font-weight: 900; line-height: 1; margin: 0.75rem 0 0.25rem; color: var(--gold); }
+        .pprice small { font-size: 0.9rem; font-weight: 400; color: var(--text-muted); }
+        .pdesc  { font-size: 0.88rem; color: var(--text-muted); margin-bottom: 1.5rem; }
+        .pfeat  { margin-bottom: 1.75rem; flex: 1; }
+        .pfeat li { display: flex; align-items: flex-start; gap: 0.6rem; font-size: 0.88rem; color: var(--text-secondary); padding: 0.35rem 0; }
+        .pfeat li svg { width: 16px; height: 16px; color: var(--gold); flex-shrink: 0; margin-top: 1px; }
 
-    /* ── Addon box ── */
-    .addon-box { background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 10px; padding: 1.25rem 1.5rem; margin-top: 2rem; }
-    .addon-box h4 { font-size: 0.78rem; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.09em; margin-bottom: 0.75rem; }
-    .addon-row { display: flex; justify-content: space-between; font-size: 0.85rem; padding: 0.4rem 0; border-bottom: 1px solid var(--border); color: var(--text-secondary); }
-    .addon-row:last-child { border-bottom: none; }
-    .addon-row span:last-child { color: var(--gold); font-weight: 600; }
-    .text-bonus { color: #28a745; font-size: 0.8em; font-weight: 600; }
+        /* FOOTER */
+        footer { border-top: 1px solid var(--border); padding: 3rem 0; }
+        .foot-in { display: flex; align-items: center; justify-content: space-between; gap: 2rem; flex-wrap: wrap; }
+        .foot-links { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+        .foot-links a { font-size: 0.85rem; color: var(--text-muted); transition: color 0.2s; }
+        .foot-links a:hover { color: var(--text-secondary); }
+        .foot-copy { font-size: 0.82rem; color: var(--text-muted); }
 
-    /* ── Code block ── */
-    .code-block { background: #0a0d14; border: 1px solid var(--border); border-radius: 10px; padding: 1.5rem; overflow-x: auto; font-family: monospace; font-size: 0.85rem; line-height: 1.7; color: #e0e5ec; }
-    .code-block .comment { color: #4b5563; }
-    .code-block .string { color: #86efac; }
-    .code-block .key { color: #93c5fd; }
+        /* ANIMATIONS */
+        .fu { opacity: 0; transform: translateY(28px); transition: opacity 0.65s ease, transform 0.65s ease; }
+        .fu.on { opacity: 1; transform: translateY(0); }
+        .d1 { transition-delay: 0.10s; }
+        .d2 { transition-delay: 0.20s; }
+        .d3 { transition-delay: 0.30s; }
 
-    /* ── Model List (ml-) premium redesign ── */
-    .ml-category-group { margin-bottom: 2.75rem; }
-    .ml-category-header { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.5rem; }
-    .ml-category-diamond { color: var(--gold); font-size: 0.65rem; flex-shrink: 0; line-height: 1; }
-    .ml-category-label { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); white-space: nowrap; }
-    .ml-category-line { flex: 1; height: 1px; background: linear-gradient(to right, rgba(212,175,55,0.4), transparent); }
-    .ml-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
-    .ml-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px; padding: 1.2rem 1.35rem; display: flex; align-items: flex-start; gap: 1rem; transition: border-color 0.22s, box-shadow 0.22s; cursor: default; }
-    .ml-card:hover { border-color: rgba(212,175,55,0.5); box-shadow: 0 0 0 1px rgba(212,175,55,0.13), 0 8px 28px rgba(0,0,0,0.38); }
-    .ml-avatar { width: 42px; height: 42px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 0.82rem; font-weight: 800; color: #fff; flex-shrink: 0; letter-spacing: -0.01em; font-family: 'Inter', sans-serif; }
-    .ml-av-meta    { background: linear-gradient(140deg, #0866FF 0%, #3b8fff 100%); }
-    .ml-av-mistral { background: linear-gradient(140deg, #e56000 0%, #ff8c2e 100%); }
-    .ml-av-qwen    { background: linear-gradient(140deg, #e05c00 0%, #ff8533 100%); }
-    .ml-av-deepseek{ background: linear-gradient(140deg, #3a58e8 0%, #6f88ff 100%); }
-    .ml-body { flex: 1; min-width: 0; }
-    .ml-model-name { font-size: 0.875rem; font-weight: 700; color: #dde2ea; line-height: 1.3; margin-bottom: 0.2rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .ml-company { font-size: 0.7rem; color: var(--text-muted); margin-bottom: 0.4rem; line-height: 1; }
-    .ml-tagline { font-size: 0.76rem; color: var(--text-secondary); line-height: 1.55; }
-    .ml-footer { text-align: center; margin-top: 2.5rem; padding-top: 2rem; border-top: 1px solid var(--border); }
-    .ml-footer p { color: var(--text-muted); font-size: 0.875rem; }
-    .ml-footer a { color: var(--gold); font-weight: 600; }
-    .ml-footer a:hover { color: var(--gold-light); }
+        @media (prefers-reduced-motion: reduce) {
+            .fu { opacity: 1; transform: none; transition: none; }
+            .orb, .stats-card, .logo-dot { animation: none; }
+        }
 
-    /* ── CTA section ── */
-    .cta-section { text-align: center; padding: 5rem 2rem; background: linear-gradient(135deg, rgba(212,175,55,0.05) 0%, transparent 100%); border-top: 1px solid var(--border); }
-    .cta-title { font-size: 2.25rem; font-weight: 700; margin-bottom: 0.75rem; }
-    .cta-subtitle { color: var(--text-secondary); margin-bottom: 2rem; font-size: 1.05rem; }
+        /* RESPONSIVE */
+        @media (max-width: 1024px) {
+            .bento { grid-template-columns: repeat(2,1fr); }
+            .bc.w2 { grid-column: span 1; }
+        }
+        @media (max-width: 768px) {
+            .nav-links, .nav-actions .btn-ghost, .nav-actions .btn-outline-gold { display: none; }
+            .nav-toggle { display: flex; }
+            .bento, .t-grid, .p-grid, .steps-grid { grid-template-columns: 1fr; }
+            .steps-grid::before { display: none; }
+            .hero { padding: 7rem 0 4rem; }
+            .sp { padding: 5rem 0; }
+            .stats-card { flex-direction: column; gap: 0.75rem; border-radius: var(--r-md); padding: 1rem 1.5rem; }
+            .ssep { width: 100%; height: 1px; }
+            .foot-in { flex-direction: column; text-align: center; }
+            .foot-links { justify-content: center; }
+        }
+        @media (max-width: 480px) {
+            .hero-h1 { font-size: 2.2rem; }
+            .hero-cta-group { flex-direction: column; align-items: stretch; }
+            .hero-cta-group .btn { justify-content: center; }
+        }
+    </style>
+</head>
+<body>
 
-    /* ── Site footer ── */
-    .site-footer { border-top: 1px solid var(--border); padding: 2rem; background: var(--bg-secondary); }
-    .site-footer-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
-    .site-footer-brand { font-weight: 700; font-size: 0.95rem; background: linear-gradient(135deg, var(--gold), var(--gold-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-    .site-footer-links { display: flex; gap: 1.5rem; flex-wrap: wrap; }
-    .site-footer-links a { font-size: 0.825rem; color: var(--text-muted); transition: color 0.2s; }
-    .site-footer-links a:hover { color: var(--gold); }
-    .site-footer-copy { font-size: 0.78rem; color: var(--text-muted); }
+<nav class="mobile-nav" id="mobile-nav" role="dialog" aria-label="Navigation menu">
+    <button class="mobile-nav-close" id="mnav-close" aria-label="Close menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>
+    </button>
+    <a href="#features" onclick="closeMnav()">Features</a>
+    <a href="#how-it-works" onclick="closeMnav()">How It Works</a>
+    <a href="#pricing" onclick="closeMnav()">Pricing</a>
+    <a href="/login" onclick="closeMnav()">Sign In</a>
+    <a href="/register" onclick="closeMnav()" style="color:var(--gold);">Start Free</a>
+</nav>
 
-    /* ── Dividers ── */
-    .divider { border: none; border-top: 1px solid var(--border); margin: 0; }
-
-    /* ── Responsive ── */
-    @media(max-width: 900px) {
-        .pricing-grid { grid-template-columns: 1fr; }
-        .trial-grid { grid-template-columns: 1fr; }
-        .ml-grid { grid-template-columns: repeat(2, 1fr); }
-        .site-footer-inner { flex-direction: column; text-align: center; }
-    }
-    @media(max-width: 768px) {
-        .hero h1 { font-size: 2.25rem; }
-        .steps { grid-template-columns: 1fr; }
-        .hero-slider-container { height: 220px; }
-        .hero-slide h2, .hero-slide-model { font-size: 1.4rem; }
-        .hero-trust { gap: 1rem; }
-    }
-    @media(max-width: 560px) {
-        .ml-grid { grid-template-columns: 1fr; }
-        .hero h1 { font-size: 1.875rem; }
-        .site-footer-links { justify-content: center; }
-    }
-</style>
-@endpush
-
-@push('scripts')
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    const slides = document.querySelectorAll('.hero-slide');
-    const dots = document.querySelectorAll('.hero-slider-dot');
-    let currentSlide = 0;
-    let autoPlay = null;
-
-    function showSlide(index) {
-        slides.forEach((slide, i) => {
-            slide.classList.remove('active');
-            if (dots[i]) dots[i].classList.remove('active');
-            if (i === index) {
-                slide.classList.add('active');
-                if (dots[i]) dots[i].classList.add('active');
-            }
-        });
-        currentSlide = index;
-        const counter = document.getElementById('heroSlideCounter');
-        if (counter) counter.textContent = (index + 1) + ' / ' + slides.length;
-    }
-
-    function nextSlide() {
-        const next = (currentSlide + 1) % slides.length;
-        showSlide(next);
-    }
-
-    function prevSlide() {
-        const prev = (currentSlide - 1 + slides.length) % slides.length;
-        showSlide(prev);
-    }
-
-    function startAutoPlay() {
-        autoPlay = setInterval(nextSlide, 4500);
-    }
-
-    function stopAutoPlay() {
-        if (autoPlay) { clearInterval(autoPlay); autoPlay = null; }
-    }
-
-    dots.forEach((dot, index) => {
-        dot.addEventListener('click', () => { stopAutoPlay(); showSlide(index); startAutoPlay(); });
-    });
-
-    document.querySelectorAll('.hero-slider-prev, .hero-slider-next').forEach(btn => {
-        btn.addEventListener('click', function() {
-            stopAutoPlay();
-            this.classList.contains('hero-slider-prev') ? prevSlide() : nextSlide();
-            startAutoPlay();
-        });
-    });
-
-    // Keyboard navigation
-    document.addEventListener('keydown', function(e) {
-        if (e.key === 'ArrowLeft') { stopAutoPlay(); prevSlide(); startAutoPlay(); }
-        if (e.key === 'ArrowRight') { stopAutoPlay(); nextSlide(); startAutoPlay(); }
-    });
-
-    // Initialize
-    showSlide(0);
-    startAutoPlay();
-
-    // Pause on hover
-    const sliderCard = document.querySelector('.hero-slider-card');
-    sliderCard?.addEventListener('mouseenter', stopAutoPlay);
-    sliderCard?.addEventListener('mouseleave', startAutoPlay);
-});
-</script>
-@endpush
-
-@section('content')
-
-<!-- Hero -->
-<section class="hero">
-    <div class="hero-badge">
-        <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-        {{ __('welcome.hero_badge') }}
-    </div>
-    <h1>{{ __('welcome.hero_headline_before') }} <span class="text-gradient">{{ __('welcome.hero_headline_gold') }}</span> {{ __('welcome.hero_headline_after') }}</h1>
-    <p class="hero-lead">{{ __('welcome.hero_subtitle') }}</p>
-    <div class="hero-cta">
-        <a href="/register" class="btn btn-gold btn-lg">{{ __('welcome.cta_start_free_trial') }}</a>
-        <a href="#pricing" class="btn btn-outline btn-lg">{{ __('welcome.cta_view_pricing') }}</a>
-    </div>
-    <div class="hero-trust">
-        <div class="hero-trust-item">
-            <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
-            {{ __('welcome.trust_openai_compatible') }}
-        </div>
-        <div class="hero-trust-item">
-            <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-            {{ __('welcome.trust_pay_per_use') }}
-        </div>
-        <div class="hero-trust-item">
-            <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064"/></svg>
-            {{ __('welcome.trust_kuwait_based') }}
-        </div>
-        <div class="hero-trust-item">
-            <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-            {{ __('welcome.trust_free_trial') }}
-        </div>
-    </div>
-
-    <!-- Featured Models Slider -->
-    <div class="featured-models-label">{{ __('welcome.featured_models_label') }}</div>
-    <div class="hero-slider-card">
-        <div class="hero-slider-container">
-            <!-- Slide 1: Lightweight & Fast -->
-            <div class="hero-slide active">
-                <div class="hero-slide-content">
-                    <div class="hero-slide-logo slide-logo-meta">
-                        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 19V5l9 8.5L21 5v14" stroke="white" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                    </div>
-                    <div class="hero-slide-badge">
-                        <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-                        {{ __('welcome.lightweight') }}
-                    </div>
-                    <div class="hero-slide-model">{{ __('welcome.llama_32_3b_plain') }} <span class="text-gradient">{{ __('welcome.llama_32_3b_highlight') }}</span></div>
-                    <p>{{ __('welcome.lightweight_fast') }}</p>
-                </div>
-            </div>
-            <!-- Slide 2: Frontier Model -->
-            <div class="hero-slide">
-                <div class="hero-slide-content">
-                    <div class="hero-slide-logo slide-logo-deepseek">
-                        <svg width="26" height="26" viewBox="0 0 24 24" fill="white" aria-hidden="true"><path d="M6 4h6c4.418 0 8 3.582 8 8s-3.582 8-8 8H6V4z"/></svg>
-                    </div>
-                    <div class="hero-slide-badge">
-                        <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
-                        {{ __('welcome.frontier_model') }}
-                    </div>
-                    <div class="hero-slide-model">{{ __('welcome.deepseek_v31_671b_plain') }} <span class="text-gradient">{{ __('welcome.deepseek_v31_671b_highlight') }}</span></div>
-                    <p>{{ __('welcome.frontier_reasoning') }}</p>
-                </div>
+<header class="navbar" id="navbar">
+    <div class="container">
+        <div class="nav-inner">
+            <a href="/" class="logo" aria-label="LLM Resayil home">
+                <div class="logo-dot" aria-hidden="true"></div>
+                LLM Resayil
+            </a>
+            <nav class="nav-links" aria-label="Main navigation">
+                <a href="#features">Features</a>
+                <a href="#how-it-works">How It Works</a>
+                <a href="#pricing">Pricing</a>
+            </nav>
+            <div class="nav-actions">
+                <a href="/login" class="btn btn-ghost" style="padding:.6rem 1.1rem;font-size:.88rem;">Sign In</a>
+                <a href="/register" class="btn btn-gold" style="padding:.6rem 1.2rem;font-size:.88rem;">
+                    Start Free
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+                </a>
+                <button class="nav-toggle" id="nav-toggle" aria-label="Open menu" aria-expanded="false">
+                    <span></span><span></span><span></span>
+                </button>
             </div>
         </div>
-        <!-- Slider Footer with Controls -->
-        <div class="hero-slider-footer">
-            <button class="hero-slider-dot" aria-label="{{ __('welcome.slide_1_label') }}"></button>
-            <button class="hero-slider-dot" aria-label="{{ __('welcome.slide_2_label') }}"></button>
-            <span class="hero-slider-counter" id="heroSlideCounter">1 / 2</span>
+    </div>
+</header>
+
+<main>
+
+<!-- HERO -->
+<section class="hero" aria-labelledby="hero-h1">
+    <div class="orb orb-1" aria-hidden="true"></div>
+    <div class="orb orb-2" aria-hidden="true"></div>
+    <div class="orb orb-3" aria-hidden="true"></div>
+    <div class="container">
+        <div class="hero-content">
+            <div class="hero-badge" role="note">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                1,000 Free Credits &mdash; No Credit Card Needed
+            </div>
+            <h1 class="hero-h1" id="hero-h1">
+                Your Personal<br>
+                <span class="text-gradient">AI Assistant</span>
+            </h1>
+            <p class="hero-sub">
+                Write faster, think smarter, and get answers instantly.<br>
+                Access <strong>50+ powerful AI models</strong> on a single platform.
+            </p>
+            <div class="hero-cta-group">
+                <a href="/register" class="btn btn-gold btn-lg">
+                    Start Free
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+                </a>
+                <a href="#features" class="btn btn-ghost btn-lg">See Features</a>
+            </div>
+            <p class="hero-trust"><strong>Trusted by users worldwide</strong> &mdash; saving hours every day</p>
+            <div class="stats-card" role="status" aria-label="Live platform statistics">
+                <div class="h-stat"><div class="sdot g" aria-hidden="true"></div>1,200+ users online</div>
+                <div class="ssep" aria-hidden="true"></div>
+                <div class="h-stat"><div class="sdot y" aria-hidden="true"></div>50+ AI models</div>
+                <div class="ssep" aria-hidden="true"></div>
+                <div class="h-stat"><div class="sdot b" aria-hidden="true"></div>99.9% uptime</div>
+            </div>
         </div>
     </div>
 </section>
 
-<!-- How It Works -->
-<section class="section">
-    <div class="section-title">
-        <h2>{{ __('welcome.how_it_works_title') }}</h2>
-        <p>{{ __('welcome.how_it_works_subtitle') }}</p>
-    </div>
-    <div class="steps">
-        <div class="step">
-            <div class="step-num">1</div>
-            <h3>{{ __('welcome.step_1_title') }}</h3>
-            <p>{{ __('welcome.step_1_description') }}</p>
+<!-- FEATURES -->
+<section class="sp" id="features" aria-labelledby="feat-h2">
+    <div class="container">
+        <div class="sheader text-center">
+            <div class="slabel fu">What you can do</div>
+            <h2 class="sh2 fu d1" id="feat-h2">Everyday tasks, done <span class="text-gradient-gold">10x faster</span></h2>
+            <p class="ssub fu d2" style="margin:0 auto;">No technical knowledge needed. Just type what you need and get results instantly.</p>
         </div>
-        <div class="step">
-            <div class="step-num">2</div>
-            <h3>{{ __('welcome.step_2_title') }}</h3>
-            <p>{{ __('welcome.step_2_description') }}</p>
-        </div>
-        <div class="step">
-            <div class="step-num">3</div>
-            <h3>{{ __('welcome.step_3_title') }}</h3>
-            <p>{{ __('welcome.step_3_description') }}</p>
+        <div class="bento">
+            <div class="bc fu">
+                <div class="bi" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg>
+                </div>
+                <h3>Write Faster</h3>
+                <p>Emails, reports, social posts, articles &mdash; generate polished content in seconds. Never stare at a blank page again.</p>
+            </div>
+            <div class="bc fu d1">
+                <div class="bi" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>
+                </div>
+                <h3>Answer Anything</h3>
+                <p>Research topics, get instant analysis, and find answers to complex questions without spending hours searching.</p>
+            </div>
+            <div class="bc fu d2">
+                <div class="bi" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 8 6 6"/><path d="m4 14 6-6 2-3"/><path d="M2 5h12"/><path d="M7 2h1"/><path d="m22 22-5-10-5 10"/><path d="M14 18h6"/></svg>
+                </div>
+                <h3>Multiple Languages</h3>
+                <p>Work in the language you are most comfortable with. Our models support dozens of languages with high accuracy.</p>
+            </div>
+            <div class="bc w2 fu">
+                <div class="bi" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                </div>
+                <h3>Available 24/7 &mdash; Always Instant</h3>
+                <p>No waiting, no appointments, no delays. Your AI assistant is ready the moment you need it, any time of day or night. Whether it is 3am or your busiest workday, we are always on.</p>
+            </div>
+            <div class="bc fu d1">
+                <div class="bi" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                </div>
+                <h3>Private &amp; Secure</h3>
+                <p>Your conversations and data stay safe. Built with privacy as the default &mdash; we do not train on your data.</p>
+            </div>
+            <div class="bc fu d2">
+                <div class="bi" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></svg>
+                </div>
+                <h3>50+ AI Models</h3>
+                <p>Choose the best AI for each task. Creative writing, data analysis, coding help &mdash; there is a model for everything.</p>
+            </div>
         </div>
     </div>
 </section>
 
-<hr class="divider">
-
-<!-- Pricing -->
-<section class="section" id="pricing">
-    <div class="section-title">
-        <h2>{{ __('welcome.pricing_title_plain') }} <span class="text-gold">{{ __('welcome.pricing_title_gold') }}</span></h2>
-        <p>{{ __('welcome.pricing_subtitle') }}</p>
+<!-- HOW IT WORKS -->
+<section class="sp" id="how-it-works" aria-labelledby="hiw-h2">
+    <div class="container">
+        <div class="sheader text-center">
+            <div class="slabel fu">Simple Process</div>
+            <h2 class="sh2 fu d1" id="hiw-h2">Up and running in <span class="text-gradient-gold">30 seconds</span></h2>
+            <p class="ssub fu d2" style="margin:0 auto;">No technical setup, no complicated onboarding. Three simple steps and you are ready.</p>
+        </div>
+        <div class="steps-grid">
+            <div class="step-card fu">
+                <div class="step-num">1</div>
+                <h3>Create Account</h3>
+                <p>Sign up in 30 seconds with your email. No credit card required to start your free trial with 1,000 credits.</p>
+            </div>
+            <div class="step-card fu d1">
+                <div class="step-num">2</div>
+                <h3>Start Chatting</h3>
+                <p>Type your question, task, or idea. Pick from 50+ AI models or let the system choose the best one for you.</p>
+            </div>
+            <div class="step-card fu d2">
+                <div class="step-num">3</div>
+                <h3>Get Results</h3>
+                <p>Receive instant, high-quality responses. Refine, export, and use your results however you need them.</p>
+            </div>
+        </div>
     </div>
+</section>
 
-    {{-- Free Trial Box --}}
-    <div class="trial-section">
-        <div class="trial-badge">{{ __('welcome.free_trial_badge') }}</div>
-        <h2 class="trial-section-title">{{ __('welcome.try_before_buy') }}</h2>
-        <div class="trial-grid">
-            <div class="trial-card">
-                <div class="trial-icon">
-                    <svg width="28" height="28" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="color:#28a745"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+<!-- TESTIMONIALS -->
+<section class="sp" aria-labelledby="test-h2">
+    <div class="container">
+        <div class="sheader text-center">
+            <div class="slabel fu">Real Users, Real Results</div>
+            <h2 class="sh2 fu d1" id="test-h2">People are saving <span class="text-gradient-gold">hours every day</span></h2>
+        </div>
+        <div class="t-grid">
+            <div class="tc fu">
+                <div class="tstars" aria-label="5 stars">
+                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
                 </div>
-                <h3 class="trial-card-title">{{ __('welcome.seven_day_trial') }}</h3>
-                <ul class="trial-features">
-                    <li><svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>{{ __('welcome.full_starter_features') }}</li>
-                    <li><svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>{{ __('welcome.one_thousand_credits') }}</li>
-                    <li><svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>{{ __('welcome.small_models_only') }}</li>
-                    <li><svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>{{ __('welcome.one_free_api_key') }}</li>
-                    <li><svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>{{ __('welcome.cancel_anytime_trial') }}</li>
+                <p class="tq">"I write all my business proposals and client emails in minutes now. It understands exactly what I need and the tone is always professional. It has completely changed how I work."</p>
+                <div class="ta">
+                    <div class="tav av-p" aria-hidden="true">S</div>
+                    <div>
+                        <div class="tn">Sarah Mitchell</div>
+                        <div class="tr">Freelance Consultant</div>
+                    </div>
+                </div>
+            </div>
+            <div class="tc fu d1">
+                <div class="tstars" aria-label="5 stars">
+                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                </div>
+                <p class="tq">"My team uses it for research and analysis every day. The quality of responses is remarkable. It has made everyone significantly more productive and our output quality has jumped."</p>
+                <div class="ta">
+                    <div class="tav av-g" aria-hidden="true">J</div>
+                    <div>
+                        <div class="tn">James Thornton</div>
+                        <div class="tr">Product Manager, Tech Startup</div>
+                    </div>
+                </div>
+            </div>
+            <div class="tc fu d2">
+                <div class="tstars" aria-label="5 stars">
+                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                </div>
+                <p class="tq">"Saved me 3 hours every single day on content creation. I used to struggle with captions and articles. Now I describe what I want and it is done in seconds. Absolutely worth it."</p>
+                <div class="ta">
+                    <div class="tav av-b" aria-hidden="true">N</div>
+                    <div>
+                        <div class="tn">Nina Kowalski</div>
+                        <div class="tr">Content Creator &amp; Blogger</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- PRICING -->
+<section class="sp" id="pricing" aria-labelledby="price-h2">
+    <div class="container">
+        <div class="sheader text-center">
+            <div class="slabel fu">Pricing</div>
+            <h2 class="sh2 fu d1" id="price-h2">Simple Pricing. <span class="text-gradient-gold">No Surprises.</span></h2>
+            <p class="ssub fu d2" style="margin:0 auto;">Start free, upgrade only when you need more. Cancel anytime.</p>
+        </div>
+        <div class="p-grid">
+            <div class="pc fu">
+                <div class="pname">Free Trial</div>
+                <div class="pprice">FREE<small> / 7 days</small></div>
+                <p class="pdesc">Everything you need to experience AI</p>
+                <ul class="pfeat">
+                    <li>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                        1,000 free credits
+                    </li>
+                    <li>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                        ~500 AI responses
+                    </li>
+                    <li>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                        No credit card required
+                    </li>
+                    <li>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                        Multiple AI models
+                    </li>
                 </ul>
+                <a href="/register" class="btn btn-outline-gold" style="width:100%;justify-content:center;padding:.85rem;">Start Free Trial</a>
             </div>
-            <div class="trial-cta-col">
-                <div class="trial-after-label">{{ __('welcome.after_trial_label') }}</div>
-                <div class="trial-after-plan">{{ __('welcome.auto_bill_to_starter') }}</div>
-                <div class="trial-after-details">{{ __('welcome.card_required_for_trial') }}<br>{{ __('welcome.cancel_anytime') }}</div>
-                <a href="/register" class="trial-cta-btn">{{ __('welcome.start_free_trial_card_required') }}</a>
+            <div class="pc feat fu d1">
+                <div class="pbadge">Most Popular</div>
+                <div class="pname">Basic</div>
+                <div class="pprice">2 KWD<small> / month</small></div>
+                <p class="pdesc">Great for daily personal use</p>
+                <ul class="pfeat">
+                    <li>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                        5,000 credits / month
+                    </li>
+                    <li>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                        ~2,500 AI responses
+                    </li>
+                    <li>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                        All 50+ AI models
+                    </li>
+                    <li>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                        Priority support
+                    </li>
+                </ul>
+                <a href="/billing/plans" class="btn btn-gold" style="width:100%;justify-content:center;padding:.85rem;">Get Started</a>
+            </div>
+            <div class="pc fu d2">
+                <div class="pname">Pro</div>
+                <div class="pprice">5 KWD<small> / month</small></div>
+                <p class="pdesc">For power users and small teams</p>
+                <ul class="pfeat">
+                    <li>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                        15,000 credits / month
+                    </li>
+                    <li>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                        ~7,500 AI responses
+                    </li>
+                    <li>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                        All models + API access
+                    </li>
+                    <li>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                        Dedicated support
+                    </li>
+                </ul>
+                <a href="/billing/plans" class="btn btn-ghost" style="width:100%;justify-content:center;padding:.85rem;">Get Started</a>
             </div>
         </div>
-        <p class="trial-footer">{{ __('welcome.payments_secure') }}</p>
-    </div>
-
-    <div class="pricing-grid">
-
-        {{-- Starter Tier --}}
-        <div class="plan-card">
-            <div class="plan-badge">{{ __('welcome.most_popular') }}</div>
-            <div class="plan-name">{{ __('welcome.starter_tier') }}</div>
-            <div class="plan-price">15 <span>KWD</span></div>
-            <div class="plan-billing">{{ __('welcome.per_month') }} &nbsp;&middot;&nbsp; {{ __('welcome.billed_monthly') }}</div>
-            <hr class="plan-divider">
-            <ul class="plan-features">
-                <li>
-                    <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                    {{ __('welcome.one_thousand_credits_month') }}
-                </li>
-                <li>
-                    <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                    {{ __('welcome.ten_requests_minute') }}
-                </li>
-                <li>
-                    <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                    {{ __('welcome.one_free_api_key') }}
-                </li>
-                <li>
-                    <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                    {{ __('welcome.small_models_only') }}
-                </li>
-            </ul>
-            <a href="/register" class="plan-cta plan-cta-outline">{{ __('welcome.start_monthly_plan') }}</a>
-        </div>
-
-        {{-- Basic Tier (featured) --}}
-        <div class="plan-card featured">
-            <div class="plan-badge">{{ __('welcome.best_value') }}</div>
-            <div class="plan-name">{{ __('welcome.basic_tier') }}</div>
-            <div class="plan-price">25 <span>KWD</span></div>
-            <div class="plan-billing">{{ __('welcome.per_month') }} &nbsp;&middot;&nbsp; {{ __('welcome.billed_monthly') }}</div>
-            <hr class="plan-divider">
-            <ul class="plan-features">
-                <li>
-                    <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                    {{ __('welcome.three_thousand_credits_month') }}
-                </li>
-                <li>
-                    <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                    {{ __('welcome.thirty_requests_minute') }}
-                </li>
-                <li>
-                    <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                    {{ __('welcome.one_free_api_key') }}
-                </li>
-                <li>
-                    <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                    {{ __('welcome.all_model_sizes') }}
-                </li>
-            </ul>
-            <a href="/register" class="plan-cta plan-cta-gold">{{ __('welcome.start_monthly_plan') }}</a>
-        </div>
-
-        {{-- Pro Tier --}}
-        <div class="plan-card">
-            <div class="plan-name">{{ __('welcome.pro_tier') }}</div>
-            <div class="plan-price">45 <span>KWD</span></div>
-            <div class="plan-billing">{{ __('welcome.per_month') }} &nbsp;&middot;&nbsp; {{ __('welcome.billed_monthly') }}</div>
-            <hr class="plan-divider">
-            <ul class="plan-features">
-                <li>
-                    <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                    {{ __('welcome.ten_thousand_credits_month') }}
-                </li>
-                <li>
-                    <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                    {{ __('welcome.sixty_requests_minute') }}
-                </li>
-                <li>
-                    <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                    {{ __('welcome.two_free_api_keys') }}
-                </li>
-                <li>
-                    <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                    {{ __('welcome.priority_cloud_failover') }}
-                </li>
-            </ul>
-            <a href="/register" class="plan-cta plan-cta-outline">{{ __('welcome.start_monthly_plan') }}</a>
-        </div>
-
-    </div>
-    <p class="trial-note">{{ __('welcome.card_required_for_trial') }} {{ __('welcome.cancel_anytime') }} {{ __('welcome.payments_secure') }}</p>
-
-    <!-- Credit top-up & addons info -->
-    <div class="addon-box">
-        <h4>{{ __('welcome.credit_top_ups_title') }}</h4>
-        <div class="addon-row"><span>{{ __('welcome.five_hundred_credits') }}</span><span>{{ __('welcome.five_kwd') }}</span></div>
-        <div class="addon-row"><span>{{ __('welcome.one_thousand_one_hundred_credits') }}</span><span>{{ __('welcome.ten_kwd') }} <span class="text-bonus">{{ __('welcome.bonus_ten') }}</span></span></div>
-        <div class="addon-row"><span>{{ __('welcome.three_thousand_credits') }}</span><span>{{ __('welcome.twenty_five_kwd') }} <span class="text-bonus">{{ __('welcome.bonus_twenty') }}</span></span></div>
-        <div class="addon-row"><span>{{ __('welcome.credits_per_one_k_tokens') }}</span><span>{{ __('welcome.local_cloud_pricing') }}</span></div>
     </div>
 </section>
 
-<hr class="divider">
-
-<!-- Available Models -->
-<section class="section" id="models">
-    <div class="section-title">
-        <h2>{{ __('welcome.available_models_title') }}</h2>
-        <p>{{ __('welcome.available_models_description') }}</p>
-    </div>
-
-    <!-- General Chat -->
-    <div class="ml-category-group">
-        <div class="ml-category-header">
-            <span class="ml-category-diamond">&#9670;</span>
-            <span class="ml-category-label">{{ __('welcome.general_chat_category') }}</span>
-            <span class="ml-category-line"></span>
+<!-- FINAL CTA -->
+<section class="sps" aria-labelledby="cta-h2">
+    <div class="container">
+        <div class="glass-gold fu" style="padding:3.5rem 2.5rem;text-align:center;position:relative;overflow:hidden;">
+            <div style="position:absolute;top:-60px;right:-60px;width:200px;height:200px;background:radial-gradient(circle,rgba(212,175,55,.10) 0%,transparent 70%);border-radius:50%;pointer-events:none;" aria-hidden="true"></div>
+            <div style="position:absolute;bottom:-40px;left:-40px;width:160px;height:160px;background:radial-gradient(circle,rgba(124,58,237,.08) 0%,transparent 70%);border-radius:50%;pointer-events:none;" aria-hidden="true"></div>
+            <div class="slabel" style="justify-content:center;margin-bottom:.75rem;">Ready to start?</div>
+            <h2 class="sh2" id="cta-h2" style="margin-bottom:.75rem;">Start Your Free Trial <span class="text-gradient-gold">Today</span></h2>
+            <p style="color:var(--text-secondary);margin-bottom:2rem;font-size:1.05rem;">7 days free. 1,000 credits. No credit card required.</p>
+            <a href="/register" class="btn btn-gold btn-lg">
+                Create Free Account
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+            </a>
+            <p style="margin-top:1rem;font-size:.84rem;color:var(--text-muted);">Cancel anytime. No commitment.</p>
         </div>
-        <div class="ml-grid">
-            <div class="ml-card">
-                <div class="ml-avatar ml-av-meta">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 19V5l9 8.5L21 5v14" stroke="white" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                </div>
-                <div class="ml-body">
-                    <div class="ml-model-name">{{ __('welcome.llama_32_3b') }}</div>
-                    <div class="ml-company">{{ __('welcome.llama_32_3b_company') }}</div>
-                    <div class="ml-tagline">{{ __('welcome.llama_32_3b_description') }}</div>
-                </div>
-            </div>
-            <div class="ml-card">
-                <div class="ml-avatar ml-av-mistral">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="white" aria-hidden="true"><rect x="3" y="6" width="18" height="2.5" rx="1.25"/><rect x="3" y="10.75" width="18" height="2.5" rx="1.25"/><rect x="3" y="15.5" width="18" height="2.5" rx="1.25"/></svg>
-                </div>
-                <div class="ml-body">
-                    <div class="ml-model-name">{{ __('welcome.mistral_small_32_24b') }}</div>
-                    <div class="ml-company">{{ __('welcome.mistral_small_32_24b_company') }}</div>
-                    <div class="ml-tagline">{{ __('welcome.mistral_small_32_24b_description') }}</div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Code -->
-    <div class="ml-category-group">
-        <div class="ml-category-header">
-            <span class="ml-category-diamond">&#9670;</span>
-            <span class="ml-category-label">{{ __('welcome.code_category') }}</span>
-            <span class="ml-category-line"></span>
-        </div>
-        <div class="ml-grid">
-            <div class="ml-card">
-                <div class="ml-avatar ml-av-qwen">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="7" stroke="white" stroke-width="2.2"/><path d="M15.5 15.5l3 3" stroke="white" stroke-width="2.4" stroke-linecap="round"/></svg>
-                </div>
-                <div class="ml-body">
-                    <div class="ml-model-name">{{ __('welcome.qwen_25_coder_14b') }}</div>
-                    <div class="ml-company">{{ __('welcome.qwen_25_coder_14b_company') }}</div>
-                    <div class="ml-tagline">{{ __('welcome.qwen_25_coder_14b_description') }}</div>
-                </div>
-            </div>
-            <div class="ml-card">
-                <div class="ml-avatar ml-av-deepseek">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="white" aria-hidden="true"><path d="M6 4h6c4.418 0 8 3.582 8 8s-3.582 8-8 8H6V4z"/></svg>
-                </div>
-                <div class="ml-body">
-                    <div class="ml-model-name">{{ __('welcome.deepseek_coder_67b') }}</div>
-                    <div class="ml-company">{{ __('welcome.deepseek_coder_67b_company') }}</div>
-                    <div class="ml-tagline">{{ __('welcome.deepseek_coder_67b_description') }}</div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Vision & Multimodal -->
-    <div class="ml-category-group">
-        <div class="ml-category-header">
-            <span class="ml-category-diamond">&#9670;</span>
-            <span class="ml-category-label">{{ __('welcome.vision_multimodal_category') }}</span>
-            <span class="ml-category-line"></span>
-        </div>
-        <div class="ml-grid">
-            <div class="ml-card">
-                <div class="ml-avatar ml-av-qwen">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="7" stroke="white" stroke-width="2.2"/><path d="M15.5 15.5l3 3" stroke="white" stroke-width="2.4" stroke-linecap="round"/></svg>
-                </div>
-                <div class="ml-body">
-                    <div class="ml-model-name">{{ __('welcome.qwen3_vl_32b') }}</div>
-                    <div class="ml-company">{{ __('welcome.qwen3_vl_32b_company') }}</div>
-                    <div class="ml-tagline">{{ __('welcome.qwen3_vl_32b_description') }}</div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Frontier -->
-    <div class="ml-category-group">
-        <div class="ml-category-header">
-            <span class="ml-category-diamond">&#9670;</span>
-            <span class="ml-category-label">{{ __('welcome.frontier_category') }}</span>
-            <span class="ml-category-line"></span>
-        </div>
-        <div class="ml-grid">
-            <div class="ml-card">
-                <div class="ml-avatar ml-av-deepseek">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="white" aria-hidden="true"><path d="M6 4h6c4.418 0 8 3.582 8 8s-3.582 8-8 8H6V4z"/></svg>
-                </div>
-                <div class="ml-body">
-                    <div class="ml-model-name">{{ __('welcome.deepseek_v31_671b') }}</div>
-                    <div class="ml-company">{{ __('welcome.deepseek_v31_671b_company') }}</div>
-                    <div class="ml-tagline">{{ __('welcome.deepseek_v31_671b_description') }}</div>
-                </div>
-            </div>
-            <div class="ml-card">
-                <div class="ml-avatar ml-av-qwen">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="7" stroke="white" stroke-width="2.2"/><path d="M15.5 15.5l3 3" stroke="white" stroke-width="2.4" stroke-linecap="round"/></svg>
-                </div>
-                <div class="ml-body">
-                    <div class="ml-model-name">{{ __('welcome.qwen_35_397b') }}</div>
-                    <div class="ml-company">{{ __('welcome.qwen_35_397b_company') }}</div>
-                    <div class="ml-tagline">{{ __('welcome.qwen_35_397b_description') }}</div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="ml-footer">
-        <p>{!! str_replace(':link', '<a href="/dashboard">', __('welcome.model_selection_notice')) !!}</p>
     </div>
 </section>
 
-<hr class="divider">
+</main>
 
-<!-- Code Example -->
-<section class="section" id="docs">
-    <div class="section-title">
-        <h2>{{ __('welcome.drop_in_replacement_title') }}</h2>
-        <p>{{ __('welcome.drop_in_replacement_description') }}</p>
-    </div>
-    <div class="code-block">
-<span class="comment"># Python example using openai SDK</span>
-from openai import OpenAI
-
-client = OpenAI(
-    <span class="key">api_key</span>=<span class="string">"sk-resayil-your-key-here"</span>,
-    <span class="key">base_url</span>=<span class="string">"https://llm.resayil.io/api/v1"</span>
-)
-
-response = client.chat.completions.create(
-    <span class="key">model</span>=<span class="string">"qwen2.5:7b"</span>,
-    <span class="key">messages</span>=[{<span class="string">"role"</span>: <span class="string">"user"</span>, <span class="string">"content"</span>: <span class="string">"Hello!"</span>}]
-)
-print(response.choices[0].message.content)
-    </div>
-</section>
-
-<!-- CTA -->
-<section class="cta-section">
-    <h2 class="cta-title">{{ __('welcome.ready_to_get_started') }}</h2>
-    <p class="cta-subtitle">{{ __('welcome.join_developers') }}</p>
-    <a href="/register" class="btn btn-gold btn-xl">{{ __('welcome.create_free_account') }}</a>
-</section>
-
-<!-- Site Footer -->
-<footer class="site-footer">
-    <div class="site-footer-inner">
-        <span class="site-footer-brand">LLM Resayil</span>
-        <nav class="site-footer-links">
-            <a href="/docs">{{ __('navigation.docs') }}</a>
-            <a href="/credits">{{ __('navigation.credits') }}</a>
-            <a href="#pricing">{{ __('welcome.cta_view_pricing') }}</a>
-            <a href="/privacy-policy">{{ __('welcome.footer_privacy') }}</a>
-            <a href="/terms-of-service">{{ __('welcome.footer_terms') }}</a>
-            <a href="/contact">{{ __('welcome.footer_contact') }}</a>
-        </nav>
-        <span class="site-footer-copy">&copy; {{ date('Y') }} LLM Resayil</span>
+<footer role="contentinfo">
+    <div class="container">
+        <div class="foot-in">
+            <a href="/" class="logo" aria-label="LLM Resayil home">
+                <div class="logo-dot" aria-hidden="true"></div>
+                LLM Resayil
+            </a>
+            <nav class="foot-links" aria-label="Footer navigation">
+                <a href="#features">Features</a>
+                <a href="#pricing">Pricing</a>
+                <a href="/docs">Docs</a>
+                <a href="/login">Sign In</a>
+                <a href="/terms-of-service">Terms</a>
+                <a href="/privacy-policy">Privacy</a>
+            </nav>
+            <p class="foot-copy">&copy; {{ date('Y') }} LLM Resayil. All rights reserved.</p>
+        </div>
     </div>
 </footer>
 
-@endsection
+<script>
+(function () {
+    'use strict';
+
+    /* NAVBAR SCROLL */
+    var navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', function () {
+        navbar.classList.toggle('scrolled', window.scrollY > 40);
+    }, { passive: true });
+
+    /* MOBILE NAV */
+    var mobileNav   = document.getElementById('mobile-nav');
+    var navToggle   = document.getElementById('nav-toggle');
+    var mnavClose   = document.getElementById('mnav-close');
+
+    function openMnav() {
+        mobileNav.classList.add('open');
+        navToggle.setAttribute('aria-expanded', 'true');
+        document.body.style.overflow = 'hidden';
+    }
+    function closeMnav() {
+        mobileNav.classList.remove('open');
+        navToggle.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
+    }
+    window.closeMnav = closeMnav;
+
+    navToggle.addEventListener('click', openMnav);
+    mnavClose.addEventListener('click', closeMnav);
+    mobileNav.addEventListener('click', function (e) {
+        if (e.target === mobileNav) closeMnav();
+    });
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') closeMnav();
+    });
+
+    /* SCROLL ANIMATIONS */
+    var fus = document.querySelectorAll('.fu');
+    if ('IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function (entries) {
+            entries.forEach(function (en) {
+                if (en.isIntersecting) {
+                    en.target.classList.add('on');
+                    io.unobserve(en.target);
+                }
+            });
+        }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+        fus.forEach(function (el) { io.observe(el); });
+    } else {
+        fus.forEach(function (el) { el.classList.add('on'); });
+    }
+
+})();
+</script>
+
+</body>
+</html>
