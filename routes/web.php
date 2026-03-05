@@ -69,7 +69,14 @@ Route::group([], function () {
 
     // Dashboard (protected)
     Route::get('/dashboard', function () {
-        return view('dashboard');
+        $meta = \App\Helpers\SeoHelper::getPageMeta('dashboard');
+        return view('dashboard', [
+            'pageTitle' => $meta['title'],
+            'pageDescription' => $meta['description'],
+            'pageKeywords' => $meta['keywords'],
+            'ogImage' => $meta['ogImage'],
+            'ogType' => $meta['ogType'],
+        ]);
     })->middleware('auth');
 
     // Profile (protected)
@@ -116,17 +123,38 @@ Route::group([], function () {
 
     // Credits documentation page
     Route::get('/credits', function () {
-        return view('credits');
+        $meta = \App\Helpers\SeoHelper::getPageMeta('credits');
+        return view('credits', [
+            'pageTitle' => $meta['title'],
+            'pageDescription' => $meta['description'],
+            'pageKeywords' => $meta['keywords'],
+            'ogImage' => $meta['ogImage'],
+            'ogType' => $meta['ogType'],
+        ]);
     })->name('credits');
 
     // Documentation page
     Route::get('/docs', function () {
-        return view('docs');
+        $meta = \App\Helpers\SeoHelper::getPageMeta('docs');
+        return view('docs', [
+            'pageTitle' => $meta['title'],
+            'pageDescription' => $meta['description'],
+            'pageKeywords' => $meta['keywords'],
+            'ogImage' => $meta['ogImage'],
+            'ogType' => $meta['ogType'],
+        ]);
     })->name('docs');
 
     // Contact page (public, no auth required)
     Route::get('/contact', function () {
-        return view('contact');
+        $meta = \App\Helpers\SeoHelper::getPageMeta('contact');
+        return view('contact', [
+            'pageTitle' => $meta['title'],
+            'pageDescription' => $meta['description'],
+            'pageKeywords' => $meta['keywords'],
+            'ogImage' => $meta['ogImage'],
+            'ogType' => $meta['ogType'],
+        ]);
     })->name('contact');
 
     // Contact form submission (public, no auth required)
@@ -140,15 +168,78 @@ Route::group([], function () {
     Route::get('/privacy-policy', [WelcomeController::class, 'privacy'])->name('privacy-policy');
     Route::get('/terms-of-service', [WelcomeController::class, 'terms'])->name('terms-of-service');
 
+    // Comparison and informational pages
+    Route::get('/comparison', function () {
+        $meta = \App\Helpers\SeoHelper::getPageMeta('comparison');
+        return view('comparison', [
+            'pageTitle' => $meta['title'],
+            'pageDescription' => $meta['description'],
+            'pageKeywords' => $meta['keywords'],
+            'ogImage' => $meta['ogImage'],
+            'ogType' => $meta['ogType'],
+        ]);
+    })->name('comparison');
+
+    Route::get('/alternatives', function () {
+        $meta = \App\Helpers\SeoHelper::getPageMeta('alternatives');
+        return view('alternatives', [
+            'pageTitle' => $meta['title'],
+            'pageDescription' => $meta['description'],
+            'pageKeywords' => $meta['keywords'],
+            'ogImage' => $meta['ogImage'],
+            'ogType' => $meta['ogType'],
+        ]);
+    })->name('alternatives');
+
+    Route::get('/cost-calculator', function () {
+        $meta = \App\Helpers\SeoHelper::getPageMeta('cost-calculator');
+        return view('cost-calculator', [
+            'pageTitle' => $meta['title'],
+            'pageDescription' => $meta['description'],
+            'pageKeywords' => $meta['keywords'],
+            'ogImage' => $meta['ogImage'],
+            'ogType' => $meta['ogType'],
+        ]);
+    })->name('cost-calculator');
+
+    Route::get('/dedicated-server', function () {
+        $meta = \App\Helpers\SeoHelper::getPageMeta('dedicated-server');
+        return view('dedicated-server', [
+            'pageTitle' => $meta['title'],
+            'pageDescription' => $meta['description'],
+            'pageKeywords' => $meta['keywords'],
+            'ogImage' => $meta['ogImage'],
+            'ogType' => $meta['ogType'],
+        ]);
+    })->name('dedicated-server');
+
     // Model catalog for dashboard (session auth, no API key required)
     Route::get('/models/catalog', [App\Http\Controllers\Api\ModelsController::class, 'index'])->middleware('auth');
 
     // Admin routes
     Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
-        Route::get('/', function () { return view('admin.dashboard'); })->name('admin.dashboard');
+        Route::get('/', function () {
+            $meta = \App\Helpers\SeoHelper::getPageMeta('admin.dashboard');
+            return view('admin.dashboard', [
+                'pageTitle' => $meta['title'],
+                'pageDescription' => $meta['description'],
+                'pageKeywords' => $meta['keywords'],
+                'ogImage' => $meta['ogImage'],
+                'ogType' => $meta['ogType'],
+            ]);
+        })->name('admin.dashboard');
         Route::get('/api-settings', [ApiSettingsController::class, 'index'])->name('admin.api-settings');
         Route::put('/api-settings', [ApiSettingsController::class, 'update'])->name('admin.api-settings.update');
-        Route::get('/monitoring', function () { return view('admin.monitoring'); })->name('admin.monitoring');
+        Route::get('/monitoring', function () {
+            $meta = \App\Helpers\SeoHelper::getPageMeta('admin.dashboard');
+            return view('admin.monitoring', [
+                'pageTitle' => 'Monitoring — LLM Resayil',
+                'pageDescription' => 'System monitoring dashboard',
+                'pageKeywords' => 'monitoring, system health',
+                'ogImage' => $meta['ogImage'],
+                'ogType' => $meta['ogType'],
+            ]);
+        })->name('admin.monitoring');
 
         // Model management routes
         Route::get('/models', [AdminModelController::class, 'index'])->name('admin.models');
