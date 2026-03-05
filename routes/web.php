@@ -58,7 +58,7 @@ Route::post('/locale/ajax/{locale}', function ($locale) {
 Route::group([], function () {
 
     // Auth routes - web interface
-    Route::get('/register', [RegisteredUserController::class, 'create'])->middleware('guest');
+    Route::get('/register', [RegisteredUserController::class, 'create'])->middleware('guest')->name('register');
     Route::post('/register/otp', [App\Http\Controllers\Auth\RegisteredUserController::class, 'sendOtp'])->middleware('guest');
     Route::post('/register', [RegisteredUserController::class, 'store'])->middleware('guest');
 
