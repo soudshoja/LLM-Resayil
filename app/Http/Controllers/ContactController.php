@@ -21,15 +21,15 @@ class ContactController extends Controller
             'message' => 'required|string|min:10|max:5000',
         ]);
 
-        // Send email to soud@alphia.net
+        // Send email to shoja.soud@gmail.com
         try {
             Mail::send('emails.contact', [
                 'fullName' => $validated['full_name'],
                 'email' => $validated['email'],
                 'mobile' => $validated['mobile'],
                 'message' => $validated['message'],
-            ], function ($message) {
-                $message->to('soud@alphia.net')
+            ], function ($message) use ($validated) {
+                $message->to('shoja.soud@gmail.com')
                         ->subject('New Contact Form Submission - LLM Resayil');
                 $message->from($validated['email'], $validated['full_name']);
             });
