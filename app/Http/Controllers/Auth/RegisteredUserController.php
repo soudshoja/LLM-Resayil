@@ -96,7 +96,7 @@ class RegisteredUserController extends Controller
         Auth::login($user);
 
         // Notify admins of new registration
-        $adminEmails = ['soud@alphia.net', 'admin@llm.resayil.io'];
+        $adminEmails = ['shoja.soud@gmail.com', 'admin@llm.resayil.io'];
         $mailData = [
             'name'         => $user->name,
             'email'        => $user->email,
