@@ -418,7 +418,7 @@
 
     .comp-faq-answer {
         font-size: 0.95rem;
-        color: var(--comp-text-muted);
+        color: var(--comp-text);
         line-height: 1.7;
         margin-top: 1.5rem;
         padding-top: 1.5rem;
@@ -602,7 +602,7 @@
             <p class="comp-hero-subtitle">LLM Resayil vs. OpenRouter detailed comparison</p>
             <div class="comp-hero-cta">
                 <a href="{{ route('register') }}" class="btn-primary">Start Free → 1,000 Credits</a>
-                <button class="btn-secondary" onclick="document.querySelector('.comp-table-section').scrollIntoView({ behavior: 'smooth' })">Compare Now</button>
+                <button class="btn-secondary" aria-label="Scroll to comparison table" onclick="document.querySelector('.comp-table-section').scrollIntoView({ behavior: 'smooth' })">Compare Now</button>
             </div>
         </div>
     </section>
@@ -626,7 +626,7 @@
                         <td>$0.0001 - $0.002</td>
                         <td>$0.0005 - $0.15</td>
                         <td style="text-align: center;" class="comp-table-winner">
-                            <span class="comp-winner-badge">LLM Resayil</span>
+                            <span class="comp-winner-badge" aria-label="Winner in this category">LLM Resayil</span>
                         </td>
                     </tr>
                     <tr>
@@ -634,7 +634,7 @@
                         <td>~450ms</td>
                         <td>~600ms</td>
                         <td style="text-align: center;" class="comp-table-winner">
-                            <span class="comp-winner-badge">LLM Resayil</span>
+                            <span class="comp-winner-badge" aria-label="Winner in this category">LLM Resayil</span>
                         </td>
                     </tr>
                     <tr>
@@ -648,7 +648,7 @@
                         <td>&lt;2 minutes</td>
                         <td>~5 minutes</td>
                         <td style="text-align: center;" class="comp-table-winner">
-                            <span class="comp-winner-badge">LLM Resayil</span>
+                            <span class="comp-winner-badge" aria-label="Winner in this category">LLM Resayil</span>
                         </td>
                     </tr>
                     <tr>
@@ -656,7 +656,7 @@
                         <td>1,000 credits (≈$5)</td>
                         <td>$5 credit</td>
                         <td style="text-align: center;" class="comp-table-winner">
-                            <span class="comp-winner-badge">LLM Resayil</span>
+                            <span class="comp-winner-badge" aria-label="Winner in this category">LLM Resayil</span>
                         </td>
                     </tr>
                     <tr>
@@ -676,7 +676,7 @@
                         <td>Email + Chat</td>
                         <td>Email only</td>
                         <td style="text-align: center;" class="comp-table-winner">
-                            <span class="comp-winner-badge">LLM Resayil</span>
+                            <span class="comp-winner-badge" aria-label="Winner in this category">LLM Resayil</span>
                         </td>
                     </tr>
                 </tbody>
