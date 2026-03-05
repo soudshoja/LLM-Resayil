@@ -291,6 +291,15 @@
         }
     }
 
+    /* Animation restart trigger - allows animation to re-run on value change */
+    .result-value.animate {
+        animation: none;
+    }
+
+    .result-value.animate {
+        animation: slideUp 0.4s ease-out;
+    }
+
     /* ── Savings Badge ── */
     .savings-badge {
         background: linear-gradient(135deg, rgba(212,175,55,0.2), rgba(212,175,55,0.1));
@@ -1003,6 +1012,36 @@
         calculateCosts();
     });
 
+    // Keyboard support for slider (arrow keys, page up/down)
+    elements.slider.addEventListener('keydown', function(e) {
+        const step = parseInt(this.step) || 1000000;
+        let newValue = parseInt(this.value);
+        let changed = false;
+
+        if (e.key === 'ArrowLeft' || e.key === 'ArrowDown') {
+            e.preventDefault();
+            newValue = Math.max(parseInt(this.min), newValue - step);
+            changed = true;
+        } else if (e.key === 'ArrowRight' || e.key === 'ArrowUp') {
+            e.preventDefault();
+            newValue = Math.min(parseInt(this.max), newValue + step);
+            changed = true;
+        } else if (e.key === 'PageDown') {
+            e.preventDefault();
+            newValue = Math.max(parseInt(this.min), newValue - (step * 10));
+            changed = true;
+        } else if (e.key === 'PageUp') {
+            e.preventDefault();
+            newValue = Math.min(parseInt(this.max), newValue + (step * 10));
+            changed = true;
+        }
+
+        if (changed && newValue !== parseInt(this.value)) {
+            this.value = newValue;
+            this.dispatchEvent(new Event('input', { bubbles: true }));
+        }
+    });
+
     // Sync number input with slider
     elements.tokensInput.addEventListener('input', function() {
         let value = parseInt(this.value) || 0;
@@ -1043,6 +1082,16 @@
         item.setAttribute('aria-expanded', isOpen);
     }
 
+    // Helper function to trigger animation restart
+    function triggerAnimation(element) {
+        // Remove animate class if present
+        element.classList.remove('animate');
+        // Force reflow to reset animation
+        void element.offsetHeight;
+        // Re-add animate class to trigger animation
+        element.classList.add('animate');
+    }
+
     // Update cost display with aria-valuenow
     function calculateCosts() {
         const tokens = parseInt(elements.slider.value);
@@ -1064,19 +1113,30 @@
         const savingsPercentOpenAI = openaiCost > 0 ? ((savingsVsOpenAI / openaiCost) * 100).toFixed(1) : 0;
         const savingsPercentRouter = routerCost > 0 ? ((savingsVsRouter / routerCost) * 100).toFixed(1) : 0;
 
-        // Update DOM
+        // Update DOM with animation triggers
         elements.resultLLM.textContent = formatCurrency(llmCost);
         elements.resultLLM.setAttribute('aria-valuenow', llmCost.toFixed(2));
+        triggerAnimation(elements.resultLLM);
+
         elements.resultOpenAI.textContent = formatCurrency(openaiCost);
         elements.resultOpenAI.setAttribute('aria-valuenow', openaiCost.toFixed(2));
+        triggerAnimation(elements.resultOpenAI);
+
         elements.resultOpenRouter.textContent = formatCurrency(routerCost);
         elements.resultOpenRouter.setAttribute('aria-valuenow', routerCost.toFixed(2));
+        triggerAnimation(elements.resultOpenRouter);
+
         elements.savingsAmount.textContent = formatCurrency(savingsVsOpenAI);
         elements.savingsAmount.setAttribute('aria-valuenow', savingsVsOpenAI.toFixed(2));
+        triggerAnimation(elements.savingsAmount);
+
         elements.savingsPercent.textContent = savingsPercentOpenAI + '%';
         elements.savingsPercent.setAttribute('aria-valuenow', savingsPercentOpenAI);
+        triggerAnimation(elements.savingsPercent);
+
         elements.savingsPercentRouter.textContent = savingsPercentRouter + '%';
         elements.savingsPercentRouter.setAttribute('aria-valuenow', savingsPercentRouter);
+        triggerAnimation(elements.savingsPercentRouter);
     }
 
     // Initial calculation
