@@ -47,7 +47,16 @@ class AuthenticatedSessionController extends Controller
             $user = User::where('email', $request->email)->first();
         }
 
-        if (!$user || !Hash::check($request->password, $user->password)) {
+        $passwordValid = false;
+        if ($user) {
+            try {
+                $passwordValid = Hash::check($request->password, $user->password);
+            } catch (\RuntimeException $e) {
+                $passwordValid = false;
+            }
+        }
+
+        if (!$user || !$passwordValid) {
             return response()->json([
                 'message' => 'Invalid credentials.',
             ], 401);
