@@ -37,23 +37,32 @@ class Handler extends ExceptionHandler
     public function render($request, Throwable $e): \Symfony\Component\HttpFoundation\Response
     {
         if ($e instanceof AuthenticationException) {
-            return response()->json([
-                'message' => 'Unauthenticated.',
-                'error' => 'You must be logged in to access this resource.',
-            ], 401);
+            if ($request->expectsJson() || $request->is('api/*')) {
+                return response()->json([
+                    'message' => 'Unauthenticated.',
+                    'error' => 'You must be logged in to access this resource.',
+                ], 401);
+            }
+            return redirect()->guest(route('login'));
         }
 
         if ($e instanceof ValidationException) {
-            return response()->json([
-                'message' => 'Validation failed.',
-                'errors' => $e->errors(),
-            ], 422);
+            if ($request->expectsJson() || $request->is('api/*')) {
+                return response()->json([
+                    'message' => 'Validation failed.',
+                    'errors' => $e->errors(),
+                ], 422);
+            }
+            return parent::render($request, $e);
         }
 
         if ($e instanceof HttpException) {
-            return response()->json([
-                'message' => $e->getMessage(),
-            ], $e->getStatusCode());
+            if ($request->expectsJson() || $request->is('api/*')) {
+                return response()->json([
+                    'message' => $e->getMessage(),
+                ], $e->getStatusCode());
+            }
+            return parent::render($request, $e);
         }
 
         if (config('app.debug')) {
