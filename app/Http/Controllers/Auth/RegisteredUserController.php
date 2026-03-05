@@ -57,8 +57,8 @@ class RegisteredUserController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name'     => 'nullable|string|max:255',
-            'email'    => 'nullable|email|unique:users,email',
-            'phone'    => 'required|numeric|unique:users,phone',
+            'email'    => 'nullable|email',
+            'phone'    => 'required|numeric',
             'password' => 'required|string|min:8|confirmed',
             'otp_code' => 'required|string|size:6',
         ]);
@@ -83,15 +83,21 @@ class RegisteredUserController extends Controller
             ], 422);
         }
 
-        $user = User::create([
-            'phone'               => $request->phone,
-            'email'               => $request->email,
-            'name'                => $request->name,
-            'password'            => Hash::make($request->password),
-            'credits'             => 1000,
-            'subscription_tier'   => 'basic',
-            'phone_verified_at'   => now(),
-        ]);
+        try {
+            $user = User::create([
+                'phone'               => $request->phone,
+                'email'               => $request->email,
+                'name'                => $request->name,
+                'password'            => Hash::make($request->password),
+                'credits'             => 1000,
+                'subscription_tier'   => 'basic',
+                'phone_verified_at'   => now(),
+            ]);
+        } catch (\Illuminate\Database\QueryException $e) {
+            return response()->json([
+                'message' => 'This phone number or email is already registered. Please log in instead.',
+            ], 422);
+        }
 
         Auth::login($user);
 
