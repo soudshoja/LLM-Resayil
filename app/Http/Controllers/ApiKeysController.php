@@ -16,10 +16,11 @@ class ApiKeysController extends Controller
      */
     public function index(Request $request)
     {
+        $user = $request->user();
+        $apiKeys = $user->apiKeys()->orderBy('created_at', 'desc')->get();
+
         if ($request->wantsJson()) {
-            $user = $request->user();
-            $apiKeys = $user->apiKeys()->orderBy('created_at', 'desc')->paginate(15);
-            $apiKeys->getCollection()->transform(function ($apiKey) {
+            return response()->json(['data' => $apiKeys->map(function ($apiKey) {
                 return [
                     'id' => $apiKey->id,
                     'name' => $apiKey->name,
@@ -29,11 +30,10 @@ class ApiKeysController extends Controller
                     'created_at' => $apiKey->created_at->toISOString(),
                     'updated_at' => $apiKey->updated_at->toISOString(),
                 ];
-            });
-            return response()->json(['data' => $apiKeys]);
+            })]);
         }
 
-        return redirect('/dashboard');
+        return view('api-keys', compact('apiKeys'));
     }
 
     /**

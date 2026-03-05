@@ -288,7 +288,7 @@
     @endphp
     <div class="card extra-key-section">
         <h2>{{ __('billing.additional_api_keys') }}</h2>
-        <p class="text-secondary text-sm mb-4">{{ __('billing.need_more_keys') }} {{ ucfirst($userTier) }}</p>
+        <p class="text-secondary text-sm mb-4">{{ __('billing.need_more_keys', ['tier' => ucfirst($userTier)]) }}</p>
         <div class="extra-key-card">
             <div class="extra-key-info">
                 <strong>{{ __('billing.your_keys') }}</strong>
