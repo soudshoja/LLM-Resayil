@@ -488,25 +488,36 @@ eb44537 feat: AJAX toggle for admin models — no page reload on enable/disable
 
 ---
 
-*State file last updated: 2026-03-05 — Quick task 13: admin email → shoja.soud@gmail.com, registration Step 2 double-validation fix*
+*State file last updated: 2026-03-06 — v1.9.2: isAdmin() subscription_tier fix, QA verified login/register/admin on prod*
 
-### Debug Session 2026-03-05 — Issues Found
+### Prod QA — 2026-03-06
 
-See full report: `.planning/phases/09-enhancements/09-DEBUG-SESSION-2026-03-05.md`
+| Test | Result |
+|------|--------|
+| Login (`soud@alphia.net`) | ✅ → dashboard |
+| Registration Step 1 (OTP sent) | ✅ → OTP screen appears |
+| Admin panel `/admin` | ✅ → All Users table visible |
+| `admin@llm.resayil.io` | ❌ Not in prod DB — do not use |
+
+### Bug Tracker
 
 | ID | Severity | Status | Issue |
 |----|----------|--------|-------|
-| BUG-01 | 🔴 CRITICAL | Open | Chat completions API returns Ollama-native format, not OpenAI — breaks all SDK clients |
-| BUG-02 | 🔴 CRITICAL | Open | Billing/plans page shows raw `billing.xxx` translation keys — page unusable |
-| BUG-03 | 🟡 MEDIUM | Open | Double UsageLog per non-streaming API call (proxy + controller both create log) |
-| BUG-04 | 🟡 MEDIUM | Open | Login error shows "Validation failed." — should be "These credentials do not match" |
-| BUG-05 | 🟢 LOW | Open | KNET text still in dashboard Top Up Credits widget |
-| BUG-06 | 🟢 LOW | Open | Native alert() dialog on model catalog (should be inline toast) |
+| BUG-01 | ✅ FIXED | Prod | Chat completions API OpenAI format — fixed quick-8 |
+| BUG-02 | ✅ FIXED | Prod | Billing/plans raw keys — fixed quick-8 |
+| BUG-03 | ✅ FIXED | Prod | Double UsageLog — fixed quick-8 |
+| BUG-04 | ✅ FIXED | Prod | Login "Validation failed." — fixed quick-8 |
+| BUG-05 | 🟢 LOW | Open | KNET text in dashboard Top Up Credits widget |
+| BUG-06 | 🟢 LOW | Open | Native alert() on model catalog (should be toast) |
 | BUG-07 | 🟢 LOW | Open | Admin nav overflow when logged in |
 | BUG-08 | 🟢 LOW | Open | No schedule:run cron on either server |
-| BUG-01-fix | ✅ FIXED | Dev | Our Cost column: tokens*multiplier calc (commit 19c5847) |
-| BUG-02-fix | ✅ FIXED | Dev | Dashboard :name placeholder interpolation (commit be360dc) |
-| BUG-03-fix | ✅ FIXED | Prod | MAIL_MAILER=log → sendmail on prod (.env only) |
+
+### Prod Release History
+
+| Tag | Date | Description |
+|-----|------|-------------|
+| v1.9.2 | 2026-03-06 | isAdmin() checks subscription_tier=admin — admin access restored for soud@alphia.net |
+| v1.9.1 | 2026-03-06 | Admin email → shoja.soud@gmail.com, registration Step 2 double-validation fix |
 
 ### Quick Tasks Completed
 
@@ -518,4 +529,5 @@ See full report: `.planning/phases/09-enhancements/09-DEBUG-SESSION-2026-03-05.m
 | 5 | Fix @json Blade compiler bug in dashboard (pre-compute $dashLang in @php) | 2026-03-05 | f17fa94 | dev only |
 | 6 | Add "Our Cost ($)" column to Recent API Usage table (alongside vs GPT-4o) | 2026-03-05 | 429fe06 | dev only |
 | 7 | Rewrite how-it-works section to reflect actual product flow (phone OTP, credits, API key) | 2026-03-05 | a1acd6a | [6-rewrite-how-it-works-section-to-reflect-](./quick/6-rewrite-how-it-works-section-to-reflect-/) |
-| 13 | Fix admin email change soud@alphia.net to shoja.soud@gmail.com and fix login registration issues | 2026-03-05 | 5473e0c | [13-fix-admin-email-change-soud-alphia-net-t](./quick/13-fix-admin-email-change-soud-alphia-net-t/) |
+| 13 | Admin email → shoja.soud@gmail.com + registration Step 2 fix + deployed v1.9.1 | 2026-03-06 | 1dde5f6 | [13-fix-admin-email-change-soud-alphia-net-t](./quick/13-fix-admin-email-change-soud-alphia-net-t/) |
+| 14 | isAdmin() add subscription_tier check — admin access fix, deployed v1.9.2 | 2026-03-06 | 2e49209 | hotfix |
