@@ -241,6 +241,21 @@
         .pfeat li { display: flex; align-items: flex-start; gap: 0.6rem; font-size: 0.88rem; color: var(--text-secondary); padding: 0.35rem 0; }
         .pfeat li svg { width: 16px; height: 16px; color: var(--gold); flex-shrink: 0; margin-top: 1px; }
 
+        /* HOW IT WORKS */
+        .hiw-steps { display: flex; flex-direction: column; gap: 1.5rem; margin-top: 3rem; }
+        .hiw-step { display: flex; gap: 1.75rem; align-items: flex-start; background: var(--bg-card); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid var(--border); border-radius: var(--r-lg); padding: 2rem 2rem; transition: border-color 0.3s; }
+        .hiw-step:hover { border-color: var(--gold-border); }
+        .hiw-num { flex-shrink: 0; width: 48px; height: 48px; border-radius: 50%; background: var(--gold-dim); border: 1px solid var(--gold-border); display: flex; align-items: center; justify-content: center; font-size: 1.25rem; font-weight: 800; color: var(--gold); }
+        .hiw-content { flex: 1; min-width: 0; }
+        .hiw-content h3 { font-size: 1.15rem; font-weight: 700; margin-bottom: 0.5rem; }
+        .hiw-content p { font-size: 0.93rem; color: var(--text-secondary); line-height: 1.7; margin: 0; }
+        .hiw-content p strong { color: var(--text); font-weight: 600; }
+        .hiw-code { margin-top: 1rem; background: rgba(0,0,0,0.55); border: 1px solid rgba(255,255,255,0.07); border-radius: var(--r-sm); padding: 1rem 1.25rem; font-family: 'Fira Code', 'Cascadia Code', 'Courier New', monospace; font-size: 0.85rem; display: flex; flex-direction: column; gap: 0.2rem; color: #c9d1d9; overflow-x: auto; }
+        .hiw-code .hiw-code-comment { color: var(--text-muted); }
+        .hiw-code .hiw-str { color: #79c0ff; }
+        .hiw-badges { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem; }
+        .hiw-badge { background: rgba(124,58,237,0.12); border: 1px solid rgba(124,58,237,0.25); color: #a78bfa; font-size: 0.8rem; font-weight: 600; padding: 0.25rem 0.75rem; border-radius: 999px; }
+
         /* DEVELOPER */
         .dev-sec { padding: 5rem 0; }
         .dev-bar { background: rgba(19,22,29,0.85); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid var(--border); border-radius: var(--r-md); padding: 1.1rem 1.5rem; display: flex; align-items: center; justify-content: space-between; cursor: pointer; transition: all 0.2s; user-select: none; }
@@ -315,6 +330,8 @@
             .hero-h1 { font-size: 2.2rem; }
             .hero-cta-group { flex-direction: column; align-items: stretch; }
             .hero-cta-group .btn { justify-content: center; }
+            .hiw-step { flex-direction: column; gap: 1rem; padding: 1.5rem 1.25rem; }
+            .hiw-num { width: 40px; height: 40px; font-size: 1.05rem; }
         }
     </style>
 </head>
@@ -470,6 +487,72 @@
             </div>
             <a href="#register" class="btn btn-gold btn-lg">
                 Get My Free Credits
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="sp" id="how-it-works" aria-labelledby="hiw-h2">
+    <div class="container">
+        <div class="sheader text-center">
+            <div class="slabel fu">How It Works</div>
+            <h2 class="sh2 fu d1" id="hiw-h2">Up and running in <span class="text-gradient-gold">under 5 minutes</span></h2>
+            <p class="ssub fu d2" style="margin:0 auto;">No chat interface. No new tool to learn. Just plug our endpoint into your existing app and go.</p>
+        </div>
+        <div class="hiw-steps">
+            <!-- Step 1 -->
+            <div class="hiw-step fu">
+                <div class="hiw-num" aria-hidden="true">1</div>
+                <div class="hiw-content">
+                    <h3>Sign Up &amp; Choose a Plan</h3>
+                    <p>Register in 30 seconds, pick a plan (Starter / Basic / Pro), and top up credits. Start with a <strong>7-day free trial</strong> — no credit card required, no commitment.</p>
+                </div>
+            </div>
+            <!-- Step 2 -->
+            <div class="hiw-step fu d1">
+                <div class="hiw-num" aria-hidden="true">2</div>
+                <div class="hiw-content">
+                    <h3>Generate Your API Key</h3>
+                    <p>From your dashboard, create an API key in one click. Instant access — no waiting, no approval queue.</p>
+                </div>
+            </div>
+            <!-- Step 3 -->
+            <div class="hiw-step fu d2">
+                <div class="hiw-num" aria-hidden="true">3</div>
+                <div class="hiw-content">
+                    <h3>Point Your App at Our Endpoint</h3>
+                    <p>Replace your current OpenAI base URL with ours. That is the only change. Use the same OpenAI SDK you already know — <strong>zero migration effort</strong>.</p>
+                    <div class="hiw-code" aria-label="Code example: set base_url to https://llm.resayil.io/api/v1">
+                        <span class="hiw-code-comment"># Python — one line change</span>
+                        <span>client = OpenAI(</span>
+                        <span>&nbsp;&nbsp;&nbsp;&nbsp;base_url=<span class="hiw-str">"https://llm.resayil.io/api/v1"</span>,</span>
+                        <span>&nbsp;&nbsp;&nbsp;&nbsp;api_key=<span class="hiw-str">"your-api-key-here"</span>,</span>
+                        <span>)</span>
+                    </div>
+                </div>
+            </div>
+            <!-- Step 4 -->
+            <div class="hiw-step fu d3">
+                <div class="hiw-num" aria-hidden="true">4</div>
+                <div class="hiw-content">
+                    <h3>Use It Everywhere</h3>
+                    <p>Works with <strong>Cursor, VS Code extensions, custom apps, automation scripts</strong> — anywhere that supports OpenAI-compatible APIs. Credits are deducted per token. Pay only for what you use.</p>
+                    <div class="hiw-badges" aria-label="Compatible tools">
+                        <span class="hiw-badge">Cursor</span>
+                        <span class="hiw-badge">VS Code</span>
+                        <span class="hiw-badge">Python SDK</span>
+                        <span class="hiw-badge">Node.js</span>
+                        <span class="hiw-badge">n8n</span>
+                        <span class="hiw-badge">Any OpenAI SDK</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="text-center fu" style="margin-top:2.5rem;">
+            <a href="#register" class="btn btn-gold btn-lg">
+                Get Your API Key Free
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
             </a>
         </div>
