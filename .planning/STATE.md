@@ -488,7 +488,7 @@ eb44537 feat: AJAX toggle for admin models — no page reload on enable/disable
 
 ---
 
-*State file last updated: 2026-03-05 — Full-cycle debug session: 4 agents, 2 code fixes on dev, 1 prod .env fix*
+*State file last updated: 2026-03-05 — Quick task 13: admin email → shoja.soud@gmail.com, registration Step 2 double-validation fix*
 
 ### Debug Session 2026-03-05 — Issues Found
 
@@ -518,3 +518,4 @@ See full report: `.planning/phases/09-enhancements/09-DEBUG-SESSION-2026-03-05.m
 | 5 | Fix @json Blade compiler bug in dashboard (pre-compute $dashLang in @php) | 2026-03-05 | f17fa94 | dev only |
 | 6 | Add "Our Cost ($)" column to Recent API Usage table (alongside vs GPT-4o) | 2026-03-05 | 429fe06 | dev only |
 | 7 | Rewrite how-it-works section to reflect actual product flow (phone OTP, credits, API key) | 2026-03-05 | a1acd6a | [6-rewrite-how-it-works-section-to-reflect-](./quick/6-rewrite-how-it-works-section-to-reflect-/) |
+| 13 | Fix admin email change soud@alphia.net to shoja.soud@gmail.com and fix login registration issues | 2026-03-05 | 5473e0c | [13-fix-admin-email-change-soud-alphia-net-t](./quick/13-fix-admin-email-change-soud-alphia-net-t/) |
