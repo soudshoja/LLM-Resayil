@@ -10,7 +10,8 @@
         --ds-gold: #d4af37;
         --ds-gold-light: #eac558;
         --ds-text: #e0e5ec;
-        --ds-text-muted: #a0a8b5;
+        --ds-text-muted: #b8c0cc;
+        --ds-text-muted-hover: #d0d8e0;
         --ds-border: #1e2230;
     }
 
@@ -188,6 +189,11 @@
         opacity: 1;
     }
 
+    .ds-value-card:focus-visible {
+        outline: 3px solid var(--ds-gold);
+        outline-offset: 2px;
+    }
+
     .ds-value-icon {
         font-size: 3rem;
         margin-bottom: 1.5rem;
@@ -233,6 +239,11 @@
     .ds-comparison-card:hover {
         border-color: var(--ds-gold);
         box-shadow: 0 12px 40px rgba(212,175,55,0.15);
+    }
+
+    .ds-comparison-card:focus-visible {
+        outline: 3px solid var(--ds-gold);
+        outline-offset: 2px;
     }
 
     .ds-comparison-label {
@@ -337,6 +348,11 @@
         letter-spacing: 0.08em;
     }
 
+    .ds-tier-card:focus-visible {
+        outline: 3px solid var(--ds-gold);
+        outline-offset: 2px;
+    }
+
     .ds-tier-name {
         font-size: 1.6rem;
         font-weight: 800;
@@ -417,7 +433,7 @@
     }
 
     .ds-tier-cta {
-        padding: 1rem 2rem;
+        padding: 1.1rem 2rem;
         background: var(--ds-gold);
         color: var(--ds-bg);
         border: none;
@@ -430,6 +446,10 @@
         font-size: 1rem;
         display: block;
         margin-top: auto;
+        min-height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
     .ds-tier-card.featured .ds-tier-cta {
@@ -440,6 +460,11 @@
         background: var(--ds-gold-light);
         transform: translateY(-2px);
         box-shadow: 0 8px 24px rgba(212,175,55,0.3);
+    }
+
+    .ds-tier-cta:focus-visible {
+        outline: 2px solid var(--ds-gold);
+        outline-offset: 2px;
     }
 
     /* ── USE CASES SECTION ── */
@@ -469,6 +494,11 @@
         border-color: var(--ds-gold);
         box-shadow: 0 10px 32px rgba(212,175,55,0.12);
         transform: translateY(-3px);
+    }
+
+    .ds-usecase-card:focus-visible {
+        outline: 3px solid var(--ds-gold);
+        outline-offset: 2px;
     }
 
     .ds-usecase-icon {
@@ -714,6 +744,11 @@
         color: var(--ds-gold-light);
     }
 
+    .ds-footer-link:focus-visible {
+        outline: 2px solid var(--ds-gold);
+        outline-offset: 2px;
+    }
+
     /* ── RESPONSIVE ── */
     @media (max-width: 1024px) {
         .ds-arch-grid {
@@ -838,8 +873,16 @@
         }
 
         .btn-primary, .btn-secondary {
-            padding: 0.95rem 1.75rem;
+            padding: 1rem 1.75rem;
             font-size: 0.95rem;
+            min-height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .ds-tier-cta {
+            min-height: 44px;
         }
     }
 </style>
@@ -859,20 +902,20 @@
     </section>
 
     <!-- VALUE PROPOSITION CARDS -->
-    <section class="ds-value-section">
-        <h2 class="ds-section-title">Why Dedicated + API?</h2>
+    <section class="ds-value-section" role="region" aria-labelledby="value-section-title">
+        <h2 class="ds-section-title" id="value-section-title">Why Dedicated + API?</h2>
         <div class="ds-value-grid">
-            <div class="ds-value-card">
+            <div class="ds-value-card" tabindex="0">
                 <span class="ds-value-icon" aria-label="lightning bolt - security">⚡</span>
                 <h3 class="ds-value-title">API Simplicity</h3>
                 <p class="ds-value-text">No model management overhead. Resayil handles updates, scaling, and reliability while you focus on your application logic.</p>
             </div>
-            <div class="ds-value-card">
+            <div class="ds-value-card" tabindex="0">
                 <span class="ds-value-icon" aria-label="padlock - encrypted">🔒</span>
                 <h3 class="ds-value-title">Complete Control</h3>
                 <p class="ds-value-text">Your dedicated server runs your applications. Data stays within your infrastructure. Full compliance with regulatory requirements.</p>
             </div>
-            <div class="ds-value-card">
+            <div class="ds-value-card" tabindex="0">
                 <span class="ds-value-icon" aria-label="money bag - cost effective">💰</span>
                 <h3 class="ds-value-title">Cost Efficiency</h3>
                 <p class="ds-value-text">Pay-per-use API pricing with no monthly minimums. Dedicated hardware cost is predictable and scales with your needs.</p>
@@ -881,11 +924,11 @@
     </section>
 
     <!-- COMPARISON SECTION -->
-    <section class="ds-comparison-section">
-        <h2 class="ds-section-title">The Infrastructure Debate</h2>
+    <section class="ds-comparison-section" role="region" aria-labelledby="comparison-section-title">
+        <h2 class="ds-section-title" id="comparison-section-title">The Infrastructure Debate</h2>
         <div class="ds-comparison-grid">
             <!-- Self-Hosted Ollama -->
-            <div class="ds-comparison-card">
+            <div class="ds-comparison-card" tabindex="0">
                 <p class="ds-comparison-label">Self-Hosted Approach</p>
                 <h3 class="ds-comparison-title">Self-Hosted Ollama</h3>
                 <div class="ds-comparison-items">
@@ -913,7 +956,7 @@
             </div>
 
             <!-- Cloud API -->
-            <div class="ds-comparison-card">
+            <div class="ds-comparison-card" tabindex="0">
                 <p class="ds-comparison-label">Cloud-Only Approach</p>
                 <h3 class="ds-comparison-title">Generic Cloud API</h3>
                 <div class="ds-comparison-items">
@@ -941,7 +984,7 @@
             </div>
 
             <!-- Resayil Hybrid -->
-            <div class="ds-comparison-card ds-comparison-highlight">
+            <div class="ds-comparison-card ds-comparison-highlight" tabindex="0">
                 <p class="ds-comparison-label">Hybrid Approach</p>
                 <h3 class="ds-comparison-title">Resayil + Dedicated</h3>
                 <div class="ds-comparison-items">
@@ -971,11 +1014,11 @@
     </section>
 
     <!-- INFRASTRUCTURE TIERS -->
-    <section class="ds-tiers-section">
-        <h2 class="ds-section-title">Hosting Tiers</h2>
+    <section class="ds-tiers-section" role="region" aria-labelledby="tiers-section-title">
+        <h2 class="ds-section-title" id="tiers-section-title">Hosting Tiers</h2>
         <div class="ds-tiers-grid">
             <!-- Starter Tier -->
-            <div class="ds-tier-card">
+            <div class="ds-tier-card" tabindex="0">
                 <h3 class="ds-tier-name">Starter</h3>
                 <p class="ds-tier-subtitle">Small dedicated server for development & early production</p>
 
@@ -1030,7 +1073,7 @@
             </div>
 
             <!-- Professional Tier -->
-            <div class="ds-tier-card featured">
+            <div class="ds-tier-card featured" tabindex="0">
                 <h3 class="ds-tier-name">Professional</h3>
                 <p class="ds-tier-subtitle">Medium dedicated server for production applications</p>
 
@@ -1085,7 +1128,7 @@
             </div>
 
             <!-- Enterprise Tier -->
-            <div class="ds-tier-card">
+            <div class="ds-tier-card" tabindex="0">
                 <h3 class="ds-tier-name">Enterprise</h3>
                 <p class="ds-tier-subtitle">Large dedicated server with white-glove support</p>
 
@@ -1142,35 +1185,35 @@
     </section>
 
     <!-- USE CASES SECTION -->
-    <section class="ds-usecases-section">
-        <h2 class="ds-section-title">Perfect For</h2>
+    <section class="ds-usecases-section" role="region" aria-labelledby="usecases-section-title">
+        <h2 class="ds-section-title" id="usecases-section-title">Perfect For</h2>
         <div class="ds-usecases-grid">
-            <div class="ds-usecase-card">
+            <div class="ds-usecase-card" tabindex="0">
                 <span class="ds-usecase-icon" aria-label="bank">🏦</span>
                 <h3 class="ds-usecase-title">Financial Services</h3>
                 <p class="ds-usecase-desc">Regulatory compliance (SOC 2, HIPAA), data sovereignty, and zero data sharing requirements met with dedicated infrastructure.</p>
             </div>
-            <div class="ds-usecase-card">
+            <div class="ds-usecase-card" tabindex="0">
                 <span class="ds-usecase-icon" aria-label="hospital">🏥</span>
                 <h3 class="ds-usecase-title">Healthcare</h3>
                 <p class="ds-usecase-desc">Patient data privacy, HIPAA compliance, and encrypted on-premise processing without cloud data exposure.</p>
             </div>
-            <div class="ds-usecase-card">
+            <div class="ds-usecase-card" tabindex="0">
                 <span class="ds-usecase-icon" aria-label="rocket">🚀</span>
                 <h3 class="ds-usecase-title">Enterprise SaaS</h3>
                 <p class="ds-usecase-desc">White-label AI features, customer data isolation, and guaranteed uptime with multi-region failover.</p>
             </div>
-            <div class="ds-usecase-card">
+            <div class="ds-usecase-card" tabindex="0">
                 <span class="ds-usecase-icon" aria-label="analytics">📊</span>
                 <h3 class="ds-usecase-title">High-Volume Production</h3>
                 <p class="ds-usecase-desc">Millions of API calls, predictable costs, and dedicated compute resources without sharing capacity with others.</p>
             </div>
-            <div class="ds-usecase-card">
+            <div class="ds-usecase-card" tabindex="0">
                 <span class="ds-usecase-icon" aria-label="security">🔐</span>
                 <h3 class="ds-usecase-title">Regulated Industries</h3>
                 <p class="ds-usecase-desc">Government, defense, and critical infrastructure needs with full audit trails and compliance reporting.</p>
             </div>
-            <div class="ds-usecase-card">
+            <div class="ds-usecase-card" tabindex="0">
                 <span class="ds-usecase-icon">🌍</span>
                 <h3 class="ds-usecase-title">Multi-Tenant Platforms</h3>
                 <p class="ds-usecase-desc">Customer-specific models, isolated analytics, and dedicated capacity per tenant with consolidated billing.</p>
@@ -1179,8 +1222,8 @@
     </section>
 
     <!-- ARCHITECTURE SECTION -->
-    <section class="ds-architecture-section">
-        <h2 class="ds-section-title">How It Works</h2>
+    <section class="ds-architecture-section" role="region" aria-labelledby="architecture-section-title">
+        <h2 class="ds-section-title" id="architecture-section-title">How It Works</h2>
         <div class="ds-arch-grid">
             <div class="ds-arch-visual">
                 <div class="ds-arch-component">Your Applications</div>
@@ -1223,8 +1266,8 @@
     </section>
 
     <!-- FAQ SECTION -->
-    <section class="ds-faq-section">
-        <h2 class="ds-section-title">Frequently Asked Questions</h2>
+    <section class="ds-faq-section" role="region" aria-labelledby="faq-section-title">
+        <h2 class="ds-section-title" id="faq-section-title">Frequently Asked Questions</h2>
         <div class="ds-faq-list">
             <div class="ds-faq-item" role="button" tabindex="0" aria-expanded="false">
                 <div class="ds-faq-question">
@@ -1319,8 +1362,8 @@
     </section>
 
     <!-- FOOTER CTA -->
-    <section class="ds-footer-cta">
-        <h2 class="ds-footer-headline">Ready to Deploy?</h2>
+    <section class="ds-footer-cta" role="region" aria-labelledby="footer-cta-title">
+        <h2 class="ds-footer-headline" id="footer-cta-title">Ready to Deploy?</h2>
         <p class="ds-footer-text">Get dedicated infrastructure with enterprise-grade LLM API. Start your free trial today or schedule a demo with our team to discuss your specific compliance and performance needs.</p>
         <div class="ds-footer-buttons">
             <a href="{{ route('register') }}" class="btn-primary">Start Free Trial</a>
