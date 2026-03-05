@@ -138,6 +138,7 @@
         }
     </style>
     @stack('styles')
+    @if(app()->isProduction())
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-M0T3YYQP7X"></script>
     <script>
@@ -146,6 +147,7 @@
       gtag('js', new Date());
       gtag('config', 'G-M0T3YYQP7X');
     </script>
+    @endif
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Language switcher
