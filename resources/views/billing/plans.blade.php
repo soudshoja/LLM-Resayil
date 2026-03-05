@@ -253,23 +253,23 @@
         <h2>{{ __('billing.top_up_credits') }}</h2>
         <p class="text-secondary text-sm mb-4">{{ __('billing.need_extra_credits') }}</p>
         <div class="topup-grid">
-            <div class="topup-card">
+            <div class="topup-card" onclick="openPaymentModal('topup', '500')">
                 <div class="topup-credits">500</div>
                 <div class="topup-price">{{ __('billing.credits') }}</div>
                 <div class="topup-bonus">{{ __('billing.topup_no_bonus') }}</div>
-                <button type="button" class="topup-buy" onclick="openPaymentModal('topup', '500')">5 KWD</button>
+                <button type="button" class="topup-buy" onclick="event.stopPropagation(); openPaymentModal('topup', '500')">5 KWD</button>
             </div>
-            <div class="topup-card">
+            <div class="topup-card" onclick="openPaymentModal('topup', '1100')">
                 <div class="topup-credits">1,100</div>
                 <div class="topup-price">{{ __('billing.credits') }}</div>
                 <div class="topup-bonus">{{ __('billing.topup_bonus') }}</div>
-                <button type="button" class="topup-buy" onclick="openPaymentModal('topup', '1100')">10 KWD</button>
+                <button type="button" class="topup-buy" onclick="event.stopPropagation(); openPaymentModal('topup', '1100')">10 KWD</button>
             </div>
-            <div class="topup-card">
+            <div class="topup-card" onclick="openPaymentModal('topup', '3000')">
                 <div class="topup-credits">3,000</div>
                 <div class="topup-price">{{ __('billing.credits') }}</div>
                 <div class="topup-bonus">{{ __('billing.topup_bonus_20') }}</div>
-                <button type="button" class="topup-buy" onclick="openPaymentModal('topup', '3000')">25 KWD</button>
+                <button type="button" class="topup-buy" onclick="event.stopPropagation(); openPaymentModal('topup', '3000')">25 KWD</button>
             </div>
         </div>
         <p class="text-xs text-muted mt-4">{{ __('billing.payments_secure') }}</p>
