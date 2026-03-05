@@ -499,52 +499,52 @@
         <div class="sheader text-center">
             <div class="slabel fu">How It Works</div>
             <h2 class="sh2 fu d1" id="hiw-h2">Up and running in <span class="text-gradient-gold">under 5 minutes</span></h2>
-            <p class="ssub fu d2" style="margin:0 auto;">No chat interface. No new tool to learn. Just plug our endpoint into your existing app and go.</p>
+            <p class="ssub fu d2" style="margin:0 auto;">No new tools to learn. Register, add credits, grab your API key, and you are ready to go.</p>
         </div>
         <div class="hiw-steps">
             <!-- Step 1 -->
             <div class="hiw-step fu">
                 <div class="hiw-num" aria-hidden="true">1</div>
                 <div class="hiw-content">
-                    <h3>Sign Up &amp; Choose a Plan</h3>
-                    <p>Register in 30 seconds, pick a plan (Starter / Basic / Pro), and top up credits. Start with a <strong>7-day free trial</strong> — no credit card required, no commitment.</p>
+                    <h3>Create Your Account</h3>
+                    <p>Register in under a minute using your name, email, and phone number. We will send a verification code to your WhatsApp to confirm your identity — quick and secure.</p>
                 </div>
             </div>
             <!-- Step 2 -->
             <div class="hiw-step fu d1">
                 <div class="hiw-num" aria-hidden="true">2</div>
                 <div class="hiw-content">
-                    <h3>Generate Your API Key</h3>
-                    <p>From your dashboard, create an API key in one click. Instant access — no waiting, no approval queue.</p>
+                    <h3>Add Credits to Your Wallet</h3>
+                    <p>Top up your credit balance using your credit or debit card. Credits are what you spend on API calls — each request deducts a small amount based on the model and tokens used. <strong>Pay only for what you use.</strong></p>
                 </div>
             </div>
             <!-- Step 3 -->
             <div class="hiw-step fu d2">
                 <div class="hiw-num" aria-hidden="true">3</div>
                 <div class="hiw-content">
-                    <h3>Point Your App at Our Endpoint</h3>
-                    <p>Replace your current OpenAI base URL with ours. That is the only change. Use the same OpenAI SDK you already know — <strong>zero migration effort</strong>.</p>
-                    <div class="hiw-code" aria-label="Code example: set base_url to https://llm.resayil.io/api/v1">
-                        <span class="hiw-code-comment"># Python — one line change</span>
-                        <span>client = OpenAI(</span>
-                        <span>&nbsp;&nbsp;&nbsp;&nbsp;base_url=<span class="hiw-str">"https://llm.resayil.io/api/v1"</span>,</span>
-                        <span>&nbsp;&nbsp;&nbsp;&nbsp;api_key=<span class="hiw-str">"your-api-key-here"</span>,</span>
-                        <span>)</span>
-                    </div>
+                    <h3>Get Your API Key</h3>
+                    <p>From your dashboard, generate an API key in one click. Copy it — you will use it in the next step. No approval process, no waiting.</p>
                 </div>
             </div>
             <!-- Step 4 -->
             <div class="hiw-step fu d3">
                 <div class="hiw-num" aria-hidden="true">4</div>
                 <div class="hiw-content">
-                    <h3>Use It Everywhere</h3>
-                    <p>Works with <strong>Cursor, VS Code extensions, custom apps, automation scripts</strong> — anywhere that supports OpenAI-compatible APIs. Credits are deducted per token. Pay only for what you use.</p>
+                    <h3>Plug It Into Your App</h3>
+                    <p>Replace your current AI endpoint with ours — it is a single line change. Use the exact same OpenAI SDK you already have. Works with <strong>ChatGPT plugins, Cursor, n8n, Python, Node.js</strong> — any tool that supports OpenAI.</p>
+                    <div class="hiw-code" aria-label="Code example: replace base_url with llm.resayil.io/api/v1">
+                        <span class="hiw-code-comment"># Python — one line change</span>
+                        <span>client = OpenAI(</span>
+                        <span>&nbsp;&nbsp;&nbsp;&nbsp;base_url=<span class="hiw-str">"https://llm.resayil.io/api/v1"</span>,</span>
+                        <span>&nbsp;&nbsp;&nbsp;&nbsp;api_key=<span class="hiw-str">"your-api-key-here"</span>,</span>
+                        <span>)</span>
+                    </div>
                     <div class="hiw-badges" aria-label="Compatible tools">
+                        <span class="hiw-badge">ChatGPT Plugins</span>
                         <span class="hiw-badge">Cursor</span>
-                        <span class="hiw-badge">VS Code</span>
+                        <span class="hiw-badge">n8n</span>
                         <span class="hiw-badge">Python SDK</span>
                         <span class="hiw-badge">Node.js</span>
-                        <span class="hiw-badge">n8n</span>
                         <span class="hiw-badge">Any OpenAI SDK</span>
                     </div>
                 </div>
