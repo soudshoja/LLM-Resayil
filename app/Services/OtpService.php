@@ -32,11 +32,14 @@ class OtpService
 
         $message = $this->buildOTPMessage($code, 10);
 
+        // Resayil WhatsApp API requires E164 format (e.g. +96550123456)
+        $e164Phone = '+' . ltrim($phone, '+');
+
         $response = Http::withHeaders([
             'Token'        => config('services.whatsapp.api_key'),
             'Content-Type' => 'application/json',
         ])->timeout(15)->post(config('services.whatsapp.api_url'), [
-            'phone'   => $phone,
+            'phone'   => $e164Phone,
             'message' => $message,
         ]);
 
