@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>LLM Resayil — Your Personal AI Assistant in Arabic &amp; English</title>
-    <meta name="description" content="Write, think, and create faster with AI. Get 1,000 free credits — no credit card required. Arabic & English AI assistant for Kuwait.">
+    <title>{{ __('landing-3.page_title') }}</title>
+    <meta name="description" content="{{ __('landing-3.page_description') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -351,13 +351,13 @@
 <body>
 
 <nav class="mobile-nav" id="mobile-nav" role="dialog" aria-label="Navigation menu">
-    <button class="mobile-nav-close" id="mnav-close" aria-label="Close menu">
+    <button class="mobile-nav-close" id="mnav-close" aria-label="{{ __('landing-3.mobile_nav_close') }}">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>
     </button>
-    <a href="#features" onclick="closeMnav()">Features</a>
-    <a href="#pricing"  onclick="closeMnav()">Pricing</a>
-    <a href="#register" onclick="closeMnav()">Get Started Free</a>
-    <a href="/login"    onclick="closeMnav()">Sign In</a>
+    <a href="#features" onclick="closeMnav()">{{ __('landing-3.nav_features') }}</a>
+    <a href="#pricing"  onclick="closeMnav()">{{ __('landing-3.nav_pricing') }}</a>
+    <a href="#register" onclick="closeMnav()">{{ __('landing-3.nav_start_free') }}</a>
+    <a href="/login"    onclick="closeMnav()">{{ __('landing-3.nav_sign_in') }}</a>
 </nav>
 
 <header class="navbar" id="navbar">
@@ -368,17 +368,17 @@
                 LLM Resayil
             </a>
             <nav class="nav-links" aria-label="Main navigation">
-                <a href="#features">Features</a>
-                <a href="#pricing">Pricing</a>
-                <a href="#developer">For Developers</a>
+                <a href="#features">{{ __('landing-3.nav_features') }}</a>
+                <a href="#pricing">{{ __('landing-3.nav_pricing') }}</a>
+                <a href="#developer">{{ __('landing-3.nav_developers') }}</a>
             </nav>
             <div class="nav-actions">
-                <a href="/login" class="btn btn-ghost" style="padding:.6rem 1.1rem;font-size:.88rem;">Sign In</a>
+                <a href="/login" class="btn btn-ghost" style="padding:.6rem 1.1rem;font-size:.88rem;">{{ __('landing-3.nav_sign_in') }}</a>
                 <a href="#register" class="btn btn-gold" style="padding:.6rem 1.2rem;font-size:.88rem;">
-                    Start Free
+                    {{ __('landing-3.nav_start_free') }}
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
                 </a>
-                <button class="nav-toggle" id="nav-toggle" aria-label="Open menu" aria-expanded="false">
+                <button class="nav-toggle" id="nav-toggle" aria-label="{{ __('landing-3.nav_open_menu') }}" aria-expanded="false">
                     <span></span><span></span><span></span>
                 </button>
             </div>
@@ -397,30 +397,30 @@
         <div class="hero-content">
             <div class="hero-badge" role="note">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>
-                7 Days Free — No Credit Card Needed
+                {{ __('landing-3.hero_badge') }}
             </div>
             <h1 class="hero-h1" id="hero-h1">
-                Your Personal AI Assistant<br>
-                <span class="text-gradient">In Arabic &amp; English</span>
+                {{ __('landing-3.hero_h1') }}<br>
+                <span class="text-gradient">{{ __('landing-3.hero_h1_highlight') }}</span>
             </h1>
             <p class="hero-sub">
-                Write, think, and create faster with AI.<br>
-                Get <strong>1,000 free credits</strong> to start today — no payment required.
+                {{ __('landing-3.hero_sub') }}<br>
+                {!! __('landing-3.hero_sub_credits', ['credits' => '<strong>1,000</strong>']) !!}
             </p>
             <div class="hero-cta-group">
                 <a href="#register" class="btn btn-gold btn-lg">
-                    Claim Your Free Trial
+                    {{ __('landing-3.hero_cta_primary') }}
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
                 </a>
-                <a href="#features" class="btn btn-ghost btn-lg">See What It Can Do</a>
+                <a href="#features" class="btn btn-ghost btn-lg">{{ __('landing-3.hero_cta_secondary') }}</a>
             </div>
-            <p class="hero-trust"><strong>Join thousands of users</strong> already saving hours every day</p>
-            <div class="stats-card" role="status" aria-label="Live platform statistics">
-                <div class="h-stat"><div class="sdot g" aria-hidden="true"></div>1,247 users online</div>
+            <p class="hero-trust">{{ __('landing-3.hero_trust') }}</p>
+            <div class="stats-card" role="status" aria-label="{{ __('landing-3.hero_stat_aria') }}">
+                <div class="h-stat"><div class="sdot g" aria-hidden="true"></div>{{ __('landing-3.hero_stat_users') }}</div>
                 <div class="ssep" aria-hidden="true"></div>
-                <div class="h-stat"><div class="sdot y" aria-hidden="true"></div>47ms avg response</div>
+                <div class="h-stat"><div class="sdot y" aria-hidden="true"></div>{{ __('landing-3.hero_stat_response') }}</div>
                 <div class="ssep" aria-hidden="true"></div>
-                <div class="h-stat"><div class="sdot b" aria-hidden="true"></div>99.9% uptime</div>
+                <div class="h-stat"><div class="sdot b" aria-hidden="true"></div>{{ __('landing-3.hero_stat_uptime') }}</div>
             </div>
         </div>
     </div>
@@ -430,40 +430,40 @@
 <section class="sp" id="features" aria-labelledby="feat-h2">
     <div class="container">
         <div class="sheader text-center">
-            <div class="slabel fu">What you can do with it</div>
-            <h2 class="sh2 fu d1" id="feat-h2">Everyday tasks, done <span class="text-gradient-gold">10x faster</span></h2>
-            <p class="ssub fu d2" style="margin:0 auto;">No technical knowledge needed. Just type what you need, in Arabic or English.</p>
+            <div class="slabel fu">{{ __('landing-3.feat_label') }}</div>
+            <h2 class="sh2 fu d1" id="feat-h2">{!! __('landing-3.feat_h2', ['highlight' => '<span class="text-gradient-gold">' . __('landing-3.feat_h2_hl') . '</span>']) !!}</h2>
+            <p class="ssub fu d2" style="margin:0 auto;">{{ __('landing-3.feat_sub') }}</p>
         </div>
         <div class="bento">
             <div class="bc fu">
                 <div class="bi" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg></div>
-                <h3>Write in Seconds</h3>
-                <p>Emails, business reports, social media posts, articles — generate polished content instantly in your language.</p>
+                <h3>{{ __('landing-3.feat_write_title') }}</h3>
+                <p>{{ __('landing-3.feat_write_desc') }}</p>
             </div>
             <div class="bc fu d1">
                 <div class="bi" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg></div>
-                <h3>Answer Anything</h3>
-                <p>Research topics, get instant analysis, and find answers to complex questions without spending hours searching.</p>
+                <h3>{{ __('landing-3.feat_answer_title') }}</h3>
+                <p>{{ __('landing-3.feat_answer_desc') }}</p>
             </div>
             <div class="bc fu d2">
                 <div class="bi" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 8 6 6"/><path d="m4 14 6-6 2-3"/><path d="M2 5h12"/><path d="M7 2h1"/><path d="m22 22-5-10-5 10"/><path d="M14 18h6"/></svg></div>
-                <h3>Arabic &amp; English</h3>
-                <p>Seamlessly switch between both languages. Perfect for Kuwait, the Gulf, and the broader Arab world.</p>
+                <h3>{{ __('landing-3.feat_bilingual_title') }}</h3>
+                <p>{{ __('landing-3.feat_bilingual_desc') }}</p>
             </div>
             <div class="bc w2 fu">
                 <div class="bi" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
-                <h3>Available 24/7 — Always Instant</h3>
-                <p>No waiting, no appointments, no delays. Your AI assistant is ready the moment you need it, any time of day or night. Whether it is 3am or during Ramadan evenings, we are always on.</p>
+                <h3>{{ __('landing-3.feat_247_title') }}</h3>
+                <p>{{ __('landing-3.feat_247_desc') }}</p>
             </div>
             <div class="bc fu d1">
                 <div class="bi" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
-                <h3>Private &amp; Secure</h3>
-                <p>Your conversations and data stay safe. Built for users in Kuwait with privacy as the default.</p>
+                <h3>{{ __('landing-3.feat_private_title') }}</h3>
+                <p>{{ __('landing-3.feat_private_desc') }}</p>
             </div>
             <div class="bc fu d2">
                 <div class="bi" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></svg></div>
-                <h3>50+ AI Models</h3>
-                <p>Choose the best AI brain for each task. Creative writing, data analysis, coding help — there is a model for everything.</p>
+                <h3>{{ __('landing-3.feat_models_title') }}</h3>
+                <p>{{ __('landing-3.feat_models_desc') }}</p>
             </div>
         </div>
     </div>
@@ -473,33 +473,33 @@
 <section class="sp" aria-labelledby="hook-h2">
     <div class="container">
         <div class="hook-card fu">
-            <div class="slabel" style="justify-content:center;margin-bottom:.75rem;">Limited Time Offer</div>
-            <h2 class="hook-h2" id="hook-h2">Start Free. Pay Only When<br><span class="text-gradient-gold">You Love It.</span></h2>
-            <p class="hook-sub">Everything you need to get started — completely free.</p>
+            <div class="slabel" style="justify-content:center;margin-bottom:.75rem;">{{ __('landing-3.hook_label') }}</div>
+            <h2 class="hook-h2" id="hook-h2">{{ __('landing-3.hook_h2') }}<br><span class="text-gradient-gold">{{ __('landing-3.hook_h2_hl') }}</span></h2>
+            <p class="hook-sub">{{ __('landing-3.hook_sub') }}</p>
             <div class="hook-perks">
                 <div class="hp">
                     <div class="hp-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
-                    <div class="hp-num">7</div>
-                    <div class="hp-lbl">Days Completely Free</div>
+                    <div class="hp-num">{{ __('landing-3.hook_perk1_num') }}</div>
+                    <div class="hp-lbl">{{ __('landing-3.hook_perk1_lbl') }}</div>
                 </div>
                 <div class="hp">
                     <div class="hp-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
-                    <div class="hp-num">1,000</div>
-                    <div class="hp-lbl">Free AI Credits</div>
+                    <div class="hp-num">{{ __('landing-3.hook_perk2_num') }}</div>
+                    <div class="hp-lbl">{{ __('landing-3.hook_perk2_lbl') }}</div>
                 </div>
                 <div class="hp">
                     <div class="hp-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg></div>
-                    <div class="hp-num">0</div>
-                    <div class="hp-lbl">Credit Card Required</div>
+                    <div class="hp-num">{{ __('landing-3.hook_perk3_num') }}</div>
+                    <div class="hp-lbl">{{ __('landing-3.hook_perk3_lbl') }}</div>
                 </div>
             </div>
             <div class="cred-prog">
-                <div class="cred-prog-top"><span>Your 1,000 free credits</span><span>~500 AI responses</span></div>
+                <div class="cred-prog-top"><span>{{ __('landing-3.hook_credits_label') }}</span><span>{{ __('landing-3.hook_credits_approx') }}</span></div>
                 <div class="prog-track"><div class="prog-fill" id="prog-fill"></div></div>
-                <p class="cred-desc">1 credit = roughly 1 sentence of AI output. 1,000 credits goes a long way.</p>
+                <p class="cred-desc">{{ __('landing-3.hook_credits_desc') }}</p>
             </div>
             <a href="#register" class="btn btn-gold btn-lg">
-                Get My Free Credits
+                {{ __('landing-3.hook_cta') }}
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
             </a>
         </div>
@@ -510,49 +510,49 @@
 <section class="sp" id="how-it-works" aria-labelledby="hiw-h2">
     <div class="container">
         <div class="sheader text-center">
-            <div class="slabel fu">How It Works</div>
-            <h2 class="sh2 fu d1" id="hiw-h2">Up and running in <span class="text-gradient-gold">under 5 minutes</span></h2>
-            <p class="ssub fu d2" style="margin:0 auto;">No new tools to learn. Register, add credits, grab your API key, and you are ready to go.</p>
+            <div class="slabel fu">{{ __('landing-3.hiw_label') }}</div>
+            <h2 class="sh2 fu d1" id="hiw-h2">{!! __('landing-3.hiw_h2', ['highlight' => '<span class="text-gradient-gold">' . __('landing-3.hiw_h2_hl') . '</span>']) !!}</h2>
+            <p class="ssub fu d2" style="margin:0 auto;">{{ __('landing-3.hiw_sub') }}</p>
         </div>
         <div class="hiw-steps">
             <!-- Step 1 -->
             <div class="hiw-step fu">
                 <div class="hiw-num" aria-hidden="true">1</div>
                 <div class="hiw-content">
-                    <h3>Create Your Account</h3>
-                    <p>Register in under a minute using your name, email, and phone number. We will send a verification code to your WhatsApp to confirm your identity — quick and secure.</p>
+                    <h3>{{ __('landing-3.hiw_step1_title') }}</h3>
+                    <p>{{ __('landing-3.hiw_step1_desc') }}</p>
                 </div>
             </div>
             <!-- Step 2 -->
             <div class="hiw-step fu d1">
                 <div class="hiw-num" aria-hidden="true">2</div>
                 <div class="hiw-content">
-                    <h3>Add Credits to Your Wallet</h3>
-                    <p>Top up your credit balance using your credit or debit card. Credits are what you spend on API calls — each request deducts a small amount based on the model and tokens used. <strong>Pay only for what you use.</strong></p>
+                    <h3>{{ __('landing-3.hiw_step2_title') }}</h3>
+                    <p>{{ __('landing-3.hiw_step2_desc') }} <strong>{{ __('landing-3.hiw_step2_note') }}</strong></p>
                 </div>
             </div>
             <!-- Step 3 -->
             <div class="hiw-step fu d2">
                 <div class="hiw-num" aria-hidden="true">3</div>
                 <div class="hiw-content">
-                    <h3>Get Your API Key</h3>
-                    <p>From your dashboard, generate an API key in one click. Copy it — you will use it in the next step. No approval process, no waiting.</p>
+                    <h3>{{ __('landing-3.hiw_step3_title') }}</h3>
+                    <p>{{ __('landing-3.hiw_step3_desc') }}</p>
                 </div>
             </div>
             <!-- Step 4 -->
             <div class="hiw-step fu d3">
                 <div class="hiw-num" aria-hidden="true">4</div>
                 <div class="hiw-content">
-                    <h3>Plug It Into Your App</h3>
-                    <p>Replace your current AI endpoint with ours — it is a single line change. Use the exact same OpenAI SDK you already have. Works with <strong>ChatGPT plugins, Cursor, n8n, Python, Node.js</strong> — any tool that supports OpenAI.</p>
-                    <div class="hiw-code" aria-label="Code example: replace base_url with llm.resayil.io/api/v1">
-                        <span class="hiw-code-comment"># Python — one line change</span>
+                    <h3>{{ __('landing-3.hiw_step4_title') }}</h3>
+                    <p>{!! __('landing-3.hiw_step4_desc', ['tools' => '<strong>' . __('landing-3.hiw_step4_tools') . '</strong>']) !!}</p>
+                    <div class="hiw-code" aria-label="{{ __('landing-3.hiw_code_aria') }}">
+                        <span class="hiw-code-comment">{{ __('landing-3.hiw_code_comment') }}</span>
                         <span>client = OpenAI(</span>
                         <span>&nbsp;&nbsp;&nbsp;&nbsp;base_url=<span class="hiw-str">"https://llm.resayil.io/api/v1"</span>,</span>
                         <span>&nbsp;&nbsp;&nbsp;&nbsp;api_key=<span class="hiw-str">"your-api-key-here"</span>,</span>
                         <span>)</span>
                     </div>
-                    <div class="hiw-badges" aria-label="Compatible tools">
+                    <div class="hiw-badges" aria-label="{{ __('landing-3.hiw_badges_aria') }}">
                         <span class="hiw-badge">ChatGPT Plugins</span>
                         <span class="hiw-badge">Cursor</span>
                         <span class="hiw-badge">n8n</span>
@@ -565,7 +565,7 @@
         </div>
         <div class="text-center fu" style="margin-top:2.5rem;">
             <a href="#register" class="btn btn-gold btn-lg">
-                Get Your API Key Free
+                {{ __('landing-3.hiw_cta') }}
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
             </a>
         </div>
@@ -576,24 +576,24 @@
 <section class="sp" aria-labelledby="test-h2">
     <div class="container">
         <div class="sheader text-center">
-            <div class="slabel fu">Real Users, Real Results</div>
-            <h2 class="sh2 fu d1" id="test-h2">People are saving <span class="text-gradient-gold">hours every day</span></h2>
+            <div class="slabel fu">{{ __('landing-3.test_label') }}</div>
+            <h2 class="sh2 fu d1" id="test-h2">{!! __('landing-3.test_h2', ['highlight' => '<span class="text-gradient-gold">' . __('landing-3.test_h2_hl') . '</span>']) !!}</h2>
         </div>
         <div class="t-grid">
             <div class="tc fu">
-                <div class="tstars" aria-label="5 stars"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
-                <p class="tq">"I write all my business emails in Arabic now in seconds. It understands exactly what I mean and the tone is always professional. It has completely changed how I run my business."</p>
-                <div class="ta"><div class="tav av-p" aria-hidden="true">F</div><div><div class="tn">Fatima Al-Zahra</div><div class="tr">Business Owner, Kuwait City</div></div></div>
+                <div class="tstars" aria-label="{{ __('landing-3.test_stars_aria') }}"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+                <p class="tq">{{ __('landing-3.test1_quote') }}</p>
+                <div class="ta"><div class="tav av-p" aria-hidden="true">F</div><div><div class="tn">{{ __('landing-3.test1_name') }}</div><div class="tr">{{ __('landing-3.test1_role') }}</div></div></div>
             </div>
             <div class="tc fu d1">
-                <div class="tstars" aria-label="5 stars"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
-                <p class="tq">"My students use it for research and it is incredible. The quality of answers in Arabic is something I have never seen before. It has made my teaching so much more effective."</p>
-                <div class="ta"><div class="tav av-g" aria-hidden="true">M</div><div><div class="tn">Dr. Mohammed Al-Rashid</div><div class="tr">University Professor</div></div></div>
+                <div class="tstars" aria-label="{{ __('landing-3.test_stars_aria') }}"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+                <p class="tq">{{ __('landing-3.test2_quote') }}</p>
+                <div class="ta"><div class="tav av-g" aria-hidden="true">M</div><div><div class="tn">{{ __('landing-3.test2_name') }}</div><div class="tr">{{ __('landing-3.test2_role') }}</div></div></div>
             </div>
             <div class="tc fu d2">
-                <div class="tstars" aria-label="5 stars"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
-                <p class="tq">"Saved me 3 hours every single day on content writing. I used to struggle with captions and articles — now I just describe what I want and it is done. Absolutely worth every fils."</p>
-                <div class="ta"><div class="tav av-b" aria-hidden="true">N</div><div><div class="tn">Noor Hassan</div><div class="tr">Content Creator &amp; Influencer</div></div></div>
+                <div class="tstars" aria-label="{{ __('landing-3.test_stars_aria') }}"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+                <p class="tq">{{ __('landing-3.test3_quote') }}</p>
+                <div class="ta"><div class="tav av-b" aria-hidden="true">N</div><div><div class="tn">{{ __('landing-3.test3_name') }}</div><div class="tr">{{ __('landing-3.test3_role') }}</div></div></div>
             </div>
         </div>
     </div>
@@ -603,74 +603,77 @@
 <section class="reg-sec" id="register" aria-labelledby="reg-h2">
     <div class="container-xs">
         <div class="text-center" style="margin-bottom:1.5rem;">
-            <div class="slabel fu" style="justify-content:center;">Get Started Now</div>
-            <p class="fu d1" style="font-size:.9rem;color:var(--text-muted);">30 seconds to set up. No credit card. Cancel anytime.</p>
+            <div class="slabel fu" style="justify-content:center;">{{ __('landing-3.reg_label') }}</div>
+            <p class="fu d1" style="font-size:.9rem;color:var(--text-muted);">{{ __('landing-3.reg_sublabel') }}</p>
         </div>
         <div class="reg-card fu d2" id="reg-card">
             <div class="reg-head">
-                <h2 id="reg-h2">Create Your Free Account</h2>
-                <p>Start in 30 seconds. No credit card required.</p>
+                <h2 id="reg-h2">{{ __('landing-3.reg_card_h2') }}</h2>
+                <p>{{ __('landing-3.reg_card_sub') }}</p>
             </div>
             <div class="tbadges">
-                <div class="tbadge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>No credit card</div>
-                <div class="tbadge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>7 days free</div>
-                <div class="tbadge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Cancel anytime</div>
+                <div class="tbadge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>{{ __('landing-3.reg_badge_no_cc') }}</div>
+                <div class="tbadge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>{{ __('landing-3.reg_badge_7days') }}</div>
+                <div class="tbadge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>{{ __('landing-3.reg_badge_cancel') }}</div>
             </div>
             <div class="gerr" id="gerr" role="alert" aria-live="assertive">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-                <span id="gerr-msg">Something went wrong. Please try again.</span>
+                <span id="gerr-msg">{{ __('landing-3.reg_err_generic') }}</span>
             </div>
             <div class="gsuccess" id="gsuccess" role="status" aria-live="polite">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
-                <span id="gsuccess-msg">Code sent successfully.</span>
+                <span id="gsuccess-msg">{{ __('landing-3.reg_success_code') }}</span>
             </div>
             <!-- STEP 1: Registration fields -->
             <form id="reg-form" novalidate method="post">
                 <div id="reg-step1" class="reg-step">
                     <div class="ff">
-                        <label class="fl" for="r-name">Full Name</label>
-                        <input class="fi" type="text" id="r-name" name="name" placeholder="Ahmad Al-Mansouri" autocomplete="name" required aria-required="true" aria-describedby="e-name">
+                        <label class="fl" for="r-name">{{ __('landing-3.reg_label_name') }}</label>
+                        <input class="fi" type="text" id="r-name" name="name" placeholder="{{ __('landing-3.reg_ph_name') }}" autocomplete="name" required aria-required="true" aria-describedby="e-name">
                         <div class="ferr" id="e-name" role="alert"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span></span></div>
                     </div>
                     <div class="ff">
-                        <label class="fl" for="r-email">Email Address</label>
-                        <input class="fi" type="email" id="r-email" name="email" placeholder="ahmad@example.com" autocomplete="email" required aria-required="true" aria-describedby="e-email">
+                        <label class="fl" for="r-email">{{ __('landing-3.reg_label_email') }}</label>
+                        <input class="fi" type="email" id="r-email" name="email" placeholder="{{ __('landing-3.reg_ph_email') }}" autocomplete="email" required aria-required="true" aria-describedby="e-email">
                         <div class="ferr" id="e-email" role="alert"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span></span></div>
                     </div>
                     <div class="ff">
-                        <label class="fl" for="r-phone">Phone Number</label>
+                        <label class="fl" for="r-phone">{{ __('landing-3.reg_label_phone') }}</label>
                         <div class="phone-row">
                             <div class="ph-pfx" aria-label="+965 Kuwait">+965</div>
-                            <input class="fi" type="tel" id="r-phone" name="phone_local" placeholder="9XXXXXXX" autocomplete="tel-national" inputmode="numeric" required aria-required="true" aria-describedby="e-phone" aria-label="Local phone number">
+                            <input class="fi" type="tel" id="r-phone" name="phone_local" placeholder="{{ __('landing-3.reg_ph_phone') }}" autocomplete="tel-national" inputmode="numeric" required aria-required="true" aria-describedby="e-phone" aria-label="Local phone number">
                         </div>
                         <div class="ferr" id="e-phone" role="alert"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span></span></div>
                     </div>
                     <div class="ff">
-                        <label class="fl" for="r-pw">Password</label>
+                        <label class="fl" for="r-pw">{{ __('landing-3.reg_label_pw') }}</label>
                         <div class="pw-wrap">
-                            <input class="fi" type="password" id="r-pw" name="password" placeholder="At least 8 characters" autocomplete="new-password" required aria-required="true" aria-describedby="e-pw">
-                            <button type="button" class="pw-tog" id="pw-tog" aria-label="Show password" aria-pressed="false">
+                            <input class="fi" type="password" id="r-pw" name="password" placeholder="{{ __('landing-3.reg_ph_pw') }}" autocomplete="new-password" required aria-required="true" aria-describedby="e-pw">
+                            <button type="button" class="pw-tog" id="pw-tog" aria-label="{{ __('landing-3.reg_pw_show_aria') }}" aria-pressed="false">
                                 <svg id="eye-on"  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
                                 <svg id="eye-off" class="eye-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"/><path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"/><path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"/><line x1="2" y1="2" x2="22" y2="22"/></svg>
                             </button>
                         </div>
                         <div class="ferr" id="e-pw" role="alert"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span></span></div>
                     </div>
-                    <button type="submit" class="sub-btn" id="reg-btn">Start My Free Trial &rarr;</button>
-                    <p class="f-legal">By signing up you agree to our <a href="/terms" target="_blank" rel="noopener">Terms of Service</a> and <a href="/privacy" target="_blank" rel="noopener">Privacy Policy</a></p>
-                    <p class="f-signin">Already have an account? <a href="/login">Sign In</a></p>
+                    <button type="submit" class="sub-btn" id="reg-btn">{{ __('landing-3.reg_btn_submit') }} &rarr;</button>
+                    <p class="f-legal">{!! __('landing-3.reg_terms_text', [
+                        'terms'   => '<a href="/terms" target="_blank" rel="noopener">' . __('landing-3.reg_terms_link') . '</a>',
+                        'privacy' => '<a href="/privacy" target="_blank" rel="noopener">' . __('landing-3.reg_privacy_link') . '</a>',
+                    ]) !!}</p>
+                    <p class="f-signin">{{ __('landing-3.reg_signin_text') }} <a href="/login">{{ __('landing-3.reg_signin_link') }}</a></p>
                 </div>
                 <!-- STEP 2: OTP verification -->
                 <div id="reg-step2" class="otp-step">
-                    <p class="otp-info">We sent a 6-digit code to WhatsApp at <strong id="otp-phone-display"></strong>. Enter it below to verify your number.</p>
+                    <p class="otp-info">{!! __('landing-3.otp_info', ['phone' => '<strong id="otp-phone-display"></strong>']) !!}</p>
                     <div class="ff">
-                        <label class="fl" for="r-otp">Verification Code</label>
+                        <label class="fl" for="r-otp">{{ __('landing-3.otp_label_code') }}</label>
                         <input class="fi otp-fi" type="text" id="r-otp" name="otp_code" maxlength="6" inputmode="numeric" pattern="[0-9]{6}" placeholder="------" autocomplete="one-time-code" aria-describedby="e-otp">
                         <div class="ferr" id="e-otp" role="alert"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span></span></div>
                     </div>
-                    <button type="submit" class="sub-btn" id="otp-btn">Create My Account &rarr;</button>
-                    <button type="button" class="otp-back" id="otp-back">Wrong number? Go back</button>
-                    <button type="button" class="otp-back" id="otp-resend" style="margin-top:.35rem;color:var(--text-muted);">Resend code</button>
+                    <button type="submit" class="sub-btn" id="otp-btn">{{ __('landing-3.otp_btn_verify') }} &rarr;</button>
+                    <button type="button" class="otp-back" id="otp-back">{{ __('landing-3.otp_back_btn') }}</button>
+                    <button type="button" class="otp-back" id="otp-resend" style="margin-top:.35rem;color:var(--text-muted);">{{ __('landing-3.otp_resend_btn') }}</button>
                 </div>
             </form>
         </div>
@@ -681,47 +684,59 @@
 <section class="sp" id="pricing" aria-labelledby="price-h2">
     <div class="container">
         <div class="sheader text-center">
-            <div class="slabel fu">Pricing</div>
-            <h2 class="sh2 fu d1" id="price-h2">Simple Pricing. <span class="text-gradient-gold">No Surprises.</span></h2>
-            <p class="ssub fu d2" style="margin:0 auto;">Start free, upgrade only when you need more. Prices in Kuwaiti Dinar.</p>
+            <div class="slabel fu">{{ __('landing-3.price_label') }}</div>
+            <h2 class="sh2 fu d1" id="price-h2">{{ __('landing-3.price_h2') }} <span class="text-gradient-gold">{{ __('landing-3.price_h2_hl') }}</span></h2>
+            <p class="ssub fu d2" style="margin:0 auto;">{{ __('landing-3.price_sub') }}</p>
         </div>
         <div class="p-grid">
             <div class="pc fu">
-                <div class="pname">Free Trial</div>
-                <div class="pprice">FREE<small> / 7 days</small></div>
-                <p class="pdesc">Everything you need to fall in love with AI</p>
+                <div class="pname">{{ __('landing-3.price_free_name') }}</div>
+                <div class="pprice">{{ __('landing-3.price_free_price') }}<small> {{ __('landing-3.price_free_period') }}</small></div>
+                <p class="pdesc">{{ __('landing-3.price_free_desc') }}</p>
                 <ul class="pfeat">
-                    <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>1,000 free credits</li>
-                    <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>~500 AI responses</li>
-                    <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Arabic &amp; English</li>
-                    <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>No credit card</li>
+                    @foreach([
+                        __('landing-3.price_free_f1'),
+                        __('landing-3.price_free_f2'),
+                        __('landing-3.price_free_f3'),
+                        __('landing-3.price_free_f4'),
+                    ] as $feat)
+                    <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>{{ $feat }}</li>
+                    @endforeach
                 </ul>
-                <a href="#register" class="btn btn-outline-gold" style="width:100%;justify-content:center;padding:.85rem;">Start Free Trial</a>
+                <a href="#register" class="btn btn-outline-gold" style="width:100%;justify-content:center;padding:.85rem;">{{ __('landing-3.price_free_cta') }}</a>
             </div>
             <div class="pc feat fu d1">
-                <div class="pbadge">Most Popular</div>
-                <div class="pname">Basic</div>
-                <div class="pprice">2 KWD<small> / month</small></div>
-                <p class="pdesc">Great for daily personal use</p>
+                <div class="pbadge">{{ __('landing-3.price_basic_badge') }}</div>
+                <div class="pname">{{ __('landing-3.price_basic_name') }}</div>
+                <div class="pprice">{{ __('landing-3.price_basic_price') }}<small> {{ __('landing-3.price_basic_period') }}</small></div>
+                <p class="pdesc">{{ __('landing-3.price_basic_desc') }}</p>
                 <ul class="pfeat">
-                    <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>5,000 credits / month</li>
-                    <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>~2,500 AI responses</li>
-                    <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>All 50+ AI models</li>
-                    <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Priority support</li>
+                    @foreach([
+                        __('landing-3.price_basic_f1'),
+                        __('landing-3.price_basic_f2'),
+                        __('landing-3.price_basic_f3'),
+                        __('landing-3.price_basic_f4'),
+                    ] as $feat)
+                    <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>{{ $feat }}</li>
+                    @endforeach
                 </ul>
-                <a href="#register" class="btn btn-gold" style="width:100%;justify-content:center;padding:.85rem;">Start Free, Then Upgrade</a>
+                <a href="#register" class="btn btn-gold" style="width:100%;justify-content:center;padding:.85rem;">{{ __('landing-3.price_basic_cta') }}</a>
             </div>
             <div class="pc fu d2">
-                <div class="pname">Pro</div>
-                <div class="pprice">5 KWD<small> / month</small></div>
-                <p class="pdesc">For power users and small teams</p>
+                <div class="pname">{{ __('landing-3.price_pro_name') }}</div>
+                <div class="pprice">{{ __('landing-3.price_pro_price') }}<small> {{ __('landing-3.price_pro_period') }}</small></div>
+                <p class="pdesc">{{ __('landing-3.price_pro_desc') }}</p>
                 <ul class="pfeat">
-                    <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>15,000 credits / month</li>
-                    <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>~7,500 AI responses</li>
-                    <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>All models + API access</li>
-                    <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Dedicated support</li>
+                    @foreach([
+                        __('landing-3.price_pro_f1'),
+                        __('landing-3.price_pro_f2'),
+                        __('landing-3.price_pro_f3'),
+                        __('landing-3.price_pro_f4'),
+                    ] as $feat)
+                    <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>{{ $feat }}</li>
+                    @endforeach
                 </ul>
-                <a href="#register" class="btn btn-ghost" style="width:100%;justify-content:center;padding:.85rem;">Get Started</a>
+                <a href="#register" class="btn btn-ghost" style="width:100%;justify-content:center;padding:.85rem;">{{ __('landing-3.price_pro_cta') }}</a>
             </div>
         </div>
     </div>
@@ -733,15 +748,15 @@
         <div class="dev-bar fu" id="dev-bar" role="button" aria-expanded="false" aria-controls="dev-body" tabindex="0">
             <div class="dev-bar-l">
                 <div class="dev-bar-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div>
-                <div class="dev-bar-lbl">Are you a developer?<span>Click to get API access</span></div>
+                <div class="dev-bar-lbl">{{ __('landing-3.dev_bar_label') }}<span>{{ __('landing-3.dev_bar_span') }}</span></div>
             </div>
             <svg class="dev-chev" id="dev-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
         </div>
         <div class="dev-body" id="dev-body" aria-hidden="true">
             <div class="dev-inner">
-                <h3>OpenAI-Compatible API — Drop-in Replacement</h3>
-                <p>Switch your existing OpenAI integration to LLM Resayil in minutes. Same API format, lower cost, 50+ models including Arabic-optimised ones.</p>
-                <div class="dev-url"><span class="dev-url-lbl">Base URL</span><code>https://llm.resayil.io/api/v1</code></div>
+                <h3>{{ __('landing-3.dev_h3') }}</h3>
+                <p>{{ __('landing-3.dev_desc') }}</p>
+                <div class="dev-url"><span class="dev-url-lbl">{{ __('landing-3.dev_base_url_lbl') }}</span><code>https://llm.resayil.io/api/v1</code></div>
                 <div class="ctabs" role="tablist">
                     <button class="ctab on" id="tab-py"   role="tab" aria-selected="true"  aria-controls="code-py"   data-tab="py">Python</button>
                     <button class="ctab"    id="tab-curl" role="tab" aria-selected="false" aria-controls="code-curl" data-tab="curl">cURL</button>
@@ -766,7 +781,7 @@ response = client.chat.completions.create(
     "model": "llama3.2",
     "messages": [{"role": "user", "content": "&#x645;&#x631;&#x62D;&#x628;&#x627;!"}]
   }'</span></pre>
-                <p class="dev-note">Get your API key after registering above. Questions? <a href="mailto:support@resayil.io">support@resayil.io</a></p>
+                <p class="dev-note">{{ __('landing-3.dev_note') }} <a href="mailto:support@resayil.io">support@resayil.io</a></p>
             </div>
         </div>
     </div>
@@ -778,14 +793,14 @@ response = client.chat.completions.create(
         <div class="glass-gold fu" style="padding:3.5rem 2.5rem;text-align:center;position:relative;overflow:hidden;">
             <div style="position:absolute;top:-60px;right:-60px;width:200px;height:200px;background:radial-gradient(circle,rgba(212,175,55,.10) 0%,transparent 70%);border-radius:50%;pointer-events:none;" aria-hidden="true"></div>
             <div style="position:absolute;bottom:-40px;left:-40px;width:160px;height:160px;background:radial-gradient(circle,rgba(124,58,237,.08) 0%,transparent 70%);border-radius:50%;pointer-events:none;" aria-hidden="true"></div>
-            <div class="slabel" style="justify-content:center;margin-bottom:.75rem;">Ready to start?</div>
-            <h2 class="sh2" id="cta-h2" style="margin-bottom:.75rem;">Your AI assistant is <span class="text-gradient-gold">one click away</span></h2>
-            <p style="color:var(--text-secondary);margin-bottom:2rem;font-size:1.05rem;">7 days free. 1,000 credits. No credit card required.</p>
+            <div class="slabel" style="justify-content:center;margin-bottom:.75rem;">{{ __('landing-3.cta_label') }}</div>
+            <h2 class="sh2" id="cta-h2" style="margin-bottom:.75rem;">{!! __('landing-3.cta_h2', ['highlight' => '<span class="text-gradient-gold">' . __('landing-3.cta_h2_hl') . '</span>']) !!}</h2>
+            <p style="color:var(--text-secondary);margin-bottom:2rem;font-size:1.05rem;">{{ __('landing-3.cta_sub') }}</p>
             <a href="#register" class="btn btn-gold btn-lg">
-                Start My Free Trial Now
+                {{ __('landing-3.cta_btn') }}
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
             </a>
-            <p style="margin-top:1rem;font-size:.84rem;color:var(--text-muted);">Cancel anytime. No commitment.</p>
+            <p style="margin-top:1rem;font-size:.84rem;color:var(--text-muted);">{{ __('landing-3.cta_cancel') }}</p>
         </div>
     </div>
 </section>
@@ -796,15 +811,15 @@ response = client.chat.completions.create(
     <div class="container">
         <div class="foot-in">
             <a href="/" class="logo" aria-label="LLM Resayil home"><div class="logo-dot" aria-hidden="true"></div>LLM Resayil</a>
-            <nav class="foot-links" aria-label="Footer navigation">
-                <a href="#features">Features</a>
-                <a href="#pricing">Pricing</a>
-                <a href="#developer">Developers</a>
-                <a href="/login">Sign In</a>
-                <a href="/terms">Terms</a>
-                <a href="/privacy">Privacy</a>
+            <nav class="foot-links" aria-label="{{ __('landing-3.foot_nav_aria') }}">
+                <a href="#features">{{ __('landing-3.foot_features') }}</a>
+                <a href="#pricing">{{ __('landing-3.foot_pricing') }}</a>
+                <a href="#developer">{{ __('landing-3.foot_developers') }}</a>
+                <a href="/login">{{ __('landing-3.foot_signin') }}</a>
+                <a href="/terms">{{ __('landing-3.foot_terms') }}</a>
+                <a href="/privacy">{{ __('landing-3.foot_privacy') }}</a>
             </nav>
-            <p class="foot-copy">&copy; {{ date('Y') }} LLM Resayil. All rights reserved.</p>
+            <p class="foot-copy">&copy; {!! __('landing-3.foot_copy', ['year' => date('Y')]) !!}</p>
         </div>
     </div>
 </footer>
