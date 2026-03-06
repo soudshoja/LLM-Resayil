@@ -2,7 +2,7 @@
 
 @section('title', 'OpenAI Alternatives — LLM Resayil')
 
-@push('meta')
+@push('styles')
 <link href="{{ asset('css/alternatives.css') }}" rel="stylesheet">
 @endpush
 
