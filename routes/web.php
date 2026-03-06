@@ -172,7 +172,6 @@ Route::group([], function () {
     Route::get('/comparison', function () {
         $meta = \App\Helpers\SeoHelper::getPageMeta('comparison');
         return view('comparison', [
-            'pageTitle' => $meta['title'],
             'pageDescription' => $meta['description'],
             'pageKeywords' => $meta['keywords'],
             'ogImage' => $meta['ogImage'],
@@ -183,7 +182,6 @@ Route::group([], function () {
     Route::get('/alternatives', function () {
         $meta = \App\Helpers\SeoHelper::getPageMeta('alternatives');
         return view('alternatives', [
-            'pageTitle' => $meta['title'],
             'pageDescription' => $meta['description'],
             'pageKeywords' => $meta['keywords'],
             'ogImage' => $meta['ogImage'],
@@ -194,7 +192,6 @@ Route::group([], function () {
     Route::get('/cost-calculator', function () {
         $meta = \App\Helpers\SeoHelper::getPageMeta('cost-calculator');
         return view('cost-calculator', [
-            'pageTitle' => $meta['title'],
             'pageDescription' => $meta['description'],
             'pageKeywords' => $meta['keywords'],
             'ogImage' => $meta['ogImage'],
@@ -205,7 +202,6 @@ Route::group([], function () {
     Route::get('/dedicated-server', function () {
         $meta = \App\Helpers\SeoHelper::getPageMeta('dedicated-server');
         return view('dedicated-server', [
-            'pageTitle' => $meta['title'],
             'pageDescription' => $meta['description'],
             'pageKeywords' => $meta['keywords'],
             'ogImage' => $meta['ogImage'],
