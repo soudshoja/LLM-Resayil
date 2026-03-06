@@ -165,5 +165,5 @@ return [
     // Support
     'contact_support' => 'تواصل مع الدعم',
     'need_help' => 'تحتاج مساعدة؟',
-    'last_updated' => '2 مارس 2026',
+    'last_updated' => date('Y/m/d'),
 ];

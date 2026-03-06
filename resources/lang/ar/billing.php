@@ -129,6 +129,16 @@ return [
     'model_access'          => 'الوصول إلى النماذج',
     'priority_support'      => 'دعم ذو أولوية',
 
+    // Plan features - additional (missing from EN mapping)
+    'subscription_plans'    => 'خطط الاشتراك',
+    'choose_your_plan'      => 'اختر خطتك',
+    'unlock_llm_power'      => 'أطلق الإمكانيات الكاملة لـ LLM Resayil. ابدأ بتجربة مجانية لمدة 7 أيام بدون التزام.',
+    'free_trial'            => 'تجربة مجانية',
+    '1_free_api_key'        => 'مفتاح API مجاني واحد',
+    'auto_bill_to_starter'  => 'فوترة تلقائية لخطة Starter',
+    'start_free_trial'      => 'ابدأ التجربة المجانية — بطاقة مطلوبة',
+    '2_free_api_keys'       => 'مفتاحا API مجانيان',
+
     // Error messages
     'error_plan_not_found'      => 'الخطة غير موجودة.',
     'error_subscription_exists' => 'الاشتراك موجود بالفعل.',
