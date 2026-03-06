@@ -146,5 +146,5 @@ return [
     'home' => 'Home',
     'api' => 'API',
     'read_more' => 'Read more',
-    'last_updated' => 'March 2, 2026',
+    'last_updated' => date('F j, Y'),
 ];

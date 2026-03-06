@@ -213,6 +213,48 @@ Route::group([], function () {
         ]);
     })->name('dedicated-server');
 
+    Route::get('/pricing', function () {
+        $meta = \App\Helpers\SeoHelper::getPageMeta('pricing');
+        return view('pricing', [
+            'pageTitle' => $meta['title'],
+            'pageDescription' => $meta['description'],
+            'pageKeywords' => $meta['keywords'],
+            'ogImage' => $meta['ogImage'],
+            'ogType' => $meta['ogType'],
+        ]);
+    })->name('pricing');
+
+    Route::get('/features', function () {
+        $meta = \App\Helpers\SeoHelper::getPageMeta('features');
+        return view('features', [
+            'pageTitle' => $meta['title'],
+            'pageDescription' => $meta['description'],
+            'pageKeywords' => $meta['keywords'],
+            'ogImage' => $meta['ogImage'],
+            'ogType' => $meta['ogType'],
+        ]);
+    })->name('features');
+
+    // Sitemap
+    Route::get('/sitemap.xml', function () {
+        $routes = [
+            ['url' => '/', 'changefreq' => 'weekly', 'priority' => '1.0'],
+            ['url' => '/comparison', 'changefreq' => 'monthly', 'priority' => '0.9'],
+            ['url' => '/alternatives', 'changefreq' => 'monthly', 'priority' => '0.9'],
+            ['url' => '/cost-calculator', 'changefreq' => 'monthly', 'priority' => '0.9'],
+            ['url' => '/dedicated-server', 'changefreq' => 'monthly', 'priority' => '0.8'],
+            ['url' => '/pricing', 'changefreq' => 'monthly', 'priority' => '0.8'],
+            ['url' => '/features', 'changefreq' => 'monthly', 'priority' => '0.8'],
+            ['url' => '/docs', 'changefreq' => 'monthly', 'priority' => '0.7'],
+            ['url' => '/credits', 'changefreq' => 'monthly', 'priority' => '0.7'],
+            ['url' => '/contact', 'changefreq' => 'yearly', 'priority' => '0.6'],
+            ['url' => '/register', 'changefreq' => 'yearly', 'priority' => '0.6'],
+            ['url' => '/login', 'changefreq' => 'yearly', 'priority' => '0.5'],
+        ];
+        return response()->view('sitemap', compact('routes'))
+            ->header('Content-Type', 'application/xml');
+    })->name('sitemap');
+
     // Model catalog for dashboard (session auth, no API key required)
     Route::get('/models/catalog', [App\Http\Controllers\Api\ModelsController::class, 'index'])->middleware('auth');
 

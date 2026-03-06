@@ -159,6 +159,20 @@ class SeoHelper
             'ogImage' => 'https://llm.resayil.io/og-images/og-dedicated-server.png',
             'ogType' => 'website',
         ],
+        'pricing' => [
+            'title' => 'Pricing — LLM Resayil | Pay-Per-Token, No Subscriptions',
+            'description' => 'LLM Resayil pricing: buy credit packs from 2 KWD. No subscriptions, no seat fees. 5,000 credits/2 KWD, 15,000/5 KWD, 50,000/15 KWD. Start free.',
+            'keywords' => 'llm api pricing, pay per token, credit packs, affordable ai pricing, kwd pricing',
+            'ogImage' => 'https://llm.resayil.io/og-images/og-pricing.png',
+            'ogType' => 'website',
+        ],
+        'features' => [
+            'title' => 'Features & Models — LLM Resayil | 45+ LLMs, OpenAI Compatible',
+            'description' => 'LLM Resayil features: 45+ models, OpenAI-compatible API, pay-per-token credits, multiple API keys, usage dashboard, Arabic UI. No monthly fees.',
+            'keywords' => 'llm features, available models, openai compatible, api features, arabic llm',
+            'ogImage' => 'https://llm.resayil.io/og-images/og-features.png',
+            'ogType' => 'website',
+        ],
     ];
 
     /**

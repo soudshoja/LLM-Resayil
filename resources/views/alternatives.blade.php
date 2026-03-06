@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'OpenAI Alternatives — LLM Resayil')
+@section('title', __('alternatives.title'))
 
 @push('styles')
 <link href="{{ asset('css/alternatives.css') }}" rel="stylesheet">
@@ -13,44 +13,44 @@
          HERO SECTION
     ═══════════════════════════════════════════════════════════ --}}
     <section class="hero-section" aria-labelledby="hero-headline">
-        <div class="hero-eyebrow" aria-label="2025 LLM API Comparison Guide">
+        <div class="hero-eyebrow" aria-label="{{ __('alternatives.hero_eyebrow') }}">
             <span class="hero-eyebrow-dot" aria-hidden="true"></span>
-            2025 LLM API Comparison Guide
+            {{ __('alternatives.hero_eyebrow') }}
         </div>
 
         <h1 class="hero-headline" id="hero-headline">
-            Top 5 <span class="highlight">OpenAI Alternatives</span>
+            {{ __('alternatives.hero_headline_pre') }} <span class="highlight">{{ __('alternatives.hero_headline_highlight') }}</span>
         </h1>
 
         <p class="hero-subheadline">
-            Cost, speed, models, and features compared. Find the best LLM API for your team — and discover why LLM Resayil is up to 10x cheaper.
+            {{ __('alternatives.hero_subheadline') }}
         </p>
 
         <div class="hero-cta">
-            <a href="#comparison-matrix" class="cta-btn primary" aria-label="Jump to feature comparison matrix">
-                Compare Now
+            <a href="#comparison-matrix" class="cta-btn primary" aria-label="{{ __('alternatives.hero_cta_compare') }}">
+                {{ __('alternatives.hero_cta_compare') }}
             </a>
-            <a href="{{ route('register') }}" class="cta-btn secondary" aria-label="Create a free LLM Resayil account">
-                Start Free
+            <a href="{{ route('register') }}" class="cta-btn secondary" aria-label="{{ __('alternatives.hero_cta_start') }}">
+                {{ __('alternatives.hero_cta_start') }}
             </a>
         </div>
 
         <div class="hero-stats" role="list" aria-label="Key statistics">
             <div class="hero-stat" role="listitem">
                 <span class="hero-stat-number">45+</span>
-                <span class="hero-stat-label">Models</span>
+                <span class="hero-stat-label">{{ __('alternatives.hero_stat_models') }}</span>
             </div>
             <div class="hero-stat" role="listitem">
                 <span class="hero-stat-number">$0.0001</span>
-                <span class="hero-stat-label">Per 1K tokens</span>
+                <span class="hero-stat-label">{{ __('alternatives.hero_stat_per_1k') }}</span>
             </div>
             <div class="hero-stat" role="listitem">
                 <span class="hero-stat-number">100%</span>
-                <span class="hero-stat-label">OpenAI Compatible</span>
+                <span class="hero-stat-label">{{ __('alternatives.hero_stat_openai_compat') }}</span>
             </div>
             <div class="hero-stat" role="listitem">
                 <span class="hero-stat-number">&lt;5 min</span>
-                <span class="hero-stat-label">Setup time</span>
+                <span class="hero-stat-label">{{ __('alternatives.hero_stat_setup') }}</span>
             </div>
         </div>
     </section>
@@ -61,17 +61,17 @@
          COMPARISON MATRIX
     ═══════════════════════════════════════════════════════════ --}}
     <section class="matrix-section" id="comparison-matrix" aria-labelledby="matrix-title">
-        <h2 class="section-title" id="matrix-title">Feature Comparison Matrix</h2>
+        <h2 class="section-title" id="matrix-title">{{ __('alternatives.matrix_title') }}</h2>
         <p class="section-description">
-            Head-to-head breakdown of the 5 most popular LLM API alternatives. Scroll horizontally on mobile or tap any provider for details.
+            {{ __('alternatives.matrix_description') }}
         </p>
 
         {{-- Desktop Table --}}
-        <div style="overflow-x: auto;" role="region" aria-label="Feature comparison table — scroll horizontally on mobile">
+        <div style="overflow-x: auto;" role="region" aria-label="{{ __('alternatives.matrix_description') }}">
             <table class="comparison-table" aria-describedby="matrix-title">
                 <thead>
                     <tr>
-                        <th scope="col" style="width: 18%;">Feature</th>
+                        <th scope="col" style="width: 18%;">{{ __('alternatives.col_feature') }}</th>
                         <th scope="col" class="resayil" style="width: 16.5%;">LLM Resayil</th>
                         <th scope="col" style="width: 16.5%;">OpenRouter</th>
                         <th scope="col" style="width: 16.5%;">Claude API</th>
@@ -81,23 +81,23 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td class="header-cell" scope="row">Pricing (/1K tokens)</td>
-                        <td class="resayil">From $0.0001</td>
-                        <td>$0.0008–$0.02</td>
-                        <td>$0.003–$0.03</td>
-                        <td>Free (local)</td>
-                        <td>$0.0005–$0.01</td>
+                        <td class="header-cell" scope="row">{{ __('alternatives.col_pricing') }}</td>
+                        <td class="resayil">{{ __('alternatives.val_resayil_pricing') }}</td>
+                        <td>{{ __('alternatives.val_openrouter_pricing') }}</td>
+                        <td>{{ __('alternatives.val_claude_pricing') }}</td>
+                        <td>{{ __('alternatives.val_ollama_pricing') }}</td>
+                        <td>{{ __('alternatives.val_together_pricing') }}</td>
                     </tr>
                     <tr>
-                        <td class="header-cell" scope="row">Model Availability</td>
-                        <td class="resayil">45+ models</td>
-                        <td>100+ routed</td>
-                        <td>Claude 3.5 only</td>
-                        <td>100s (community)</td>
-                        <td>50+ open models</td>
+                        <td class="header-cell" scope="row">{{ __('alternatives.col_model_availability') }}</td>
+                        <td class="resayil">{{ __('alternatives.val_resayil_models') }}</td>
+                        <td>{{ __('alternatives.val_openrouter_models') }}</td>
+                        <td>{{ __('alternatives.val_claude_models') }}</td>
+                        <td>{{ __('alternatives.val_ollama_models') }}</td>
+                        <td>{{ __('alternatives.val_together_models') }}</td>
                     </tr>
                     <tr>
-                        <td class="header-cell" scope="row">OpenAI Compatible?</td>
+                        <td class="header-cell" scope="row">{{ __('alternatives.col_openai_compat') }}</td>
                         <td class="resayil">
                             <span class="icon-check" role="img" aria-label="Yes">
                                 <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true">
@@ -135,60 +135,60 @@
                         </td>
                     </tr>
                     <tr>
-                        <td class="header-cell" scope="row">Latency (p50)</td>
-                        <td class="resayil">1–3s</td>
-                        <td>1–5s</td>
-                        <td>1–4s</td>
-                        <td>&lt;500ms (local)</td>
-                        <td>500ms–2s</td>
+                        <td class="header-cell" scope="row">{{ __('alternatives.col_latency') }}</td>
+                        <td class="resayil">{{ __('alternatives.val_resayil_latency') }}</td>
+                        <td>{{ __('alternatives.val_openrouter_latency') }}</td>
+                        <td>{{ __('alternatives.val_claude_latency') }}</td>
+                        <td>{{ __('alternatives.val_ollama_latency') }}</td>
+                        <td>{{ __('alternatives.val_together_latency') }}</td>
                     </tr>
                     <tr>
-                        <td class="header-cell" scope="row">Support Quality</td>
-                        <td class="resayil">Email + Discord</td>
-                        <td>Community-driven</td>
-                        <td>Tier-based</td>
-                        <td>Community</td>
-                        <td>Community</td>
+                        <td class="header-cell" scope="row">{{ __('alternatives.col_support') }}</td>
+                        <td class="resayil">{{ __('alternatives.val_resayil_support') }}</td>
+                        <td>{{ __('alternatives.val_openrouter_support') }}</td>
+                        <td>{{ __('alternatives.val_claude_support') }}</td>
+                        <td>{{ __('alternatives.val_ollama_support') }}</td>
+                        <td>{{ __('alternatives.val_together_support') }}</td>
                     </tr>
                     <tr>
-                        <td class="header-cell" scope="row">Best Use Case</td>
-                        <td class="resayil">Price-sensitive teams</td>
-                        <td>Model flexibility</td>
-                        <td>Quality/instruction</td>
-                        <td>Offline/privacy</td>
-                        <td>Speed + fine-tuning</td>
+                        <td class="header-cell" scope="row">{{ __('alternatives.col_best_use') }}</td>
+                        <td class="resayil">{{ __('alternatives.val_resayil_best_use') }}</td>
+                        <td>{{ __('alternatives.val_openrouter_best_use') }}</td>
+                        <td>{{ __('alternatives.val_claude_best_use') }}</td>
+                        <td>{{ __('alternatives.val_ollama_best_use') }}</td>
+                        <td>{{ __('alternatives.val_together_best_use') }}</td>
                     </tr>
                     <tr>
-                        <td class="header-cell" scope="row">Setup Time</td>
-                        <td class="resayil">&lt;5 min</td>
-                        <td>&lt;5 min</td>
-                        <td>&lt;5 min</td>
-                        <td>30 min–2h</td>
-                        <td>&lt;5 min</td>
+                        <td class="header-cell" scope="row">{{ __('alternatives.col_setup_time') }}</td>
+                        <td class="resayil">{{ __('alternatives.val_resayil_setup') }}</td>
+                        <td>{{ __('alternatives.val_openrouter_setup') }}</td>
+                        <td>{{ __('alternatives.val_claude_setup') }}</td>
+                        <td>{{ __('alternatives.val_ollama_setup') }}</td>
+                        <td>{{ __('alternatives.val_together_setup') }}</td>
                     </tr>
                     <tr>
-                        <td class="header-cell" scope="row">Data Privacy / OSS</td>
+                        <td class="header-cell" scope="row">{{ __('alternatives.col_data_privacy') }}</td>
                         <td class="resayil">
-                            <span class="icon-partial" role="img" aria-label="Partial — secure and encrypted">
+                            <span class="icon-partial" role="img" aria-label="{{ __('alternatives.val_resayil_privacy') }}">
                                 <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
                                     <circle cx="6" cy="6" r="4" stroke="currentColor" stroke-width="2"/>
                                     <path d="M6 4V6.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
                                     <circle cx="6" cy="8.5" r="0.75" fill="currentColor"/>
                                 </svg>
                             </span>
-                            <span style="margin-left: 0.4rem; font-size: 0.85rem;">Secure, encrypted</span>
+                            <span style="margin-left: 0.4rem; font-size: 0.85rem;">{{ __('alternatives.val_resayil_privacy') }}</span>
                         </td>
-                        <td>Closed</td>
-                        <td>Closed</td>
+                        <td>{{ __('alternatives.val_openrouter_privacy') }}</td>
+                        <td>{{ __('alternatives.val_claude_privacy') }}</td>
                         <td>
-                            <span class="icon-check" role="img" aria-label="Yes — open source">
+                            <span class="icon-check" role="img" aria-label="{{ __('alternatives.val_ollama_privacy') }}">
                                 <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true">
                                     <path d="M2 6.5L5 9.5L11 3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                 </svg>
                             </span>
-                            <span style="margin-left: 0.4rem; font-size: 0.85rem;">Open-source</span>
+                            <span style="margin-left: 0.4rem; font-size: 0.85rem;">{{ __('alternatives.val_ollama_privacy') }}</span>
                         </td>
-                        <td>Open models</td>
+                        <td>{{ __('alternatives.val_together_privacy') }}</td>
                     </tr>
                 </tbody>
             </table>
@@ -211,15 +211,15 @@
                 <div class="accordion-content" id="accordion-content-resayil" role="region" aria-labelledby="accordion-btn-resayil">
                     <div class="accordion-inner">
                         <div class="accordion-row">
-                            <span class="accordion-label">Pricing (/1K tokens)</span>
-                            <span class="accordion-value">From $0.0001</span>
+                            <span class="accordion-label">{{ __('alternatives.accordion_pricing') }}</span>
+                            <span class="accordion-value">{{ __('alternatives.val_resayil_pricing') }}</span>
                         </div>
                         <div class="accordion-row">
-                            <span class="accordion-label">Models</span>
-                            <span class="accordion-value">45+</span>
+                            <span class="accordion-label">{{ __('alternatives.accordion_models') }}</span>
+                            <span class="accordion-value">{{ __('alternatives.val_resayil_models') }}</span>
                         </div>
                         <div class="accordion-row">
-                            <span class="accordion-label">OpenAI Compatible</span>
+                            <span class="accordion-label">{{ __('alternatives.accordion_openai_compat') }}</span>
                             <span class="accordion-value" aria-label="Yes">
                                 <span class="icon-check" role="img" aria-hidden="true">
                                     <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
@@ -229,16 +229,16 @@
                             </span>
                         </div>
                         <div class="accordion-row">
-                            <span class="accordion-label">Latency (p50)</span>
-                            <span class="accordion-value">1–3s</span>
+                            <span class="accordion-label">{{ __('alternatives.accordion_latency') }}</span>
+                            <span class="accordion-value">{{ __('alternatives.val_resayil_latency') }}</span>
                         </div>
                         <div class="accordion-row">
-                            <span class="accordion-label">Best For</span>
-                            <span class="accordion-value">Price-sensitive teams</span>
+                            <span class="accordion-label">{{ __('alternatives.accordion_best_for') }}</span>
+                            <span class="accordion-value">{{ __('alternatives.val_resayil_best_use') }}</span>
                         </div>
                         <div class="accordion-row">
-                            <span class="accordion-label">Setup Time</span>
-                            <span class="accordion-value">&lt;5 min</span>
+                            <span class="accordion-label">{{ __('alternatives.accordion_setup_time') }}</span>
+                            <span class="accordion-value">{{ __('alternatives.val_resayil_setup') }}</span>
                         </div>
                     </div>
                 </div>
@@ -258,15 +258,15 @@
                 <div class="accordion-content" id="accordion-content-openrouter" role="region" aria-labelledby="accordion-btn-openrouter">
                     <div class="accordion-inner">
                         <div class="accordion-row">
-                            <span class="accordion-label">Pricing (/1K tokens)</span>
-                            <span class="accordion-value">$0.0008–$0.02</span>
+                            <span class="accordion-label">{{ __('alternatives.accordion_pricing') }}</span>
+                            <span class="accordion-value">{{ __('alternatives.val_openrouter_pricing') }}</span>
                         </div>
                         <div class="accordion-row">
-                            <span class="accordion-label">Models</span>
-                            <span class="accordion-value">100+ routed</span>
+                            <span class="accordion-label">{{ __('alternatives.accordion_models') }}</span>
+                            <span class="accordion-value">{{ __('alternatives.val_openrouter_models') }}</span>
                         </div>
                         <div class="accordion-row">
-                            <span class="accordion-label">OpenAI Compatible</span>
+                            <span class="accordion-label">{{ __('alternatives.accordion_openai_compat') }}</span>
                             <span class="accordion-value" aria-label="Yes">
                                 <span class="icon-check" role="img" aria-hidden="true">
                                     <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
@@ -276,16 +276,16 @@
                             </span>
                         </div>
                         <div class="accordion-row">
-                            <span class="accordion-label">Latency (p50)</span>
-                            <span class="accordion-value">1–5s</span>
+                            <span class="accordion-label">{{ __('alternatives.accordion_latency') }}</span>
+                            <span class="accordion-value">{{ __('alternatives.val_openrouter_latency') }}</span>
                         </div>
                         <div class="accordion-row">
-                            <span class="accordion-label">Best For</span>
-                            <span class="accordion-value">Model flexibility</span>
+                            <span class="accordion-label">{{ __('alternatives.accordion_best_for') }}</span>
+                            <span class="accordion-value">{{ __('alternatives.val_openrouter_best_use') }}</span>
                         </div>
                         <div class="accordion-row">
-                            <span class="accordion-label">Setup Time</span>
-                            <span class="accordion-value">&lt;5 min</span>
+                            <span class="accordion-label">{{ __('alternatives.accordion_setup_time') }}</span>
+                            <span class="accordion-value">{{ __('alternatives.val_openrouter_setup') }}</span>
                         </div>
                     </div>
                 </div>
@@ -305,15 +305,15 @@
                 <div class="accordion-content" id="accordion-content-claude" role="region" aria-labelledby="accordion-btn-claude">
                     <div class="accordion-inner">
                         <div class="accordion-row">
-                            <span class="accordion-label">Pricing (/1K tokens)</span>
-                            <span class="accordion-value">$0.003–$0.03</span>
+                            <span class="accordion-label">{{ __('alternatives.accordion_pricing') }}</span>
+                            <span class="accordion-value">{{ __('alternatives.val_claude_pricing') }}</span>
                         </div>
                         <div class="accordion-row">
-                            <span class="accordion-label">Models</span>
-                            <span class="accordion-value">Claude 3.5 only</span>
+                            <span class="accordion-label">{{ __('alternatives.accordion_models') }}</span>
+                            <span class="accordion-value">{{ __('alternatives.val_claude_models') }}</span>
                         </div>
                         <div class="accordion-row">
-                            <span class="accordion-label">OpenAI Compatible</span>
+                            <span class="accordion-label">{{ __('alternatives.accordion_openai_compat') }}</span>
                             <span class="accordion-value" aria-label="No">
                                 <span class="icon-cross" role="img" aria-hidden="true">
                                     <svg width="11" height="11" viewBox="0 0 11 11" fill="none">
@@ -323,16 +323,16 @@
                             </span>
                         </div>
                         <div class="accordion-row">
-                            <span class="accordion-label">Latency (p50)</span>
-                            <span class="accordion-value">1–4s</span>
+                            <span class="accordion-label">{{ __('alternatives.accordion_latency') }}</span>
+                            <span class="accordion-value">{{ __('alternatives.val_claude_latency') }}</span>
                         </div>
                         <div class="accordion-row">
-                            <span class="accordion-label">Best For</span>
-                            <span class="accordion-value">Quality/instruction</span>
+                            <span class="accordion-label">{{ __('alternatives.accordion_best_for') }}</span>
+                            <span class="accordion-value">{{ __('alternatives.val_claude_best_use') }}</span>
                         </div>
                         <div class="accordion-row">
-                            <span class="accordion-label">Setup Time</span>
-                            <span class="accordion-value">&lt;5 min</span>
+                            <span class="accordion-label">{{ __('alternatives.accordion_setup_time') }}</span>
+                            <span class="accordion-value">{{ __('alternatives.val_claude_setup') }}</span>
                         </div>
                     </div>
                 </div>
@@ -352,15 +352,15 @@
                 <div class="accordion-content" id="accordion-content-ollama" role="region" aria-labelledby="accordion-btn-ollama">
                     <div class="accordion-inner">
                         <div class="accordion-row">
-                            <span class="accordion-label">Pricing (/1K tokens)</span>
-                            <span class="accordion-value">Free (local)</span>
+                            <span class="accordion-label">{{ __('alternatives.accordion_pricing') }}</span>
+                            <span class="accordion-value">{{ __('alternatives.val_ollama_pricing') }}</span>
                         </div>
                         <div class="accordion-row">
-                            <span class="accordion-label">Models</span>
-                            <span class="accordion-value">100s available</span>
+                            <span class="accordion-label">{{ __('alternatives.accordion_models') }}</span>
+                            <span class="accordion-value">{{ __('alternatives.val_ollama_models_accordion') }}</span>
                         </div>
                         <div class="accordion-row">
-                            <span class="accordion-label">OpenAI Compatible</span>
+                            <span class="accordion-label">{{ __('alternatives.accordion_openai_compat') }}</span>
                             <span class="accordion-value" aria-label="Yes">
                                 <span class="icon-check" role="img" aria-hidden="true">
                                     <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
@@ -370,16 +370,16 @@
                             </span>
                         </div>
                         <div class="accordion-row">
-                            <span class="accordion-label">Latency (p50)</span>
-                            <span class="accordion-value">&lt;500ms</span>
+                            <span class="accordion-label">{{ __('alternatives.accordion_latency') }}</span>
+                            <span class="accordion-value">{{ __('alternatives.val_ollama_latency') }}</span>
                         </div>
                         <div class="accordion-row">
-                            <span class="accordion-label">Best For</span>
-                            <span class="accordion-value">Offline/privacy</span>
+                            <span class="accordion-label">{{ __('alternatives.accordion_best_for') }}</span>
+                            <span class="accordion-value">{{ __('alternatives.val_ollama_best_use') }}</span>
                         </div>
                         <div class="accordion-row">
-                            <span class="accordion-label">Setup Time</span>
-                            <span class="accordion-value">30 min–2h</span>
+                            <span class="accordion-label">{{ __('alternatives.accordion_setup_time') }}</span>
+                            <span class="accordion-value">{{ __('alternatives.val_ollama_setup') }}</span>
                         </div>
                     </div>
                 </div>
@@ -399,15 +399,15 @@
                 <div class="accordion-content" id="accordion-content-together" role="region" aria-labelledby="accordion-btn-together">
                     <div class="accordion-inner">
                         <div class="accordion-row">
-                            <span class="accordion-label">Pricing (/1K tokens)</span>
-                            <span class="accordion-value">$0.0005–$0.01</span>
+                            <span class="accordion-label">{{ __('alternatives.accordion_pricing') }}</span>
+                            <span class="accordion-value">{{ __('alternatives.val_together_pricing') }}</span>
                         </div>
                         <div class="accordion-row">
-                            <span class="accordion-label">Models</span>
-                            <span class="accordion-value">50+ open models</span>
+                            <span class="accordion-label">{{ __('alternatives.accordion_models') }}</span>
+                            <span class="accordion-value">{{ __('alternatives.val_together_models') }}</span>
                         </div>
                         <div class="accordion-row">
-                            <span class="accordion-label">OpenAI Compatible</span>
+                            <span class="accordion-label">{{ __('alternatives.accordion_openai_compat') }}</span>
                             <span class="accordion-value" aria-label="Yes">
                                 <span class="icon-check" role="img" aria-hidden="true">
                                     <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
@@ -417,16 +417,16 @@
                             </span>
                         </div>
                         <div class="accordion-row">
-                            <span class="accordion-label">Latency (p50)</span>
-                            <span class="accordion-value">500ms–2s</span>
+                            <span class="accordion-label">{{ __('alternatives.accordion_latency') }}</span>
+                            <span class="accordion-value">{{ __('alternatives.val_together_latency') }}</span>
                         </div>
                         <div class="accordion-row">
-                            <span class="accordion-label">Best For</span>
-                            <span class="accordion-value">Speed + fine-tuning</span>
+                            <span class="accordion-label">{{ __('alternatives.accordion_best_for') }}</span>
+                            <span class="accordion-value">{{ __('alternatives.val_together_best_use') }}</span>
                         </div>
                         <div class="accordion-row">
-                            <span class="accordion-label">Setup Time</span>
-                            <span class="accordion-value">&lt;5 min</span>
+                            <span class="accordion-label">{{ __('alternatives.accordion_setup_time') }}</span>
+                            <span class="accordion-value">{{ __('alternatives.val_together_setup') }}</span>
                         </div>
                     </div>
                 </div>
@@ -441,9 +441,9 @@
          DEEP DIVE CARDS
     ═══════════════════════════════════════════════════════════ --}}
     <section class="deep-dive-section" aria-labelledby="deep-dive-title">
-        <h2 class="section-title" id="deep-dive-title">Deep Dive: Each Alternative</h2>
+        <h2 class="section-title" id="deep-dive-title">{{ __('alternatives.deep_dive_title') }}</h2>
         <p class="section-description">
-            Not all LLM APIs are equal. Here's what each one does best — and where LLM Resayil outperforms them.
+            {{ __('alternatives.deep_dive_description') }}
         </p>
 
         <div class="deep-dive-grid">
@@ -454,47 +454,27 @@
                     <div class="card-avatar avatar-resayil" aria-hidden="true">LR</div>
                     <div class="card-title-group">
                         <h3 id="card-title-resayil">LLM Resayil</h3>
-                        <div class="deep-dive-tagline">Best Value</div>
+                        <div class="deep-dive-tagline">{{ __('alternatives.resayil_tagline') }}</div>
                     </div>
                 </div>
                 <div class="card-body">
-                    <p class="deep-dive-content">
-                        LLM Resayil is the cheapest production-ready LLM API, starting at $0.0001 per 1K tokens. Built for price-sensitive teams, it combines on-server and cloud-routed models into one unified API. With 45+ models and true OpenAI compatibility, you can migrate existing code in minutes.
-                    </p>
-                    <p class="deep-dive-content">
-                        The platform offers 1,000 free credits on signup — no card required — and transparent credit-based billing. Perfect for startups, research labs, and cost-conscious enterprises.
-                    </p>
+                    <p class="deep-dive-content">{{ __('alternatives.resayil_p1') }}</p>
+                    <p class="deep-dive-content">{{ __('alternatives.resayil_p2') }}</p>
                     <ul class="deep-dive-list" aria-label="LLM Resayil highlights">
+                        @foreach([
+                            __('alternatives.resayil_li1'),
+                            __('alternatives.resayil_li2'),
+                            __('alternatives.resayil_li3'),
+                            __('alternatives.resayil_li4'),
+                            __('alternatives.resayil_li5'),
+                        ] as $li)
                         <li>
                             <svg class="list-bullet list-bullet-gold" viewBox="0 0 18 18" fill="none" aria-hidden="true">
                                 <path d="M3 9L7 13L15 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
-                            From $0.0001/1K tokens — 10x cheaper than OpenAI
+                            {{ $li }}
                         </li>
-                        <li>
-                            <svg class="list-bullet list-bullet-gold" viewBox="0 0 18 18" fill="none" aria-hidden="true">
-                                <path d="M3 9L7 13L15 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                            45+ models: Mistral, Llama, DeepSeek, Qwen, and cloud-routed Claude
-                        </li>
-                        <li>
-                            <svg class="list-bullet list-bullet-gold" viewBox="0 0 18 18" fill="none" aria-hidden="true">
-                                <path d="M3 9L7 13L15 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                            100% OpenAI-compatible REST API — no code changes needed
-                        </li>
-                        <li>
-                            <svg class="list-bullet list-bullet-gold" viewBox="0 0 18 18" fill="none" aria-hidden="true">
-                                <path d="M3 9L7 13L15 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                            1–3s median latency (faster on local models)
-                        </li>
-                        <li>
-                            <svg class="list-bullet list-bullet-gold" viewBox="0 0 18 18" fill="none" aria-hidden="true">
-                                <path d="M3 9L7 13L15 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                            No monthly commitments — pay only for what you use
-                        </li>
+                        @endforeach
                     </ul>
                 </div>
             </article>
@@ -505,45 +485,33 @@
                     <div class="card-avatar avatar-openrouter" aria-hidden="true">OR</div>
                     <div class="card-title-group">
                         <h3 id="card-title-openrouter">OpenRouter</h3>
-                        <div class="deep-dive-tagline">Maximum Flexibility</div>
-                        <span class="vs-badge" aria-label="Compared to LLM Resayil">vs LLM Resayil</span>
+                        <div class="deep-dive-tagline">{{ __('alternatives.openrouter_tagline') }}</div>
+                        <span class="vs-badge" aria-label="{{ __('alternatives.vs_resayil') }}">{{ __('alternatives.vs_resayil') }}</span>
                     </div>
                 </div>
                 <div class="card-body">
-                    <p class="deep-dive-content">
-                        OpenRouter routes your requests across 100+ LLM providers under one API key. Great for teams that need to experiment with many models or want automatic fallback. Pricing ranges from $0.0008–$0.02 per 1K tokens — 8–200x more than LLM Resayil.
-                    </p>
+                    <p class="deep-dive-content">{{ __('alternatives.openrouter_p1') }}</p>
                     <ul class="deep-dive-list" aria-label="OpenRouter highlights">
+                        @foreach([
+                            ['gold', __('alternatives.openrouter_li1')],
+                            ['gold', __('alternatives.openrouter_li2')],
+                            ['gold', __('alternatives.openrouter_li3')],
+                            ['red',  __('alternatives.openrouter_li4')],
+                            ['red',  __('alternatives.openrouter_li5')],
+                        ] as [$color, $li])
                         <li>
+                            @if($color === 'gold')
                             <svg class="list-bullet list-bullet-gold" viewBox="0 0 18 18" fill="none" aria-hidden="true">
                                 <path d="M3 9L7 13L15 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
-                            100+ routed models (GPT, Claude, Gemini, Llama, etc.)
-                        </li>
-                        <li>
-                            <svg class="list-bullet list-bullet-gold" viewBox="0 0 18 18" fill="none" aria-hidden="true">
-                                <path d="M3 9L7 13L15 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                            OpenAI-compatible API with automatic fallback
-                        </li>
-                        <li>
-                            <svg class="list-bullet list-bullet-gold" viewBox="0 0 18 18" fill="none" aria-hidden="true">
-                                <path d="M3 9L7 13L15 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                            Streaming, function calling, vision supported
-                        </li>
-                        <li>
+                            @else
                             <svg class="list-bullet" style="color: #f87171;" viewBox="0 0 18 18" fill="none" aria-hidden="true">
                                 <path d="M4 4L14 14M14 4L4 14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
                             </svg>
-                            No official support — community-driven only
+                            @endif
+                            {{ $li }}
                         </li>
-                        <li>
-                            <svg class="list-bullet" style="color: #f87171;" viewBox="0 0 18 18" fill="none" aria-hidden="true">
-                                <path d="M4 4L14 14M14 4L4 14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                            </svg>
-                            Pricing 8–200x higher than LLM Resayil
-                        </li>
+                        @endforeach
                     </ul>
                 </div>
             </article>
@@ -554,45 +522,33 @@
                     <div class="card-avatar avatar-claude" aria-hidden="true">CA</div>
                     <div class="card-title-group">
                         <h3 id="card-title-claude">Claude API</h3>
-                        <div class="deep-dive-tagline">Best Reasoning & Quality</div>
-                        <span class="vs-badge" aria-label="Compared to LLM Resayil">vs LLM Resayil</span>
+                        <div class="deep-dive-tagline">{{ __('alternatives.claude_tagline') }}</div>
+                        <span class="vs-badge" aria-label="{{ __('alternatives.vs_resayil') }}">{{ __('alternatives.vs_resayil') }}</span>
                     </div>
                 </div>
                 <div class="card-body">
-                    <p class="deep-dive-content">
-                        Anthropic's Claude 3.5 (Sonnet, Opus) is the gold standard for reasoning and instruction-following. Not OpenAI-compatible — requires its own SDK. Best when output quality justifies the 30–300x price premium.
-                    </p>
+                    <p class="deep-dive-content">{{ __('alternatives.claude_p1') }}</p>
                     <ul class="deep-dive-list" aria-label="Claude API highlights">
+                        @foreach([
+                            ['gold', __('alternatives.claude_li1')],
+                            ['gold', __('alternatives.claude_li2')],
+                            ['gold', __('alternatives.claude_li3')],
+                            ['red',  __('alternatives.claude_li4')],
+                            ['red',  __('alternatives.claude_li5')],
+                        ] as [$color, $li])
                         <li>
+                            @if($color === 'gold')
                             <svg class="list-bullet list-bullet-gold" viewBox="0 0 18 18" fill="none" aria-hidden="true">
                                 <path d="M3 9L7 13L15 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
-                            Best-in-class reasoning and instruction-following
-                        </li>
-                        <li>
-                            <svg class="list-bullet list-bullet-gold" viewBox="0 0 18 18" fill="none" aria-hidden="true">
-                                <path d="M3 9L7 13L15 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                            Extended 200K context windows
-                        </li>
-                        <li>
-                            <svg class="list-bullet list-bullet-gold" viewBox="0 0 18 18" fill="none" aria-hidden="true">
-                                <path d="M3 9L7 13L15 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                            Tier-based support including enterprise
-                        </li>
-                        <li>
+                            @else
                             <svg class="list-bullet" style="color: #f87171;" viewBox="0 0 18 18" fill="none" aria-hidden="true">
                                 <path d="M4 4L14 14M14 4L4 14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
                             </svg>
-                            NOT OpenAI-compatible — requires Anthropic SDK
+                            @endif
+                            {{ $li }}
                         </li>
-                        <li>
-                            <svg class="list-bullet" style="color: #f87171;" viewBox="0 0 18 18" fill="none" aria-hidden="true">
-                                <path d="M4 4L14 14M14 4L4 14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                            </svg>
-                            $0.003–$0.03/1K tokens — 30–300x pricier
-                        </li>
+                        @endforeach
                     </ul>
                 </div>
             </article>
@@ -603,45 +559,33 @@
                     <div class="card-avatar avatar-ollama" aria-hidden="true">OL</div>
                     <div class="card-title-group">
                         <h3 id="card-title-ollama">Ollama</h3>
-                        <div class="deep-dive-tagline">Offline &amp; Private</div>
-                        <span class="vs-badge" aria-label="Compared to LLM Resayil">vs LLM Resayil</span>
+                        <div class="deep-dive-tagline">{{ __('alternatives.ollama_tagline') }}</div>
+                        <span class="vs-badge" aria-label="{{ __('alternatives.vs_resayil') }}">{{ __('alternatives.vs_resayil') }}</span>
                     </div>
                 </div>
                 <div class="card-body">
-                    <p class="deep-dive-content">
-                        Free, open-source LLM runner for macOS, Linux, and Windows. Zero API costs, zero data transmission, and sub-500ms latency when your GPU is powerful enough. Setup takes 30 min–2h.
-                    </p>
+                    <p class="deep-dive-content">{{ __('alternatives.ollama_p1') }}</p>
                     <ul class="deep-dive-list" aria-label="Ollama highlights">
+                        @foreach([
+                            ['gold', __('alternatives.ollama_li1')],
+                            ['gold', __('alternatives.ollama_li2')],
+                            ['gold', __('alternatives.ollama_li3')],
+                            ['red',  __('alternatives.ollama_li4')],
+                            ['red',  __('alternatives.ollama_li5')],
+                        ] as [$color, $li])
                         <li>
+                            @if($color === 'gold')
                             <svg class="list-bullet list-bullet-gold" viewBox="0 0 18 18" fill="none" aria-hidden="true">
                                 <path d="M3 9L7 13L15 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
-                            Free and open-source (MIT license)
-                        </li>
-                        <li>
-                            <svg class="list-bullet list-bullet-gold" viewBox="0 0 18 18" fill="none" aria-hidden="true">
-                                <path d="M3 9L7 13L15 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                            Run locally — no data leaves your machine
-                        </li>
-                        <li>
-                            <svg class="list-bullet list-bullet-gold" viewBox="0 0 18 18" fill="none" aria-hidden="true">
-                                <path d="M3 9L7 13L15 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                            OpenAI-compatible server with 100s of models
-                        </li>
-                        <li>
+                            @else
                             <svg class="list-bullet" style="color: #f87171;" viewBox="0 0 18 18" fill="none" aria-hidden="true">
                                 <path d="M4 4L14 14M14 4L4 14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
                             </svg>
-                            Requires GPU — CPU is impractically slow
+                            @endif
+                            {{ $li }}
                         </li>
-                        <li>
-                            <svg class="list-bullet" style="color: #f87171;" viewBox="0 0 18 18" fill="none" aria-hidden="true">
-                                <path d="M4 4L14 14M14 4L4 14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                            </svg>
-                            High setup and infrastructure overhead
-                        </li>
+                        @endforeach
                     </ul>
                 </div>
             </article>
@@ -652,45 +596,33 @@
                     <div class="card-avatar avatar-together" aria-hidden="true">TA</div>
                     <div class="card-title-group">
                         <h3 id="card-title-together">Together AI</h3>
-                        <div class="deep-dive-tagline">Speed + Open Models</div>
-                        <span class="vs-badge" aria-label="Compared to LLM Resayil">vs LLM Resayil</span>
+                        <div class="deep-dive-tagline">{{ __('alternatives.together_tagline') }}</div>
+                        <span class="vs-badge" aria-label="{{ __('alternatives.vs_resayil') }}">{{ __('alternatives.vs_resayil') }}</span>
                     </div>
                 </div>
                 <div class="card-body">
-                    <p class="deep-dive-content">
-                        Together AI specializes in fast inference on open-source models with built-in fine-tuning. If you need sub-second latency or custom model training, Together AI is the specialist. Pricing is 5–100x higher than LLM Resayil.
-                    </p>
+                    <p class="deep-dive-content">{{ __('alternatives.together_p1') }}</p>
                     <ul class="deep-dive-list" aria-label="Together AI highlights">
+                        @foreach([
+                            ['gold', __('alternatives.together_li1')],
+                            ['gold', __('alternatives.together_li2')],
+                            ['gold', __('alternatives.together_li3')],
+                            ['red',  __('alternatives.together_li4')],
+                            ['red',  __('alternatives.together_li5')],
+                        ] as [$color, $li])
                         <li>
+                            @if($color === 'gold')
                             <svg class="list-bullet list-bullet-gold" viewBox="0 0 18 18" fill="none" aria-hidden="true">
                                 <path d="M3 9L7 13L15 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
-                            500ms–2s latency (optimized for speed)
-                        </li>
-                        <li>
-                            <svg class="list-bullet list-bullet-gold" viewBox="0 0 18 18" fill="none" aria-hidden="true">
-                                <path d="M3 9L7 13L15 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                            50+ open models with fine-tuning available
-                        </li>
-                        <li>
-                            <svg class="list-bullet list-bullet-gold" viewBox="0 0 18 18" fill="none" aria-hidden="true">
-                                <path d="M3 9L7 13L15 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                            OpenAI-compatible with streaming and vision
-                        </li>
-                        <li>
+                            @else
                             <svg class="list-bullet" style="color: #f87171;" viewBox="0 0 18 18" fill="none" aria-hidden="true">
                                 <path d="M4 4L14 14M14 4L4 14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
                             </svg>
-                            $0.0005–$0.01/1K — 5–100x pricier than us
+                            @endif
+                            {{ $li }}
                         </li>
-                        <li>
-                            <svg class="list-bullet" style="color: #f87171;" viewBox="0 0 18 18" fill="none" aria-hidden="true">
-                                <path d="M4 4L14 14M14 4L4 14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                            </svg>
-                            Community support only (no dedicated team)
-                        </li>
+                        @endforeach
                     </ul>
                 </div>
             </article>
@@ -704,9 +636,9 @@
          WHY CHOOSE US — Feature Highlights (SVG icons, no emoji)
     ═══════════════════════════════════════════════════════════ --}}
     <section class="highlights-section" aria-labelledby="highlights-title">
-        <h2 class="section-title" id="highlights-title">Why LLM Resayil Stands Out</h2>
+        <h2 class="section-title" id="highlights-title">{{ __('alternatives.highlights_title') }}</h2>
         <p class="section-description">
-            Six reasons why thousands of developers choose LLM Resayil over the alternatives.
+            {{ __('alternatives.highlights_description') }}
         </p>
 
         <div class="highlights-grid">
@@ -719,10 +651,8 @@
                         <path d="M12 7v1m0 8v1M9.5 10a2.5 2.5 0 0 1 5 0c0 1.5-1 2-2.5 2.5S9.5 13 9.5 14.5a2.5 2.5 0 0 0 5 0" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
                     </svg>
                 </div>
-                <h4>10x Cheaper Than OpenAI</h4>
-                <p>
-                    Starting at $0.0001 per 1K tokens. Our aggressive pricing means you pay less while maintaining quality across all model tiers.
-                </p>
+                <h4>{{ __('alternatives.highlight_1_title') }}</h4>
+                <p>{{ __('alternatives.highlight_1_desc') }}</p>
             </div>
 
             <div class="highlight-item fade-up delay-1">
@@ -732,10 +662,8 @@
                         <path d="M12 2v4M8 6h8M7 6v5a5 5 0 0 0 10 0V6M12 16v6" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                 </div>
-                <h4>100% OpenAI Compatible</h4>
-                <p>
-                    Drop-in replacement for OpenAI. Update one line of code — the endpoint URL. No SDK changes, no refactoring.
-                </p>
+                <h4>{{ __('alternatives.highlight_2_title') }}</h4>
+                <p>{{ __('alternatives.highlight_2_desc') }}</p>
             </div>
 
             <div class="highlight-item fade-up delay-2">
@@ -745,10 +673,8 @@
                         <path d="M13 2L4.5 13.5H11L11 22L19.5 10.5H13L13 2Z" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                 </div>
-                <h4>Hybrid: Local + Cloud Models</h4>
-                <p>
-                    Run local models for ultra-low latency, or route to cloud providers for cutting-edge capabilities. One API, your choice.
-                </p>
+                <h4>{{ __('alternatives.highlight_3_title') }}</h4>
+                <p>{{ __('alternatives.highlight_3_desc') }}</p>
             </div>
 
             <div class="highlight-item fade-up delay-3">
@@ -761,10 +687,8 @@
                         <rect x="14" y="14" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.75"/>
                     </svg>
                 </div>
-                <h4>45+ Models in One API</h4>
-                <p>
-                    Mistral, Llama, DeepSeek, Qwen, and Claude — all routed through a single, unified endpoint with one API key.
-                </p>
+                <h4>{{ __('alternatives.highlight_4_title') }}</h4>
+                <p>{{ __('alternatives.highlight_4_desc') }}</p>
             </div>
 
             <div class="highlight-item fade-up delay-4">
@@ -776,10 +700,8 @@
                         <circle cx="12" cy="7" r="1.25" fill="currentColor"/>
                     </svg>
                 </div>
-                <h4>Free to Start</h4>
-                <p>
-                    1,000 free credits on signup. No credit card required. Start building today, pay only if you scale beyond the free tier.
-                </p>
+                <h4>{{ __('alternatives.highlight_5_title') }}</h4>
+                <p>{{ __('alternatives.highlight_5_desc') }}</p>
             </div>
 
             <div class="highlight-item fade-up delay-5">
@@ -791,10 +713,8 @@
                         <circle cx="12" cy="16" r="1.5" fill="currentColor"/>
                     </svg>
                 </div>
-                <h4>Data Security &amp; Transparency</h4>
-                <p>
-                    All data encrypted in transit and at rest. Transparent billing with audit logs. Know exactly what you're paying for.
-                </p>
+                <h4>{{ __('alternatives.highlight_6_title') }}</h4>
+                <p>{{ __('alternatives.highlight_6_desc') }}</p>
             </div>
 
         </div>{{-- /.highlights-grid --}}
@@ -807,16 +727,16 @@
     ═══════════════════════════════════════════════════════════ --}}
     <section class="calculator-section" aria-labelledby="calculator-title">
         <div class="calculator-container fade-up">
-            <h2 class="calculator-title" id="calculator-title">Calculate Your Savings</h2>
+            <h2 class="calculator-title" id="calculator-title">{{ __('alternatives.calculator_title') }}</h2>
             <p class="calculator-description">
-                Input your monthly token usage and see exactly how much you'll save switching from OpenAI or any competitor to LLM Resayil.
+                {{ __('alternatives.calculator_description') }}
             </p>
-            <a href="{{ route('cost-calculator') }}" class="calculator-cta" aria-label="Open interactive cost calculator tool">
+            <a href="{{ route('cost-calculator') }}" class="calculator-cta" aria-label="{{ __('alternatives.calculator_cta') }}">
                 <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
                     <rect x="2" y="2" width="14" height="14" rx="2.5" stroke="currentColor" stroke-width="1.5"/>
                     <path d="M5.5 6h7M5.5 9h7M5.5 12h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
                 </svg>
-                Open Cost Calculator
+                {{ __('alternatives.calculator_cta') }}
             </a>
         </div>
     </section>
@@ -827,9 +747,9 @@
          FAQ SECTION
     ═══════════════════════════════════════════════════════════ --}}
     <section class="faq-section" aria-labelledby="faq-title">
-        <h2 class="section-title" id="faq-title">Frequently Asked Questions</h2>
+        <h2 class="section-title" id="faq-title">{{ __('alternatives.faq_title') }}</h2>
         <p class="section-description">
-            Common questions about LLM API pricing, compatibility, and choosing the right provider.
+            {{ __('alternatives.faq_description') }}
         </p>
 
         <div class="faq-container" role="list" aria-label="FAQ list">
@@ -839,15 +759,13 @@
                         aria-expanded="true"
                         aria-controls="faq-answer-1"
                         id="faq-btn-1">
-                    <span>Which API is cheapest overall?</span>
+                    <span>{{ __('alternatives.faq_q1') }}</span>
                     <svg class="faq-chevron" viewBox="0 0 20 20" fill="none" aria-hidden="true">
                         <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                 </button>
                 <div class="faq-answer" id="faq-answer-1" role="region" aria-labelledby="faq-btn-1">
-                    <div class="faq-answer-inner">
-                        <strong>LLM Resayil</strong> is the cheapest at $0.0001 per 1K input tokens. OpenRouter and Together AI are close (around $0.0005–$0.0008), but Resayil edges them out for pure cost efficiency. Ollama is free if you run it locally, but requires your own hardware and setup. OpenAI and Claude API are 10x+ more expensive.
-                    </div>
+                    <div class="faq-answer-inner">{!! __('alternatives.faq_a1') !!}</div>
                 </div>
             </div>
 
@@ -856,15 +774,13 @@
                         aria-expanded="false"
                         aria-controls="faq-answer-2"
                         id="faq-btn-2">
-                    <span>Is LLM Resayil truly OpenAI-compatible?</span>
+                    <span>{{ __('alternatives.faq_q2') }}</span>
                     <svg class="faq-chevron" viewBox="0 0 20 20" fill="none" aria-hidden="true">
                         <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                 </button>
                 <div class="faq-answer" id="faq-answer-2" role="region" aria-labelledby="faq-btn-2">
-                    <div class="faq-answer-inner">
-                        Yes, 100%. LLM Resayil implements the OpenAI API specification. You can use the OpenAI Python SDK, JavaScript SDK, or any third-party SDK that supports OpenAI-compatible endpoints. Change one line of code — the <code>base_url</code> parameter — and you're done. The models, response formats, and error handling are all identical.
-                    </div>
+                    <div class="faq-answer-inner">{!! __('alternatives.faq_a2') !!}</div>
                 </div>
             </div>
 
@@ -873,15 +789,13 @@
                         aria-expanded="false"
                         aria-controls="faq-answer-3"
                         id="faq-btn-3">
-                    <span>Can I migrate from OpenAI to LLM Resayil easily?</span>
+                    <span>{{ __('alternatives.faq_q3') }}</span>
                     <svg class="faq-chevron" viewBox="0 0 20 20" fill="none" aria-hidden="true">
                         <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                 </button>
                 <div class="faq-answer" id="faq-answer-3" role="region" aria-labelledby="faq-btn-3">
-                    <div class="faq-answer-inner">
-                        Yes. If you're already using the OpenAI SDK, you just need to change the <code>base_url</code> (or <code>api_base</code>) to <code>https://api.llm.resayil.io</code>. No other code changes needed. Model names stay the same. You can start with a small test to verify outputs, then gradually migrate your workload.
-                    </div>
+                    <div class="faq-answer-inner">{!! __('alternatives.faq_a3') !!}</div>
                 </div>
             </div>
 
@@ -890,15 +804,13 @@
                         aria-expanded="false"
                         aria-controls="faq-answer-4"
                         id="faq-btn-4">
-                    <span>Which API is fastest?</span>
+                    <span>{{ __('alternatives.faq_q4') }}</span>
                     <svg class="faq-chevron" viewBox="0 0 20 20" fill="none" aria-hidden="true">
                         <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                 </button>
                 <div class="faq-answer" id="faq-answer-4" role="region" aria-labelledby="faq-btn-4">
-                    <div class="faq-answer-inner">
-                        <strong>Ollama</strong> is fastest (sub-500ms latency) because it runs locally with zero network overhead. For cloud APIs, <strong>Together AI</strong> (500ms–2s) and <strong>LLM Resayil</strong> (1–3s, faster on local models) are the quickest. OpenRouter and Claude API typically see 1–5s latency due to routing overhead.
-                    </div>
+                    <div class="faq-answer-inner">{!! __('alternatives.faq_a4') !!}</div>
                 </div>
             </div>
 
@@ -907,15 +819,13 @@
                         aria-expanded="false"
                         aria-controls="faq-answer-5"
                         id="faq-btn-5">
-                    <span>Do I need my own GPU for Ollama?</span>
+                    <span>{{ __('alternatives.faq_q5') }}</span>
                     <svg class="faq-chevron" viewBox="0 0 20 20" fill="none" aria-hidden="true">
                         <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                 </button>
                 <div class="faq-answer" id="faq-answer-5" role="region" aria-labelledby="faq-btn-5">
-                    <div class="faq-answer-inner">
-                        Not strictly — Ollama can run on CPU, but it will be very slow (minutes per request). For practical use, you need a GPU: NVIDIA (CUDA), AMD (ROCm), or Mac Silicon. Setup takes 30 minutes to 2 hours depending on your hardware and OS.
-                    </div>
+                    <div class="faq-answer-inner">{!! __('alternatives.faq_a5') !!}</div>
                 </div>
             </div>
 
@@ -924,15 +834,13 @@
                         aria-expanded="false"
                         aria-controls="faq-answer-6"
                         id="faq-btn-6">
-                    <span>Should I use a cloud API or run Ollama locally?</span>
+                    <span>{{ __('alternatives.faq_q6') }}</span>
                     <svg class="faq-chevron" viewBox="0 0 20 20" fill="none" aria-hidden="true">
                         <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                 </button>
                 <div class="faq-answer" id="faq-answer-6" role="region" aria-labelledby="faq-btn-6">
-                    <div class="faq-answer-inner">
-                        <strong>Use Ollama if:</strong> You need maximum privacy, have latency-sensitive real-time apps, or want zero API costs for development. <strong>Use a cloud API if:</strong> You want zero infrastructure overhead, automatic scaling, and access to the latest models. LLM Resayil offers the best middle ground — low cost, minimal setup, and cloud reliability.
-                    </div>
+                    <div class="faq-answer-inner">{!! __('alternatives.faq_a6') !!}</div>
                 </div>
             </div>
 
@@ -941,15 +849,13 @@
                         aria-expanded="false"
                         aria-controls="faq-answer-7"
                         id="faq-btn-7">
-                    <span>What models does LLM Resayil support?</span>
+                    <span>{{ __('alternatives.faq_q7') }}</span>
                     <svg class="faq-chevron" viewBox="0 0 20 20" fill="none" aria-hidden="true">
                         <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                 </button>
                 <div class="faq-answer" id="faq-answer-7" role="region" aria-labelledby="faq-btn-7">
-                    <div class="faq-answer-inner">
-                        LLM Resayil supports 45+ models including Mistral 7B, Llama 2/3, DeepSeek, Qwen, and cloud-routed access to GPT-4, GPT-3.5, and Claude 3.5. Check the dashboard model catalog for the full updated list. New models are added monthly.
-                    </div>
+                    <div class="faq-answer-inner">{!! __('alternatives.faq_a7') !!}</div>
                 </div>
             </div>
 
@@ -958,15 +864,13 @@
                         aria-expanded="false"
                         aria-controls="faq-answer-8"
                         id="faq-btn-8">
-                    <span>Is there a free tier?</span>
+                    <span>{{ __('alternatives.faq_q8') }}</span>
                     <svg class="faq-chevron" viewBox="0 0 20 20" fill="none" aria-hidden="true">
                         <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                 </button>
                 <div class="faq-answer" id="faq-answer-8" role="region" aria-labelledby="faq-btn-8">
-                    <div class="faq-answer-inner">
-                        Yes. Every new account gets 1,000 free credits — enough for ~5M tokens on budget models. No credit card required. Once you exhaust the free credits, pay-as-you-go with no monthly minimums.
-                    </div>
+                    <div class="faq-answer-inner">{!! __('alternatives.faq_a8') !!}</div>
                 </div>
             </div>
 
@@ -975,15 +879,13 @@
                         aria-expanded="false"
                         aria-controls="faq-answer-9"
                         id="faq-btn-9">
-                    <span>How do I get support?</span>
+                    <span>{{ __('alternatives.faq_q9') }}</span>
                     <svg class="faq-chevron" viewBox="0 0 20 20" fill="none" aria-hidden="true">
                         <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                 </button>
                 <div class="faq-answer" id="faq-answer-9" role="region" aria-labelledby="faq-btn-9">
-                    <div class="faq-answer-inner">
-                        LLM Resayil offers email support and a Discord community. For production workloads, our dedicated support team is available at <a href="mailto:support@llm.resayil.io" style="color: var(--gold);">support@llm.resayil.io</a>. OpenAI, Claude API, and OpenRouter offer tier-based support. Ollama and Together AI are mostly community-driven.
-                    </div>
+                    <div class="faq-answer-inner">{!! __('alternatives.faq_a9') !!}</div>
                 </div>
             </div>
 
@@ -997,17 +899,17 @@
     ═══════════════════════════════════════════════════════════ --}}
     <section class="footer-cta-section" aria-labelledby="footer-cta-headline">
         <h2 class="footer-cta-headline" id="footer-cta-headline">
-            Ready to Switch? Start with <span class="cta-brand">LLM Resayil</span>
+            {{ __('alternatives.footer_cta_headline_pre') }} <span class="cta-brand">LLM Resayil</span>
         </h2>
         <p class="footer-cta-tagline">
-            Get 1,000 free credits. No credit card required. 100% OpenAI-compatible.
+            {{ __('alternatives.footer_cta_tagline') }}
         </p>
         <div class="footer-cta-buttons">
-            <a href="{{ route('register') }}" class="cta-btn primary-dark" aria-label="Create a free LLM Resayil account">
-                Create Free Account
+            <a href="{{ route('register') }}" class="cta-btn primary-dark" aria-label="{{ __('alternatives.footer_cta_create_account') }}">
+                {{ __('alternatives.footer_cta_create_account') }}
             </a>
-            <a href="{{ route('cost-calculator') }}" class="cta-btn secondary-dark" aria-label="Open cost savings calculator">
-                Calculate Savings
+            <a href="{{ route('cost-calculator') }}" class="cta-btn secondary-dark" aria-label="{{ __('alternatives.footer_cta_calculate') }}">
+                {{ __('alternatives.footer_cta_calculate') }}
             </a>
         </div>
     </section>
@@ -1015,7 +917,10 @@
     {{-- Internal link box --}}
     <div class="internal-links-box">
         <p>
-            Need help deciding? Try our <a href="/cost-calculator">cost calculator</a> to compare prices, or read our <a href="/comparison">detailed OpenRouter vs LLM Resayil comparison</a>.
+            {!! __('alternatives.internal_links', [
+                'calc_link'       => '<a href="' . route('cost-calculator') . '">' . __('alternatives.internal_calc_link') . '</a>',
+                'comparison_link' => '<a href="' . route('comparison') . '">' . __('alternatives.internal_comparison_link') . '</a>',
+            ]) !!}
         </p>
     </div>
 

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'LLM Cost Calculator — Compare API Pricing')
+@section('title', __('cost-calculator.title'))
 
 @push('styles')
 <style>
@@ -1175,29 +1175,29 @@
 <section class="calc-hero" aria-labelledby="calc-hero-heading">
     <div class="calc-hero-badge" aria-hidden="true">
         <span class="calc-hero-badge-dot"></span>
-        Live Price Comparison
+        {{ __('cost-calculator.hero_badge') }}
     </div>
 
     <h1 id="calc-hero-heading">
-        LLM API <span class="hero-accent">Cost Calculator</span>
+        {{ __('cost-calculator.hero_title') }} <span class="hero-accent">{{ __('cost-calculator.hero_title_highlight') }}</span>
     </h1>
 
-    <p>See exactly how much you'll save with LLM Resayil. Compare real-time pricing against OpenAI and OpenRouter — no sign-up required.</p>
+    <p>{{ __('cost-calculator.hero_description') }}</p>
 
     <div class="hero-stats" role="list" aria-label="Key pricing facts">
         <div class="hero-stat" role="listitem">
             <span class="hero-stat-value">15×</span>
-            <span class="hero-stat-label">Cheaper than OpenAI</span>
+            <span class="hero-stat-label">{{ __('cost-calculator.hero_stat_openai') }}</span>
         </div>
         <div class="hero-stat-divider" aria-hidden="true"></div>
         <div class="hero-stat" role="listitem">
             <span class="hero-stat-value">8×</span>
-            <span class="hero-stat-label">Cheaper than OpenRouter</span>
+            <span class="hero-stat-label">{{ __('cost-calculator.hero_stat_openrouter') }}</span>
         </div>
         <div class="hero-stat-divider" aria-hidden="true"></div>
         <div class="hero-stat" role="listitem">
             <span class="hero-stat-value">$0</span>
-            <span class="hero-stat-label">Monthly Minimum</span>
+            <span class="hero-stat-label">{{ __('cost-calculator.hero_stat_minimum') }}</span>
         </div>
     </div>
 </section>
@@ -1217,13 +1217,13 @@
                             <rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h6M9 12h6M9 15h4"/>
                         </svg>
                     </span>
-                    Configure Your Usage
+                    {{ __('cost-calculator.card_configure_title') }}
                 </h2>
 
                 {{-- Token Slider --}}
                 <div class="form-group">
                     <label class="form-label" for="tokens-slider">
-                        <span>Monthly Token Usage</span>
+                        <span>{{ __('cost-calculator.label_monthly_tokens') }}</span>
                         <span class="form-label-value" id="tokens-label-value" aria-live="polite" aria-atomic="true">1M</span>
                     </label>
 
@@ -1249,17 +1249,17 @@
 
                     <div class="slider-display" aria-hidden="true">
                         <span class="slider-display-num" id="slider-display-num">1,000,000</span>
-                        <span>tokens / month</span>
+                        <span>{{ __('cost-calculator.tokens_per_month') }}</span>
                     </div>
                     <div id="slider-hint" class="slider-hint">
-                        Drag or use arrow keys (1M step) — Page Up/Down for 10M steps
+                        {{ __('cost-calculator.slider_hint') }}
                     </div>
                 </div>
 
                 {{-- Direct numeric input --}}
                 <div class="form-group">
                     <label class="form-label" for="tokens-input">
-                        Or enter token count directly:
+                        {{ __('cost-calculator.label_enter_directly') }}
                     </label>
                     <input
                         type="number"
@@ -1276,22 +1276,22 @@
 
                 {{-- Model Tier --}}
                 <div class="form-group">
-                    <label class="form-label" for="model-tier">Model Tier</label>
+                    <label class="form-label" for="model-tier">{{ __('cost-calculator.label_model_tier') }}</label>
                     <select class="form-input" id="model-tier" aria-describedby="model-tier-hint">
-                        <option value="small">Small — e.g. Mistral 7B</option>
-                        <option value="medium" selected>Medium — e.g. Llama 70B</option>
-                        <option value="large">Large — e.g. GPT-4 Equivalent</option>
+                        <option value="small">{{ __('cost-calculator.model_small') }}</option>
+                        <option value="medium" selected>{{ __('cost-calculator.model_medium') }}</option>
+                        <option value="large">{{ __('cost-calculator.model_large') }}</option>
                     </select>
-                    <span id="model-tier-hint" class="slider-hint">Larger tiers cost more per token across all providers</span>
+                    <span id="model-tier-hint" class="slider-hint">{{ __('cost-calculator.model_tier_hint') }}</span>
                 </div>
 
                 {{-- Workload Type --}}
                 <div class="form-group" style="margin-bottom:0;">
-                    <label class="form-label" for="workload-type">Workload Type</label>
+                    <label class="form-label" for="workload-type">{{ __('cost-calculator.label_workload_type') }}</label>
                     <select class="form-input" id="workload-type">
-                        <option value="production" selected>Production</option>
-                        <option value="development">Development</option>
-                        <option value="batch">Batch Processing</option>
+                        <option value="production" selected>{{ __('cost-calculator.workload_production') }}</option>
+                        <option value="development">{{ __('cost-calculator.workload_development') }}</option>
+                        <option value="batch">{{ __('cost-calculator.workload_batch') }}</option>
                     </select>
                 </div>
 
@@ -1300,7 +1300,7 @@
                         <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
                         <polyline points="22 4 12 14.01 9 11.01"/>
                     </svg>
-                    Calculate My Savings
+                    {{ __('cost-calculator.btn_calculate') }}
                 </button>
             </div>
         </div>
@@ -1320,7 +1320,7 @@
                             <line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
                         </svg>
                     </span>
-                    Monthly Cost Comparison
+                    {{ __('cost-calculator.card_results_title') }}
                 </h2>
 
                 {{-- Result items --}}
@@ -1329,12 +1329,12 @@
                     {{-- Our platform — featured --}}
                     <div class="result-item result-featured" role="listitem" aria-label="LLM Resayil monthly cost">
                         <div class="result-item-left">
-                            <span class="result-badge" aria-label="Best value">
+                            <span class="result-badge" aria-label="{{ __('cost-calculator.badge_best_value') }}">
                                 <svg width="9" height="9" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-                                Best Value
+                                {{ __('cost-calculator.badge_best_value') }}
                             </span>
                             <span class="result-label">LLM Resayil</span>
-                            <span class="result-label-sub">Our platform</span>
+                            <span class="result-label-sub">{{ __('cost-calculator.label_our_platform') }}</span>
                         </div>
                         <div
                             class="result-value"
@@ -1348,7 +1348,7 @@
                     <div class="result-item" role="listitem" aria-label="OpenAI monthly cost">
                         <div class="result-item-left">
                             <span class="result-label">OpenAI</span>
-                            <span class="result-label-sub">GPT-4 API</span>
+                            <span class="result-label-sub">{{ __('cost-calculator.label_openai_sub') }}</span>
                         </div>
                         <div
                             class="result-value"
@@ -1362,7 +1362,7 @@
                     <div class="result-item" role="listitem" aria-label="OpenRouter monthly cost">
                         <div class="result-item-left">
                             <span class="result-label">OpenRouter</span>
-                            <span class="result-label-sub">Aggregated routing</span>
+                            <span class="result-label-sub">{{ __('cost-calculator.label_openrouter_sub') }}</span>
                         </div>
                         <div
                             class="result-value"
@@ -1375,7 +1375,7 @@
 
                 {{-- Savings badge --}}
                 <div class="savings-summary" aria-label="Total savings summary">
-                    <div class="savings-summary-label">Your monthly savings vs OpenAI</div>
+                    <div class="savings-summary-label">{{ __('cost-calculator.savings_label') }}</div>
                     <div
                         class="savings-main"
                         id="savings-amount"
@@ -1383,11 +1383,11 @@
                         aria-live="polite"
                         aria-atomic="true"
                     >$0.00</div>
-                    <div class="savings-sub" id="savings-amount-sub">saved every month</div>
+                    <div class="savings-sub" id="savings-amount-sub">{{ __('cost-calculator.savings_sub') }}</div>
 
                     <div class="savings-percents">
                         <div class="savings-percent-item" role="group" aria-label="Savings percentage vs OpenAI">
-                            <div class="savings-percent-item-label">vs OpenAI</div>
+                            <div class="savings-percent-item-label">{{ __('cost-calculator.vs_openai') }}</div>
                             <div
                                 class="savings-percent-item-value"
                                 id="savings-percent-openai"
@@ -1397,7 +1397,7 @@
                             >0%</div>
                         </div>
                         <div class="savings-percent-item" role="group" aria-label="Savings percentage vs OpenRouter">
-                            <div class="savings-percent-item-label">vs OpenRouter</div>
+                            <div class="savings-percent-item-label">{{ __('cost-calculator.vs_openrouter') }}</div>
                             <div
                                 class="savings-percent-item-value"
                                 id="savings-percent-router"
@@ -1418,37 +1418,40 @@
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
             </svg>
-            <h3>How We Calculate Your Costs</h3>
+            <h3>{{ __('cost-calculator.pricing_method_title') }}</h3>
         </div>
 
         <div class="pricing-rates" role="list" aria-label="Pricing rates used">
             <div class="pricing-rate-pill pill-featured" role="listitem">
                 <span class="pricing-rate-pill-dot" aria-hidden="true"></span>
-                LLM Resayil: $0.001 / 1K tokens
+                {{ __('cost-calculator.pricing_resayil') }}
             </div>
             <div class="pricing-rate-pill" role="listitem">
                 <span class="pricing-rate-pill-dot" aria-hidden="true"></span>
-                OpenAI: $0.015 / 1K tokens
+                {{ __('cost-calculator.pricing_openai') }}
             </div>
             <div class="pricing-rate-pill" role="listitem">
                 <span class="pricing-rate-pill-dot" aria-hidden="true"></span>
-                OpenRouter: $0.008 / 1K tokens
+                {{ __('cost-calculator.pricing_openrouter') }}
             </div>
         </div>
 
         <p class="info-section-note">
-            Calculations use current market rates and are updated regularly. Actual costs may vary by model selection, additional features, and volume agreements. All figures assume standard pricing without custom contracts.
+            {{ __('cost-calculator.pricing_note') }}
         </p>
 
         <p class="info-section-links">
-            See a <a href="/comparison" class="info-link">detailed comparison with OpenRouter</a>, or explore <a href="/alternatives" class="info-link">alternative LLM APIs</a>.
+            {!! __('cost-calculator.pricing_links', [
+                'comparison_link'  => '<a href="' . route('comparison') . '" class="info-link">' . __('cost-calculator.pricing_comparison_link') . '</a>',
+                'alternatives_link' => '<a href="' . route('alternatives') . '" class="info-link">' . __('cost-calculator.pricing_alternatives_link') . '</a>',
+            ]) !!}
         </p>
     </div>
 
     {{-- ── FAQ ── --}}
     <section class="faq-section" aria-labelledby="faq-heading">
-        <h2 class="section-title" id="faq-heading">Frequently Asked Questions</h2>
-        <p class="section-subtitle">Everything you need to know about our pricing and this calculator.</p>
+        <h2 class="section-title" id="faq-heading">{{ __('cost-calculator.faq_title') }}</h2>
+        <p class="section-subtitle">{{ __('cost-calculator.faq_subtitle') }}</p>
 
         <div class="faq-grid">
 
@@ -1459,14 +1462,14 @@
                     aria-controls="faq-body-accuracy"
                     id="faq-btn-accuracy"
                 >
-                    <span>How accurate is this calculator?</span>
+                    <span>{{ __('cost-calculator.faq_q1') }}</span>
                     <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                         <polyline points="6 9 12 15 18 9"/>
                     </svg>
                 </button>
                 <div class="faq-body" id="faq-body-accuracy" role="region" aria-labelledby="faq-btn-accuracy" hidden>
                     <div class="faq-answer">
-                        Our calculator uses current market pricing rates and is updated regularly. Results are accurate for estimation purposes. For production environments with volume discounts or custom agreements, please contact our sales team for a personalized quote.
+                        {{ __('cost-calculator.faq_a1') }}
                     </div>
                 </div>
             </div>
@@ -1478,14 +1481,14 @@
                     aria-controls="faq-body-cheaper"
                     id="faq-btn-cheaper"
                 >
-                    <span>Why is LLM Resayil cheaper?</span>
+                    <span>{{ __('cost-calculator.faq_q2') }}</span>
                     <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                         <polyline points="6 9 12 15 18 9"/>
                     </svg>
                 </button>
                 <div class="faq-body" id="faq-body-cheaper" role="region" aria-labelledby="faq-btn-cheaper" hidden>
                     <div class="faq-answer">
-                        We optimize infrastructure costs and pass savings to users. Our pay-per-token model eliminates monthly minimums. No hidden fees or overages. Plus, access to open-source models with commercial licenses removes vendor lock-in premiums charged by competitors.
+                        {{ __('cost-calculator.faq_a2') }}
                     </div>
                 </div>
             </div>
@@ -1497,14 +1500,14 @@
                     aria-controls="faq-body-production"
                     id="faq-btn-production"
                 >
-                    <span>Can I use this for production estimates?</span>
+                    <span>{{ __('cost-calculator.faq_q3') }}</span>
                     <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                         <polyline points="6 9 12 15 18 9"/>
                     </svg>
                 </button>
                 <div class="faq-body" id="faq-body-production" role="region" aria-labelledby="faq-btn-production" hidden>
                     <div class="faq-answer">
-                        Yes, this calculator is designed for production cost estimates. All pricing is based on current published rates. For guaranteed pricing, SLAs, or enterprise agreements, contact our sales team at support@resayil.io with your usage profile.
+                        {{ __('cost-calculator.faq_a3') }}
                     </div>
                 </div>
             </div>
@@ -1516,14 +1519,14 @@
                     aria-controls="faq-body-tiers"
                     id="faq-btn-tiers"
                 >
-                    <span>Do pricing tiers affect the calculation?</span>
+                    <span>{{ __('cost-calculator.faq_q4') }}</span>
                     <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                         <polyline points="6 9 12 15 18 9"/>
                     </svg>
                 </button>
                 <div class="faq-body" id="faq-body-tiers" role="region" aria-labelledby="faq-btn-tiers" hidden>
                     <div class="faq-answer">
-                        Model tier selection affects pricing rates. Larger models (like GPT-4 equivalents) are more expensive per token than smaller models (like Mistral 7B). The calculator uses representative pricing for each tier. See our detailed pricing page for model-specific rates.
+                        {{ __('cost-calculator.faq_a4') }}
                     </div>
                 </div>
             </div>
@@ -1535,14 +1538,14 @@
                     aria-controls="faq-body-discount"
                     id="faq-btn-discount"
                 >
-                    <span>Are there volume discounts?</span>
+                    <span>{{ __('cost-calculator.faq_q5') }}</span>
                     <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                         <polyline points="6 9 12 15 18 9"/>
                     </svg>
                 </button>
                 <div class="faq-body" id="faq-body-discount" role="region" aria-labelledby="faq-btn-discount" hidden>
                     <div class="faq-answer">
-                        Yes! Enterprise customers with high monthly volumes qualify for volume discounts. Contact our sales team to discuss your specific use case and get a custom pricing proposal tailored to your needs.
+                        {{ __('cost-calculator.faq_a5') }}
                     </div>
                 </div>
             </div>
@@ -1554,14 +1557,14 @@
                     aria-controls="faq-body-change"
                     id="faq-btn-change"
                 >
-                    <span>How often do prices change?</span>
+                    <span>{{ __('cost-calculator.faq_q6') }}</span>
                     <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                         <polyline points="6 9 12 15 18 9"/>
                     </svg>
                 </button>
                 <div class="faq-body" id="faq-body-change" role="region" aria-labelledby="faq-btn-change" hidden>
                     <div class="faq-answer">
-                        We update pricing quarterly to reflect market conditions. Existing users are grandfathered into their current rates for 12 months. Price increases (if any) are announced 30 days in advance via email and dashboard notifications.
+                        {{ __('cost-calculator.faq_a6') }}
                     </div>
                 </div>
             </div>
@@ -1571,23 +1574,26 @@
 
     {{-- ── CTA ── --}}
     <div class="cta-section" role="complementary" aria-label="Call to action">
-        <h2>Ready to Start Saving?</h2>
-        <p>Join thousands of developers who've switched to LLM Resayil and dramatically cut their API costs.</p>
+        <h2>{{ __('cost-calculator.cta_title') }}</h2>
+        <p>{{ __('cost-calculator.cta_description') }}</p>
 
         <div class="cta-buttons">
             <a href="{{ route('register') }}" class="btn-primary">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                     <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/>
                 </svg>
-                Start Free — 1,000 Credits
+                {{ __('cost-calculator.cta_primary') }}
             </a>
             <a href="/billing/plans" class="btn-secondary">
-                View Pricing Plans
+                {{ __('cost-calculator.cta_secondary') }}
             </a>
         </div>
 
         <p class="cta-footer-note">
-            Check our <a href="/pricing" class="info-link">detailed pricing page</a>, or see how we <a href="/comparison" class="info-link">compare to competitors</a>.
+            {!! __('cost-calculator.cta_footer_note', [
+                'pricing_link'    => '<a href="' . route('billing.plans') . '" class="info-link">' . __('cost-calculator.cta_pricing_link') . '</a>',
+                'comparison_link' => '<a href="' . route('comparison') . '" class="info-link">' . __('cost-calculator.cta_comparison_link') . '</a>',
+            ]) !!}
         </p>
     </div>
 

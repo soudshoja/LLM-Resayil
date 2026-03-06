@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'LLM Resayil vs OpenRouter — Detailed Comparison')
+@section('title', __('comparison.title'))
 
 @push('styles')
 <style>
@@ -888,21 +888,20 @@
                 <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
                     <path d="M6 1L7.5 4.5H11L8.5 6.8L9.5 10.5L6 8.5L2.5 10.5L3.5 6.8L1 4.5H4.5L6 1Z" fill="currentColor"/>
                 </svg>
-                Detailed Comparison
+                {{ __('comparison.hero_eyebrow') }}
             </span>
             <h1 id="hero-heading">
-                Save <span class="gold-word">30%</span> on<br>LLM API Costs
+                {!! __('comparison.hero_title', ['percent' => '<span class="gold-word">30%</span>']) !!}
             </h1>
             <p class="comp-hero-subtitle">
-                LLM Resayil vs. OpenRouter — a transparent, feature-by-feature breakdown
-                so you can make the right choice for your project.
+                {{ __('comparison.hero_subtitle') }}
             </p>
             <div class="comp-hero-cta">
                 <a href="{{ route('register') }}" class="btn-primary">
-                    Start Free — 1,000 Credits
+                    {{ __('comparison.hero_cta_primary') }}
                 </a>
-                <button type="button" class="btn-secondary" aria-label="Scroll down to the comparison table">
-                    Compare Now
+                <button type="button" class="btn-secondary" aria-label="{{ __('comparison.hero_cta_secondary') }}">
+                    {{ __('comparison.hero_cta_secondary') }}
                 </button>
             </div>
         </div>
@@ -913,28 +912,28 @@
     ═══════════════════════════════ -->
     <section aria-labelledby="table-heading">
         <div class="comp-section-inner comp-table-section-anchor">
-            <h2 class="comp-section-title" id="table-heading">Quick Comparison</h2>
+            <h2 class="comp-section-title" id="table-heading">{{ __('comparison.quick_comparison_title') }}</h2>
             <p class="comp-section-subtitle">
-                Key metrics side by side — price, speed, models, and onboarding.
+                {{ __('comparison.quick_comparison_subtitle') }}
             </p>
-            <div class="comp-table-scroll-wrapper" id="tableScrollWrapper" role="region" aria-label="Comparison table — scroll horizontally if needed">
+            <div class="comp-table-scroll-wrapper" id="tableScrollWrapper" role="region" aria-label="{{ __('comparison.table_aria') }}">
                 <div class="comp-table-outer">
-                    <table class="comp-table" aria-label="LLM Resayil vs OpenRouter feature comparison">
+                    <table class="comp-table" aria-label="{{ __('comparison.table_aria') }}">
                         <thead>
                             <tr>
-                                <th scope="col">Feature</th>
+                                <th scope="col">{{ __('comparison.col_feature') }}</th>
                                 <th scope="col" class="col-resayil">LLM Resayil</th>
                                 <th scope="col">OpenRouter</th>
-                                <th scope="col" style="text-align: center; width: 140px;">Winner</th>
+                                <th scope="col" style="text-align: center; width: 140px;">{{ __('comparison.col_winner') }}</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr class="comp-fade-in">
-                                <td>Price per 1K tokens</td>
-                                <td class="col-resayil">$0.0001 – $0.002</td>
-                                <td>$0.0005 – $0.15</td>
+                                <td>{{ __('comparison.row_price_per_1k') }}</td>
+                                <td class="col-resayil">{{ __('comparison.val_resayil_price') }}</td>
+                                <td>{{ __('comparison.val_openrouter_price') }}</td>
                                 <td class="col-winner">
-                                    <span class="comp-winner-badge" role="img" aria-label="Winner: LLM Resayil — lower price per 1K tokens">
+                                    <span class="comp-winner-badge" role="img" aria-label="{{ __('comparison.winner_label') }}">
                                         <svg class="comp-winner-badge-svg" viewBox="0 0 10 10" fill="none" aria-hidden="true">
                                             <path d="M5 0.5L6.2 3.6H9.5L6.9 5.6L7.9 9L5 7.1L2.1 9L3.1 5.6L0.5 3.6H3.8L5 0.5Z" fill="currentColor"/>
                                         </svg>
@@ -943,11 +942,11 @@
                                 </td>
                             </tr>
                             <tr class="comp-fade-in">
-                                <td>Latency p50</td>
-                                <td class="col-resayil">~450 ms</td>
-                                <td>~600 ms</td>
+                                <td>{{ __('comparison.row_latency') }}</td>
+                                <td class="col-resayil">{{ __('comparison.val_resayil_latency') }}</td>
+                                <td>{{ __('comparison.val_openrouter_latency') }}</td>
                                 <td class="col-winner">
-                                    <span class="comp-winner-badge" role="img" aria-label="Winner: LLM Resayil — lower median latency">
+                                    <span class="comp-winner-badge" role="img" aria-label="{{ __('comparison.winner_label') }}">
                                         <svg class="comp-winner-badge-svg" viewBox="0 0 10 10" fill="none" aria-hidden="true">
                                             <path d="M5 0.5L6.2 3.6H9.5L6.9 5.6L7.9 9L5 7.1L2.1 9L3.1 5.6L0.5 3.6H3.8L5 0.5Z" fill="currentColor"/>
                                         </svg>
@@ -956,19 +955,19 @@
                                 </td>
                             </tr>
                             <tr class="comp-fade-in">
-                                <td>Models Available</td>
-                                <td class="col-resayil">45+</td>
-                                <td>100+</td>
+                                <td>{{ __('comparison.row_models') }}</td>
+                                <td class="col-resayil">{{ __('comparison.val_resayil_models') }}</td>
+                                <td>{{ __('comparison.val_openrouter_models') }}</td>
                                 <td class="col-winner">
-                                    <span class="comp-openrouter-winner" aria-label="Winner: OpenRouter — more models available">OpenRouter</span>
+                                    <span class="comp-openrouter-winner" aria-label="OpenRouter">OpenRouter</span>
                                 </td>
                             </tr>
                             <tr class="comp-fade-in">
-                                <td>Setup Time</td>
-                                <td class="col-resayil">&lt;2 minutes</td>
-                                <td>~5 minutes</td>
+                                <td>{{ __('comparison.row_setup_time') }}</td>
+                                <td class="col-resayil">{{ __('comparison.val_resayil_setup') }}</td>
+                                <td>{{ __('comparison.val_openrouter_setup') }}</td>
                                 <td class="col-winner">
-                                    <span class="comp-winner-badge" role="img" aria-label="Winner: LLM Resayil — faster setup time">
+                                    <span class="comp-winner-badge" role="img" aria-label="{{ __('comparison.winner_label') }}">
                                         <svg class="comp-winner-badge-svg" viewBox="0 0 10 10" fill="none" aria-hidden="true">
                                             <path d="M5 0.5L6.2 3.6H9.5L6.9 5.6L7.9 9L5 7.1L2.1 9L3.1 5.6L0.5 3.6H3.8L5 0.5Z" fill="currentColor"/>
                                         </svg>
@@ -977,11 +976,11 @@
                                 </td>
                             </tr>
                             <tr class="comp-fade-in">
-                                <td>Free Trial</td>
-                                <td class="col-resayil">1,000 credits (≈$5)</td>
-                                <td>$5 credit</td>
+                                <td>{{ __('comparison.row_free_trial') }}</td>
+                                <td class="col-resayil">{{ __('comparison.val_resayil_trial') }}</td>
+                                <td>{{ __('comparison.val_openrouter_trial') }}</td>
                                 <td class="col-winner">
-                                    <span class="comp-winner-badge" role="img" aria-label="Winner: LLM Resayil — larger free trial offer">
+                                    <span class="comp-winner-badge" role="img" aria-label="{{ __('comparison.winner_label') }}">
                                         <svg class="comp-winner-badge-svg" viewBox="0 0 10 10" fill="none" aria-hidden="true">
                                             <path d="M5 0.5L6.2 3.6H9.5L6.9 5.6L7.9 9L5 7.1L2.1 9L3.1 5.6L0.5 3.6H3.8L5 0.5Z" fill="currentColor"/>
                                         </svg>
@@ -990,27 +989,27 @@
                                 </td>
                             </tr>
                             <tr class="comp-fade-in">
-                                <td>OpenAI Compatible</td>
-                                <td class="col-resayil">100%</td>
-                                <td>100%</td>
+                                <td>{{ __('comparison.row_openai_compat') }}</td>
+                                <td class="col-resayil">{{ __('comparison.val_both_compat') }}</td>
+                                <td>{{ __('comparison.val_both_compat') }}</td>
                                 <td class="col-winner">
-                                    <span class="comp-tie-text" aria-label="Tie — both are fully OpenAI compatible">Tie</span>
+                                    <span class="comp-tie-text" aria-label="{{ __('comparison.tie_label') }}">{{ __('comparison.tie_label') }}</span>
                                 </td>
                             </tr>
                             <tr class="comp-fade-in">
-                                <td>API Key Rotation</td>
-                                <td class="col-resayil">Instant</td>
-                                <td>Instant</td>
+                                <td>{{ __('comparison.row_api_key_rotation') }}</td>
+                                <td class="col-resayil">{{ __('comparison.val_both_rotation') }}</td>
+                                <td>{{ __('comparison.val_both_rotation') }}</td>
                                 <td class="col-winner">
-                                    <span class="comp-tie-text" aria-label="Tie — both offer instant API key rotation">Tie</span>
+                                    <span class="comp-tie-text" aria-label="{{ __('comparison.tie_label') }}">{{ __('comparison.tie_label') }}</span>
                                 </td>
                             </tr>
                             <tr class="comp-fade-in">
-                                <td>Support</td>
-                                <td class="col-resayil">Email + Chat</td>
-                                <td>Email only</td>
+                                <td>{{ __('comparison.row_support') }}</td>
+                                <td class="col-resayil">{{ __('comparison.val_resayil_support') }}</td>
+                                <td>{{ __('comparison.val_openrouter_support') }}</td>
                                 <td class="col-winner">
-                                    <span class="comp-winner-badge" role="img" aria-label="Winner: LLM Resayil — email and chat support vs email only">
+                                    <span class="comp-winner-badge" role="img" aria-label="{{ __('comparison.winner_label') }}">
                                         <svg class="comp-winner-badge-svg" viewBox="0 0 10 10" fill="none" aria-hidden="true">
                                             <path d="M5 0.5L6.2 3.6H9.5L6.9 5.6L7.9 9L5 7.1L2.1 9L3.1 5.6L0.5 3.6H3.8L5 0.5Z" fill="currentColor"/>
                                         </svg>
@@ -1030,16 +1029,16 @@
     ═══════════════════════════════ -->
     <section aria-labelledby="cost-heading">
         <div class="comp-section-inner">
-            <h2 class="comp-section-title" id="cost-heading">Real Cost Comparison</h2>
+            <h2 class="comp-section-title" id="cost-heading">{{ __('comparison.cost_comparison_title') }}</h2>
             <p class="comp-section-subtitle">
-                Estimated monthly spend based on token volume. Your savings grow as you scale.
+                {{ __('comparison.cost_comparison_subtitle') }}
             </p>
             <div class="comp-cost-grid">
                 <!-- Case 1: 10M tokens -->
-                <div class="comp-cost-card comp-fade-in" aria-label="Cost comparison for startup usage: 10 million tokens per month">
+                <div class="comp-cost-card comp-fade-in" aria-label="{{ __('comparison.cost_startup_title') }}">
                     <div class="comp-cost-card-header">
-                        <h3 class="comp-cost-title">Startup</h3>
-                        <p class="comp-cost-subtitle">10M tokens / month</p>
+                        <h3 class="comp-cost-title">{{ __('comparison.cost_startup_title') }}</h3>
+                        <p class="comp-cost-subtitle">{{ __('comparison.cost_startup_subtitle') }}</p>
                     </div>
                     <div class="comp-cost-row">
                         <span class="comp-cost-label">LLM Resayil</span>
@@ -1047,19 +1046,19 @@
                     </div>
                     <div class="comp-cost-row">
                         <span class="comp-cost-label">OpenRouter</span>
-                        <span class="comp-cost-value comp-cost-openrouter" aria-label="OpenRouter costs $45, shown with strikethrough">$45</span>
+                        <span class="comp-cost-value comp-cost-openrouter" aria-label="$45">$45</span>
                     </div>
                     <div class="comp-savings">
-                        <p class="comp-savings-label">You Save</p>
-                        <p class="comp-savings-amount" aria-label="You save $30 per month">$30</p>
+                        <p class="comp-savings-label">{{ __('comparison.you_save_label') }}</p>
+                        <p class="comp-savings-amount" aria-label="$30">$30</p>
                     </div>
                 </div>
 
                 <!-- Case 2: 100M tokens -->
-                <div class="comp-cost-card comp-fade-in" aria-label="Cost comparison for scale-up usage: 100 million tokens per month">
+                <div class="comp-cost-card comp-fade-in" aria-label="{{ __('comparison.cost_scaleup_title') }}">
                     <div class="comp-cost-card-header">
-                        <h3 class="comp-cost-title">Scale-up</h3>
-                        <p class="comp-cost-subtitle">100M tokens / month</p>
+                        <h3 class="comp-cost-title">{{ __('comparison.cost_scaleup_title') }}</h3>
+                        <p class="comp-cost-subtitle">{{ __('comparison.cost_scaleup_subtitle') }}</p>
                     </div>
                     <div class="comp-cost-row">
                         <span class="comp-cost-label">LLM Resayil</span>
@@ -1067,19 +1066,19 @@
                     </div>
                     <div class="comp-cost-row">
                         <span class="comp-cost-label">OpenRouter</span>
-                        <span class="comp-cost-value comp-cost-openrouter" aria-label="OpenRouter costs $380, shown with strikethrough">$380</span>
+                        <span class="comp-cost-value comp-cost-openrouter" aria-label="$380">$380</span>
                     </div>
                     <div class="comp-savings">
-                        <p class="comp-savings-label">You Save</p>
-                        <p class="comp-savings-amount" aria-label="You save $260 per month">$260</p>
+                        <p class="comp-savings-label">{{ __('comparison.you_save_label') }}</p>
+                        <p class="comp-savings-amount" aria-label="$260">$260</p>
                     </div>
                 </div>
 
                 <!-- Case 3: 1B tokens -->
-                <div class="comp-cost-card comp-fade-in" aria-label="Cost comparison for enterprise usage: 1 billion tokens per month">
+                <div class="comp-cost-card comp-fade-in" aria-label="{{ __('comparison.cost_enterprise_title') }}">
                     <div class="comp-cost-card-header">
-                        <h3 class="comp-cost-title">Enterprise</h3>
-                        <p class="comp-cost-subtitle">1B tokens / month</p>
+                        <h3 class="comp-cost-title">{{ __('comparison.cost_enterprise_title') }}</h3>
+                        <p class="comp-cost-subtitle">{{ __('comparison.cost_enterprise_subtitle') }}</p>
                     </div>
                     <div class="comp-cost-row">
                         <span class="comp-cost-label">LLM Resayil</span>
@@ -1087,11 +1086,11 @@
                     </div>
                     <div class="comp-cost-row">
                         <span class="comp-cost-label">OpenRouter</span>
-                        <span class="comp-cost-value comp-cost-openrouter" aria-label="OpenRouter costs $3,200, shown with strikethrough">$3,200</span>
+                        <span class="comp-cost-value comp-cost-openrouter" aria-label="$3,200">$3,200</span>
                     </div>
                     <div class="comp-savings">
-                        <p class="comp-savings-label">You Save</p>
-                        <p class="comp-savings-amount" aria-label="You save $2,250 per month">$2,250</p>
+                        <p class="comp-savings-label">{{ __('comparison.you_save_label') }}</p>
+                        <p class="comp-savings-amount" aria-label="$2,250">$2,250</p>
                     </div>
                 </div>
             </div>
@@ -1102,10 +1101,10 @@
     <div class="comp-cluster-callout">
         <div class="comp-cluster-inner">
             <p>
-                Want to calculate your exact savings? Try our
-                <a href="/cost-calculator">interactive cost calculator</a>
-                or compare with
-                <a href="/alternatives">other LLM APIs side-by-side</a>.
+                {!! __('comparison.cluster_callout', [
+                    'calc_link' => '<a href="/cost-calculator">' . __('comparison.cluster_calc_link') . '</a>',
+                    'alt_link'  => '<a href="/alternatives">' . __('comparison.cluster_alt_link') . '</a>',
+                ]) !!}
             </p>
         </div>
     </div>
@@ -1115,9 +1114,9 @@
     ═══════════════════════════════ -->
     <section aria-labelledby="features-heading">
         <div class="comp-section-inner">
-            <h2 class="comp-section-title" id="features-heading">Feature Matrix</h2>
+            <h2 class="comp-section-title" id="features-heading">{{ __('comparison.feature_matrix_title') }}</h2>
             <p class="comp-section-subtitle">
-                A complete look at what each platform includes — and what it lacks.
+                {{ __('comparison.feature_matrix_subtitle') }}
             </p>
             <div class="comp-features-grid">
                 <!-- LLM Resayil Features -->
@@ -1130,25 +1129,18 @@
                         LLM Resayil
                     </h3>
                     <ul class="comp-feature-list" aria-label="LLM Resayil features">
-                        <li class="comp-feature-item">
-                            <span class="comp-feature-icon" aria-hidden="true">
-                                <!-- Green checkmark SVG -->
-                                <svg viewBox="0 0 18 18" fill="none">
-                                    <circle cx="9" cy="9" r="8.5" fill="rgba(212,175,55,0.15)" stroke="#d4af37" stroke-width="1"/>
-                                    <path d="M5 9L7.5 11.5L13 6" stroke="#d4af37" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-                                </svg>
-                            </span>
-                            <span class="comp-feature-text">Lightweight &amp; Fast (OpenAI-compatible)</span>
-                        </li>
-                        <li class="comp-feature-item">
-                            <span class="comp-feature-icon" aria-hidden="true">
-                                <svg viewBox="0 0 18 18" fill="none">
-                                    <circle cx="9" cy="9" r="8.5" fill="rgba(212,175,55,0.15)" stroke="#d4af37" stroke-width="1"/>
-                                    <path d="M5 9L7.5 11.5L13 6" stroke="#d4af37" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-                                </svg>
-                            </span>
-                            <span class="comp-feature-text">Pay-per-token pricing (no monthly fees)</span>
-                        </li>
+                        @foreach([
+                            __('comparison.feature_resayil_lightweight'),
+                            __('comparison.feature_resayil_pay_per_token'),
+                            __('comparison.feature_resayil_multicurrency'),
+                            __('comparison.feature_resayil_analytics'),
+                            __('comparison.feature_resayil_api_keys'),
+                            __('comparison.feature_resayil_cost_tracking'),
+                            __('comparison.feature_resayil_support'),
+                            __('comparison.feature_resayil_team'),
+                            __('comparison.feature_resayil_rate_limiting'),
+                            __('comparison.feature_resayil_zero_cost_setup'),
+                        ] as $feat)
                         <li class="comp-feature-item">
                             <span class="comp-feature-icon" aria-hidden="true">
                                 <svg viewBox="0 0 18 18" fill="none">
@@ -1156,71 +1148,9 @@
                                     <path d="M5 9L7.5 11.5L13 6" stroke="#d4af37" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
                                 </svg>
                             </span>
-                            <span class="comp-feature-text">Multi-currency support (KWD, USD, and more)</span>
+                            <span class="comp-feature-text">{{ $feat }}</span>
                         </li>
-                        <li class="comp-feature-item">
-                            <span class="comp-feature-icon" aria-hidden="true">
-                                <svg viewBox="0 0 18 18" fill="none">
-                                    <circle cx="9" cy="9" r="8.5" fill="rgba(212,175,55,0.15)" stroke="#d4af37" stroke-width="1"/>
-                                    <path d="M5 9L7.5 11.5L13 6" stroke="#d4af37" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-                                </svg>
-                            </span>
-                            <span class="comp-feature-text">Advanced usage analytics &amp; cost breakdown</span>
-                        </li>
-                        <li class="comp-feature-item">
-                            <span class="comp-feature-icon" aria-hidden="true">
-                                <svg viewBox="0 0 18 18" fill="none">
-                                    <circle cx="9" cy="9" r="8.5" fill="rgba(212,175,55,0.15)" stroke="#d4af37" stroke-width="1"/>
-                                    <path d="M5 9L7.5 11.5L13 6" stroke="#d4af37" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-                                </svg>
-                            </span>
-                            <span class="comp-feature-text">Instant API key creation &amp; rotation</span>
-                        </li>
-                        <li class="comp-feature-item">
-                            <span class="comp-feature-icon" aria-hidden="true">
-                                <svg viewBox="0 0 18 18" fill="none">
-                                    <circle cx="9" cy="9" r="8.5" fill="rgba(212,175,55,0.15)" stroke="#d4af37" stroke-width="1"/>
-                                    <path d="M5 9L7.5 11.5L13 6" stroke="#d4af37" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-                                </svg>
-                            </span>
-                            <span class="comp-feature-text">Per-model cost tracking</span>
-                        </li>
-                        <li class="comp-feature-item">
-                            <span class="comp-feature-icon" aria-hidden="true">
-                                <svg viewBox="0 0 18 18" fill="none">
-                                    <circle cx="9" cy="9" r="8.5" fill="rgba(212,175,55,0.15)" stroke="#d4af37" stroke-width="1"/>
-                                    <path d="M5 9L7.5 11.5L13 6" stroke="#d4af37" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-                                </svg>
-                            </span>
-                            <span class="comp-feature-text">Dedicated support + Community Discord</span>
-                        </li>
-                        <li class="comp-feature-item">
-                            <span class="comp-feature-icon" aria-hidden="true">
-                                <svg viewBox="0 0 18 18" fill="none">
-                                    <circle cx="9" cy="9" r="8.5" fill="rgba(212,175,55,0.15)" stroke="#d4af37" stroke-width="1"/>
-                                    <path d="M5 9L7.5 11.5L13 6" stroke="#d4af37" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-                                </svg>
-                            </span>
-                            <span class="comp-feature-text">Team management (Enterprise)</span>
-                        </li>
-                        <li class="comp-feature-item">
-                            <span class="comp-feature-icon" aria-hidden="true">
-                                <svg viewBox="0 0 18 18" fill="none">
-                                    <circle cx="9" cy="9" r="8.5" fill="rgba(212,175,55,0.15)" stroke="#d4af37" stroke-width="1"/>
-                                    <path d="M5 9L7.5 11.5L13 6" stroke="#d4af37" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-                                </svg>
-                            </span>
-                            <span class="comp-feature-text">Custom rate limiting</span>
-                        </li>
-                        <li class="comp-feature-item">
-                            <span class="comp-feature-icon" aria-hidden="true">
-                                <svg viewBox="0 0 18 18" fill="none">
-                                    <circle cx="9" cy="9" r="8.5" fill="rgba(212,175,55,0.15)" stroke="#d4af37" stroke-width="1"/>
-                                    <path d="M5 9L7.5 11.5L13 6" stroke="#d4af37" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-                                </svg>
-                            </span>
-                            <span class="comp-feature-text">Zero cold-start cost setup</span>
-                        </li>
+                        @endforeach
                     </ul>
                 </div>
 
@@ -1228,98 +1158,35 @@
                 <div class="comp-feature-column comp-fade-in">
                     <h3 class="comp-feature-column-title">OpenRouter</h3>
                     <ul class="comp-feature-list" aria-label="OpenRouter features">
+                        @foreach([
+                            ['check', __('comparison.feature_openrouter_model_library')],
+                            ['check', __('comparison.feature_openrouter_openai_compat')],
+                            ['check', __('comparison.feature_openrouter_router')],
+                            ['check', __('comparison.feature_openrouter_moderation')],
+                            ['x',     __('comparison.feature_openrouter_no_multicurrency')],
+                            ['x',     __('comparison.feature_openrouter_no_dashboard')],
+                            ['x',     __('comparison.feature_openrouter_no_priority_support')],
+                            ['x',     __('comparison.feature_openrouter_no_team')],
+                            ['x',     __('comparison.feature_openrouter_no_rate_limiting')],
+                            ['x',     __('comparison.feature_openrouter_no_calc')],
+                        ] as [$icon, $feat])
                         <li class="comp-feature-item">
                             <span class="comp-feature-icon" aria-hidden="true">
-                                <!-- Check SVG (muted) -->
+                                @if($icon === 'check')
                                 <svg viewBox="0 0 18 18" fill="none">
                                     <circle cx="9" cy="9" r="8.5" fill="rgba(136,146,164,0.1)" stroke="#8892a4" stroke-width="1"/>
                                     <path d="M5 9L7.5 11.5L13 6" stroke="#8892a4" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
                                 </svg>
-                            </span>
-                            <span class="comp-feature-text">Large model library (100+)</span>
-                        </li>
-                        <li class="comp-feature-item">
-                            <span class="comp-feature-icon" aria-hidden="true">
-                                <svg viewBox="0 0 18 18" fill="none">
-                                    <circle cx="9" cy="9" r="8.5" fill="rgba(136,146,164,0.1)" stroke="#8892a4" stroke-width="1"/>
-                                    <path d="M5 9L7.5 11.5L13 6" stroke="#8892a4" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-                                </svg>
-                            </span>
-                            <span class="comp-feature-text">OpenAI-compatible API</span>
-                        </li>
-                        <li class="comp-feature-item">
-                            <span class="comp-feature-icon" aria-hidden="true">
-                                <svg viewBox="0 0 18 18" fill="none">
-                                    <circle cx="9" cy="9" r="8.5" fill="rgba(136,146,164,0.1)" stroke="#8892a4" stroke-width="1"/>
-                                    <path d="M5 9L7.5 11.5L13 6" stroke="#8892a4" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-                                </svg>
-                            </span>
-                            <span class="comp-feature-text">Router (auto-fallback between models)</span>
-                        </li>
-                        <li class="comp-feature-item">
-                            <span class="comp-feature-icon" aria-hidden="true">
-                                <svg viewBox="0 0 18 18" fill="none">
-                                    <circle cx="9" cy="9" r="8.5" fill="rgba(136,146,164,0.1)" stroke="#8892a4" stroke-width="1"/>
-                                    <path d="M5 9L7.5 11.5L13 6" stroke="#8892a4" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-                                </svg>
-                            </span>
-                            <span class="comp-feature-text">Moderation &amp; filter controls</span>
-                        </li>
-                        <li class="comp-feature-item">
-                            <span class="comp-feature-icon" aria-hidden="true">
-                                <!-- X SVG (not available) -->
+                                @else
                                 <svg viewBox="0 0 18 18" fill="none">
                                     <circle cx="9" cy="9" r="8.5" fill="rgba(100,100,120,0.08)" stroke="#3a3d4a" stroke-width="1"/>
                                     <path d="M6 6L12 12M12 6L6 12" stroke="#4a4f62" stroke-width="1.8" stroke-linecap="round"/>
                                 </svg>
+                                @endif
                             </span>
-                            <span class="comp-feature-text" style="color: var(--comp-text-muted);">Multi-currency support</span>
+                            <span class="comp-feature-text" @if($icon === 'x') style="color: var(--comp-text-muted);" @endif>{{ $feat }}</span>
                         </li>
-                        <li class="comp-feature-item">
-                            <span class="comp-feature-icon" aria-hidden="true">
-                                <svg viewBox="0 0 18 18" fill="none">
-                                    <circle cx="9" cy="9" r="8.5" fill="rgba(100,100,120,0.08)" stroke="#3a3d4a" stroke-width="1"/>
-                                    <path d="M6 6L12 12M12 6L6 12" stroke="#4a4f62" stroke-width="1.8" stroke-linecap="round"/>
-                                </svg>
-                            </span>
-                            <span class="comp-feature-text" style="color: var(--comp-text-muted);">Real-time usage dashboard</span>
-                        </li>
-                        <li class="comp-feature-item">
-                            <span class="comp-feature-icon" aria-hidden="true">
-                                <svg viewBox="0 0 18 18" fill="none">
-                                    <circle cx="9" cy="9" r="8.5" fill="rgba(100,100,120,0.08)" stroke="#3a3d4a" stroke-width="1"/>
-                                    <path d="M6 6L12 12M12 6L6 12" stroke="#4a4f62" stroke-width="1.8" stroke-linecap="round"/>
-                                </svg>
-                            </span>
-                            <span class="comp-feature-text" style="color: var(--comp-text-muted);">Priority support included</span>
-                        </li>
-                        <li class="comp-feature-item">
-                            <span class="comp-feature-icon" aria-hidden="true">
-                                <svg viewBox="0 0 18 18" fill="none">
-                                    <circle cx="9" cy="9" r="8.5" fill="rgba(100,100,120,0.08)" stroke="#3a3d4a" stroke-width="1"/>
-                                    <path d="M6 6L12 12M12 6L6 12" stroke="#4a4f62" stroke-width="1.8" stroke-linecap="round"/>
-                                </svg>
-                            </span>
-                            <span class="comp-feature-text" style="color: var(--comp-text-muted);">Team management at free tier</span>
-                        </li>
-                        <li class="comp-feature-item">
-                            <span class="comp-feature-icon" aria-hidden="true">
-                                <svg viewBox="0 0 18 18" fill="none">
-                                    <circle cx="9" cy="9" r="8.5" fill="rgba(100,100,120,0.08)" stroke="#3a3d4a" stroke-width="1"/>
-                                    <path d="M6 6L12 12M12 6L6 12" stroke="#4a4f62" stroke-width="1.8" stroke-linecap="round"/>
-                                </svg>
-                            </span>
-                            <span class="comp-feature-text" style="color: var(--comp-text-muted);">Custom rate limiting</span>
-                        </li>
-                        <li class="comp-feature-item">
-                            <span class="comp-feature-icon" aria-hidden="true">
-                                <svg viewBox="0 0 18 18" fill="none">
-                                    <circle cx="9" cy="9" r="8.5" fill="rgba(100,100,120,0.08)" stroke="#3a3d4a" stroke-width="1"/>
-                                    <path d="M6 6L12 12M12 6L6 12" stroke="#4a4f62" stroke-width="1.8" stroke-linecap="round"/>
-                                </svg>
-                            </span>
-                            <span class="comp-feature-text" style="color: var(--comp-text-muted);">Cost calculator built-in</span>
-                        </li>
+                        @endforeach
                     </ul>
                 </div>
             </div>
@@ -1331,9 +1198,9 @@
     ═══════════════════════════════ -->
     <section aria-labelledby="faq-heading">
         <div class="comp-section-inner comp-section-inner--narrow">
-            <h2 class="comp-section-title" id="faq-heading">Frequently Asked Questions</h2>
+            <h2 class="comp-section-title" id="faq-heading">{{ __('comparison.faq_title') }}</h2>
             <p class="comp-section-subtitle">
-                Everything you need to know before making the switch.
+                {{ __('comparison.faq_subtitle') }}
             </p>
 
             <div class="comp-faq-list" id="faqList">
@@ -1347,7 +1214,7 @@
                         aria-controls="faq-answer-1"
                         id="faq-trigger-1"
                     >
-                        <span>Why is LLM Resayil cheaper than OpenRouter?</span>
+                        <span>{{ __('comparison.faq_q1') }}</span>
                         <svg class="comp-faq-arrow" viewBox="0 0 20 20" fill="none" aria-hidden="true">
                             <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
@@ -1360,7 +1227,7 @@
                         aria-hidden="true"
                     >
                         <div class="comp-faq-answer">
-                            <p>LLM Resayil uses a hybrid approach with local GPU servers and cloud fallback, dramatically reducing infrastructure costs. We pass these savings directly to users through transparent pay-per-token pricing with no platform markup. OpenRouter maintains higher pricing to fund their router infrastructure and broader model catalog.</p>
+                            <p>{{ __('comparison.faq_a1') }}</p>
                         </div>
                     </div>
                 </div>
@@ -1374,7 +1241,7 @@
                         aria-controls="faq-answer-2"
                         id="faq-trigger-2"
                     >
-                        <span>Is LLM Resayil fully OpenAI compatible?</span>
+                        <span>{{ __('comparison.faq_q2') }}</span>
                         <svg class="comp-faq-arrow" viewBox="0 0 20 20" fill="none" aria-hidden="true">
                             <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
@@ -1387,7 +1254,7 @@
                         aria-hidden="true"
                     >
                         <div class="comp-faq-answer">
-                            <p>100% yes. Our API is fully compatible with the OpenAI SDK and REST API specification. Simply swap your endpoint and API key. All standard features work: streaming, function calling, vision models, embeddings, and more. No code changes required.</p>
+                            <p>{{ __('comparison.faq_a2') }}</p>
                         </div>
                     </div>
                 </div>
@@ -1401,7 +1268,7 @@
                         aria-controls="faq-answer-3"
                         id="faq-trigger-3"
                     >
-                        <span>What if I need a specific model not on LLM Resayil?</span>
+                        <span>{{ __('comparison.faq_q3') }}</span>
                         <svg class="comp-faq-arrow" viewBox="0 0 20 20" fill="none" aria-hidden="true">
                             <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
@@ -1414,7 +1281,7 @@
                         aria-hidden="true"
                     >
                         <div class="comp-faq-answer">
-                            <p>Our 45+ models cover 95% of use cases (Claude 3, GPT-4, Mixtral, Llama 3, and more). If you need a model we don't offer, we can add it within 48 hours. Contact our support team with your request, and we'll evaluate and deploy it as a priority.</p>
+                            <p>{{ __('comparison.faq_a3') }}</p>
                         </div>
                     </div>
                 </div>
@@ -1428,7 +1295,7 @@
                         aria-controls="faq-answer-4"
                         id="faq-trigger-4"
                     >
-                        <span>How fast is LLM Resayil compared to OpenRouter?</span>
+                        <span>{{ __('comparison.faq_q4') }}</span>
                         <svg class="comp-faq-arrow" viewBox="0 0 20 20" fill="none" aria-hidden="true">
                             <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
@@ -1441,7 +1308,7 @@
                         aria-hidden="true"
                     >
                         <div class="comp-faq-answer">
-                            <p>LLM Resayil averages 450ms latency (p50) vs OpenRouter's ~600ms. For streaming use cases, this translates to significantly faster token delivery. Our local GPU servers eliminate network hops, while OpenRouter routes through multiple provider aggregators.</p>
+                            <p>{{ __('comparison.faq_a4') }}</p>
                         </div>
                     </div>
                 </div>
@@ -1455,7 +1322,7 @@
                         aria-controls="faq-answer-5"
                         id="faq-trigger-5"
                     >
-                        <span>Can I use my existing OpenRouter code with LLM Resayil?</span>
+                        <span>{{ __('comparison.faq_q5') }}</span>
                         <svg class="comp-faq-arrow" viewBox="0 0 20 20" fill="none" aria-hidden="true">
                             <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
@@ -1468,7 +1335,7 @@
                         aria-hidden="true"
                     >
                         <div class="comp-faq-answer">
-                            <p>Yes, minimal changes needed. Update your base URL to <code style="background: rgba(255,255,255,0.07); padding: 0.15em 0.4em; border-radius: 4px; font-family: monospace; font-size: 0.9em;">https://api.llm.resayil.io/v1</code> and use your LLM Resayil API key. Most code will work without modification due to our 100% OpenAI compatibility. Check our docs for any model name differences.</p>
+                            <p>{{ __('comparison.faq_a5') }}</p>
                         </div>
                     </div>
                 </div>
@@ -1482,7 +1349,7 @@
                         aria-controls="faq-answer-6"
                         id="faq-trigger-6"
                     >
-                        <span>What happens after I use my 1,000 free credits?</span>
+                        <span>{{ __('comparison.faq_q6') }}</span>
                         <svg class="comp-faq-arrow" viewBox="0 0 20 20" fill="none" aria-hidden="true">
                             <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
@@ -1495,7 +1362,7 @@
                         aria-hidden="true"
                     >
                         <div class="comp-faq-answer">
-                            <p>You can top up your account anytime via our billing page. We accept credit cards, debit cards, and WhatsApp payments. No contracts, no hidden fees. Start with just 2 KWD (~$6) if you want to test further. Your free credits never expire.</p>
+                            <p>{{ __('comparison.faq_a6') }}</p>
                         </div>
                     </div>
                 </div>
@@ -1509,7 +1376,7 @@
                         aria-controls="faq-answer-7"
                         id="faq-trigger-7"
                     >
-                        <span>Is my API usage data private?</span>
+                        <span>{{ __('comparison.faq_q7') }}</span>
                         <svg class="comp-faq-arrow" viewBox="0 0 20 20" fill="none" aria-hidden="true">
                             <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
@@ -1522,7 +1389,7 @@
                         aria-hidden="true"
                     >
                         <div class="comp-faq-answer">
-                            <p>Absolutely. We do not train on, log, or share your API requests. We only track token usage for billing purposes. All data is encrypted in transit and at rest. See our Privacy Policy for full details and our SOC 2 compliance roadmap.</p>
+                            <p>{{ __('comparison.faq_a7') }}</p>
                         </div>
                     </div>
                 </div>
@@ -1537,17 +1404,20 @@
     <section class="comp-footer-cta" aria-labelledby="cta-heading">
         <div class="comp-footer-cta-inner">
             <h2 class="comp-footer-title" id="cta-heading">
-                Ready to save <span style="color: var(--comp-gold);">30%</span>?<br>Start building today.
+                {!! __('comparison.footer_cta_title', ['percent' => '30%']) !!}
             </h2>
             <p class="comp-footer-subtitle">
-                No contracts. No hidden fees. 1,000 free credits on signup.
+                {{ __('comparison.footer_cta_subtitle') }}
             </p>
             <div class="comp-footer-buttons">
-                <a href="{{ route('register') }}" class="btn-primary">Create Free Account</a>
-                <a href="{{ route('docs') }}" class="btn-secondary">Read API Docs</a>
+                <a href="{{ route('register') }}" class="btn-primary">{{ __('comparison.footer_cta_primary') }}</a>
+                <a href="{{ route('docs') }}" class="btn-secondary">{{ __('comparison.footer_cta_secondary') }}</a>
             </div>
             <p class="comp-footer-links">
-                Explore our <a href="/features">available models</a> or view our <a href="/billing/plans">subscription plans</a>.
+                {!! __('comparison.footer_cta_links', [
+                    'models_link' => '<a href="/features">' . __('comparison.footer_models_link') . '</a>',
+                    'plans_link'  => '<a href="/billing/plans">' . __('comparison.footer_plans_link') . '</a>',
+                ]) !!}
             </p>
         </div>
     </section>
