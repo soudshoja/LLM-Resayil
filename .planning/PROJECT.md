@@ -100,6 +100,20 @@ This is a **bilingual (Arabic/English) Gulf B2B SaaS** for LLM API access. The t
 | Auto-failover to cloud | Ensures service availability during local queue congestion | Better UX |
 | Dual pricing (1x local, 2x cloud) | Reflects actual infrastructure cost difference | Sustainable economics |
 
+## Current Milestone: v1.2 - SEO Optimization
+
+**Goal:** Improve organic search visibility from 62/100 → 85+/100, establish authority as OpenAI alternative, enable AI search presence through comprehensive SEO optimization.
+
+**Target Features:**
+- Schema markup (Organization, SoftwareApplication, FAQ, breadcrumbs)
+- Metadata optimization (descriptions, OpenGraph, Twitter cards, canonicals)
+- Content expansion (docs 2,500+ words, case studies, testimonials)
+- E-E-A-T signals (team bios, customer proof, authority building)
+- Technical SEO (images, hreflang, internal links, Core Web Vitals)
+- AI search enablement (robots.txt updates, structured data for SGE/Perplexity)
+
+**4 Phases | 31 Requirements | ~47 hours | 6 weeks**
+
 ---
 
-*Last updated: 2026-02-26 after initialization*
+*Last updated: 2026-03-06 after SEO audit; starting v1.2 milestone*
