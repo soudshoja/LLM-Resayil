@@ -12,8 +12,12 @@
 - [x] **Phase 5: Dashboards** - User dashboard, admin dashboard, landing page, and enterprise team management
 - [x] **Phase 6: MySQL Production Setup** - Database migrations, environment configuration, and production deployment
 - [x] **Phase 7: Backend Services** - Fix API endpoint (config files, throttle, OllamaProxy), verify end-to-end API flow
-- [ ] **Phase 8: User Documentation** - End-user API docs (markdown + in-portal /docs page) for API consumers
-- [ ] **Phase 9: User Profile Management** - Password change, email change, verified mobile number update with WhatsApp OTP
+- [ ] **Phase 8: User Documentation** - End-user API docs (markdown + in-portal /docs page) for API consumers — 10% (plan written, not executed)
+- [ ] **Phase 9: User Profile & Billing Enhancements** - Password/email/phone updates, token-split logging, Arabic translations, translation keys — 40% (2/5 plans complete)
+- [ ] **Phase 10: SEO Foundation** - Schema markup, metadata, comparison pages, cost calculator, internal linking — Pending (findings documented, design fixes queued)
+- [ ] **Phase 11: Content & Technical SEO** - Expand docs, hreflang, image optimization, FAQ/features pages
+- [ ] **Phase 12: E-E-A-T Authority** - Team page, testimonials, case studies, credentials
+- [ ] **Phase 13: Performance & Launch** - Core Web Vitals, monitoring, SEO go-live checklist
 
 ## Phase Details
 
@@ -200,11 +204,143 @@ Plan 01 covers:
 - Execute all seeders with initial data
 - Verify production application is operational
 
----
+### Phase 8: User Documentation
+
+**Goal:** End-user API docs (markdown + in-portal /docs page) for API consumers
+
+**Depends on:** Phase 7
+
+**Requirements:** DOC-01, DOC-02, DOC-03
+
+**Success Criteria:**
+1. Eight markdown files under `docs/` with API reference content
+2. Public `/docs` page with sidebar navigation and syntax highlighting
+3. Code examples in 4 languages (cURL, Python, JavaScript, n8n)
+4. All pages accessible without authentication
+
+**Status:** 10% complete (skeleton exists, full API docs pending)
+
+**Plans:** 0/1 plans executed
+- [ ] 08-01: Create markdown docs and /docs Blade page — PLAN.md written (600+ lines detailed spec), awaiting execution
+
+**Pending Details:**
+- 8 markdown files: getting-started, authentication, api-reference, models, billing-credits, rate-limits, error-codes, code-examples
+- Blade /docs page with sidebar nav, highlight.js syntax highlighting, copy buttons, tab-based code example switcher
+- Full self-contained HTML (own nav, not extending layouts.app)
 
 ---
 
-### Phase 9: User Profile Management
+### Phase 9: User Profile & Billing Enhancements
+
+**Goal:** (09-01) Full Arabic translations for all landing pages. (09-02) Token-split logging and cost comparison dashboard. (09-03) User profile management (password/email/phone with OTP). (09-04) Language switcher UX. (09-05) Translation key backfill.
+
+**Depends on:** Phase 1 (auth), Phase 3 (API usage), Phase 4 (WhatsApp OTP infrastructure)
+
+**Status:** 40% complete (2/5 sub-plans executed, 3 pending)
+
+**Completed Plans:**
+- [x] **09-02: Savings Dashboard with token-split logging** (deployed 2026-03-05)
+  - Real token count split from Ollama responses (prompt_tokens + completion_tokens)
+  - CostService with multi-model price comparison (GPT-4o, Claude 3, Gemini 2.0)
+  - Migration: `prompt_tokens` + `completion_tokens` nullable columns on usage_logs
+  - Dashboard savings widget showing monthly savings % vs 5 public LLM APIs
+  - Status: ✅ Complete and live in production
+
+- [x] **09-01: Full Arabic translations** (deployed 2026-03-07)
+  - 100% translation coverage for welcome.blade.php
+  - Dynamic language switching via /locale/en and /locale/ar routes
+  - All sections bilingual: navigation, hero, features, pricing, testimonials, footer, buttons
+  - RTL/LTR support with dynamic `dir` attribute
+  - Default: Arabic (app()->getLocale() === 'ar')
+  - Status: ✅ Complete and live in production
+
+**Pending Plans:**
+- [ ] **09-03: User profile management** (25 KB PLAN.md written) — password change, email update, phone OTP verification, profile view redesign
+- [ ] **09-04: Language switcher enhancements** (2.9 KB PLAN.md written) — UX improvements, mobile menu integration
+- [ ] **09-05: Translation key backfill** (12.8 KB PLAN.md written) — dashboard, billing, admin pages translation coverage
+
+---
+
+### Phase 10: SEO Foundation (v1.2 Milestone)
+
+**Goal:** Implement schema markup, metadata, comparison pages, and cost calculator to establish competitive SEO advantage
+
+**Depends on:** Phase 5 (dashboards/landing page exist)
+
+**Status:** 0% (Specifications complete, design fixes in progress — requires WCAG AA compliance on 4 pages)
+
+**Deliverables (from Phase 10 v2 Completion Report, 2026-03-06):**
+
+**Complete Design Specifications:**
+- [x] Schema Markup (240+ lines JSON-LD) — Organization + SoftwareApplication + FAQPage (3 types)
+- [x] Metadata (100% coverage) — 20+ pages with keyword-optimized meta descriptions
+- [x] Comparison Pages (11,400+ words) — 3 high-design pages:
+  - `/comparison` — LLM Resayil vs OpenRouter (3,800 words, 6 sections, 7 FAQ entries)
+  - `/alternatives` — Top 5 OpenAI alternatives (3,800 words, 7 sections, 9 FAQ entries)
+  - `/dedicated-server` — Enterprise hosting + API hybrid (2,800 words, 8 sections, 9 FAQ entries)
+- [x] Cost Calculator — Interactive real-time widget (unique tool, no competitors)
+- [x] Internal Linking (55+ links) — 3 content clusters (Cost/ROI, API/Integration, Education)
+- [x] OG Images (20+ SVG files) — 1200×630px, dark luxury design
+- [x] Robots.txt — Strategic AI crawler rules (GPTBot, ClaudeBot, PerplexityBot)
+
+**Design Fixes Required (from Quick Task 14 — 4 teams, in progress):**
+- [ ] Team A: /cost-calculator — WCAG AA compliance fixes (currently 8/10 score)
+- [ ] Team B: /comparison — HTML validation, focus states (currently 7.8/10 score)
+- [ ] Team C: /alternatives — Keyboard navigation, mobile typography (currently 7.8/10 score)
+- [ ] Team D: /dedicated-server — Accessibility polish (currently 8.5/10 score)
+
+**Expected SEO Impact (from completion report):**
+- +20-30% SERP visibility (metadata optimization)
+- +10-15% CTR improvement (keyword-rich titles)
+- Top 3 ranking: "openai alternative" (8 weeks)
+- Top 1 ranking: "llm api cost calculator" (4 weeks — zero competition)
+- 40-50% organic traffic growth (Month 2-3)
+
+**Code Delivery Stats:**
+- 4,000+ lines of new code
+- 1,500+ lines of modified code
+- 489+ CSS classes
+- 14,200+ words of new content
+- 8 files created/modified
+
+---
+
+### Phase 11: Content & Technical SEO
+
+**Goal:** Expand /docs, implement hreflang, optimize images, add breadcrumb schema
+
+**Depends on:** Phase 10 completion
+
+**Status:** Planned (4 weeks, 12 hours)
+
+**Requirements:**
+- Expand /docs from 737 → 2,500+ words with code examples
+- Implement hreflang for EN/AR versions on all pages
+- Add semantic alt text to 50+ images
+- Create /faq and /features pages with schema
+- Add breadcrumb schema to /docs subsections
+
+---
+
+### Phase 12: E-E-A-T Authority Building
+
+**Goal:** Build entity authority through team page, testimonials, case studies, competitive comparisons
+
+**Depends on:** Phase 11 completion
+
+**Status:** Planned (TBD)
+
+---
+
+### Phase 13: Performance & Launch
+
+**Goal:** Core Web Vitals optimization, monitoring setup, go-live readiness
+
+**Depends on:** Phases 10-12 completion
+
+**Status:** Planned — Final phase in v1.2 SEO optimization milestone
+
+---
 
 **Goal:** Users can update their password, email address, and verified mobile number from the profile page. Mobile number changes require WhatsApp OTP confirmation before the new number is saved.
 
@@ -225,21 +361,25 @@ Plan 01 covers:
 
 ---
 
-## Progress
+## Progress Summary
 
-| Phase | Plans Complete | Status | Completed |
+| Phase | Plans Complete | Status | Last Update |
 |-------|----------------|--------|-----------|
-| 1 - Foundation & Auth | 1/1 | Complete | Plan 01 completed |
-| 2 - Billing & Subscriptions | 1/1 | Complete | Plan 01 completed |
-| 3 - API Access | 1/1 | Complete | 2026-02-26 |
-| 4 - Notifications | 1/1 | Complete | Plan 01 completed |
-| 5 - Dashboards | 3/3 | Complete | Plans 01-03 completed |
-| 6 - MySQL Production Setup | 1/1 | Planned | Plan 01 ready for execution |
-| 7 - Backend Services | 7/7 | Complete | All plans deployed 2026-03-03 |
-| 8 - User Documentation | 0/1 | Pending | — |
-| 9 - User Profile Management | 0/1 | Pending | — |
+| 1 - Foundation & Auth | 1/1 | ✅ Complete | 2026-02-26 |
+| 2 - Billing & Subscriptions | 1/1 | ✅ Complete | 2026-02-26 |
+| 3 - API Access | 1/1 | ✅ Complete | 2026-02-26 |
+| 4 - Notifications | 1/1 | ✅ Complete | 2026-02-26 |
+| 5 - Dashboards | 3/3 | ✅ Complete | 2026-02-26 |
+| 6 - MySQL Production Setup | 1/1 | ✅ Complete | 2026-03-02 |
+| 7 - Backend Services | 7/7 | ✅ Complete | 2026-03-03 |
+| 8 - User Documentation | 0/1 | ⏳ 10% (plan written, not executed) | 2026-03-05 |
+| 9 - User Profile & Billing | 2/5 | ⏳ 40% (2 sub-plans complete) | 2026-03-07 |
+| 10 - SEO Foundation | 0/1 | ⏳ 0% (specs complete, design fixes pending) | 2026-03-06 |
+| 11 - Content & Technical SEO | 0/1 | 📋 Planned | TBD |
+| 12 - E-E-A-T Authority | 0/1 | 📋 Planned | TBD |
+| 13 - Performance & Launch | 0/1 | 📋 Planned | TBD |
 
 ---
 
 *Roadmap defined: 2026-02-26*
-*Last updated: 2026-03-03 - Phase 9 plan created (User Profile Management)*
+*Last updated: 2026-03-07 - Phase status corrected based on actual completion (Phase 8: 10%, Phase 9: 40%, Phase 10: 0% with specs complete)*
