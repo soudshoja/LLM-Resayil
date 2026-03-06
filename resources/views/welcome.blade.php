@@ -348,9 +348,9 @@
                 LLM Resayil
             </a>
             <nav class="nav-links" aria-label="Main navigation">
-                <a href="#features">Features</a>
-                <a href="#how-it-works">How It Works</a>
-                <a href="#pricing">Pricing</a>
+                <a href="#features">{{ app()->getLocale() === 'ar' ? 'المميزات' : 'Features' }}</a>
+                <a href="#how-it-works">{{ app()->getLocale() === 'ar' ? 'كيف يعمل' : 'How It Works' }}</a>
+                <a href="#pricing">{{ app()->getLocale() === 'ar' ? 'الأسعار' : 'Pricing' }}</a>
             </nav>
             <div class="nav-actions">
                 <div style="display:flex;align-items:center;gap:0;border:1px solid var(--border);border-radius:8px;overflow:hidden;">
@@ -382,7 +382,7 @@
         <div class="hero-content">
             <div class="hero-badge" role="note">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-                1,000 Free Credits &mdash; No Credit Card Needed
+                {{ app()->getLocale() === 'ar' ? '1000 رصيد مجاني &mdash; بدون بطاقة ائتمان' : '1,000 Free Credits &mdash; No Credit Card Needed' }}
             </div>
             <h1 class="hero-h1" id="hero-h1">
                 {{ app()->getLocale() === 'ar' ? 'مساعدك الذكي' : 'Your Personal' }}<br>
@@ -417,50 +417,50 @@
         <div class="sheader text-center">
             <div class="slabel fu">{{ app()->getLocale() === 'ar' ? 'ما يمكنك فعله' : 'What you can do' }}</div>
             <h2 class="sh2 fu d1" id="feat-h2">{{ app()->getLocale() === 'ar' ? 'مهامك اليومية، منجزة <span class="text-gradient-gold">أسرع 10 مرات</span>' : 'Everyday tasks, done <span class="text-gradient-gold">10x faster</span>' }}</h2>
-            <p class="ssub fu d2" style="margin:0 auto;">{{ app()->getLocale() === 'ar' ? 'لا حاجة لخبرة تقنية. فقط اكتب ما تحتاجه وحصل على النتائج فوراً.' : 'No technical knowledge needed. Just type what you need and get results instantly.' }}</p>
+            <p class="ssub fu d2" style="margin:0 auto;">{{ app()->getLocale() === 'ar' ? 'لا حاجة لخبرة تقنية. فقط اكتب ما تحتاجه واحصل على النتائج فوراً.' : 'No technical knowledge needed. Just type what you need and get results instantly.' }}</p>
         </div>
         <div class="bento">
             <div class="bc fu">
                 <div class="bi" aria-hidden="true">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg>
                 </div>
-                <h3>Write Faster</h3>
-                <p>Emails, reports, social posts, articles &mdash; generate polished content in seconds. Never stare at a blank page again.</p>
+                <h3>{{ app()->getLocale() === 'ar' ? 'اكتب بسرعة' : 'Write Faster' }}</h3>
+                <p>{{ app()->getLocale() === 'ar' ? 'رسائل بريد إلكترونية، تقارير، منشورات وسائط اجتماعية، مقالات &mdash; توليد محتوى محترف في ثوان. لا تحدق في صفحة فارغة مرة أخرى.' : 'Emails, reports, social posts, articles &mdash; generate polished content in seconds. Never stare at a blank page again.' }}</p>
             </div>
             <div class="bc fu d1">
                 <div class="bi" aria-hidden="true">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>
                 </div>
-                <h3>Answer Anything</h3>
-                <p>Research topics, get instant analysis, and find answers to complex questions without spending hours searching.</p>
+                <h3>{{ app()->getLocale() === 'ar' ? 'أجب على أي سؤال' : 'Answer Anything' }}</h3>
+                <p>{{ app()->getLocale() === 'ar' ? 'ابحث عن المواضيع، احصل على تحليل فوري، وجد إجابات للأسئلة المعقدة دون قضاء ساعات في البحث.' : 'Research topics, get instant analysis, and find answers to complex questions without spending hours searching.' }}</p>
             </div>
             <div class="bc fu d2">
                 <div class="bi" aria-hidden="true">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 8 6 6"/><path d="m4 14 6-6 2-3"/><path d="M2 5h12"/><path d="M7 2h1"/><path d="m22 22-5-10-5 10"/><path d="M14 18h6"/></svg>
                 </div>
-                <h3>Multiple Languages</h3>
-                <p>Work in the language you are most comfortable with. Our models support dozens of languages with high accuracy.</p>
+                <h3>{{ app()->getLocale() === 'ar' ? 'لغات متعددة' : 'Multiple Languages' }}</h3>
+                <p>{{ app()->getLocale() === 'ar' ? 'اعمل باللغة التي تشعر بالارتياح معها. نماذجنا تدعم العشرات من اللغات بدقة عالية.' : 'Work in the language you are most comfortable with. Our models support dozens of languages with high accuracy.' }}</p>
             </div>
             <div class="bc w2 fu">
                 <div class="bi" aria-hidden="true">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
                 </div>
-                <h3>Available 24/7 &mdash; Always Instant</h3>
-                <p>No waiting, no appointments, no delays. Your AI assistant is ready the moment you need it, any time of day or night. Whether it is 3am or your busiest workday, we are always on.</p>
+                <h3>{{ app()->getLocale() === 'ar' ? 'متاح 24/7 &mdash; دائماً فوري' : 'Available 24/7 &mdash; Always Instant' }}</h3>
+                <p>{{ app()->getLocale() === 'ar' ? 'بدون انتظار، بدون مواعيد، بدون تأخير. مساعدك الذكي جاهز في اللحظة التي تحتاجه فيها، في أي وقت من الليل والنهار. سواء كان الساعة 3 صباحاً أو أضخم يوم عمل، نحن دائماً متصلين.' : 'No waiting, no appointments, no delays. Your AI assistant is ready the moment you need it, any time of day or night. Whether it is 3am or your busiest workday, we are always on.' }}</p>
             </div>
             <div class="bc fu d1">
                 <div class="bi" aria-hidden="true">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
                 </div>
-                <h3>Private &amp; Secure</h3>
-                <p>Your conversations and data stay safe. Built with privacy as the default &mdash; we do not train on your data.</p>
+                <h3>{{ app()->getLocale() === 'ar' ? 'خاص وآمن' : 'Private &amp; Secure' }}</h3>
+                <p>{{ app()->getLocale() === 'ar' ? 'محادثاتك وبيانатك تبقى آمنة. مبني مع الخصوصية كإعداد افتراضي &mdash; لا نقوم بتدريب نماذجنا على بيانатك.' : 'Your conversations and data stay safe. Built with privacy as the default &mdash; we do not train on your data.' }}</p>
             </div>
             <div class="bc fu d2">
                 <div class="bi" aria-hidden="true">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></svg>
                 </div>
-                <h3>50+ AI Models</h3>
-                <p>Choose the best AI for each task. Creative writing, data analysis, coding help &mdash; there is a model for everything.</p>
+                <h3>{{ app()->getLocale() === 'ar' ? '50+ نموذج ذكاء اصطناعي' : '50+ AI Models' }}</h3>
+                <p>{{ app()->getLocale() === 'ar' ? 'اختر أفضل ذكاء اصطناعي لكل مهمة. الكتابة الإبداعية، تحليل البيانات، مساعدة الترميز &mdash; هناك نموذج لكل شيء.' : 'Choose the best AI for each task. Creative writing, data analysis, coding help &mdash; there is a model for everything.' }}</p>
             </div>
         </div>
     </div>
@@ -470,25 +470,25 @@
 <section class="sp" id="how-it-works" aria-labelledby="hiw-h2">
     <div class="container">
         <div class="sheader text-center">
-            <div class="slabel fu">Simple Process</div>
-            <h2 class="sh2 fu d1" id="hiw-h2">Up and running in <span class="text-gradient-gold">30 seconds</span></h2>
-            <p class="ssub fu d2" style="margin:0 auto;">No technical setup, no complicated onboarding. Three simple steps and you are ready.</p>
+            <div class="slabel fu">{{ app()->getLocale() === 'ar' ? 'عملية بسيطة' : 'Simple Process' }}</div>
+            <h2 class="sh2 fu d1" id="hiw-h2">{{ app()->getLocale() === 'ar' ? 'تشغيل وتشغيل في <span class="text-gradient-gold">30 ثانية</span>' : 'Up and running in <span class="text-gradient-gold">30 seconds</span>' }}</h2>
+            <p class="ssub fu d2" style="margin:0 auto;">{{ app()->getLocale() === 'ar' ? 'لا إعدادات تقنية، لا إعداد معقد. ثلاث خطوات بسيطة وأنت جاهز.' : 'No technical setup, no complicated onboarding. Three simple steps and you are ready.' }}</p>
         </div>
         <div class="steps-grid">
             <div class="step-card fu">
                 <div class="step-num">1</div>
-                <h3>Create Account</h3>
-                <p>Sign up in 30 seconds with your email. No credit card required to start your free trial with 1,000 credits.</p>
+                <h3>{{ app()->getLocale() === 'ar' ? 'إنشاء حساب' : 'Create Account' }}</h3>
+                <p>{{ app()->getLocale() === 'ar' ? 'اشترك في 30 ثانية ببريدك الإلكتروني. لا توجد بطاقة ائتمان مطلوبة لبدء تجربتك المجانية بـ 1000 رصيد.' : 'Sign up in 30 seconds with your email. No credit card required to start your free trial with 1,000 credits.' }}</p>
             </div>
             <div class="step-card fu d1">
                 <div class="step-num">2</div>
-                <h3>Start Chatting</h3>
-                <p>Type your question, task, or idea. Pick from 50+ AI models or let the system choose the best one for you.</p>
+                <h3>{{ app()->getLocale() === 'ar' ? 'ابدأ المحادثة' : 'Start Chatting' }}</h3>
+                <p>{{ app()->getLocale() === 'ar' ? 'اكتب سؤالك أو مهمتك أو فكرتك. اختر من 50+ نموذج ذكاء اصطناعي أو اترك النظام يختار الأفضل لك.' : 'Type your question, task, or idea. Pick from 50+ AI models or let the system choose the best one for you.' }}</p>
             </div>
             <div class="step-card fu d2">
                 <div class="step-num">3</div>
-                <h3>Get Results</h3>
-                <p>Receive instant, high-quality responses. Refine, export, and use your results however you need them.</p>
+                <h3>{{ app()->getLocale() === 'ar' ? 'احصل على النتائج' : 'Get Results' }}</h3>
+                <p>{{ app()->getLocale() === 'ar' ? 'احصل على ردود فورية عالية الجودة. صقّل ونسّق واستخدم النتائج بالطريقة التي تحتاجها.' : 'Receive instant, high-quality responses. Refine, export, and use your results however you need them.' }}</p>
             </div>
         </div>
     </div>
@@ -498,8 +498,8 @@
 <section class="sp" aria-labelledby="test-h2">
     <div class="container">
         <div class="sheader text-center">
-            <div class="slabel fu">Real Users, Real Results</div>
-            <h2 class="sh2 fu d1" id="test-h2">People are saving <span class="text-gradient-gold">hours every day</span></h2>
+            <div class="slabel fu">{{ app()->getLocale() === 'ar' ? 'مستخدمون حقيقيون، نتائج حقيقية' : 'Real Users, Real Results' }}</div>
+            <h2 class="sh2 fu d1" id="test-h2">{{ app()->getLocale() === 'ar' ? 'الناس يوفرون <span class="text-gradient-gold">ساعات كل يوم</span>' : 'People are saving <span class="text-gradient-gold">hours every day</span>' }}</h2>
         </div>
         <div class="t-grid">
             <div class="tc fu">
@@ -561,72 +561,72 @@
 <section class="sp" id="pricing" aria-labelledby="price-h2">
     <div class="container">
         <div class="sheader text-center">
-            <div class="slabel fu">Pricing</div>
-            <h2 class="sh2 fu d1" id="price-h2">Simple Pricing. <span class="text-gradient-gold">No Surprises.</span></h2>
-            <p class="ssub fu d2" style="margin:0 auto;">Start free, upgrade only when you need more. Cancel anytime.</p>
+            <div class="slabel fu">{{ app()->getLocale() === 'ar' ? 'الأسعار' : 'Pricing' }}</div>
+            <h2 class="sh2 fu d1" id="price-h2">{{ app()->getLocale() === 'ar' ? 'أسعار بسيطة. <span class="text-gradient-gold">بدون مفاجآت.</span>' : 'Simple Pricing. <span class="text-gradient-gold">No Surprises.</span>' }}</h2>
+            <p class="ssub fu d2" style="margin:0 auto;">{{ app()->getLocale() === 'ar' ? 'ابدأ مجاناً، قم بالترقية عندما تحتاج المزيد. ألغ في أي وقت.' : 'Start free, upgrade only when you need more. Cancel anytime.' }}</p>
         </div>
         <div class="p-grid">
             <div class="pc fu">
-                <div class="pname">Free Trial</div>
-                <div class="pprice">FREE<small> / 7 days</small></div>
-                <p class="pdesc">Everything you need to experience AI</p>
+                <div class="pname">{{ app()->getLocale() === 'ar' ? 'تجربة مجانية' : 'Free Trial' }}</div>
+                <div class="pprice">{{ app()->getLocale() === 'ar' ? 'مجاني' : 'FREE' }}<small>{{ app()->getLocale() === 'ar' ? ' / 7 أيام' : ' / 7 days' }}</small></div>
+                <p class="pdesc">{{ app()->getLocale() === 'ar' ? 'كل ما تحتاجه لتجربة الذكاء الاصطناعي' : 'Everything you need to experience AI' }}</p>
                 <ul class="pfeat">
                     <li>
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
-                        1,000 free credits
+                        {{ app()->getLocale() === 'ar' ? '1000 رصيد مجاني' : '1,000 free credits' }}
                     </li>
                     <li>
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
-                        ~500 AI responses
+                        {{ app()->getLocale() === 'ar' ? '~500 ردود ذكاء اصطناعي' : '~500 AI responses' }}
                     </li>
                     <li>
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
-                        No credit card required
+                        {{ app()->getLocale() === 'ar' ? 'لا توجد بطاقة ائتمان مطلوبة' : 'No credit card required' }}
                     </li>
                     <li>
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
-                        Multiple AI models
+                        {{ app()->getLocale() === 'ar' ? 'نماذج ذكاء اصطناعي متعددة' : 'Multiple AI models' }}
                     </li>
                 </ul>
-                <a href="/register" class="btn btn-outline-gold" style="width:100%;justify-content:center;padding:.85rem;">Start Free Trial</a>
+                <a href="/register" class="btn btn-outline-gold" style="width:100%;justify-content:center;padding:.85rem;">{{ app()->getLocale() === 'ar' ? 'ابدأ التجربة المجانية' : 'Start Free Trial' }}</a>
             </div>
             <div class="pc fu d1">
-                <div class="pbadge">Most Popular</div>
-                <div class="pname">Starter</div>
-                <div class="pprice">15 <small>KWD / mo</small></div>
-                <p class="pdesc">Great for daily personal use</p>
+                <div class="pbadge">{{ app()->getLocale() === 'ar' ? 'الأكثر شيوعاً' : 'Most Popular' }}</div>
+                <div class="pname">{{ app()->getLocale() === 'ar' ? 'البداية' : 'Starter' }}</div>
+                <div class="pprice">15 <small>{{ app()->getLocale() === 'ar' ? 'د.ك / شهر' : 'KWD / mo' }}</small></div>
+                <p class="pdesc">{{ app()->getLocale() === 'ar' ? 'رائع للاستخدام الشخصي اليومي' : 'Great for daily personal use' }}</p>
                 <ul class="pfeat">
-                    <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>1,000 credits / month</li>
-                    <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>10 requests / minute</li>
-                    <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>1 free API key</li>
-                    <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Small models only</li>
+                    <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>{{ app()->getLocale() === 'ar' ? '1000 رصيد / الشهر' : '1,000 credits / month' }}</li>
+                    <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>{{ app()->getLocale() === 'ar' ? '10 طلبات / دقيقة' : '10 requests / minute' }}</li>
+                    <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>{{ app()->getLocale() === 'ar' ? 'مفتاح API واحد مجاني' : '1 free API key' }}</li>
+                    <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>{{ app()->getLocale() === 'ar' ? 'نماذج صغيرة فقط' : 'Small models only' }}</li>
                 </ul>
-                <a href="/billing/plans" class="btn btn-outline-gold" style="width:100%;justify-content:center;padding:.85rem;">Get Started</a>
+                <a href="/billing/plans" class="btn btn-outline-gold" style="width:100%;justify-content:center;padding:.85rem;">{{ app()->getLocale() === 'ar' ? 'ابدأ الآن' : 'Get Started' }}</a>
             </div>
             <div class="pc feat fu d2">
-                <div class="pbadge">Best Value</div>
-                <div class="pname">Basic</div>
-                <div class="pprice">25 <small>KWD / mo</small></div>
-                <p class="pdesc">More power, all model sizes</p>
+                <div class="pbadge">{{ app()->getLocale() === 'ar' ? 'أفضل قيمة' : 'Best Value' }}</div>
+                <div class="pname">{{ app()->getLocale() === 'ar' ? 'أساسي' : 'Basic' }}</div>
+                <div class="pprice">25 <small>{{ app()->getLocale() === 'ar' ? 'د.ك / شهر' : 'KWD / mo' }}</small></div>
+                <p class="pdesc">{{ app()->getLocale() === 'ar' ? 'قوة أكثر، جميع أحجام النماذج' : 'More power, all model sizes' }}</p>
                 <ul class="pfeat">
-                    <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>3,000 credits / month</li>
-                    <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>30 requests / minute</li>
-                    <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>1 free API key</li>
-                    <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>All model sizes</li>
+                    <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>{{ app()->getLocale() === 'ar' ? '3000 رصيد / الشهر' : '3,000 credits / month' }}</li>
+                    <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>{{ app()->getLocale() === 'ar' ? '30 طلب / دقيقة' : '30 requests / minute' }}</li>
+                    <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>{{ app()->getLocale() === 'ar' ? 'مفتاح API واحد مجاني' : '1 free API key' }}</li>
+                    <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>{{ app()->getLocale() === 'ar' ? 'جميع أحجام النماذج' : 'All model sizes' }}</li>
                 </ul>
-                <a href="/billing/plans" class="btn btn-gold" style="width:100%;justify-content:center;padding:.85rem;">Get Started</a>
+                <a href="/billing/plans" class="btn btn-gold" style="width:100%;justify-content:center;padding:.85rem;">{{ app()->getLocale() === 'ar' ? 'ابدأ الآن' : 'Get Started' }}</a>
             </div>
             <div class="pc fu d3">
-                <div class="pname">Pro</div>
-                <div class="pprice">45 <small>KWD / mo</small></div>
-                <p class="pdesc">For power users &amp; teams</p>
+                <div class="pname">{{ app()->getLocale() === 'ar' ? 'احترافي' : 'Pro' }}</div>
+                <div class="pprice">45 <small>{{ app()->getLocale() === 'ar' ? 'د.ك / شهر' : 'KWD / mo' }}</small></div>
+                <p class="pdesc">{{ app()->getLocale() === 'ar' ? 'للمستخدمين المتقدمين والفريق' : 'For power users &amp; teams' }}</p>
                 <ul class="pfeat">
-                    <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>10,000 credits / month</li>
-                    <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>60 requests / minute</li>
-                    <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>2 free API keys</li>
-                    <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>Priority cloud failover</li>
+                    <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>{{ app()->getLocale() === 'ar' ? '10000 رصيد / الشهر' : '10,000 credits / month' }}</li>
+                    <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>{{ app()->getLocale() === 'ar' ? '60 طلب / دقيقة' : '60 requests / minute' }}</li>
+                    <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>{{ app()->getLocale() === 'ar' ? 'مفتاحا API مجانيان' : '2 free API keys' }}</li>
+                    <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>{{ app()->getLocale() === 'ar' ? 'أولوية نسخ احتياطي سحابي' : 'Priority cloud failover' }}</li>
                 </ul>
-                <a href="/billing/plans" class="btn btn-ghost" style="width:100%;justify-content:center;padding:.85rem;">Get Started</a>
+                <a href="/billing/plans" class="btn btn-ghost" style="width:100%;justify-content:center;padding:.85rem;">{{ app()->getLocale() === 'ar' ? 'ابدأ الآن' : 'Get Started' }}</a>
             </div>
         </div>
     </div>
@@ -636,7 +636,7 @@
 <section style="padding: 2rem 2rem; background: rgba(212,175,55,0.02); border-top: 1px solid rgba(212,175,55,0.1); margin: 3rem 0;">
     <div class="container" style="text-align: center;">
         <p style="color: var(--text-secondary); font-size: 0.95rem; margin: 0;">
-            Need help choosing? <a href="/cost-calculator" style="color: var(--gold); font-weight: 600; text-decoration: none;">Try our cost calculator</a> to <a href="/cost-calculator" style="color: var(--gold); font-weight: 600; text-decoration: none;">see your savings</a>, or <a href="/comparison" style="color: var(--gold); font-weight: 600; text-decoration: none;">compare with OpenRouter</a>.
+            {{ app()->getLocale() === 'ar' ? 'هل تحتاج مساعدة في الاختيار؟ <a href="/cost-calculator" style="color: var(--gold); font-weight: 600; text-decoration: none;">جرب حاسبة التكاليف</a> لـ <a href="/cost-calculator" style="color: var(--gold); font-weight: 600; text-decoration: none;">رؤية مدخراتك</a>، أو <a href="/comparison" style="color: var(--gold); font-weight: 600; text-decoration: none;">قارن مع OpenRouter</a>.' : 'Need help choosing? <a href="/cost-calculator" style="color: var(--gold); font-weight: 600; text-decoration: none;">Try our cost calculator</a> to <a href="/cost-calculator" style="color: var(--gold); font-weight: 600; text-decoration: none;">see your savings</a>, or <a href="/comparison" style="color: var(--gold); font-weight: 600; text-decoration: none;">compare with OpenRouter</a>.' }}
         </p>
     </div>
 </section>
@@ -647,14 +647,14 @@
         <div class="glass-gold fu" style="padding:3.5rem 2.5rem;text-align:center;position:relative;overflow:hidden;">
             <div style="position:absolute;top:-60px;right:-60px;width:200px;height:200px;background:radial-gradient(circle,rgba(212,175,55,.10) 0%,transparent 70%);border-radius:50%;pointer-events:none;" aria-hidden="true"></div>
             <div style="position:absolute;bottom:-40px;left:-40px;width:160px;height:160px;background:radial-gradient(circle,rgba(124,58,237,.08) 0%,transparent 70%);border-radius:50%;pointer-events:none;" aria-hidden="true"></div>
-            <div class="slabel" style="justify-content:center;margin-bottom:.75rem;">Ready to start?</div>
-            <h2 class="sh2" id="cta-h2" style="margin-bottom:.75rem;">Start Your Free Trial <span class="text-gradient-gold">Today</span></h2>
-            <p style="color:var(--text-secondary);margin-bottom:2rem;font-size:1.05rem;">7 days free. 1,000 credits. No credit card required.</p>
+            <div class="slabel" style="justify-content:center;margin-bottom:.75rem;">{{ app()->getLocale() === 'ar' ? 'هل أنت مستعد للبدء؟' : 'Ready to start?' }}</div>
+            <h2 class="sh2" id="cta-h2" style="margin-bottom:.75rem;">{{ app()->getLocale() === 'ar' ? 'ابدأ تجربتك المجانية <span class="text-gradient-gold">اليوم</span>' : 'Start Your Free Trial <span class="text-gradient-gold">Today</span>' }}</h2>
+            <p style="color:var(--text-secondary);margin-bottom:2rem;font-size:1.05rem;">{{ app()->getLocale() === 'ar' ? '7 أيام مجاني. 1000 رصيد. لا توجد بطاقة ائتمان مطلوبة.' : '7 days free. 1,000 credits. No credit card required.' }}</p>
             <a href="/register" class="btn btn-gold btn-lg">
-                Create Free Account
+                {{ app()->getLocale() === 'ar' ? 'إنشاء حساب مجاني' : 'Create Free Account' }}
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
             </a>
-            <p style="margin-top:1rem;font-size:.84rem;color:var(--text-muted);">Cancel anytime. No commitment.</p>
+            <p style="margin-top:1rem;font-size:.84rem;color:var(--text-muted);">{{ app()->getLocale() === 'ar' ? 'ألغ في أي وقت. بدون التزام.' : 'Cancel anytime. No commitment.' }}</p>
         </div>
     </div>
 </section>
@@ -669,14 +669,14 @@
                 LLM Resayil
             </a>
             <nav class="foot-links" aria-label="Footer navigation">
-                <a href="#features">Features</a>
-                <a href="#pricing">Pricing</a>
-                <a href="/docs">Docs</a>
-                <a href="/comparison">Compare APIs</a>
-                <a href="/cost-calculator">Cost Calculator</a>
-                <a href="/login">Sign In</a>
-                <a href="/terms-of-service">Terms</a>
-                <a href="/privacy-policy">Privacy</a>
+                <a href="#features">{{ app()->getLocale() === 'ar' ? 'المميزات' : 'Features' }}</a>
+                <a href="#pricing">{{ app()->getLocale() === 'ar' ? 'الأسعار' : 'Pricing' }}</a>
+                <a href="/docs">{{ app()->getLocale() === 'ar' ? 'التوثيق' : 'Docs' }}</a>
+                <a href="/comparison">{{ app()->getLocale() === 'ar' ? 'قارن APIs' : 'Compare APIs' }}</a>
+                <a href="/cost-calculator">{{ app()->getLocale() === 'ar' ? 'حاسبة التكاليف' : 'Cost Calculator' }}</a>
+                <a href="/login">{{ app()->getLocale() === 'ar' ? 'تسجيل الدخول' : 'Sign In' }}</a>
+                <a href="/terms-of-service">{{ app()->getLocale() === 'ar' ? 'الشروط' : 'Terms' }}</a>
+                <a href="/privacy-policy">{{ app()->getLocale() === 'ar' ? 'الخصوصية' : 'Privacy' }}</a>
             </nav>
             <p class="foot-copy">&copy; {{ date('Y') }} LLM Resayil. All rights reserved.</p>
         </div>
