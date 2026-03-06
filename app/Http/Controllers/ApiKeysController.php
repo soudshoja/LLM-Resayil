@@ -33,7 +33,14 @@ class ApiKeysController extends Controller
             })]);
         }
 
-        return view('api-keys', compact('apiKeys'));
+        $meta = \App\Helpers\SeoHelper::getPageMeta('api-keys');
+        return view('api-keys', array_merge(compact('apiKeys'), [
+            'pageTitle' => $meta['title'],
+            'pageDescription' => $meta['description'],
+            'pageKeywords' => $meta['keywords'],
+            'ogImage' => $meta['ogImage'],
+            'ogType' => $meta['ogType'],
+        ]));
     }
 
     /**

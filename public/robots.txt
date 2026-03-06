@@ -1,35 +1,75 @@
+# LLM Resayil robots.txt
 User-agent: *
 Allow: /
+Allow: /docs
+Allow: /pricing
+Allow: /features
+Allow: /comparison
+Allow: /vs-ollama
+Allow: /alternatives
+Allow: /cost-calculator
+Allow: /faq
+Allow: /blog
 Disallow: /admin
 Disallow: /admin/
-Disallow: /api/
+Disallow: /dashboard
 Disallow: /profile
 Disallow: /billing
 Disallow: /api-keys
+Disallow: /api/
+Disallow: /login
+Disallow: /register
+Disallow: /checkout
 
+# OpenAI GPT crawlers
 User-agent: GPTBot
 Allow: /
 Allow: /docs
-Allow: /about
-Allow: /privacy-policy
-Allow: /terms-of-service
+Allow: /pricing
+Allow: /features
+Allow: /comparison
+Allow: /vs-ollama
+Allow: /cost-calculator
+Allow: /faq
+Allow: /blog
+Disallow: /admin
+Disallow: /admin/
+Disallow: /dashboard
+Disallow: /login
 
+# Anthropic Claude crawlers
 User-agent: ClaudeBot
 Allow: /
 Allow: /docs
-Allow: /about
-Allow: /privacy-policy
-Allow: /terms-of-service
+Allow: /pricing
+Allow: /comparison
+Disallow: /admin
+Disallow: /admin/
+Disallow: /dashboard
 
+# Perplexity AI crawler
 User-agent: PerplexityBot
 Allow: /
 Allow: /docs
-Allow: /about
+Allow: /pricing
+Allow: /features
+Allow: /comparison
+Disallow: /admin
+Disallow: /admin/
 
+# Anthropic general crawler
 User-agent: anthropic-ai
 Allow: /
+Disallow: /admin
+Disallow: /admin/
 
+# Google crawler
 User-agent: Googlebot
 Allow: /
 
+# Crawl rules
+Crawl-delay: 1
+Request-rate: 10/1s
+
+# Sitemap
 Sitemap: https://llm.resayil.io/sitemap.xml

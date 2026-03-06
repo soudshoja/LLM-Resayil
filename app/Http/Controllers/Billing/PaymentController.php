@@ -41,8 +41,15 @@ class PaymentController extends Controller
         $tiers = $this->billingService->getSubscriptionTiers();
         $topupPacks = $this->billingService->getCreditPacks();
         $paymentMethods = $this->myfatoorahService->getAvailablePaymentMethods();
+        $meta = \App\Helpers\SeoHelper::getPageMeta('billing.plans');
 
-        return view('billing.plans', compact('tiers', 'topupPacks', 'paymentMethods'));
+        return view('billing.plans', array_merge(compact('tiers', 'topupPacks', 'paymentMethods'), [
+            'pageTitle' => $meta['title'],
+            'pageDescription' => $meta['description'],
+            'pageKeywords' => $meta['keywords'],
+            'ogImage' => $meta['ogImage'],
+            'ogType' => $meta['ogType'],
+        ]));
     }
 
     /**

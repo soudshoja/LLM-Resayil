@@ -289,6 +289,10 @@
             <h2 style="color: var(--text); margin-bottom: 1rem;">@lang('docs.need_more_help')</h2>
             <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">@lang('docs.check_api_reference')</p>
             <a href="/credits" class="btn-gold">@lang('credits.how_credits_work')</a>
+            <!-- CLUSTER 2: INTEGRATION/API — Related docs -->
+            <p style="color: var(--text-secondary); margin-top: 1.5rem; font-size: 0.9rem;">
+                Ready to start? <a href="/register" style="color: var(--gold); text-decoration: underline;">Create a free account</a>, see our <a href="/features" style="color: var(--gold); text-decoration: underline;">available models</a>, or check <a href="/billing/plans" style="color: var(--gold); text-decoration: underline;">pricing plans</a>.
+            </p>
         </div>
     </section>
 

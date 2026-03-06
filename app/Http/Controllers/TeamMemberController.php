@@ -84,7 +84,14 @@ class TeamMemberController extends Controller
             ];
         });
 
-        return view('teams.dashboard', ['teamMembers' => $teamMembers]);
+        $meta = \App\Helpers\SeoHelper::getPageMeta('teams.index');
+        return view('teams.dashboard', array_merge(['teamMembers' => $teamMembers], [
+            'pageTitle' => $meta['title'],
+            'pageDescription' => $meta['description'],
+            'pageKeywords' => $meta['keywords'],
+            'ogImage' => $meta['ogImage'],
+            'ogType' => $meta['ogType'],
+        ]));
     }
 
     /**

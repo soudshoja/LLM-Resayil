@@ -4,7 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('title', 'LLM Resayil') - LLM Portal</title>
+    <title>{{ $pageTitle ?? (@yield('title', 'LLM Resayil')) }}</title>
+    <meta name="description" content="{{ $pageDescription ?? 'Affordable OpenAI-compatible LLM API with 45+ models. Pay-per-token pricing, free tier with 1,000 credits.' }}">
+    <meta name="keywords" content="{{ $pageKeywords ?? 'llm api, openai alternative, ai api' }}">
+    <meta property="og:title" content="{{ $pageTitle ?? (@yield('title', 'LLM Resayil')) }}">
+    <meta property="og:description" content="{{ $pageDescription ?? '' }}">
+    <meta property="og:image" content="{{ $ogImage ?? 'https://llm.resayil.io/og-images/og-default.png' }}">
+    <meta property="og:url" content="{{ request()->url() }}">
+    <meta property="og:type" content="{{ $ogType ?? 'website' }}">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ $pageTitle ?? (@yield('title', 'LLM Resayil')) }}">
+    <meta name="twitter:description" content="{{ $pageDescription ?? '' }}">
+    <meta name="twitter:image" content="{{ $ogImage ?? 'https://llm.resayil.io/og-images/og-default.png' }}">
+    <link rel="canonical" href="{{ url(request()->getPathInfo()) }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
     <style>
@@ -179,6 +191,18 @@
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
       gtag('config', 'G-M0T3YYQP7X');
+
+      // PHASE 10 FINDING #6: Internal Link Click Tracking
+      document.addEventListener('click', function(e) {
+        var link = e.target.closest('a[href^="/"]');
+        if (link && link.href) {
+          gtag('event', 'internal_link_click', {
+            'link_destination': link.href,
+            'link_text': link.textContent.trim(),
+            'page_source': window.location.pathname
+          });
+        }
+      });
     </script>
     @endif
     <script>
@@ -327,6 +351,44 @@
 @endif
 
 @yield('content')
+
+<!-- GLOBAL FOOTER LINKS (All Pages) — CLUSTERS 1,2,3 -->
+<footer style="border-top: 1px solid var(--border); background: rgba(0,0,0,0.3); padding: 3rem 2rem; margin-top: 4rem;">
+    <div style="max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem;">
+        <!-- CLUSTER 1: COST/ROI -->
+        <div>
+            <p style="font-weight: 600; color: var(--text-primary); margin-bottom: 1rem;">Pricing & Savings</p>
+            <ul style="list-style: none; padding: 0; margin: 0;">
+                <li style="margin-bottom: 0.5rem;"><a href="/pricing" style="color: var(--text-secondary); text-decoration: none; transition: color 0.2s;">Pricing Plans</a></li>
+                <li style="margin-bottom: 0.5rem;"><a href="/cost-calculator" style="color: var(--text-secondary); text-decoration: none; transition: color 0.2s;">Cost Calculator</a></li>
+                <li style="margin-bottom: 0.5rem;"><a href="/comparison" style="color: var(--text-secondary); text-decoration: none; transition: color 0.2s;">Compare OpenRouter</a></li>
+                <li style="margin-bottom: 0.5rem;"><a href="/alternatives" style="color: var(--text-secondary); text-decoration: none; transition: color 0.2s;">LLM Alternatives</a></li>
+            </ul>
+        </div>
+        <!-- CLUSTER 2: INTEGRATION/API -->
+        <div>
+            <p style="font-weight: 600; color: var(--text-primary); margin-bottom: 1rem;">Developer Tools</p>
+            <ul style="list-style: none; padding: 0; margin: 0;">
+                <li style="margin-bottom: 0.5rem;"><a href="/docs" style="color: var(--text-secondary); text-decoration: none; transition: color 0.2s;">API Documentation</a></li>
+                <li style="margin-bottom: 0.5rem;"><a href="/features" style="color: var(--text-secondary); text-decoration: none; transition: color 0.2s;">Available Models</a></li>
+                <li style="margin-bottom: 0.5rem;"><a href="/api-keys" style="color: var(--text-secondary); text-decoration: none; transition: color 0.2s;">API Keys</a></li>
+                <li style="margin-bottom: 0.5rem;"><a href="/credits" style="color: var(--text-secondary); text-decoration: none; transition: color 0.2s;">How Credits Work</a></li>
+            </ul>
+        </div>
+        <!-- CLUSTER 3: EDUCATION -->
+        <div>
+            <p style="font-weight: 600; color: var(--text-primary); margin-bottom: 1rem;">Learn & Compare</p>
+            <ul style="list-style: none; padding: 0; margin: 0;">
+                <li style="margin-bottom: 0.5rem;"><a href="/about" style="color: var(--text-secondary); text-decoration: none; transition: color 0.2s;">About Us</a></li>
+                <li style="margin-bottom: 0.5rem;"><a href="/contact" style="color: var(--text-secondary); text-decoration: none; transition: color 0.2s;">Contact Support</a></li>
+                <li style="margin-bottom: 0.5rem;"><a href="/privacy-policy" style="color: var(--text-secondary); text-decoration: none; transition: color 0.2s;">Privacy</a></li>
+            </ul>
+        </div>
+    </div>
+    <div style="max-width: 1200px; margin: 2rem auto 0; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; color: var(--text-muted); font-size: 0.85rem;">
+        <p>LLM Resayil &copy; 2026. Affordable, OpenAI-compatible LLM API.</p>
+    </div>
+</footer>
 
 @stack('scripts')
 </body>

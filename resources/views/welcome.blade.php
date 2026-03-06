@@ -610,6 +610,15 @@
     </div>
 </section>
 
+<!-- CLUSTER 1: COST/ROI — Show calculator and comparison links -->
+<section style="padding: 2rem 2rem; background: rgba(212,175,55,0.02); border-top: 1px solid rgba(212,175,55,0.1); margin: 3rem 0;">
+    <div class="container" style="text-align: center;">
+        <p style="color: var(--text-secondary); font-size: 0.95rem; margin: 0;">
+            Need help choosing? <a href="/cost-calculator" style="color: var(--gold); font-weight: 600; text-decoration: none;">Try our cost calculator</a> to <a href="/cost-calculator" style="color: var(--gold); font-weight: 600; text-decoration: none;">see your savings</a>, or <a href="/comparison" style="color: var(--gold); font-weight: 600; text-decoration: none;">compare with OpenRouter</a>.
+        </p>
+    </div>
+</section>
+
 <!-- FINAL CTA -->
 <section class="sps" aria-labelledby="cta-h2">
     <div class="container">
@@ -641,6 +650,8 @@
                 <a href="#features">Features</a>
                 <a href="#pricing">Pricing</a>
                 <a href="/docs">Docs</a>
+                <a href="/comparison">Compare APIs</a>
+                <a href="/cost-calculator">Cost Calculator</a>
                 <a href="/login">Sign In</a>
                 <a href="/terms-of-service">Terms</a>
                 <a href="/privacy-policy">Privacy</a>
