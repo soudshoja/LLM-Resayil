@@ -390,7 +390,7 @@
             </h1>
             <p class="hero-sub">
                 {{ app()->getLocale() === 'ar' ? 'اكتب وفكّر وأنجز أسرع من أي وقت مضى.' : 'Write faster, think smarter, and get answers instantly.' }}<br>
-                {{ app()->getLocale() === 'ar' ? 'احصل على <strong>أكثر من 50 نموذج ذكاء اصطناعي</strong> على منصة واحدة.' : 'Access <strong>50+ powerful AI models</strong> on a single platform.' }}
+                {!! app()->getLocale() === 'ar' ? 'احصل على <strong>أكثر من 50 نموذج ذكاء اصطناعي</strong> على منصة واحدة.' : 'Access <strong>50+ powerful AI models</strong> on a single platform.' !!}
             </p>
             <div class="hero-cta-group">
                 <a href="/register" class="btn btn-gold btn-lg">
@@ -416,7 +416,7 @@
     <div class="container">
         <div class="sheader text-center">
             <div class="slabel fu">{{ app()->getLocale() === 'ar' ? 'ما يمكنك فعله' : 'What you can do' }}</div>
-            <h2 class="sh2 fu d1" id="feat-h2">{{ app()->getLocale() === 'ar' ? 'مهامك اليومية، منجزة <span class="text-gradient-gold">أسرع 10 مرات</span>' : 'Everyday tasks, done <span class="text-gradient-gold">10x faster</span>' }}</h2>
+            <h2 class="sh2 fu d1" id="feat-h2">{!! app()->getLocale() === 'ar' ? 'مهامك اليومية، منجزة <span class="text-gradient-gold">أسرع 10 مرات</span>' : 'Everyday tasks, done <span class="text-gradient-gold">10x faster</span>' !!}</h2>
             <p class="ssub fu d2" style="margin:0 auto;">{{ app()->getLocale() === 'ar' ? 'لا حاجة لخبرة تقنية. فقط اكتب ما تحتاجه واحصل على النتائج فوراً.' : 'No technical knowledge needed. Just type what you need and get results instantly.' }}</p>
         </div>
         <div class="bento">
@@ -471,7 +471,7 @@
     <div class="container">
         <div class="sheader text-center">
             <div class="slabel fu">{{ app()->getLocale() === 'ar' ? 'عملية بسيطة' : 'Simple Process' }}</div>
-            <h2 class="sh2 fu d1" id="hiw-h2">{{ app()->getLocale() === 'ar' ? 'تشغيل وتشغيل في <span class="text-gradient-gold">30 ثانية</span>' : 'Up and running in <span class="text-gradient-gold">30 seconds</span>' }}</h2>
+            <h2 class="sh2 fu d1" id="hiw-h2">{!! app()->getLocale() === 'ar' ? 'تشغيل وتشغيل في <span class="text-gradient-gold">30 ثانية</span>' : 'Up and running in <span class="text-gradient-gold">30 seconds</span>' !!}</h2>
             <p class="ssub fu d2" style="margin:0 auto;">{{ app()->getLocale() === 'ar' ? 'لا إعدادات تقنية، لا إعداد معقد. ثلاث خطوات بسيطة وأنت جاهز.' : 'No technical setup, no complicated onboarding. Three simple steps and you are ready.' }}</p>
         </div>
         <div class="steps-grid">
@@ -499,7 +499,7 @@
     <div class="container">
         <div class="sheader text-center">
             <div class="slabel fu">{{ app()->getLocale() === 'ar' ? 'مستخدمون حقيقيون، نتائج حقيقية' : 'Real Users, Real Results' }}</div>
-            <h2 class="sh2 fu d1" id="test-h2">{{ app()->getLocale() === 'ar' ? 'الناس يوفرون <span class="text-gradient-gold">ساعات كل يوم</span>' : 'People are saving <span class="text-gradient-gold">hours every day</span>' }}</h2>
+            <h2 class="sh2 fu d1" id="test-h2">{!! app()->getLocale() === 'ar' ? 'الناس يوفرون <span class="text-gradient-gold">ساعات كل يوم</span>' : 'People are saving <span class="text-gradient-gold">hours every day</span>' !!}</h2>
         </div>
         <div class="t-grid">
             <div class="tc fu">
@@ -562,7 +562,7 @@
     <div class="container">
         <div class="sheader text-center">
             <div class="slabel fu">{{ app()->getLocale() === 'ar' ? 'الأسعار' : 'Pricing' }}</div>
-            <h2 class="sh2 fu d1" id="price-h2">{{ app()->getLocale() === 'ar' ? 'أسعار بسيطة. <span class="text-gradient-gold">بدون مفاجآت.</span>' : 'Simple Pricing. <span class="text-gradient-gold">No Surprises.</span>' }}</h2>
+            <h2 class="sh2 fu d1" id="price-h2">{!! app()->getLocale() === 'ar' ? 'أسعار بسيطة. <span class="text-gradient-gold">بدون مفاجآت.</span>' : 'Simple Pricing. <span class="text-gradient-gold">No Surprises.</span>' !!}</h2>
             <p class="ssub fu d2" style="margin:0 auto;">{{ app()->getLocale() === 'ar' ? 'ابدأ مجاناً، قم بالترقية عندما تحتاج المزيد. ألغ في أي وقت.' : 'Start free, upgrade only when you need more. Cancel anytime.' }}</p>
         </div>
         <div class="p-grid">
@@ -636,7 +636,7 @@
 <section style="padding: 2rem 2rem; background: rgba(212,175,55,0.02); border-top: 1px solid rgba(212,175,55,0.1); margin: 3rem 0;">
     <div class="container" style="text-align: center;">
         <p style="color: var(--text-secondary); font-size: 0.95rem; margin: 0;">
-            {{ app()->getLocale() === 'ar' ? 'هل تحتاج مساعدة في الاختيار؟ <a href="/cost-calculator" style="color: var(--gold); font-weight: 600; text-decoration: none;">جرب حاسبة التكاليف</a> لـ <a href="/cost-calculator" style="color: var(--gold); font-weight: 600; text-decoration: none;">رؤية مدخراتك</a>، أو <a href="/comparison" style="color: var(--gold); font-weight: 600; text-decoration: none;">قارن مع OpenRouter</a>.' : 'Need help choosing? <a href="/cost-calculator" style="color: var(--gold); font-weight: 600; text-decoration: none;">Try our cost calculator</a> to <a href="/cost-calculator" style="color: var(--gold); font-weight: 600; text-decoration: none;">see your savings</a>, or <a href="/comparison" style="color: var(--gold); font-weight: 600; text-decoration: none;">compare with OpenRouter</a>.' }}
+            {!! app()->getLocale() === 'ar' ? 'هل تحتاج مساعدة في الاختيار؟ <a href="/cost-calculator" style="color: var(--gold); font-weight: 600; text-decoration: none;">جرب حاسبة التكاليف</a> لـ <a href="/cost-calculator" style="color: var(--gold); font-weight: 600; text-decoration: none;">رؤية مدخراتك</a>، أو <a href="/comparison" style="color: var(--gold); font-weight: 600; text-decoration: none;">قارن مع OpenRouter</a>.' : 'Need help choosing? <a href="/cost-calculator" style="color: var(--gold); font-weight: 600; text-decoration: none;">Try our cost calculator</a> to <a href="/cost-calculator" style="color: var(--gold); font-weight: 600; text-decoration: none;">see your savings</a>, or <a href="/comparison" style="color: var(--gold); font-weight: 600; text-decoration: none;">compare with OpenRouter</a>.' !!}
         </p>
     </div>
 </section>
@@ -648,7 +648,7 @@
             <div style="position:absolute;top:-60px;right:-60px;width:200px;height:200px;background:radial-gradient(circle,rgba(212,175,55,.10) 0%,transparent 70%);border-radius:50%;pointer-events:none;" aria-hidden="true"></div>
             <div style="position:absolute;bottom:-40px;left:-40px;width:160px;height:160px;background:radial-gradient(circle,rgba(124,58,237,.08) 0%,transparent 70%);border-radius:50%;pointer-events:none;" aria-hidden="true"></div>
             <div class="slabel" style="justify-content:center;margin-bottom:.75rem;">{{ app()->getLocale() === 'ar' ? 'هل أنت مستعد للبدء؟' : 'Ready to start?' }}</div>
-            <h2 class="sh2" id="cta-h2" style="margin-bottom:.75rem;">{{ app()->getLocale() === 'ar' ? 'ابدأ تجربتك المجانية <span class="text-gradient-gold">اليوم</span>' : 'Start Your Free Trial <span class="text-gradient-gold">Today</span>' }}</h2>
+            <h2 class="sh2" id="cta-h2" style="margin-bottom:.75rem;">{!! app()->getLocale() === 'ar' ? 'ابدأ تجربتك المجانية <span class="text-gradient-gold">اليوم</span>' : 'Start Your Free Trial <span class="text-gradient-gold">Today</span>' !!}</h2>
             <p style="color:var(--text-secondary);margin-bottom:2rem;font-size:1.05rem;">{{ app()->getLocale() === 'ar' ? '7 أيام مجاني. 1000 رصيد. لا توجد بطاقة ائتمان مطلوبة.' : '7 days free. 1,000 credits. No credit card required.' }}</p>
             <a href="/register" class="btn btn-gold btn-lg">
                 {{ app()->getLocale() === 'ar' ? 'إنشاء حساب مجاني' : 'Create Free Account' }}
