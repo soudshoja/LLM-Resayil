@@ -1,83 +1,233 @@
 @extends('layouts.app')
 
-@section('title', 'LLM Cost Calculator')
+@section('title', 'LLM Cost Calculator — Compare API Pricing')
 
 @push('styles')
 <style>
-    /* ── CSS Custom Properties (Accessibility) ── */
+    /* ── CSS Custom Properties ── */
     :root {
-        --text-muted: #8a92a0; /* Updated from #6b7280 for WCAG AA 4.5:1 contrast on #0f1115 */
+        --calc-gold:        #d4af37;
+        --calc-gold-dim:    rgba(212,175,55,0.55);
+        --calc-gold-glow:   rgba(212,175,55,0.20);
+        --calc-gold-faint:  rgba(212,175,55,0.08);
+        --calc-bg:          #0f1115;
+        --calc-card:        #13161d;
+        --calc-secondary:   #1a1e28;
+        --calc-border:      rgba(255,255,255,0.08);
+        --calc-border-gold: rgba(212,175,55,0.30);
+        --calc-text:        #e8eaf0;
+        --calc-text-sub:    #b0b8c8;
+        --calc-text-muted:  #8a92a0;
+        --calc-green:       #22c55e;
+        --calc-green-bg:    rgba(34,197,94,0.12);
+        --calc-green-border:rgba(34,197,94,0.30);
+        --calc-radius-sm:   8px;
+        --calc-radius-md:   12px;
+        --calc-radius-lg:   16px;
+        --calc-radius-xl:   20px;
+        --calc-shadow-gold: 0 0 24px rgba(212,175,55,0.18);
+        --calc-shadow-card: 0 4px 24px rgba(0,0,0,0.35);
     }
 
-    /* ── Main Layout ── */
+    /* ── Motion preference ── */
+    @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after {
+            animation-duration: 0.01ms !important;
+            animation-iteration-count: 1 !important;
+            transition-duration: 0.01ms !important;
+        }
+    }
+
+    /* ── Base reset for this page ── */
     main { padding: 0; max-width: 100%; margin: 0; }
 
-    /* ── Hero Section ── */
+    /* ══════════════════════════════════════════════════
+       HERO SECTION
+    ══════════════════════════════════════════════════ */
     .calc-hero {
-        background: linear-gradient(135deg, rgba(212,175,55,0.08) 0%, rgba(212,175,55,0.03) 100%);
-        border-bottom: 1px solid var(--border);
-        padding: 4rem 2rem;
+        position: relative;
+        overflow: hidden;
+        background: linear-gradient(
+            160deg,
+            rgba(212,175,55,0.07) 0%,
+            rgba(212,175,55,0.02) 50%,
+            transparent 100%
+        );
+        border-bottom: 1px solid var(--calc-border);
+        padding: 5rem 2rem 4rem;
         text-align: center;
-        margin-bottom: 3rem;
     }
+
+    /* Decorative radial glow behind heading */
+    .calc-hero::before {
+        content: '';
+        position: absolute;
+        top: -60px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 600px;
+        height: 300px;
+        background: radial-gradient(ellipse, rgba(212,175,55,0.12) 0%, transparent 70%);
+        pointer-events: none;
+    }
+
+    .calc-hero-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        background: var(--calc-green-bg);
+        border: 1px solid var(--calc-green-border);
+        color: #86efac;
+        padding: 0.4rem 1rem;
+        border-radius: 20px;
+        font-size: 0.82rem;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        margin-bottom: 1.5rem;
+    }
+
+    .calc-hero-badge-dot {
+        width: 7px;
+        height: 7px;
+        background: var(--calc-green);
+        border-radius: 50%;
+        animation: heroPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes heroPulse {
+        0%, 100% { opacity: 1; transform: scale(1); }
+        50%       { opacity: 0.5; transform: scale(0.8); }
+    }
+
     .calc-hero h1 {
-        font-size: clamp(1.75rem, 5vw, 2.5rem);
-        font-weight: 700;
-        color: var(--text-primary);
-        margin-bottom: 0.75rem;
-        letter-spacing: -0.01em;
+        font-size: clamp(2rem, 5vw, 3rem);
+        font-weight: 800;
+        color: var(--calc-text);
+        margin-bottom: 1rem;
+        letter-spacing: -0.02em;
+        line-height: 1.2;
     }
+
     .calc-hero .hero-accent {
-        background: linear-gradient(135deg, var(--gold), var(--gold-light));
+        background: linear-gradient(135deg, var(--calc-gold) 0%, #f0d060 50%, var(--calc-gold) 100%);
+        background-size: 200% auto;
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
-    }
-    .calc-hero p {
-        font-size: 1.05rem;
-        color: var(--text-secondary);
-        max-width: 700px;
-        margin: 0 auto;
-        line-height: 1.6;
+        animation: shimmerText 4s linear infinite;
     }
 
-    /* ── Main Container ── */
+    @keyframes shimmerText {
+        0%   { background-position: 0% center; }
+        100% { background-position: 200% center; }
+    }
+
+    .calc-hero p {
+        font-size: 1.1rem;
+        color: var(--calc-text-sub);
+        max-width: 640px;
+        margin: 0 auto 2rem;
+        line-height: 1.65;
+    }
+
+    /* Hero stats row */
+    .hero-stats {
+        display: flex;
+        justify-content: center;
+        gap: 2.5rem;
+        flex-wrap: wrap;
+        margin-top: 0.5rem;
+    }
+
+    .hero-stat {
+        text-align: center;
+    }
+
+    .hero-stat-value {
+        display: block;
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--calc-gold);
+        line-height: 1.2;
+    }
+
+    .hero-stat-label {
+        display: block;
+        font-size: 0.78rem;
+        color: var(--calc-text-muted);
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        margin-top: 0.2rem;
+    }
+
+    .hero-stat-divider {
+        width: 1px;
+        background: var(--calc-border);
+        align-self: stretch;
+    }
+
+    /* ══════════════════════════════════════════════════
+       MAIN WRAPPER
+    ══════════════════════════════════════════════════ */
     .calc-wrapper {
         max-width: 1300px;
         margin: 0 auto;
-        padding: 0 2rem 3rem;
+        padding: 3rem 2rem 3rem;
     }
 
-    /* ── Calculator Grid ── */
+    /* ══════════════════════════════════════════════════
+       CALCULATOR GRID
+    ══════════════════════════════════════════════════ */
     .calc-grid {
         display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 3rem;
-        margin-bottom: 4rem;
+        grid-template-columns: 1fr 1.1fr;
+        gap: 2.5rem;
+        margin-bottom: 3.5rem;
+        align-items: start;
     }
 
-    /* ── Left Column: Inputs ── */
-    .calc-inputs {
-        display: flex;
-        flex-direction: column;
-        gap: 1.75rem;
-    }
-
+    /* ══════════════════════════════════════════════════
+       LEFT: INPUT CARD
+    ══════════════════════════════════════════════════ */
     .calc-inputs-card {
-        background: var(--bg-card);
-        border: 1px solid var(--border);
-        border-radius: 14px;
+        background: var(--calc-card);
+        border: 1px solid var(--calc-border);
+        border-radius: var(--calc-radius-lg);
         padding: 2rem;
+        box-shadow: var(--calc-shadow-card);
+        position: sticky;
+        top: 1.5rem;
     }
 
-    .calc-inputs-card h2 {
-        font-size: 1.2rem;
-        font-weight: 600;
-        color: var(--text-primary);
-        margin-bottom: 1.5rem;
+    .card-heading {
         display: flex;
         align-items: center;
-        gap: 0.5rem;
+        gap: 0.65rem;
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: var(--calc-text);
+        margin-bottom: 1.75rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid var(--calc-border);
+    }
+
+    .card-heading-icon {
+        width: 32px;
+        height: 32px;
+        background: var(--calc-gold-faint);
+        border: 1px solid var(--calc-border-gold);
+        border-radius: var(--calc-radius-sm);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+    }
+
+    .card-heading-icon svg {
+        width: 16px;
+        height: 16px;
+        color: var(--calc-gold);
     }
 
     /* ── Form Groups ── */
@@ -85,429 +235,713 @@
         display: flex;
         flex-direction: column;
         gap: 0.6rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .form-group:last-of-type {
+        margin-bottom: 0;
     }
 
     .form-label {
-        font-size: 0.9rem;
-        font-weight: 500;
-        color: var(--text-secondary);
         display: flex;
         justify-content: space-between;
+        align-items: center;
+        font-size: 0.88rem;
+        font-weight: 600;
+        color: var(--calc-text-sub);
+        letter-spacing: 0.02em;
     }
 
     .form-label-value {
-        color: var(--gold);
-        font-weight: 600;
+        font-size: 0.95rem;
+        font-weight: 700;
+        color: var(--calc-gold);
+        font-variant-numeric: tabular-nums;
+        background: var(--calc-gold-faint);
+        border: 1px solid var(--calc-border-gold);
+        padding: 0.15rem 0.55rem;
+        border-radius: 5px;
+        letter-spacing: 0;
     }
 
-    /* ── Slider Input ── */
-    .slider-wrapper {
-        display: flex;
-        flex-direction: column;
-        gap: 0.5rem;
+    /* ── Slider Track ── */
+    .slider-track-wrapper {
+        position: relative;
+        padding: 0.25rem 0;
     }
 
+    .slider-track-bg {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        right: 0;
+        height: 6px;
+        background: var(--calc-secondary);
+        border-radius: 3px;
+        transform: translateY(-50%);
+        pointer-events: none;
+    }
+
+    .slider-track-fill {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        height: 6px;
+        background: linear-gradient(to right, var(--calc-gold), #f0d060);
+        border-radius: 3px;
+        transform: translateY(-50%);
+        pointer-events: none;
+        transition: width 0.08s ease;
+        width: 0%;
+    }
+
+    /* ── Range Input ── */
     .slider-input {
+        position: relative;
         width: 100%;
         height: 6px;
-        border-radius: 4px;
-        background: linear-gradient(to right, var(--bg-primary), var(--gold), var(--gold-light));
+        border-radius: 3px;
+        background: transparent;
         outline: none;
         -webkit-appearance: none;
         appearance: none;
         cursor: pointer;
+        z-index: 1;
+        /* Transparent track — visual track done via overlay divs */
     }
 
+    .slider-input::-webkit-slider-runnable-track {
+        height: 6px;
+        background: transparent;
+        border-radius: 3px;
+    }
+
+    .slider-input::-moz-range-track {
+        height: 6px;
+        background: transparent;
+        border-radius: 3px;
+    }
+
+    /* Thumb — Desktop 24px, larger click area via padding trick */
     .slider-input::-webkit-slider-thumb {
         -webkit-appearance: none;
         appearance: none;
-        width: 20px;
-        height: 20px;
+        width: 24px;
+        height: 24px;
         border-radius: 50%;
-        background: var(--gold);
+        background: var(--calc-gold);
         cursor: pointer;
-        box-shadow: 0 2px 8px rgba(212,175,55,0.4);
-        transition: all 0.2s;
-        border: 2px solid rgba(255,255,255,0.2);
+        box-shadow: 0 0 0 3px rgba(212,175,55,0.25), 0 2px 8px rgba(0,0,0,0.4);
+        transition: transform 0.15s ease, box-shadow 0.15s ease;
+        border: 2px solid #0f1115;
+        margin-top: -9px;
     }
 
     .slider-input::-webkit-slider-thumb:hover {
-        transform: scale(1.15);
-        box-shadow: 0 4px 12px rgba(212,175,55,0.6);
-    }
-
-    .slider-input::-webkit-slider-thumb:focus {
-        outline: 2px solid var(--gold);
-        outline-offset: 2px;
+        transform: scale(1.18);
+        box-shadow: 0 0 0 6px rgba(212,175,55,0.18), 0 4px 12px rgba(0,0,0,0.4);
     }
 
     .slider-input::-moz-range-thumb {
-        width: 20px;
-        height: 20px;
+        width: 24px;
+        height: 24px;
         border-radius: 50%;
-        background: var(--gold);
+        background: var(--calc-gold);
         cursor: pointer;
-        border: 2px solid rgba(255,255,255,0.2);
-        box-shadow: 0 2px 8px rgba(212,175,55,0.4);
-        transition: all 0.2s;
+        border: 2px solid #0f1115;
+        box-shadow: 0 0 0 3px rgba(212,175,55,0.25), 0 2px 8px rgba(0,0,0,0.4);
+        transition: transform 0.15s ease, box-shadow 0.15s ease;
     }
 
     .slider-input::-moz-range-thumb:hover {
-        transform: scale(1.15);
-        box-shadow: 0 4px 12px rgba(212,175,55,0.6);
+        transform: scale(1.18);
     }
 
+    /* Focus ring on slider */
     .slider-input:focus-visible {
-        outline: 2px solid var(--gold);
-        outline-offset: 2px;
+        outline: none;
     }
 
+    .slider-input:focus-visible::-webkit-slider-thumb {
+        box-shadow: 0 0 0 3px #0f1115, 0 0 0 5px var(--calc-gold);
+    }
+
+    .slider-input:focus-visible::-moz-range-thumb {
+        box-shadow: 0 0 0 3px #0f1115, 0 0 0 5px var(--calc-gold);
+    }
+
+    /* Mobile: larger thumb for touch */
+    @media (max-width: 768px) {
+        .slider-input::-webkit-slider-thumb {
+            width: 30px;
+            height: 30px;
+            margin-top: -12px;
+        }
+        .slider-input::-moz-range-thumb {
+            width: 30px;
+            height: 30px;
+        }
+    }
+
+    /* ── Slider value display ── */
     .slider-display {
-        font-size: 0.95rem;
-        color: var(--text-secondary);
-        text-align: center;
-        padding: 0.6rem;
-        background: var(--bg-primary);
-        border-radius: 6px;
-        font-family: 'Courier New', monospace;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        font-size: 0.9rem;
+        color: var(--calc-text-sub);
+        background: var(--calc-secondary);
+        border: 1px solid var(--calc-border);
+        border-radius: var(--calc-radius-sm);
+        padding: 0.55rem 1rem;
+        margin-top: 0.75rem;
+        font-variant-numeric: tabular-nums;
+    }
+
+    .slider-display-num {
+        color: var(--calc-gold);
+        font-weight: 700;
     }
 
     .slider-hint {
-        font-size: 0.85rem;
-        color: var(--text-muted);
+        font-size: 0.78rem;
+        color: var(--calc-text-muted);
         text-align: center;
-        margin-top: 0.5rem;
-        font-style: italic;
+        margin-top: 0.4rem;
     }
 
-    /* ── Select Input ── */
+    /* ── Select / Number Inputs ── */
     .form-input {
         width: 100%;
-        background: var(--bg-primary);
-        border: 1px solid var(--border);
-        border-radius: 8px;
+        background: var(--calc-secondary);
+        border: 1px solid var(--calc-border);
+        border-radius: var(--calc-radius-sm);
         padding: 0.75rem 1rem;
-        color: var(--text-primary);
+        color: var(--calc-text);
         font-size: 0.95rem;
         font-family: inherit;
         cursor: pointer;
-        transition: all 0.2s;
+        transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        min-height: 44px;
+        appearance: auto;
     }
 
     .form-input:hover {
-        border-color: var(--gold-muted);
+        border-color: var(--calc-gold-dim);
     }
 
     .form-input:focus {
         outline: none;
-        border-color: var(--gold);
-        box-shadow: 0 0 0 3px rgba(212,175,55,0.1);
+        border-color: var(--calc-gold);
+        box-shadow: 0 0 0 3px rgba(212,175,55,0.12);
+    }
+
+    .form-input:focus-visible {
+        outline: 2px solid var(--calc-gold);
+        outline-offset: 2px;
     }
 
     /* ── Calculate Button ── */
     .btn-calculate {
-        background: linear-gradient(135deg, var(--gold), var(--gold-light));
-        color: #0a0d14;
-        padding: 1rem;
-        border: none;
-        border-radius: 10px;
-        font-weight: 600;
-        font-size: 1rem;
-        cursor: pointer;
-        transition: all 0.3s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
         width: 100%;
-        margin-top: 0.5rem;
+        min-height: 52px;
+        padding: 0.9rem 1.5rem;
+        margin-top: 1.5rem;
+        background: linear-gradient(135deg, var(--calc-gold) 0%, #f0d060 100%);
+        color: #0a0d14;
+        border: none;
+        border-radius: var(--calc-radius-md);
+        font-weight: 700;
+        font-size: 1rem;
+        font-family: inherit;
+        cursor: pointer;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        letter-spacing: 0.01em;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .btn-calculate::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, transparent 60%);
+        opacity: 0;
+        transition: opacity 0.2s ease;
     }
 
     .btn-calculate:hover {
         transform: translateY(-2px);
-        box-shadow: 0 8px 20px rgba(212,175,55,0.3);
+        box-shadow: 0 8px 28px rgba(212,175,55,0.38);
+    }
+
+    .btn-calculate:hover::after {
+        opacity: 1;
     }
 
     .btn-calculate:active {
         transform: translateY(0);
+        box-shadow: 0 4px 12px rgba(212,175,55,0.25);
     }
 
-    /* ── Right Column: Results ── */
+    .btn-calculate:focus-visible {
+        outline: 2px solid var(--calc-gold);
+        outline-offset: 3px;
+        box-shadow: 0 0 0 4px rgba(212,175,55,0.15);
+    }
+
+    /* ══════════════════════════════════════════════════
+       RIGHT: RESULTS CARD
+    ══════════════════════════════════════════════════ */
     .calc-results {
         display: flex;
         flex-direction: column;
-        gap: 1.5rem;
+        gap: 1.25rem;
     }
 
     .results-card {
-        background: var(--bg-card);
-        border: 1px solid var(--border);
-        border-radius: 14px;
+        background: var(--calc-card);
+        border: 1px solid var(--calc-border);
+        border-radius: var(--calc-radius-lg);
         padding: 2rem;
+        box-shadow: var(--calc-shadow-card);
     }
 
-    .results-card h2 {
-        font-size: 1.2rem;
-        font-weight: 600;
-        color: var(--text-primary);
-        margin-bottom: 1.5rem;
+    /* ── Result Items grid ── */
+    .result-items-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+        margin-bottom: 1.25rem;
     }
 
-    /* ── Result Items ── */
     .result-item {
-        padding: 1.25rem;
-        background: var(--bg-primary);
-        border: 1px solid rgba(212,175,55,0.15);
-        border-radius: 10px;
-        transition: all 0.2s;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        padding: 1rem 1.25rem;
+        background: var(--calc-secondary);
+        border: 1px solid var(--calc-border);
+        border-radius: var(--calc-radius-md);
+        transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        opacity: 0;
+        animation: resultReveal 0.4s ease-out forwards;
+    }
+
+    .result-item:nth-child(1) { animation-delay: 0.05s; }
+    .result-item:nth-child(2) { animation-delay: 0.12s; }
+    .result-item:nth-child(3) { animation-delay: 0.19s; }
+
+    @keyframes resultReveal {
+        from { opacity: 0; transform: translateY(8px); }
+        to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* "Our platform" result item — highlighted */
+    .result-item.result-featured {
+        border-color: var(--calc-border-gold);
+        background: linear-gradient(135deg, rgba(212,175,55,0.07) 0%, rgba(212,175,55,0.03) 100%);
+        box-shadow: 0 0 0 1px rgba(212,175,55,0.12), var(--calc-shadow-gold);
+    }
+
+    .result-item.result-featured:hover {
+        border-color: rgba(212,175,55,0.55);
     }
 
     .result-item:hover {
-        border-color: var(--gold-muted);
-        background: rgba(212,175,55,0.03);
+        border-color: var(--calc-gold-dim);
+    }
+
+    .result-item-left {
+        display: flex;
+        flex-direction: column;
+        gap: 0.2rem;
+        min-width: 0;
+    }
+
+    .result-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.3rem;
+        font-size: 0.7rem;
+        font-weight: 700;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: var(--calc-gold);
+        background: var(--calc-gold-faint);
+        border: 1px solid var(--calc-border-gold);
+        padding: 0.1rem 0.45rem;
+        border-radius: 4px;
+        width: fit-content;
+        margin-bottom: 0.1rem;
     }
 
     .result-label {
-        font-size: 0.85rem;
-        font-weight: 500;
-        color: var(--text-muted);
-        margin-bottom: 0.5rem;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
+        font-size: 0.88rem;
+        font-weight: 600;
+        color: var(--calc-text-sub);
+        white-space: nowrap;
+    }
+
+    .result-label-sub {
+        font-size: 0.75rem;
+        color: var(--calc-text-muted);
+        margin-top: 0.1rem;
     }
 
     .result-value {
-        font-size: 2.2rem;
+        font-size: 1.85rem;
+        font-weight: 800;
+        color: var(--calc-gold);
+        letter-spacing: -0.03em;
+        font-variant-numeric: tabular-nums;
+        line-height: 1;
+        white-space: nowrap;
+        flex-shrink: 0;
+    }
+
+    .result-item:not(.result-featured) .result-value {
+        color: var(--calc-text);
+        font-size: 1.5rem;
         font-weight: 700;
-        color: var(--gold);
-        font-family: 'Courier New', monospace;
-        animation: slideUp 0.4s ease-out;
     }
 
-    @keyframes slideUp {
-        from {
-            opacity: 0;
-            transform: translateY(10px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-
-    /* Animation restart trigger - allows animation to re-run on value change */
-    .result-value.animate {
-        animation: none;
-    }
-
-    .result-value.animate {
-        animation: slideUp 0.4s ease-out;
-    }
-
-    /* ── Savings Badge ── */
-    .savings-badge {
-        background: linear-gradient(135deg, rgba(212,175,55,0.2), rgba(212,175,55,0.1));
-        border: 1px solid rgba(212,175,55,0.4);
-        border-radius: 12px;
+    /* ── Savings Summary Badge ── */
+    .savings-summary {
+        background: linear-gradient(135deg, rgba(212,175,55,0.12) 0%, rgba(212,175,55,0.06) 100%);
+        border: 1px solid rgba(212,175,55,0.35);
+        border-radius: var(--calc-radius-md);
         padding: 1.5rem;
-        margin-top: 1rem;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .savings-summary::before {
+        content: '';
+        position: absolute;
+        top: -30px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 200px;
+        height: 80px;
+        background: radial-gradient(ellipse, rgba(212,175,55,0.15) 0%, transparent 70%);
+        pointer-events: none;
+    }
+
+    .savings-summary-label {
+        font-size: 0.78rem;
+        font-weight: 600;
+        color: var(--calc-text-muted);
+        text-transform: uppercase;
+        letter-spacing: 0.07em;
+        margin-bottom: 0.5rem;
+    }
+
+    .savings-main {
+        font-size: 2.4rem;
+        font-weight: 800;
+        color: var(--calc-gold);
+        letter-spacing: -0.03em;
+        line-height: 1;
+        margin-bottom: 0.35rem;
+        font-variant-numeric: tabular-nums;
+    }
+
+    .savings-sub {
+        font-size: 0.82rem;
+        color: var(--calc-text-muted);
+    }
+
+    /* ── Percentage comparison row ── */
+    .savings-percents {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.75rem;
+        margin-top: 0.75rem;
+    }
+
+    .savings-percent-item {
+        background: var(--calc-secondary);
+        border: 1px solid var(--calc-border);
+        border-radius: var(--calc-radius-sm);
+        padding: 0.75rem 1rem;
         text-align: center;
     }
 
-    .savings-badge h3 {
-        font-size: 0.9rem;
-        color: var(--text-secondary);
-        margin-bottom: 0.5rem;
-        font-weight: 500;
+    .savings-percent-item-label {
+        font-size: 0.72rem;
+        color: var(--calc-text-muted);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        margin-bottom: 0.3rem;
     }
 
-    .savings-percentage {
-        font-size: 2.5rem;
+    .savings-percent-item-value {
+        font-size: 1.2rem;
         font-weight: 700;
-        color: var(--gold);
-        animation: pulse 2s ease-in-out infinite;
+        color: var(--calc-green);
+        font-variant-numeric: tabular-nums;
     }
 
-    @keyframes pulse {
-        0%, 100% {
-            opacity: 1;
-        }
-        50% {
-            opacity: 0.8;
-        }
+    /* ── Animation for value updates ── */
+    @keyframes valueSlideUp {
+        from { opacity: 0; transform: translateY(6px) scale(0.97); }
+        to   { opacity: 1; transform: translateY(0) scale(1); }
     }
 
-    /* ── Comparison Details ── */
-    .comparison-section {
-        border-top: 1px solid var(--border);
-        padding-top: 1.5rem;
-        margin-top: 1.5rem;
+    .value-updated {
+        animation: valueSlideUp 0.28s ease-out forwards;
     }
 
-    .comparison-section h3 {
-        font-size: 0.95rem;
-        font-weight: 600;
-        color: var(--text-primary);
-        margin-bottom: 1rem;
-    }
-
-    .comparison-item {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 0.8rem;
-        background: var(--bg-primary);
-        border-radius: 8px;
-        margin-bottom: 0.6rem;
-        font-size: 0.9rem;
-    }
-
-    .comparison-label {
-        color: var(--text-secondary);
-        font-weight: 500;
-    }
-
-    .comparison-value {
-        color: var(--gold);
-        font-weight: 600;
-        font-family: 'Courier New', monospace;
-    }
-
-    /* ── Info Section ── */
+    /* ══════════════════════════════════════════════════
+       INFO / HOW WE CALCULATE
+    ══════════════════════════════════════════════════ */
     .info-section {
-        background: rgba(212,175,55,0.05);
-        border: 1px solid rgba(212,175,55,0.15);
-        border-radius: 12px;
+        background: var(--calc-gold-faint);
+        border: 1px solid rgba(212,175,55,0.16);
+        border-radius: var(--calc-radius-md);
         padding: 2rem;
         margin-bottom: 3rem;
     }
 
-    .info-section h3 {
-        font-size: 1rem;
-        font-weight: 600;
-        color: var(--text-primary);
-        margin-bottom: 0.75rem;
+    .info-section-header {
         display: flex;
         align-items: center;
-        gap: 0.5rem;
+        gap: 0.6rem;
+        margin-bottom: 1rem;
     }
 
-    .info-section p {
-        color: var(--text-secondary);
-        font-size: 0.9rem;
+    .info-section-header svg {
+        width: 18px;
+        height: 18px;
+        color: var(--calc-gold);
+        flex-shrink: 0;
+    }
+
+    .info-section-header h3 {
+        font-size: 1rem;
+        font-weight: 700;
+        color: var(--calc-text);
+        margin: 0;
+    }
+
+    .pricing-rates {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        margin-bottom: 1rem;
+    }
+
+    .pricing-rate-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        padding: 0.45rem 0.9rem;
+        border-radius: 20px;
+        font-size: 0.82rem;
+        font-weight: 600;
+        border: 1px solid var(--calc-border);
+        background: var(--calc-secondary);
+        color: var(--calc-text-sub);
+    }
+
+    .pricing-rate-pill.pill-featured {
+        background: var(--calc-gold-faint);
+        border-color: var(--calc-border-gold);
+        color: var(--calc-gold);
+    }
+
+    .pricing-rate-pill-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: currentColor;
+        opacity: 0.7;
+    }
+
+    .info-section-note {
+        font-size: 0.82rem;
+        color: var(--calc-text-muted);
         line-height: 1.6;
-        margin-bottom: 0.5rem;
+        margin-top: 0.75rem;
     }
 
-    .info-section p:last-child {
-        margin-bottom: 0;
+    .info-section-links {
+        margin-top: 1.25rem;
+        font-size: 0.9rem;
+        color: var(--calc-text-sub);
+        line-height: 1.7;
     }
 
-    /* ── FAQ Section ── */
+    .info-link {
+        color: var(--calc-gold);
+        font-weight: 600;
+        text-decoration: underline;
+        text-underline-offset: 3px;
+        transition: opacity 0.15s ease;
+    }
+
+    .info-link:hover {
+        opacity: 0.75;
+    }
+
+    .info-link:focus-visible {
+        outline: 2px solid var(--calc-gold);
+        outline-offset: 2px;
+        border-radius: 2px;
+    }
+
+    /* ══════════════════════════════════════════════════
+       FAQ SECTION
+    ══════════════════════════════════════════════════ */
     .faq-section {
         margin-bottom: 4rem;
     }
 
-    .faq-section h2 {
-        font-size: 1.5rem;
-        font-weight: 600;
-        color: var(--text-primary);
-        margin-bottom: 2rem;
+    .section-title {
+        font-size: 1.6rem;
+        font-weight: 700;
+        color: var(--calc-text);
         text-align: center;
+        margin-bottom: 0.5rem;
+        letter-spacing: -0.01em;
+    }
+
+    .section-subtitle {
+        text-align: center;
+        font-size: 0.95rem;
+        color: var(--calc-text-muted);
+        margin-bottom: 2.5rem;
+        max-width: 480px;
+        margin-left: auto;
+        margin-right: auto;
+        line-height: 1.6;
     }
 
     .faq-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-        gap: 1.5rem;
+        grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+        gap: 1rem;
     }
 
     .faq-item {
-        background: var(--bg-card);
-        border: 1px solid var(--border);
-        border-radius: 12px;
-        padding: 1.5rem;
-        cursor: pointer;
-        transition: all 0.2s;
-        outline: none;
+        background: var(--calc-card);
+        border: 1px solid var(--calc-border);
+        border-radius: var(--calc-radius-md);
+        overflow: hidden;
+        transition: border-color 0.2s ease;
     }
 
     .faq-item:hover {
-        border-color: var(--gold-muted);
-        transform: translateY(-2px);
+        border-color: var(--calc-gold-dim);
     }
 
-    .faq-item:focus-visible {
-        outline: 2px solid var(--gold);
-        outline-offset: 2px;
-        box-shadow: 0 0 0 3px rgba(212,175,55,0.15);
-    }
-
-    .faq-question {
-        font-size: 1rem;
-        font-weight: 600;
-        color: var(--text-primary);
-        margin-bottom: 0.75rem;
+    .faq-trigger {
         display: flex;
-        justify-content: space-between;
         align-items: center;
-        gap: 0.5rem;
+        justify-content: space-between;
+        gap: 1rem;
+        width: 100%;
+        padding: 1.25rem 1.5rem;
+        background: transparent;
+        border: none;
+        color: var(--calc-text);
+        font-size: 0.95rem;
+        font-weight: 600;
+        font-family: inherit;
+        text-align: start;
+        cursor: pointer;
+        transition: background 0.15s ease;
+        min-height: 56px;
     }
 
-    .faq-icon {
-        width: 20px;
-        height: 20px;
-        color: var(--gold);
-        transition: transform 0.3s;
+    .faq-trigger:hover {
+        background: rgba(255,255,255,0.03);
     }
 
-    .faq-item.open .faq-icon {
+    .faq-trigger:focus-visible {
+        outline: 2px solid var(--calc-gold);
+        outline-offset: -2px;
+        border-radius: var(--calc-radius-md);
+    }
+
+    .faq-chevron {
+        width: 18px;
+        height: 18px;
+        color: var(--calc-gold);
+        flex-shrink: 0;
+        transition: transform 0.25s ease;
+    }
+
+    .faq-item[data-open="true"] .faq-chevron {
         transform: rotate(180deg);
     }
 
+    .faq-body {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease;
+    }
+
+    .faq-item[data-open="true"] .faq-body {
+        max-height: 400px;
+    }
+
     .faq-answer {
-        color: var(--text-secondary);
+        padding: 0 1.5rem 1.25rem;
         font-size: 0.9rem;
-        line-height: 1.6;
-        display: none;
-        animation: slideDown 0.3s ease-out;
+        color: var(--calc-text-sub);
+        line-height: 1.65;
+        border-top: 1px solid var(--calc-border);
+        padding-top: 1rem;
     }
 
-    .faq-item.open .faq-answer {
-        display: block;
-    }
-
-    @keyframes slideDown {
-        from {
-            opacity: 0;
-            transform: translateY(-10px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-
-    /* ── CTA Section ── */
+    /* ══════════════════════════════════════════════════
+       CTA SECTION
+    ══════════════════════════════════════════════════ */
     .cta-section {
-        background: linear-gradient(135deg, rgba(212,175,55,0.1), rgba(212,175,55,0.05));
-        border: 1px solid rgba(212,175,55,0.2);
-        border-radius: 14px;
-        padding: 3rem 2rem;
+        position: relative;
+        overflow: hidden;
+        background: linear-gradient(135deg, rgba(212,175,55,0.1) 0%, rgba(212,175,55,0.04) 100%);
+        border: 1px solid rgba(212,175,55,0.25);
+        border-radius: var(--calc-radius-xl);
+        padding: 3.5rem 2rem;
         text-align: center;
         margin-bottom: 4rem;
     }
 
+    .cta-section::before {
+        content: '';
+        position: absolute;
+        bottom: -60px;
+        right: -60px;
+        width: 280px;
+        height: 280px;
+        background: radial-gradient(circle, rgba(212,175,55,0.08) 0%, transparent 70%);
+        pointer-events: none;
+    }
+
     .cta-section h2 {
-        font-size: 1.5rem;
-        font-weight: 600;
-        color: var(--text-primary);
-        margin-bottom: 1rem;
+        font-size: clamp(1.4rem, 3vw, 1.9rem);
+        font-weight: 800;
+        color: var(--calc-text);
+        margin-bottom: 0.75rem;
+        letter-spacing: -0.02em;
     }
 
     .cta-section p {
-        color: var(--text-secondary);
         font-size: 1rem;
-        margin-bottom: 1.5rem;
-        max-width: 500px;
-        margin-left: auto;
-        margin-right: auto;
+        color: var(--calc-text-sub);
+        max-width: 520px;
+        margin: 0 auto 2rem;
+        line-height: 1.6;
     }
 
     .cta-buttons {
@@ -515,64 +949,94 @@
         gap: 1rem;
         justify-content: center;
         flex-wrap: wrap;
-    }
-
-    .btn-primary, .btn-secondary {
-        padding: 0.9rem 1.8rem;
-        border-radius: 10px;
-        font-weight: 600;
-        font-size: 0.95rem;
-        cursor: pointer;
-        transition: all 0.2s;
-        border: none;
-        text-decoration: none;
+        position: relative;
     }
 
     .btn-primary {
-        background: linear-gradient(135deg, var(--gold), var(--gold-light));
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.95rem 2rem;
+        min-height: 52px;
+        background: linear-gradient(135deg, var(--calc-gold) 0%, #f0d060 100%);
         color: #0a0d14;
+        border: none;
+        border-radius: var(--calc-radius-md);
+        font-weight: 700;
+        font-size: 1rem;
+        font-family: inherit;
+        cursor: pointer;
+        text-decoration: none;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        letter-spacing: 0.01em;
     }
 
     .btn-primary:hover {
         transform: translateY(-2px);
-        box-shadow: 0 8px 20px rgba(212,175,55,0.3);
+        box-shadow: 0 10px 32px rgba(212,175,55,0.40);
+    }
+
+    .btn-primary:active {
+        transform: translateY(0);
+    }
+
+    .btn-primary:focus-visible {
+        outline: 2px solid var(--calc-gold);
+        outline-offset: 3px;
+        box-shadow: 0 0 0 4px rgba(212,175,55,0.15);
     }
 
     .btn-secondary {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.95rem 2rem;
+        min-height: 52px;
         background: transparent;
-        color: var(--gold);
-        border: 1px solid var(--gold-muted);
+        color: var(--calc-gold);
+        border: 1px solid rgba(212,175,55,0.40);
+        border-radius: var(--calc-radius-md);
+        font-weight: 600;
+        font-size: 1rem;
+        font-family: inherit;
+        cursor: pointer;
+        text-decoration: none;
+        transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
     }
 
     .btn-secondary:hover {
         background: rgba(212,175,55,0.1);
+        border-color: rgba(212,175,55,0.65);
+        transform: translateY(-1px);
     }
 
-    /* ── Trust Signals ── */
-    .trust-badge {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.5rem;
-        background: rgba(5,150,105,0.15);
-        border: 1px solid rgba(5,150,105,0.3);
-        color: #6ee7b7;
-        padding: 0.5rem 1rem;
-        border-radius: 20px;
-        font-size: 0.85rem;
-        font-weight: 600;
-        margin-bottom: 1.5rem;
-        justify-content: center;
+    .btn-secondary:focus-visible {
+        outline: 2px solid var(--calc-gold);
+        outline-offset: 3px;
     }
 
-    /* ── Responsive Design ── */
-    @media(max-width: 1024px) {
+    .cta-footer-note {
+        margin-top: 1.5rem;
+        font-size: 0.875rem;
+        color: var(--calc-text-sub);
+        line-height: 1.6;
+    }
+
+    /* ══════════════════════════════════════════════════
+       RESPONSIVE
+    ══════════════════════════════════════════════════ */
+    @media (max-width: 1024px) {
         .calc-grid {
             grid-template-columns: 1fr;
             gap: 2rem;
         }
 
-        .calc-hero {
-            padding: 3rem 2rem;
+        .calc-inputs-card {
+            position: static;
+        }
+
+        .hero-stat-divider {
+            display: none;
         }
 
         .faq-grid {
@@ -580,118 +1044,192 @@
         }
     }
 
-    @media(max-width: 768px) {
-        main { padding: 0; }
-
+    @media (max-width: 768px) {
         .calc-hero {
-            padding: 2.5rem 1.5rem;
-            margin-bottom: 2rem;
+            padding: 3.5rem 1.5rem 3rem;
         }
 
         .calc-hero h1 {
-            font-size: 1.5rem;
-            margin-bottom: 0.5rem;
+            font-size: 1.75rem;
         }
 
         .calc-hero p {
-            font-size: 0.95rem;
+            font-size: 0.97rem;
+        }
+
+        .hero-stats {
+            gap: 1.5rem;
         }
 
         .calc-wrapper {
-            padding: 0 1.5rem 2rem;
+            padding: 2rem 1.25rem 2rem;
         }
 
-        .calc-inputs-card, .results-card {
+        .calc-inputs-card,
+        .results-card {
             padding: 1.5rem;
         }
 
         .result-value {
-            font-size: 1.8rem;
+            font-size: 1.5rem;
         }
 
-        .savings-percentage {
+        .result-item:not(.result-featured) .result-value {
+            font-size: 1.25rem;
+        }
+
+        .savings-main {
             font-size: 2rem;
         }
 
-        .form-input, .slider-display {
-            font-size: 16px; /* Prevent iOS zoom */
-        }
-
-        .btn-calculate {
-            padding: 0.9rem;
-            font-size: 0.95rem;
-            min-height: 44px;
-        }
-
-        .comparison-item {
-            font-size: 0.85rem;
+        .form-input {
+            font-size: 16px; /* Prevent iOS auto-zoom */
         }
 
         .cta-buttons {
             flex-direction: column;
+            align-items: stretch;
         }
 
-        .btn-primary, .btn-secondary {
-            width: 100%;
-            min-height: 44px;
+        .btn-primary,
+        .btn-secondary {
+            justify-content: center;
+        }
+
+        .savings-percents {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .calc-hero h1 {
+            font-size: 1.45rem;
+        }
+
+        .hero-stats {
+            gap: 1rem;
+        }
+
+        .hero-stat-value {
+            font-size: 1.2rem;
+        }
+
+        .result-value {
+            font-size: 1.3rem;
+        }
+
+        .savings-main {
+            font-size: 1.7rem;
         }
 
         .faq-grid {
             grid-template-columns: 1fr;
         }
 
-        /* Mobile slider thumb — increase to 26px for touch accessibility */
-        .slider-input::-webkit-slider-thumb {
-            width: 26px;
-            height: 26px;
+        .pricing-rates {
+            flex-direction: column;
         }
 
-        .slider-input::-moz-range-thumb {
-            width: 26px;
-            height: 26px;
+        .cta-section {
+            padding: 2.5rem 1.25rem;
         }
     }
 
-    @media(max-width: 480px) {
-        .calc-hero h1 {
-            font-size: 1.25rem;
-        }
+    /* ── RTL support (Arabic) ── */
+    [dir="rtl"] .form-label {
+        flex-direction: row-reverse;
+    }
 
-        .result-value {
-            font-size: 1.5rem;
-        }
+    [dir="rtl"] .slider-track-fill {
+        right: 0;
+        left: auto;
+        background: linear-gradient(to left, var(--calc-gold), #f0d060);
+    }
 
-        .savings-percentage {
-            font-size: 1.75rem;
-        }
+    [dir="rtl"] .result-item {
+        flex-direction: row-reverse;
+    }
 
-        .info-section, .savings-badge {
-            padding: 1.25rem;
-        }
+    [dir="rtl"] .card-heading {
+        flex-direction: row-reverse;
+    }
+
+    [dir="rtl"] .savings-percents {
+        direction: rtl;
+    }
+
+    [dir="rtl"] .faq-trigger {
+        text-align: end;
+        flex-direction: row-reverse;
+    }
+
+    [dir="rtl"] .pricing-rates {
+        flex-direction: row-reverse;
     }
 </style>
 @endpush
 
 @section('content')
-<div class="calc-hero">
-    <h1>LLM <span class="hero-accent">Cost Calculator</span></h1>
-    <p>See how much you'll save with LLM Resayil. Compare pricing across OpenAI, OpenRouter, and our platform in real-time.</p>
-</div>
 
+{{-- ══ HERO ══ --}}
+<section class="calc-hero" aria-labelledby="calc-hero-heading">
+    <div class="calc-hero-badge" aria-hidden="true">
+        <span class="calc-hero-badge-dot"></span>
+        Live Price Comparison
+    </div>
+
+    <h1 id="calc-hero-heading">
+        LLM API <span class="hero-accent">Cost Calculator</span>
+    </h1>
+
+    <p>See exactly how much you'll save with LLM Resayil. Compare real-time pricing against OpenAI and OpenRouter — no sign-up required.</p>
+
+    <div class="hero-stats" role="list" aria-label="Key pricing facts">
+        <div class="hero-stat" role="listitem">
+            <span class="hero-stat-value">15×</span>
+            <span class="hero-stat-label">Cheaper than OpenAI</span>
+        </div>
+        <div class="hero-stat-divider" aria-hidden="true"></div>
+        <div class="hero-stat" role="listitem">
+            <span class="hero-stat-value">8×</span>
+            <span class="hero-stat-label">Cheaper than OpenRouter</span>
+        </div>
+        <div class="hero-stat-divider" aria-hidden="true"></div>
+        <div class="hero-stat" role="listitem">
+            <span class="hero-stat-value">$0</span>
+            <span class="hero-stat-label">Monthly Minimum</span>
+        </div>
+    </div>
+</section>
+
+{{-- ══ MAIN WRAPPER ══ --}}
 <div class="calc-wrapper">
-    <!-- Main Calculator -->
-    <div class="calc-grid">
-        <!-- Left Column: Inputs -->
-        <div class="calc-inputs">
-            <div class="calc-inputs-card">
-                <h2>Input Your Usage</h2>
 
+    {{-- ── Calculator Grid ── --}}
+    <div class="calc-grid">
+
+        {{-- ── LEFT: Inputs ── --}}
+        <div>
+            <div class="calc-inputs-card">
+                <h2 class="card-heading">
+                    <span class="card-heading-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h6M9 12h6M9 15h4"/>
+                        </svg>
+                    </span>
+                    Configure Your Usage
+                </h2>
+
+                {{-- Token Slider --}}
                 <div class="form-group">
                     <label class="form-label" for="tokens-slider">
                         <span>Monthly Token Usage</span>
-                        <span class="form-label-value" id="tokens-display">1M</span>
+                        <span class="form-label-value" id="tokens-label-value" aria-live="polite" aria-atomic="true">1M</span>
                     </label>
-                    <div class="slider-wrapper">
+
+                    <div class="slider-track-wrapper">
+                        <div class="slider-track-bg" aria-hidden="true"></div>
+                        <div class="slider-track-fill" id="slider-track-fill" aria-hidden="true"></div>
                         <input
                             type="range"
                             id="tokens-slider"
@@ -700,20 +1238,29 @@
                             max="10000000000"
                             step="1000000"
                             value="1000000"
-                            aria-label="Monthly token usage slider"
-                            aria-describedby="slider-help"
+                            aria-label="Monthly token usage"
+                            aria-describedby="slider-hint"
                             aria-valuemin="1000000"
                             aria-valuemax="10000000000"
                             aria-valuenow="1000000"
-                            aria-valuetext="1M tokens per month"
+                            aria-valuetext="1 million tokens per month"
                         >
-                        <div class="slider-display" id="slider-display">1,000,000 tokens/month</div>
-                        <div id="slider-help" class="slider-hint">Drag to adjust usage from 1M to 10B tokens</div>
+                    </div>
+
+                    <div class="slider-display" aria-hidden="true">
+                        <span class="slider-display-num" id="slider-display-num">1,000,000</span>
+                        <span>tokens / month</span>
+                    </div>
+                    <div id="slider-hint" class="slider-hint">
+                        Drag or use arrow keys (1M step) — Page Up/Down for 10M steps
                     </div>
                 </div>
 
+                {{-- Direct numeric input --}}
                 <div class="form-group">
-                    <label class="form-label" for="tokens-input">Or enter directly:</label>
+                    <label class="form-label" for="tokens-input">
+                        Or enter token count directly:
+                    </label>
                     <input
                         type="number"
                         id="tokens-input"
@@ -722,180 +1269,331 @@
                         max="10000000000"
                         step="1000000"
                         value="1000000"
-                        placeholder="Enter token count"
+                        placeholder="e.g. 5000000"
+                        aria-label="Token count (numeric input)"
                     >
                 </div>
 
+                {{-- Model Tier --}}
                 <div class="form-group">
-                    <label class="form-label">Model Tier</label>
-                    <select class="form-input" id="model-tier">
-                        <option value="small">Small (e.g., Mistral 7B)</option>
-                        <option value="medium" selected>Medium (e.g., Llama 70B)</option>
-                        <option value="large">Large (e.g., GPT-4 Equivalent)</option>
+                    <label class="form-label" for="model-tier">Model Tier</label>
+                    <select class="form-input" id="model-tier" aria-describedby="model-tier-hint">
+                        <option value="small">Small — e.g. Mistral 7B</option>
+                        <option value="medium" selected>Medium — e.g. Llama 70B</option>
+                        <option value="large">Large — e.g. GPT-4 Equivalent</option>
                     </select>
+                    <span id="model-tier-hint" class="slider-hint">Larger tiers cost more per token across all providers</span>
                 </div>
 
-                <div class="form-group">
-                    <label class="form-label">Workload Type</label>
+                {{-- Workload Type --}}
+                <div class="form-group" style="margin-bottom:0;">
+                    <label class="form-label" for="workload-type">Workload Type</label>
                     <select class="form-input" id="workload-type">
                         <option value="production" selected>Production</option>
                         <option value="development">Development</option>
                         <option value="batch">Batch Processing</option>
                     </select>
                 </div>
+
+                <button class="btn-calculate" id="calc-btn" type="button" aria-label="Recalculate costs with current settings">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                        <polyline points="22 4 12 14.01 9 11.01"/>
+                    </svg>
+                    Calculate My Savings
+                </button>
             </div>
         </div>
 
-        <!-- Right Column: Results -->
-        <div class="calc-results" aria-live="polite" aria-label="Cost comparison results" role="status">
+        {{-- ── RIGHT: Results ── --}}
+        <div
+            class="calc-results"
+            role="region"
+            aria-label="Cost comparison results"
+            aria-live="polite"
+            aria-atomic="false"
+        >
             <div class="results-card">
-                <h2>Cost Comparison</h2>
+                <h2 class="card-heading">
+                    <span class="card-heading-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                        </svg>
+                    </span>
+                    Monthly Cost Comparison
+                </h2>
 
-                <div class="result-item">
-                    <div class="result-label">LLM Resayil</div>
-                    <div class="result-value" id="result-llm" role="status" aria-valuenow="0" aria-label="LLM Resayil cost">$0.00</div>
-                </div>
+                {{-- Result items --}}
+                <div class="result-items-grid" role="list">
 
-                <div class="result-item">
-                    <div class="result-label">vs OpenAI</div>
-                    <div class="result-value" id="result-openai" role="status" aria-valuenow="0" aria-label="OpenAI cost">$0.00</div>
-                </div>
-
-                <div class="result-item">
-                    <div class="result-label">vs OpenRouter</div>
-                    <div class="result-value" id="result-openrouter" role="status" aria-valuenow="0" aria-label="OpenRouter cost">$0.00</div>
-                </div>
-
-                <div class="savings-badge">
-                    <h3>Total Monthly Savings vs OpenAI</h3>
-                    <div class="savings-percentage" id="savings-amount" role="status" aria-valuenow="0" aria-label="Total savings">$0.00</div>
-                </div>
-
-                <div class="comparison-section">
-                    <h3>Percentage Savings</h3>
-                    <div class="comparison-item">
-                        <span class="comparison-label">vs OpenAI</span>
-                        <span class="comparison-value" id="savings-percent-openai" role="status" aria-valuenow="0" aria-label="Percentage savings vs OpenAI">0%</span>
+                    {{-- Our platform — featured --}}
+                    <div class="result-item result-featured" role="listitem" aria-label="LLM Resayil monthly cost">
+                        <div class="result-item-left">
+                            <span class="result-badge" aria-label="Best value">
+                                <svg width="9" height="9" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                                Best Value
+                            </span>
+                            <span class="result-label">LLM Resayil</span>
+                            <span class="result-label-sub">Our platform</span>
+                        </div>
+                        <div
+                            class="result-value"
+                            id="result-llm"
+                            aria-label="LLM Resayil monthly cost"
+                            aria-valuenow="0"
+                        >$0.00</div>
                     </div>
-                    <div class="comparison-item">
-                        <span class="comparison-label">vs OpenRouter</span>
-                        <span class="comparison-value" id="savings-percent-router" role="status" aria-valuenow="0" aria-label="Percentage savings vs OpenRouter">0%</span>
+
+                    {{-- OpenAI --}}
+                    <div class="result-item" role="listitem" aria-label="OpenAI monthly cost">
+                        <div class="result-item-left">
+                            <span class="result-label">OpenAI</span>
+                            <span class="result-label-sub">GPT-4 API</span>
+                        </div>
+                        <div
+                            class="result-value"
+                            id="result-openai"
+                            aria-label="OpenAI monthly cost"
+                            aria-valuenow="0"
+                        >$0.00</div>
+                    </div>
+
+                    {{-- OpenRouter --}}
+                    <div class="result-item" role="listitem" aria-label="OpenRouter monthly cost">
+                        <div class="result-item-left">
+                            <span class="result-label">OpenRouter</span>
+                            <span class="result-label-sub">Aggregated routing</span>
+                        </div>
+                        <div
+                            class="result-value"
+                            id="result-openrouter"
+                            aria-label="OpenRouter monthly cost"
+                            aria-valuenow="0"
+                        >$0.00</div>
+                    </div>
+                </div>
+
+                {{-- Savings badge --}}
+                <div class="savings-summary" aria-label="Total savings summary">
+                    <div class="savings-summary-label">Your monthly savings vs OpenAI</div>
+                    <div
+                        class="savings-main"
+                        id="savings-amount"
+                        aria-label="Monthly savings amount"
+                        aria-live="polite"
+                        aria-atomic="true"
+                    >$0.00</div>
+                    <div class="savings-sub" id="savings-amount-sub">saved every month</div>
+
+                    <div class="savings-percents">
+                        <div class="savings-percent-item" role="group" aria-label="Savings percentage vs OpenAI">
+                            <div class="savings-percent-item-label">vs OpenAI</div>
+                            <div
+                                class="savings-percent-item-value"
+                                id="savings-percent-openai"
+                                aria-label="Savings percentage vs OpenAI"
+                                aria-live="polite"
+                                aria-atomic="true"
+                            >0%</div>
+                        </div>
+                        <div class="savings-percent-item" role="group" aria-label="Savings percentage vs OpenRouter">
+                            <div class="savings-percent-item-label">vs OpenRouter</div>
+                            <div
+                                class="savings-percent-item-value"
+                                id="savings-percent-router"
+                                aria-label="Savings percentage vs OpenRouter"
+                                aria-live="polite"
+                                aria-atomic="true"
+                            >0%</div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- How We Calculate Section — CLUSTER 1: COST/ROI -->
-    <div class="info-section">
-        <h3>How We Calculate Your Costs</h3>
-        <p><strong>Pricing rates used:</strong></p>
-        <p>
-            LLM Resayil: $0.001 per 1K tokens •
-            OpenAI: $0.015 per 1K tokens •
-            OpenRouter: $0.008 per 1K tokens
+    {{-- ── How We Calculate ── --}}
+    <div class="info-section" role="complementary" aria-label="Pricing methodology">
+        <div class="info-section-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+            </svg>
+            <h3>How We Calculate Your Costs</h3>
+        </div>
+
+        <div class="pricing-rates" role="list" aria-label="Pricing rates used">
+            <div class="pricing-rate-pill pill-featured" role="listitem">
+                <span class="pricing-rate-pill-dot" aria-hidden="true"></span>
+                LLM Resayil: $0.001 / 1K tokens
+            </div>
+            <div class="pricing-rate-pill" role="listitem">
+                <span class="pricing-rate-pill-dot" aria-hidden="true"></span>
+                OpenAI: $0.015 / 1K tokens
+            </div>
+            <div class="pricing-rate-pill" role="listitem">
+                <span class="pricing-rate-pill-dot" aria-hidden="true"></span>
+                OpenRouter: $0.008 / 1K tokens
+            </div>
+        </div>
+
+        <p class="info-section-note">
+            Calculations use current market rates and are updated regularly. Actual costs may vary by model selection, additional features, and volume agreements. All figures assume standard pricing without custom contracts.
         </p>
-        <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 1rem;">
-            Calculations are based on current market rates and are updated regularly. Actual costs may vary depending on specific model selection, additional features, and volume discounts. All calculations assume standard model pricing without special agreements.
-        </p>
-        <p style="color: var(--text-secondary); margin-top: 1.5rem; font-size: 0.9rem;">
-            See a <a href="/comparison" style="color: var(--gold); font-weight: 600; text-decoration: underline;">detailed comparison with OpenRouter</a>, or explore <a href="/alternatives" style="color: var(--gold); font-weight: 600; text-decoration: underline;">alternative LLM APIs</a>.
+
+        <p class="info-section-links">
+            See a <a href="/comparison" class="info-link">detailed comparison with OpenRouter</a>, or explore <a href="/alternatives" class="info-link">alternative LLM APIs</a>.
         </p>
     </div>
 
-    <!-- FAQ Section -->
-    <div class="faq-section">
-        <h2>Frequently Asked Questions</h2>
+    {{-- ── FAQ ── --}}
+    <section class="faq-section" aria-labelledby="faq-heading">
+        <h2 class="section-title" id="faq-heading">Frequently Asked Questions</h2>
+        <p class="section-subtitle">Everything you need to know about our pricing and this calculator.</p>
+
         <div class="faq-grid">
-            <div class="faq-item" data-faq="accuracy" role="button" tabindex="0" aria-expanded="false">
-                <div class="faq-question">
+
+            <div class="faq-item" data-open="false">
+                <button
+                    class="faq-trigger"
+                    aria-expanded="false"
+                    aria-controls="faq-body-accuracy"
+                    id="faq-btn-accuracy"
+                >
                     <span>How accurate is this calculator?</span>
-                    <svg class="faq-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                    <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <polyline points="6 9 12 15 18 9"/>
                     </svg>
-                </div>
-                <div class="faq-answer">
-                    Our calculator uses current market pricing rates and is updated regularly. Results are accurate for estimation purposes. For production environments with volume discounts or custom agreements, please contact our sales team for a personalized quote.
+                </button>
+                <div class="faq-body" id="faq-body-accuracy" role="region" aria-labelledby="faq-btn-accuracy" hidden>
+                    <div class="faq-answer">
+                        Our calculator uses current market pricing rates and is updated regularly. Results are accurate for estimation purposes. For production environments with volume discounts or custom agreements, please contact our sales team for a personalized quote.
+                    </div>
                 </div>
             </div>
 
-            <div class="faq-item" data-faq="cheaper" role="button" tabindex="0" aria-expanded="false">
-                <div class="faq-question">
+            <div class="faq-item" data-open="false">
+                <button
+                    class="faq-trigger"
+                    aria-expanded="false"
+                    aria-controls="faq-body-cheaper"
+                    id="faq-btn-cheaper"
+                >
                     <span>Why is LLM Resayil cheaper?</span>
-                    <svg class="faq-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                    <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <polyline points="6 9 12 15 18 9"/>
                     </svg>
-                </div>
-                <div class="faq-answer">
-                    We optimize infrastructure costs and pass savings to users. Our pay-per-token model eliminates monthly minimums. No hidden fees or overages. Plus, access to open-source models with commercial licenses removes vendor lock-in premiums charged by competitors.
+                </button>
+                <div class="faq-body" id="faq-body-cheaper" role="region" aria-labelledby="faq-btn-cheaper" hidden>
+                    <div class="faq-answer">
+                        We optimize infrastructure costs and pass savings to users. Our pay-per-token model eliminates monthly minimums. No hidden fees or overages. Plus, access to open-source models with commercial licenses removes vendor lock-in premiums charged by competitors.
+                    </div>
                 </div>
             </div>
 
-            <div class="faq-item" data-faq="production" role="button" tabindex="0" aria-expanded="false">
-                <div class="faq-question">
+            <div class="faq-item" data-open="false">
+                <button
+                    class="faq-trigger"
+                    aria-expanded="false"
+                    aria-controls="faq-body-production"
+                    id="faq-btn-production"
+                >
                     <span>Can I use this for production estimates?</span>
-                    <svg class="faq-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                    <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <polyline points="6 9 12 15 18 9"/>
                     </svg>
-                </div>
-                <div class="faq-answer">
-                    Yes, this calculator is designed for production cost estimates. All pricing is based on current published rates. For guaranteed pricing, SLAs, or enterprise agreements, contact our sales team at support@resayil.io with your usage profile.
+                </button>
+                <div class="faq-body" id="faq-body-production" role="region" aria-labelledby="faq-btn-production" hidden>
+                    <div class="faq-answer">
+                        Yes, this calculator is designed for production cost estimates. All pricing is based on current published rates. For guaranteed pricing, SLAs, or enterprise agreements, contact our sales team at support@resayil.io with your usage profile.
+                    </div>
                 </div>
             </div>
 
-            <div class="faq-item" data-faq="models" role="button" tabindex="0" aria-expanded="false">
-                <div class="faq-question">
+            <div class="faq-item" data-open="false">
+                <button
+                    class="faq-trigger"
+                    aria-expanded="false"
+                    aria-controls="faq-body-tiers"
+                    id="faq-btn-tiers"
+                >
                     <span>Do pricing tiers affect the calculation?</span>
-                    <svg class="faq-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                    <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <polyline points="6 9 12 15 18 9"/>
                     </svg>
-                </div>
-                <div class="faq-answer">
-                    Model tier selection affects pricing rates. Larger models (like GPT-4 equivalents) are more expensive per token than smaller models (like Mistral 7B). The calculator uses representative pricing for each tier. See our detailed pricing page for model-specific rates.
+                </button>
+                <div class="faq-body" id="faq-body-tiers" role="region" aria-labelledby="faq-btn-tiers" hidden>
+                    <div class="faq-answer">
+                        Model tier selection affects pricing rates. Larger models (like GPT-4 equivalents) are more expensive per token than smaller models (like Mistral 7B). The calculator uses representative pricing for each tier. See our detailed pricing page for model-specific rates.
+                    </div>
                 </div>
             </div>
 
-            <div class="faq-item" data-faq="discount" role="button" tabindex="0" aria-expanded="false">
-                <div class="faq-question">
+            <div class="faq-item" data-open="false">
+                <button
+                    class="faq-trigger"
+                    aria-expanded="false"
+                    aria-controls="faq-body-discount"
+                    id="faq-btn-discount"
+                >
                     <span>Are there volume discounts?</span>
-                    <svg class="faq-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                    <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <polyline points="6 9 12 15 18 9"/>
                     </svg>
-                </div>
-                <div class="faq-answer">
-                    Yes! Enterprise customers with high monthly volumes (>100B tokens) qualify for volume discounts. Contact our sales team to discuss your specific use case and get a custom pricing proposal tailored to your needs.
+                </button>
+                <div class="faq-body" id="faq-body-discount" role="region" aria-labelledby="faq-btn-discount" hidden>
+                    <div class="faq-answer">
+                        Yes! Enterprise customers with high monthly volumes qualify for volume discounts. Contact our sales team to discuss your specific use case and get a custom pricing proposal tailored to your needs.
+                    </div>
                 </div>
             </div>
 
-            <div class="faq-item" data-faq="change" role="button" tabindex="0" aria-expanded="false">
-                <div class="faq-question">
+            <div class="faq-item" data-open="false">
+                <button
+                    class="faq-trigger"
+                    aria-expanded="false"
+                    aria-controls="faq-body-change"
+                    id="faq-btn-change"
+                >
                     <span>How often do prices change?</span>
-                    <svg class="faq-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                    <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <polyline points="6 9 12 15 18 9"/>
                     </svg>
-                </div>
-                <div class="faq-answer">
-                    We update pricing quarterly to reflect market conditions. Existing users are grandfathered into their current rates for 12 months. Price increases (if any) are announced 30 days in advance via email and dashboard notifications.
+                </button>
+                <div class="faq-body" id="faq-body-change" role="region" aria-labelledby="faq-btn-change" hidden>
+                    <div class="faq-answer">
+                        We update pricing quarterly to reflect market conditions. Existing users are grandfathered into their current rates for 12 months. Price increases (if any) are announced 30 days in advance via email and dashboard notifications.
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
 
-    <!-- CTA Section — CLUSTER 1: COST/ROI -->
-    <div class="cta-section">
-        <h2>Ready to Start Saving?</h2>
-        <p>Join thousands of developers who've switched to LLM Resayil and cut their API costs significantly.</p>
-        <div class="cta-buttons">
-            <a href="/register" class="btn-primary">Start Free with 1,000 Credits</a>
-            <a href="/billing/plans" class="btn-secondary">View Pricing Plans</a>
         </div>
-        <p style="color: var(--text-secondary); margin-top: 1.5rem; font-size: 0.9rem;">
-            Check our <a href="/pricing" style="color: var(--gold); text-decoration: underline;">detailed pricing</a>, or see how we <a href="/comparison" style="color: var(--gold); text-decoration: underline;">compare to competitors</a>.
+    </section>
+
+    {{-- ── CTA ── --}}
+    <div class="cta-section" role="complementary" aria-label="Call to action">
+        <h2>Ready to Start Saving?</h2>
+        <p>Join thousands of developers who've switched to LLM Resayil and dramatically cut their API costs.</p>
+
+        <div class="cta-buttons">
+            <a href="{{ route('register') }}" class="btn-primary">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/>
+                </svg>
+                Start Free — 1,000 Credits
+            </a>
+            <a href="/billing/plans" class="btn-secondary">
+                View Pricing Plans
+            </a>
+        </div>
+
+        <p class="cta-footer-note">
+            Check our <a href="/pricing" class="info-link">detailed pricing page</a>, or see how we <a href="/comparison" class="info-link">compare to competitors</a>.
         </p>
     </div>
-</div>
 
-<!-- FAQPage Schema for SEO -->
+</div>{{-- /.calc-wrapper --}}
+
+{{-- FAQPage Schema for SEO --}}
 <script type="application/ld+json">
 {
     "@context": "https://schema.org",
@@ -938,7 +1636,7 @@
             "name": "Are there volume discounts?",
             "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "Yes! Enterprise customers with high monthly volumes (>100B tokens) qualify for volume discounts. Contact our sales team to discuss your specific use case and get a custom pricing proposal tailored to your needs."
+                "text": "Yes! Enterprise customers with high monthly volumes qualify for volume discounts. Contact our sales team to discuss your specific use case and get a custom pricing proposal tailored to your needs."
             }
         },
         {
@@ -955,192 +1653,219 @@
 
 @push('scripts')
 <script>
-    // Pricing constants (in dollars per 1K tokens)
+(function () {
+    'use strict';
+
+    // ── Pricing constants (USD per 1K tokens) ──────────────────────────────
     const PRICING = {
-        llmResayil: {
-            small: 0.0005,
-            medium: 0.001,
-            large: 0.0015
-        },
-        openAI: {
-            small: 0.015,
-            medium: 0.015,
-            large: 0.03
-        },
-        openRouter: {
-            small: 0.005,
-            medium: 0.008,
-            large: 0.015
-        }
+        llmResayil: { small: 0.0005, medium: 0.001,  large: 0.0015 },
+        openAI:     { small: 0.015,  medium: 0.015,  large: 0.030  },
+        openRouter: { small: 0.005,  medium: 0.008,  large: 0.015  }
     };
 
-    const elements = {
-        slider: document.getElementById('tokens-slider'),
-        tokensInput: document.getElementById('tokens-input'),
-        tokensDisplay: document.getElementById('tokens-display'),
-        sliderDisplay: document.getElementById('slider-display'),
-        modelTier: document.getElementById('model-tier'),
-        workloadType: document.getElementById('workload-type'),
-        resultLLM: document.getElementById('result-llm'),
-        resultOpenAI: document.getElementById('result-openai'),
-        resultOpenRouter: document.getElementById('result-openrouter'),
-        savingsAmount: document.getElementById('savings-amount'),
-        savingsPercent: document.getElementById('savings-percent-openai'),
-        savingsPercentRouter: document.getElementById('savings-percent-router')
+    // ── DOM refs ───────────────────────────────────────────────────────────
+    const $ = id => document.getElementById(id);
+
+    const el = {
+        slider:              $('tokens-slider'),
+        tokensInput:         $('tokens-input'),
+        tokenLabelValue:     $('tokens-label-value'),
+        sliderDisplayNum:    $('slider-display-num'),
+        sliderTrackFill:     $('slider-track-fill'),
+        modelTier:           $('model-tier'),
+        workloadType:        $('workload-type'),
+        resultLLM:           $('result-llm'),
+        resultOpenAI:        $('result-openai'),
+        resultOpenRouter:    $('result-openrouter'),
+        savingsAmount:       $('savings-amount'),
+        savingsAmountSub:    $('savings-amount-sub'),
+        savingsPercentOAI:   $('savings-percent-openai'),
+        savingsPercentRouter:$('savings-percent-router'),
+        calcBtn:             $('calc-btn'),
     };
 
-    function formatNumber(num) {
-        if (num >= 1000000000) return (num / 1000000000).toFixed(1) + 'B';
-        if (num >= 1000000) return (num / 1000000).toFixed(1) + 'M';
-        if (num >= 1000) return (num / 1000).toFixed(1) + 'K';
-        return num.toString();
+    // ── Formatters ─────────────────────────────────────────────────────────
+    function fmtShort(n) {
+        if (n >= 1e9)  return (n / 1e9).toFixed(1).replace(/\.0$/, '') + 'B';
+        if (n >= 1e6)  return (n / 1e6).toFixed(1).replace(/\.0$/, '') + 'M';
+        if (n >= 1e3)  return (n / 1e3).toFixed(1).replace(/\.0$/, '') + 'K';
+        return n.toString();
     }
 
-    function formatCurrency(num) {
-        return '$' + num.toFixed(2);
+    function fmtCurrency(n) {
+        if (Math.abs(n) >= 1e6) return '$' + (n / 1e6).toFixed(2) + 'M';
+        if (Math.abs(n) >= 1e3) return '$' + (n / 1e3).toFixed(2) + 'K';
+        return '$' + n.toFixed(2);
     }
 
-    // Update slider display and sync with number input
-    elements.slider.addEventListener('input', function() {
-        const value = parseInt(this.value);
-        elements.tokensInput.value = value;
-        elements.tokensDisplay.textContent = formatNumber(value);
-        elements.sliderDisplay.textContent = value.toLocaleString() + ' tokens/month';
-        // Update ARIA attributes
-        this.setAttribute('aria-valuenow', value);
-        this.setAttribute('aria-valuetext', formatNumber(value) + ' tokens per month');
+    // ── Slider track fill ──────────────────────────────────────────────────
+    function updateTrackFill(value) {
+        const min = Number(el.slider.min);
+        const max = Number(el.slider.max);
+        const pct = ((value - min) / (max - min)) * 100;
+        el.sliderTrackFill.style.width = pct + '%';
+    }
+
+    // ── Animate value update ───────────────────────────────────────────────
+    function animateValue(element, newText) {
+        element.classList.remove('value-updated');
+        // Force reflow to restart animation
+        void element.offsetWidth;
+        element.textContent = newText;
+        element.classList.add('value-updated');
+    }
+
+    // ── Sync slider + number input ─────────────────────────────────────────
+    function syncFromSlider(value) {
+        const v = Number(value);
+        el.tokensInput.value           = v;
+        el.tokenLabelValue.textContent = fmtShort(v);
+        el.sliderDisplayNum.textContent = v.toLocaleString();
+        el.slider.setAttribute('aria-valuenow', v);
+        el.slider.setAttribute('aria-valuetext', fmtShort(v) + ' tokens per month');
+        updateTrackFill(v);
+    }
+
+    // ── Main calculation ───────────────────────────────────────────────────
+    function calculateCosts() {
+        const tokens = Number(el.slider.value);
+        const tier   = el.modelTier.value;
+
+        const llmCost    = (tokens / 1000) * PRICING.llmResayil[tier];
+        const openaiCost = (tokens / 1000) * PRICING.openAI[tier];
+        const routerCost = (tokens / 1000) * PRICING.openRouter[tier];
+
+        const savingsOAI    = openaiCost - llmCost;
+        const savingsRouter = routerCost - llmCost;
+        const pctOAI        = openaiCost > 0 ? ((savingsOAI / openaiCost) * 100).toFixed(1) : '0.0';
+        const pctRouter     = routerCost > 0 ? ((savingsRouter / routerCost) * 100).toFixed(1) : '0.0';
+
+        // Update values with animation
+        animateValue(el.resultLLM,           fmtCurrency(llmCost));
+        animateValue(el.resultOpenAI,         fmtCurrency(openaiCost));
+        animateValue(el.resultOpenRouter,     fmtCurrency(routerCost));
+        animateValue(el.savingsAmount,        fmtCurrency(savingsOAI));
+        animateValue(el.savingsPercentOAI,    pctOAI + '%');
+        animateValue(el.savingsPercentRouter, pctRouter + '%');
+
+        // ARIA value updates
+        el.resultLLM.setAttribute('aria-valuenow',           llmCost.toFixed(2));
+        el.resultOpenAI.setAttribute('aria-valuenow',        openaiCost.toFixed(2));
+        el.resultOpenRouter.setAttribute('aria-valuenow',    routerCost.toFixed(2));
+        el.savingsAmount.setAttribute('aria-valuenow',       savingsOAI.toFixed(2));
+        el.savingsPercentOAI.setAttribute('aria-valuenow',   pctOAI);
+        el.savingsPercentRouter.setAttribute('aria-valuenow',pctRouter);
+
+        // Sub-label context
+        el.savingsAmountSub.textContent = savingsOAI > 0
+            ? 'saved every month vs OpenAI'
+            : 'no savings at this usage level';
+    }
+
+    // ── Event listeners ────────────────────────────────────────────────────
+
+    // Slider drag
+    el.slider.addEventListener('input', function () {
+        syncFromSlider(this.value);
         calculateCosts();
     });
 
-    // Keyboard support for slider (arrow keys, page up/down)
-    elements.slider.addEventListener('keydown', function(e) {
-        const step = parseInt(this.step) || 1000000;
-        let newValue = parseInt(this.value);
+    // Keyboard navigation for slider
+    el.slider.addEventListener('keydown', function (e) {
+        const step = Number(this.step) || 1000000;
+        const min  = Number(this.min);
+        const max  = Number(this.max);
+        let val    = Number(this.value);
         let changed = false;
 
-        if (e.key === 'ArrowLeft' || e.key === 'ArrowDown') {
-            e.preventDefault();
-            newValue = Math.max(parseInt(this.min), newValue - step);
-            changed = true;
-        } else if (e.key === 'ArrowRight' || e.key === 'ArrowUp') {
-            e.preventDefault();
-            newValue = Math.min(parseInt(this.max), newValue + step);
-            changed = true;
-        } else if (e.key === 'PageDown') {
-            e.preventDefault();
-            newValue = Math.max(parseInt(this.min), newValue - (step * 10));
-            changed = true;
-        } else if (e.key === 'PageUp') {
-            e.preventDefault();
-            newValue = Math.min(parseInt(this.max), newValue + (step * 10));
-            changed = true;
+        switch (e.key) {
+            case 'ArrowLeft':
+            case 'ArrowDown':
+                e.preventDefault();
+                val     = Math.max(min, val - step);
+                changed = true;
+                break;
+            case 'ArrowRight':
+            case 'ArrowUp':
+                e.preventDefault();
+                val     = Math.min(max, val + step);
+                changed = true;
+                break;
+            case 'PageDown':
+                e.preventDefault();
+                val     = Math.max(min, val - step * 10);
+                changed = true;
+                break;
+            case 'PageUp':
+                e.preventDefault();
+                val     = Math.min(max, val + step * 10);
+                changed = true;
+                break;
+            case 'Home':
+                e.preventDefault();
+                val     = min;
+                changed = true;
+                break;
+            case 'End':
+                e.preventDefault();
+                val     = max;
+                changed = true;
+                break;
         }
 
-        if (changed && newValue !== parseInt(this.value)) {
-            this.value = newValue;
-            this.dispatchEvent(new Event('input', { bubbles: true }));
+        if (changed) {
+            this.value = val;
+            syncFromSlider(val);
+            calculateCosts();
         }
     });
 
-    // Sync number input with slider
-    elements.tokensInput.addEventListener('input', function() {
-        let value = parseInt(this.value) || 0;
-        // Enforce min/max constraints
-        value = Math.max(1000000, Math.min(10000000000, value));
-        this.value = value;
-        elements.slider.value = value;
-        elements.tokensDisplay.textContent = formatNumber(value);
-        elements.sliderDisplay.textContent = value.toLocaleString() + ' tokens/month';
-        // Update ARIA attributes
-        elements.slider.setAttribute('aria-valuenow', value);
-        elements.slider.setAttribute('aria-valuetext', formatNumber(value) + ' tokens per month');
+    // Number input
+    el.tokensInput.addEventListener('input', function () {
+        let val = parseInt(this.value, 10) || 1000000;
+        val = Math.max(1000000, Math.min(10000000000, val));
+        el.slider.value = val;
+        syncFromSlider(val);
         calculateCosts();
     });
 
-    // Update on dropdown change
-    elements.modelTier.addEventListener('change', calculateCosts);
-    elements.workloadType.addEventListener('change', calculateCosts);
+    // Dropdowns
+    el.modelTier.addEventListener('change', calculateCosts);
+    el.workloadType.addEventListener('change', calculateCosts);
 
-    // FAQ toggle with keyboard support
-    document.querySelectorAll('.faq-item').forEach(item => {
-        item.addEventListener('click', function() {
-            toggleFAQ(this);
-        });
+    // Calculate button (redundant but reassuring UX)
+    el.calcBtn.addEventListener('click', calculateCosts);
 
-        // Keyboard navigation: Enter and Space
-        item.addEventListener('keydown', function(e) {
-            if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                toggleFAQ(this);
+    // ── FAQ accordion ──────────────────────────────────────────────────────
+    document.querySelectorAll('.faq-item').forEach(function (item) {
+        const trigger = item.querySelector('.faq-trigger');
+        const body    = item.querySelector('.faq-body');
+
+        if (!trigger || !body) return;
+
+        trigger.addEventListener('click', function () {
+            const isOpen = item.dataset.open === 'true';
+            const nowOpen = !isOpen;
+
+            item.dataset.open = nowOpen;
+            trigger.setAttribute('aria-expanded', nowOpen);
+
+            if (nowOpen) {
+                body.removeAttribute('hidden');
+            } else {
+                body.setAttribute('hidden', '');
             }
         });
+
+        // Keyboard: Enter and Space already trigger click on <button>
+        // Space is handled natively; no extra keydown needed
     });
 
-    function toggleFAQ(item) {
-        item.classList.toggle('open');
-        const isOpen = item.classList.contains('open');
-        item.setAttribute('aria-expanded', isOpen);
-    }
-
-    // Helper function to trigger animation restart
-    function triggerAnimation(element) {
-        // Remove animate class if present
-        element.classList.remove('animate');
-        // Force reflow to reset animation
-        void element.offsetHeight;
-        // Re-add animate class to trigger animation
-        element.classList.add('animate');
-    }
-
-    // Update cost display with aria-valuenow
-    function calculateCosts() {
-        const tokens = parseInt(elements.slider.value);
-        const tier = elements.modelTier.value;
-
-        // Get pricing for this tier
-        const llmPrice = PRICING.llmResayil[tier];
-        const openaiPrice = PRICING.openAI[tier];
-        const routerPrice = PRICING.openRouter[tier];
-
-        // Calculate monthly costs
-        const llmCost = (tokens / 1000) * llmPrice;
-        const openaiCost = (tokens / 1000) * openaiPrice;
-        const routerCost = (tokens / 1000) * routerPrice;
-
-        // Calculate savings
-        const savingsVsOpenAI = openaiCost - llmCost;
-        const savingsVsRouter = routerCost - llmCost;
-        const savingsPercentOpenAI = openaiCost > 0 ? ((savingsVsOpenAI / openaiCost) * 100).toFixed(1) : 0;
-        const savingsPercentRouter = routerCost > 0 ? ((savingsVsRouter / routerCost) * 100).toFixed(1) : 0;
-
-        // Update DOM with animation triggers
-        elements.resultLLM.textContent = formatCurrency(llmCost);
-        elements.resultLLM.setAttribute('aria-valuenow', llmCost.toFixed(2));
-        triggerAnimation(elements.resultLLM);
-
-        elements.resultOpenAI.textContent = formatCurrency(openaiCost);
-        elements.resultOpenAI.setAttribute('aria-valuenow', openaiCost.toFixed(2));
-        triggerAnimation(elements.resultOpenAI);
-
-        elements.resultOpenRouter.textContent = formatCurrency(routerCost);
-        elements.resultOpenRouter.setAttribute('aria-valuenow', routerCost.toFixed(2));
-        triggerAnimation(elements.resultOpenRouter);
-
-        elements.savingsAmount.textContent = formatCurrency(savingsVsOpenAI);
-        elements.savingsAmount.setAttribute('aria-valuenow', savingsVsOpenAI.toFixed(2));
-        triggerAnimation(elements.savingsAmount);
-
-        elements.savingsPercent.textContent = savingsPercentOpenAI + '%';
-        elements.savingsPercent.setAttribute('aria-valuenow', savingsPercentOpenAI);
-        triggerAnimation(elements.savingsPercent);
-
-        elements.savingsPercentRouter.textContent = savingsPercentRouter + '%';
-        elements.savingsPercentRouter.setAttribute('aria-valuenow', savingsPercentRouter);
-        triggerAnimation(elements.savingsPercentRouter);
-    }
-
-    // Initial calculation
+    // ── Initial state ──────────────────────────────────────────────────────
+    syncFromSlider(el.slider.value);
     calculateCosts();
+
+})();
 </script>
 @endpush
 
