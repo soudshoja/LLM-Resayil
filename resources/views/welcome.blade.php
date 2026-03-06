@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ app()->getLocale() }}" dir="{{ app()->getLocale() === 'ar' ? 'rtl' : 'ltr' }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,7 +8,7 @@
     <meta name="description" content="Powerful AI assistant platform. Write faster, answer anything, and get results instantly. 1,000 free credits — no credit card required.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Tajawal:wght@300;400;500;700;900&display=swap" rel="stylesheet">
 
     <!-- SoftwareApplication Schema -->
     <script type="application/ld+json">
@@ -109,6 +109,7 @@
         }
         html { scroll-behavior: smooth; }
         body { font-family: var(--font); background: var(--bg); color: var(--text); line-height: 1.65; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+        [dir="rtl"] body, [lang="ar"] body { font-family: 'Tajawal', 'Inter', sans-serif; }
         a { color: inherit; text-decoration: none; }
         button { font-family: var(--font); cursor: pointer; border: none; background: none; }
         ul { list-style: none; }
