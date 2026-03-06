@@ -385,27 +385,27 @@
                 1,000 Free Credits &mdash; No Credit Card Needed
             </div>
             <h1 class="hero-h1" id="hero-h1">
-                Your Personal<br>
-                <span class="text-gradient">AI Assistant</span>
+                {{ app()->getLocale() === 'ar' ? 'مساعدك الذكي' : 'Your Personal' }}<br>
+                <span class="text-gradient">{{ app()->getLocale() === 'ar' ? 'الشخصي' : 'AI Assistant' }}</span>
             </h1>
             <p class="hero-sub">
-                Write faster, think smarter, and get answers instantly.<br>
-                Access <strong>50+ powerful AI models</strong> on a single platform.
+                {{ app()->getLocale() === 'ar' ? 'اكتب وفكّر وأنجز أسرع من أي وقت مضى.' : 'Write faster, think smarter, and get answers instantly.' }}<br>
+                {{ app()->getLocale() === 'ar' ? 'احصل على <strong>أكثر من 50 نموذج ذكاء اصطناعي</strong> على منصة واحدة.' : 'Access <strong>50+ powerful AI models</strong> on a single platform.' }}
             </p>
             <div class="hero-cta-group">
                 <a href="/register" class="btn btn-gold btn-lg">
-                    Start Free
+                    {{ app()->getLocale() === 'ar' ? 'ابدأ مجاناً' : 'Start Free' }}
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
                 </a>
-                <a href="#features" class="btn btn-ghost btn-lg">See Features</a>
+                <a href="#features" class="btn btn-ghost btn-lg">{{ app()->getLocale() === 'ar' ? 'شاهد المميزات' : 'See Features' }}</a>
             </div>
-            <p class="hero-trust"><strong>Trusted by users worldwide</strong> &mdash; saving hours every day</p>
-            <div class="stats-card" role="status" aria-label="Live platform statistics">
-                <div class="h-stat"><div class="sdot g" aria-hidden="true"></div>1,200+ users online</div>
+            <p class="hero-trust"><strong>{{ app()->getLocale() === 'ar' ? 'موثوق من قبل المستخدمين حول العالم' : 'Trusted by users worldwide' }}</strong> &mdash; {{ app()->getLocale() === 'ar' ? 'يوفّرون ساعات يوميًا' : 'saving hours every day' }}</p>
+            <div class="stats-card" role="status" aria-label="{{ app()->getLocale() === 'ar' ? 'إحصائيات المنصة المباشرة' : 'Live platform statistics' }}">
+                <div class="h-stat"><div class="sdot g" aria-hidden="true"></div>{{ app()->getLocale() === 'ar' ? '1,200+ مستخدم متصل' : '1,200+ users online' }}</div>
                 <div class="ssep" aria-hidden="true"></div>
-                <div class="h-stat"><div class="sdot y" aria-hidden="true"></div>50+ AI models</div>
+                <div class="h-stat"><div class="sdot y" aria-hidden="true"></div>{{ app()->getLocale() === 'ar' ? '50+ نموذج ذكاء اصطناعي' : '50+ AI models' }}</div>
                 <div class="ssep" aria-hidden="true"></div>
-                <div class="h-stat"><div class="sdot b" aria-hidden="true"></div>99.9% uptime</div>
+                <div class="h-stat"><div class="sdot b" aria-hidden="true"></div>{{ app()->getLocale() === 'ar' ? '99.9% وقت التشغيل' : '99.9% uptime' }}</div>
             </div>
         </div>
     </div>
@@ -415,9 +415,9 @@
 <section class="sp" id="features" aria-labelledby="feat-h2">
     <div class="container">
         <div class="sheader text-center">
-            <div class="slabel fu">What you can do</div>
-            <h2 class="sh2 fu d1" id="feat-h2">Everyday tasks, done <span class="text-gradient-gold">10x faster</span></h2>
-            <p class="ssub fu d2" style="margin:0 auto;">No technical knowledge needed. Just type what you need and get results instantly.</p>
+            <div class="slabel fu">{{ app()->getLocale() === 'ar' ? 'ما يمكنك فعله' : 'What you can do' }}</div>
+            <h2 class="sh2 fu d1" id="feat-h2">{{ app()->getLocale() === 'ar' ? 'مهامك اليومية، منجزة <span class="text-gradient-gold">أسرع 10 مرات</span>' : 'Everyday tasks, done <span class="text-gradient-gold">10x faster</span>' }}</h2>
+            <p class="ssub fu d2" style="margin:0 auto;">{{ app()->getLocale() === 'ar' ? 'لا حاجة لخبرة تقنية. فقط اكتب ما تحتاجه وحصل على النتائج فوراً.' : 'No technical knowledge needed. Just type what you need and get results instantly.' }}</p>
         </div>
         <div class="bento">
             <div class="bc fu">
