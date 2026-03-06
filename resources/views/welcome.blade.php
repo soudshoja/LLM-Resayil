@@ -499,7 +499,11 @@
     <div class="container">
         <div class="sheader text-center">
             <div class="slabel fu">{{ app()->getLocale() === 'ar' ? 'مستخدمون حقيقيون، نتائج حقيقية' : 'Real Users, Real Results' }}</div>
-            <h2 class="sh2 fu d1" id="test-h2">{{ app()->getLocale() === 'ar' ? 'الناس يوفرون <span class="text-gradient-gold">ساعات كل يوم</span>' : 'People are saving <span class="text-gradient-gold">hours every day</span>' }}</h2>
+            @if(app()->getLocale() === 'ar')
+            <h2 class="sh2 fu d1" id="test-h2">الناس يوفرون <span class="text-gradient-gold">ساعات كل يوم</span></h2>
+            @else
+            <h2 class="sh2 fu d1" id="test-h2">People are saving <span class="text-gradient-gold">hours every day</span></h2>
+            @endif
         </div>
         <div class="t-grid">
             <div class="tc fu">
@@ -510,6 +514,16 @@
                     <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
                     <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
                 </div>
+                @if(app()->getLocale() === 'ar')
+                <p class="tq">"أكتب جميع عروضي التجارية ورسائل بريدي الإلكتروني في دقائق الآن. إنه يفهم بالضبط ما أحتاجه والنبرة احترافية دائماً. لقد غيّر تماماً طريقة عملي."</p>
+                <div class="ta">
+                    <div class="tav av-p" aria-hidden="true">س</div>
+                    <div>
+                        <div class="tn">سارة ميتشل</div>
+                        <div class="tr">مستشارة عمل حرة</div>
+                    </div>
+                </div>
+                @else
                 <p class="tq">"I write all my business proposals and client emails in minutes now. It understands exactly what I need and the tone is always professional. It has completely changed how I work."</p>
                 <div class="ta">
                     <div class="tav av-p" aria-hidden="true">S</div>
@@ -518,6 +532,7 @@
                         <div class="tr">Freelance Consultant</div>
                     </div>
                 </div>
+                @endif
             </div>
             <div class="tc fu d1">
                 <div class="tstars" aria-label="5 stars">
@@ -527,6 +542,16 @@
                     <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
                     <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
                 </div>
+                @if(app()->getLocale() === 'ar')
+                <p class="tq">"فريقي يستخدمه للبحث والتحليل كل يوم. جودة الردود استثنائية. لقد جعل الجميع أكثر إنتاجية بشكل كبير وقفزت جودة إنتاجنا."</p>
+                <div class="ta">
+                    <div class="tav av-g" aria-hidden="true">ج</div>
+                    <div>
+                        <div class="tn">جيمس ثورنتون</div>
+                        <div class="tr">مدير منتج، شركة تقنية</div>
+                    </div>
+                </div>
+                @else
                 <p class="tq">"My team uses it for research and analysis every day. The quality of responses is remarkable. It has made everyone significantly more productive and our output quality has jumped."</p>
                 <div class="ta">
                     <div class="tav av-g" aria-hidden="true">J</div>
@@ -535,6 +560,7 @@
                         <div class="tr">Product Manager, Tech Startup</div>
                     </div>
                 </div>
+                @endif
             </div>
             <div class="tc fu d2">
                 <div class="tstars" aria-label="5 stars">
@@ -544,6 +570,16 @@
                     <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
                     <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
                 </div>
+                @if(app()->getLocale() === 'ar')
+                <p class="tq">"وفّرت لي 3 ساعات يومياً على محتوى الإنشاء. كنت أعاني من كتابة التسميات والمقالات. الآن أصف ما أريده ويتم إنجازه في ثوانٍ. يستحق فعلاً."</p>
+                <div class="ta">
+                    <div class="tav av-b" aria-hidden="true">ن</div>
+                    <div>
+                        <div class="tn">نينا كوالسكي</div>
+                        <div class="tr">منشئة محتوى ومدونة</div>
+                    </div>
+                </div>
+                @else
                 <p class="tq">"Saved me 3 hours every single day on content creation. I used to struggle with captions and articles. Now I describe what I want and it is done in seconds. Absolutely worth it."</p>
                 <div class="ta">
                     <div class="tav av-b" aria-hidden="true">N</div>
@@ -552,6 +588,7 @@
                         <div class="tr">Content Creator &amp; Blogger</div>
                     </div>
                 </div>
+                @endif
             </div>
         </div>
     </div>
