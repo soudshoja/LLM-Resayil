@@ -116,6 +116,10 @@
     <div class="plans-header">
         <h1>{{ __('billing.choose_your_plan') }} <span class="text-gold">{{ __('billing.plan') }}</span></h1>
         <p>{{ __('billing.unlock_llm_power') }}</p>
+        <!-- CLUSTER 1: COST/ROI — Compare pricing -->
+        <p style="margin-top: 1.5rem; font-size: 0.95rem; color: var(--text-secondary);">
+            Want to see how much you'll save? Check our <a href="/cost-calculator" style="color: var(--gold); text-decoration: underline; font-weight: 600;">interactive cost calculator</a> or compare with <a href="/comparison" style="color: var(--gold); text-decoration: underline; font-weight: 600;">OpenRouter in detail</a>.
+        </p>
     </div>
 
     {{-- Free Trial Card --}}

@@ -39,7 +39,14 @@ class PaymentMethodsController extends Controller
             // Log error but don't fail - user can still add new methods
         }
 
-        return view('billing.payment-methods', compact('paymentMethods'));
+        $meta = \App\Helpers\SeoHelper::getPageMeta('billing.payment-methods');
+        return view('billing.payment-methods', array_merge(compact('paymentMethods'), [
+            'pageTitle' => $meta['title'],
+            'pageDescription' => $meta['description'],
+            'pageKeywords' => $meta['keywords'],
+            'ogImage' => $meta['ogImage'],
+            'ogType' => $meta['ogType'],
+        ]));
     }
 
     /**

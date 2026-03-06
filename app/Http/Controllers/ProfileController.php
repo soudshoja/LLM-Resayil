@@ -10,7 +10,15 @@ class ProfileController extends Controller
 {
     public function show(Request $request)
     {
-        return view('profile', ['user' => $request->user()]);
+        $meta = \App\Helpers\SeoHelper::getPageMeta('profile');
+        return view('profile', [
+            'user' => $request->user(),
+            'pageTitle' => $meta['title'],
+            'pageDescription' => $meta['description'],
+            'pageKeywords' => $meta['keywords'],
+            'ogImage' => $meta['ogImage'],
+            'ogType' => $meta['ogType'],
+        ]);
     }
 
     public function update(Request $request)

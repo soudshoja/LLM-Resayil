@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ app()->getLocale() }}" dir="{{ app()->getLocale() === 'ar' ? 'rtl' : 'ltr' }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,7 +8,7 @@
     <meta name="description" content="Powerful AI assistant platform. Write faster, answer anything, and get results instantly. 1,000 free credits — no credit card required.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Tajawal:wght@300;400;500;700;900&display=swap" rel="stylesheet">
 
     <!-- SoftwareApplication Schema -->
     <script type="application/ld+json">
@@ -109,6 +109,7 @@
         }
         html { scroll-behavior: smooth; }
         body { font-family: var(--font); background: var(--bg); color: var(--text); line-height: 1.65; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+        [dir="rtl"] body, [lang="ar"] body { font-family: 'Tajawal', 'Inter', sans-serif; }
         a { color: inherit; text-decoration: none; }
         button { font-family: var(--font); cursor: pointer; border: none; background: none; }
         ul { list-style: none; }
@@ -168,14 +169,25 @@
         .nav-links a { color: var(--text-secondary); font-size: 0.9rem; font-weight: 500; padding: 0.5rem 0.9rem; border-radius: var(--r-sm); transition: all 0.2s; }
         .nav-links a:hover { color: var(--text); background: rgba(255,255,255,0.04); }
         .nav-actions { display: flex; align-items: center; gap: 0.75rem; }
-        .nav-toggle { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 0.4rem; }
-        .nav-toggle span { display: block; width: 22px; height: 2px; background: var(--text-secondary); border-radius: 2px; }
-        .mobile-nav { display: none; position: fixed; inset: 0; z-index: 999; background: rgba(15,17,21,0.97); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); flex-direction: column; align-items: center; justify-content: center; gap: 2rem; }
+        .nav-toggle { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 0.5rem; min-width: 44px; min-height: 44px; align-items: center; justify-content: center; border-radius: 8px; transition: background 0.2s; }
+        .nav-toggle:hover { background: rgba(255,255,255,0.06); }
+        .nav-toggle span { display: block; width: 22px; height: 2px; background: var(--text-secondary); border-radius: 2px; transition: transform 0.3s ease, opacity 0.3s ease; transform-origin: center; }
+        .nav-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+        .nav-toggle.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+        .nav-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+        /* Mobile nav: z-index 1001 — ABOVE navbar (1000) so close button is always reachable */
+        .mobile-nav { display: none; position: fixed; inset: 0; z-index: 1001; background: rgba(15,17,21,0.97); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); flex-direction: column; align-items: center; justify-content: center; gap: 2rem; }
         .mobile-nav.open { display: flex; }
         .mobile-nav a { font-size: 1.5rem; font-weight: 700; color: var(--text-secondary); transition: color 0.2s; }
         .mobile-nav a:hover { color: var(--gold); }
-        .mobile-nav-close { position: absolute; top: 1.5rem; right: 1.5rem; color: var(--text-muted); cursor: pointer; padding: 0.5rem; }
-        .mobile-nav-close svg { width: 24px; height: 24px; }
+        .mobile-nav-close { position: absolute; top: 1rem; right: 1rem; color: #fff; cursor: pointer; padding: 0; min-width: 44px; min-height: 44px; display: flex; align-items: center; justify-content: center; border-radius: 8px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); transition: background 0.2s; }
+        .mobile-nav-close:hover { background: rgba(255,255,255,0.12); }
+        .mobile-nav-close svg { width: 22px; height: 22px; }
+        .mobile-lang-switch { display: flex; align-items: center; gap: 0; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin-top: 0.5rem; }
+        .mobile-lang-switch a { font-size: 0.95rem; font-weight: 600; color: var(--text-muted); padding: 0.6rem 1.4rem; min-height: 44px; display: flex; align-items: center; transition: all 0.2s; letter-spacing: 0.05em; text-transform: uppercase; }
+        .mobile-lang-switch a:hover { color: var(--gold); background: rgba(212,175,55,0.08); }
+        .mobile-lang-switch a.active { color: var(--gold); background: rgba(212,175,55,0.12); }
+        .mobile-lang-switch .sep { color: var(--border); font-size: 1.2rem; }
 
         /* HERO */
         .hero { min-height: 100vh; display: flex; align-items: center; padding: 8rem 0 6rem; position: relative; overflow: hidden; }
@@ -312,15 +324,20 @@
 </head>
 <body>
 
-<nav class="mobile-nav" id="mobile-nav" role="dialog" aria-label="Navigation menu">
+<nav class="mobile-nav" id="mobile-nav" role="dialog" aria-label="Navigation menu" aria-modal="true">
     <button class="mobile-nav-close" id="mnav-close" aria-label="Close menu">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
     </button>
-    <a href="#features" onclick="closeMnav()">Features</a>
-    <a href="#how-it-works" onclick="closeMnav()">How It Works</a>
-    <a href="#pricing" onclick="closeMnav()">Pricing</a>
-    <a href="/login" onclick="closeMnav()">Sign In</a>
-    <a href="/register" onclick="closeMnav()" style="color:var(--gold);">Start Free</a>
+    <a href="#features" onclick="closeMnav()">{{ app()->getLocale() === 'ar' ? 'المميزات' : 'Features' }}</a>
+    <a href="#how-it-works" onclick="closeMnav()">{{ app()->getLocale() === 'ar' ? 'كيف يعمل' : 'How It Works' }}</a>
+    <a href="#pricing" onclick="closeMnav()">{{ app()->getLocale() === 'ar' ? 'الأسعار' : 'Pricing' }}</a>
+    <a href="/login" onclick="closeMnav()">{{ app()->getLocale() === 'ar' ? 'تسجيل الدخول' : 'Sign In' }}</a>
+    <a href="/register" onclick="closeMnav()" style="color:var(--gold);">{{ app()->getLocale() === 'ar' ? 'ابدأ مجاناً' : 'Start Free' }}</a>
+    <div class="mobile-lang-switch" role="group" aria-label="Language switcher">
+        <a href="/locale/en" class="{{ app()->getLocale() === 'en' ? 'active' : '' }}" aria-label="Switch to English">EN</a>
+        <span class="sep" aria-hidden="true">|</span>
+        <a href="/locale/ar" class="{{ app()->getLocale() === 'ar' ? 'active' : '' }}" aria-label="التبديل إلى العربية">AR</a>
+    </div>
 </nav>
 
 <header class="navbar" id="navbar">
@@ -336,9 +353,14 @@
                 <a href="#pricing">Pricing</a>
             </nav>
             <div class="nav-actions">
-                <a href="/login" class="btn btn-ghost" style="padding:.6rem 1.1rem;font-size:.88rem;">Sign In</a>
+                <div style="display:flex;align-items:center;gap:0;border:1px solid var(--border);border-radius:8px;overflow:hidden;">
+                    <a href="/locale/en" style="font-size:0.8rem;font-weight:600;padding:0.4rem 0.7rem;color:{{ app()->getLocale()==='en' ? 'var(--gold)' : 'var(--text-muted)' }};background:{{ app()->getLocale()==='en' ? 'rgba(212,175,55,0.12)' : 'transparent' }};transition:all 0.2s;" aria-label="English">EN</a>
+                    <span style="color:var(--border);font-size:1rem;" aria-hidden="true">|</span>
+                    <a href="/locale/ar" style="font-size:0.8rem;font-weight:600;padding:0.4rem 0.7rem;color:{{ app()->getLocale()==='ar' ? 'var(--gold)' : 'var(--text-muted)' }};background:{{ app()->getLocale()==='ar' ? 'rgba(212,175,55,0.12)' : 'transparent' }};transition:all 0.2s;" aria-label="العربية">AR</a>
+                </div>
+                <a href="/login" class="btn btn-ghost" style="padding:.6rem 1.1rem;font-size:.88rem;">{{ app()->getLocale() === 'ar' ? 'دخول' : 'Sign In' }}</a>
                 <a href="/register" class="btn btn-gold" style="padding:.6rem 1.2rem;font-size:.88rem;">
-                    Start Free
+                    {{ app()->getLocale() === 'ar' ? 'ابدأ مجاناً' : 'Start Free' }}
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
                 </a>
                 <button class="nav-toggle" id="nav-toggle" aria-label="Open menu" aria-expanded="false">
@@ -610,6 +632,15 @@
     </div>
 </section>
 
+<!-- CLUSTER 1: COST/ROI — Show calculator and comparison links -->
+<section style="padding: 2rem 2rem; background: rgba(212,175,55,0.02); border-top: 1px solid rgba(212,175,55,0.1); margin: 3rem 0;">
+    <div class="container" style="text-align: center;">
+        <p style="color: var(--text-secondary); font-size: 0.95rem; margin: 0;">
+            Need help choosing? <a href="/cost-calculator" style="color: var(--gold); font-weight: 600; text-decoration: none;">Try our cost calculator</a> to <a href="/cost-calculator" style="color: var(--gold); font-weight: 600; text-decoration: none;">see your savings</a>, or <a href="/comparison" style="color: var(--gold); font-weight: 600; text-decoration: none;">compare with OpenRouter</a>.
+        </p>
+    </div>
+</section>
+
 <!-- FINAL CTA -->
 <section class="sps" aria-labelledby="cta-h2">
     <div class="container">
@@ -641,6 +672,8 @@
                 <a href="#features">Features</a>
                 <a href="#pricing">Pricing</a>
                 <a href="/docs">Docs</a>
+                <a href="/comparison">Compare APIs</a>
+                <a href="/cost-calculator">Cost Calculator</a>
                 <a href="/login">Sign In</a>
                 <a href="/terms-of-service">Terms</a>
                 <a href="/privacy-policy">Privacy</a>
@@ -667,11 +700,15 @@
 
     function openMnav() {
         mobileNav.classList.add('open');
+        navToggle.classList.add('open');
         navToggle.setAttribute('aria-expanded', 'true');
+        navToggle.setAttribute('aria-label', 'Close menu');
         document.body.style.overflow = 'hidden';
     }
     function closeMnav() {
         mobileNav.classList.remove('open');
+        navToggle.classList.remove('open');
+        navToggle.setAttribute('aria-label', 'Open menu');
         navToggle.setAttribute('aria-expanded', 'false');
         document.body.style.overflow = '';
     }

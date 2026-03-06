@@ -16,7 +16,14 @@ class RegisteredUserController extends Controller
 {
     public function create()
     {
-        return view('auth.register');
+        $meta = \App\Helpers\SeoHelper::getPageMeta('register');
+        return view('auth.register', [
+            'pageTitle' => $meta['title'],
+            'pageDescription' => $meta['description'],
+            'pageKeywords' => $meta['keywords'],
+            'ogImage' => $meta['ogImage'],
+            'ogType' => $meta['ogType'],
+        ]);
     }
 
     /**

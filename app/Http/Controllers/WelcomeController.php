@@ -3,26 +3,55 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Helpers\SeoHelper;
 
 class WelcomeController extends Controller
 {
     public function index()
     {
-        return view('welcome');
+        $meta = SeoHelper::getPageMeta('welcome');
+        return view('welcome', [
+            'pageTitle' => $meta['title'],
+            'pageDescription' => $meta['description'],
+            'pageKeywords' => $meta['keywords'],
+            'ogImage' => $meta['ogImage'],
+            'ogType' => $meta['ogType'],
+        ]);
     }
 
     public function about()
     {
-        return view('about');
+        $meta = SeoHelper::getPageMeta('about');
+        return view('about', [
+            'pageTitle' => $meta['title'],
+            'pageDescription' => $meta['description'],
+            'pageKeywords' => $meta['keywords'],
+            'ogImage' => $meta['ogImage'],
+            'ogType' => $meta['ogType'],
+        ]);
     }
 
     public function terms()
     {
-        return view('terms-of-service');
+        $meta = SeoHelper::getPageMeta('terms-of-service');
+        return view('terms-of-service', [
+            'pageTitle' => $meta['title'],
+            'pageDescription' => $meta['description'],
+            'pageKeywords' => $meta['keywords'],
+            'ogImage' => $meta['ogImage'],
+            'ogType' => $meta['ogType'],
+        ]);
     }
 
     public function privacy()
     {
-        return view('privacy-policy');
+        $meta = SeoHelper::getPageMeta('privacy-policy');
+        return view('privacy-policy', [
+            'pageTitle' => $meta['title'],
+            'pageDescription' => $meta['description'],
+            'pageKeywords' => $meta['keywords'],
+            'ogImage' => $meta['ogImage'],
+            'ogType' => $meta['ogType'],
+        ]);
     }
 }
