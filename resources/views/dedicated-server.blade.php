@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Resayil LLM + Dedicated Server Hosting')
+@section('title', __('dedicated-server.title'))
 
 @push('styles')
 <style>
@@ -1387,51 +1387,50 @@
 
             <div class="ds-hero-eyebrow" aria-hidden="true">
                 <span class="ds-hero-eyebrow-dot"></span>
-                Enterprise Infrastructure
+                {{ __('dedicated-server.hero_eyebrow') }}
             </div>
 
             <h1 id="hero-heading">
-                Dedicated Server
+                {{ __('dedicated-server.hero_title') }}
                 <br>
-                <span class="ds-hero-gold">+ Resayil LLM API</span>
+                <span class="ds-hero-gold">{{ __('dedicated-server.hero_title_highlight') }}</span>
             </h1>
 
             <p class="ds-hero-subtitle">
-                Enterprise-grade dedicated infrastructure combined with OpenAI-compatible LLM API access.
-                Maximum control, compliance, and performance — without the DevOps overhead.
+                {{ __('dedicated-server.hero_subtitle') }}
             </p>
 
             {{-- Hardware spec badge row --}}
             <div class="ds-hero-badges" role="list" aria-label="Available hardware specifications">
                 <span class="ds-badge" role="listitem">
                     <svg class="ds-badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="14" x2="23" y2="14"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="14" x2="4" y2="14"/></svg>
-                    CPU <span class="ds-badge-value">4–16+ cores</span>
+                    {{ __('dedicated-server.hero_badge_cpu') }} <span class="ds-badge-value">{{ __('dedicated-server.hero_badge_cpu_val') }}</span>
                 </span>
                 <span class="ds-badge" role="listitem">
                     <svg class="ds-badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 19v-3"/><path d="M10 19v-3"/><path d="M14 19v-3"/><path d="M18 19v-3"/><path d="M8 11V9"/><path d="M16 11V9"/><path d="M12 11V9"/><path d="M2 15h20"/><path d="M2 7a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v1.1a2 2 0 0 0 0 3.837V17a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-5.1a2 2 0 0 0 0-3.837Z"/></svg>
-                    RAM <span class="ds-badge-value">16–256 GB+</span>
+                    {{ __('dedicated-server.hero_badge_ram') }} <span class="ds-badge-value">{{ __('dedicated-server.hero_badge_ram_val') }}</span>
                 </span>
                 <span class="ds-badge" role="listitem">
                     <svg class="ds-badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/><path d="M3 12c0 1.66 4 3 9 3s9-1.34 9-3"/></svg>
-                    Storage <span class="ds-badge-value">256 GB–4 TB+ SSD</span>
+                    {{ __('dedicated-server.hero_badge_storage') }} <span class="ds-badge-value">{{ __('dedicated-server.hero_badge_storage_val') }}</span>
                 </span>
                 <span class="ds-badge" role="listitem">
                     <svg class="ds-badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-                    Uptime <span class="ds-badge-value">99.95% SLA</span>
+                    {{ __('dedicated-server.hero_badge_uptime') }} <span class="ds-badge-value">{{ __('dedicated-server.hero_badge_uptime_val') }}</span>
                 </span>
                 <span class="ds-badge" role="listitem">
                     <svg class="ds-badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-                    Bandwidth <span class="ds-badge-value">Up to 20 Tbps</span>
+                    {{ __('dedicated-server.hero_badge_bandwidth') }} <span class="ds-badge-value">{{ __('dedicated-server.hero_badge_bandwidth_val') }}</span>
                 </span>
                 <span class="ds-badge" role="listitem">
                     <svg class="ds-badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-                    API <span class="ds-badge-value">45+ Models</span>
+                    {{ __('dedicated-server.hero_badge_api') }} <span class="ds-badge-value">{{ __('dedicated-server.hero_badge_api_val') }}</span>
                 </span>
             </div>
 
             <div class="ds-hero-cta">
-                <a href="{{ route('register') }}" class="btn-primary">Start Free Trial</a>
-                <a href="{{ route('contact') }}" class="btn-secondary">Contact Sales</a>
+                <a href="{{ route('register') }}" class="btn-primary">{{ __('dedicated-server.hero_cta_primary') }}</a>
+                <a href="{{ route('contact') }}" class="btn-secondary">{{ __('dedicated-server.hero_cta_secondary') }}</a>
             </div>
 
         </div>
@@ -1443,27 +1442,27 @@
     {{-- ═══════════════════════════════════════════ --}}
     <section class="ds-section" role="region" aria-labelledby="value-heading">
         <div class="ds-section-header">
-            <h2 class="ds-section-title" id="value-heading">Why Dedicated + API?</h2>
-            <p class="ds-section-sub">Get the simplicity of a managed API with the control of on-premise infrastructure. No trade-offs.</p>
+            <h2 class="ds-section-title" id="value-heading">{{ __('dedicated-server.value_title') }}</h2>
+            <p class="ds-section-sub">{{ __('dedicated-server.value_subtitle') }}</p>
         </div>
         <div class="ds-value-grid">
 
             <article class="ds-value-card ds-fade-in delay-1">
                 <div class="ds-icon-shape ds-icon-bolt" role="img" aria-label="API simplicity icon"></div>
-                <h3 class="ds-value-title">API Simplicity</h3>
-                <p class="ds-value-text">No model management overhead. Resayil handles updates, scaling, and reliability while you focus on your application logic and business goals.</p>
+                <h3 class="ds-value-title">{{ __('dedicated-server.value_1_title') }}</h3>
+                <p class="ds-value-text">{{ __('dedicated-server.value_1_text') }}</p>
             </article>
 
             <article class="ds-value-card ds-fade-in delay-2">
                 <div class="ds-icon-shape ds-icon-shield" role="img" aria-label="Security and control icon"></div>
-                <h3 class="ds-value-title">Complete Control</h3>
-                <p class="ds-value-text">Your dedicated server runs your applications. Data stays within your infrastructure. Full compliance with regulatory requirements — HIPAA, SOC 2, and more.</p>
+                <h3 class="ds-value-title">{{ __('dedicated-server.value_2_title') }}</h3>
+                <p class="ds-value-text">{{ __('dedicated-server.value_2_text') }}</p>
             </article>
 
             <article class="ds-value-card ds-fade-in delay-3">
                 <div class="ds-icon-shape ds-icon-coin" role="img" aria-label="Cost efficiency icon"></div>
-                <h3 class="ds-value-title">Cost Efficiency</h3>
-                <p class="ds-value-text">Pay-per-use API pricing with no monthly minimums. Dedicated hardware cost is predictable and scales with your needs — no cloud cost surprises.</p>
+                <h3 class="ds-value-title">{{ __('dedicated-server.value_3_title') }}</h3>
+                <p class="ds-value-text">{{ __('dedicated-server.value_3_text') }}</p>
             </article>
 
         </div>
@@ -1476,121 +1475,121 @@
     <section class="ds-section ds-section--alt" role="region" aria-labelledby="comparison-heading">
         <div class="ds-section-inner">
             <div class="ds-section-header centered">
-                <h2 class="ds-section-title" id="comparison-heading">The Infrastructure Debate</h2>
-                <p class="ds-section-sub">Three approaches to LLM infrastructure — only one gives you everything.</p>
+                <h2 class="ds-section-title" id="comparison-heading">{{ __('dedicated-server.comparison_title') }}</h2>
+                <p class="ds-section-sub">{{ __('dedicated-server.comparison_subtitle') }}</p>
             </div>
             <div class="ds-comparison-grid">
 
                 {{-- Self-hosted --}}
                 <div class="ds-comparison-card ds-fade-in delay-1">
-                    <p class="ds-comparison-label">Self-Hosted Approach</p>
-                    <h3 class="ds-comparison-title">Self-Hosted Ollama</h3>
-                    <ul class="ds-comparison-items" aria-label="Self-hosted Ollama features">
+                    <p class="ds-comparison-label">{{ __('dedicated-server.self_hosted_label') }}</p>
+                    <h3 class="ds-comparison-title">{{ __('dedicated-server.self_hosted_title') }}</h3>
+                    <ul class="ds-comparison-items" aria-label="{{ __('dedicated-server.self_hosted_title') }} features">
                         <li class="ds-comparison-item">
                             <span class="ds-comp-icon ds-comp-icon--x" aria-hidden="true">
                                 <svg viewBox="0 0 12 12" fill="none" stroke="#ff5050" stroke-width="2.5" stroke-linecap="round"><line x1="2" y1="2" x2="10" y2="10"/><line x1="10" y1="2" x2="2" y2="10"/></svg>
                             </span>
-                            <span class="ds-comp-text">Complex setup and ongoing maintenance</span>
+                            <span class="ds-comp-text">{{ __('dedicated-server.self_hosted_con1') }}</span>
                         </li>
                         <li class="ds-comparison-item">
                             <span class="ds-comp-icon ds-comp-icon--x" aria-hidden="true">
                                 <svg viewBox="0 0 12 12" fill="none" stroke="#ff5050" stroke-width="2.5" stroke-linecap="round"><line x1="2" y1="2" x2="10" y2="10"/><line x1="10" y1="2" x2="2" y2="10"/></svg>
                             </span>
-                            <span class="ds-comp-text">Model updates cause downtime</span>
+                            <span class="ds-comp-text">{{ __('dedicated-server.self_hosted_con2') }}</span>
                         </li>
                         <li class="ds-comparison-item">
                             <span class="ds-comp-icon ds-comp-icon--x" aria-hidden="true">
                                 <svg viewBox="0 0 12 12" fill="none" stroke="#ff5050" stroke-width="2.5" stroke-linecap="round"><line x1="2" y1="2" x2="10" y2="10"/><line x1="10" y1="2" x2="2" y2="10"/></svg>
                             </span>
-                            <span class="ds-comp-text">Requires dedicated DevOps team</span>
+                            <span class="ds-comp-text">{{ __('dedicated-server.self_hosted_con3') }}</span>
                         </li>
                         <li class="ds-comparison-item">
                             <span class="ds-comp-icon ds-comp-icon--check" aria-hidden="true">
                                 <svg viewBox="0 0 12 12" fill="none" stroke="#d4af37" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2,6 5,9 10,3"/></svg>
                             </span>
-                            <span class="ds-comp-text">100% data privacy</span>
+                            <span class="ds-comp-text">{{ __('dedicated-server.self_hosted_pro1') }}</span>
                         </li>
                         <li class="ds-comparison-item">
                             <span class="ds-comp-icon ds-comp-icon--check" aria-hidden="true">
                                 <svg viewBox="0 0 12 12" fill="none" stroke="#d4af37" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2,6 5,9 10,3"/></svg>
                             </span>
-                            <span class="ds-comp-text">No cloud vendor lock-in</span>
+                            <span class="ds-comp-text">{{ __('dedicated-server.self_hosted_pro2') }}</span>
                         </li>
                     </ul>
                 </div>
 
                 {{-- Cloud-only --}}
                 <div class="ds-comparison-card ds-fade-in delay-2">
-                    <p class="ds-comparison-label">Cloud-Only Approach</p>
-                    <h3 class="ds-comparison-title">Generic Cloud API</h3>
-                    <ul class="ds-comparison-items" aria-label="Generic cloud API features">
+                    <p class="ds-comparison-label">{{ __('dedicated-server.cloud_label') }}</p>
+                    <h3 class="ds-comparison-title">{{ __('dedicated-server.cloud_title') }}</h3>
+                    <ul class="ds-comparison-items" aria-label="{{ __('dedicated-server.cloud_title') }} features">
                         <li class="ds-comparison-item">
                             <span class="ds-comp-icon ds-comp-icon--check" aria-hidden="true">
                                 <svg viewBox="0 0 12 12" fill="none" stroke="#d4af37" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2,6 5,9 10,3"/></svg>
                             </span>
-                            <span class="ds-comp-text">Easy to integrate</span>
+                            <span class="ds-comp-text">{{ __('dedicated-server.cloud_pro1') }}</span>
                         </li>
                         <li class="ds-comparison-item">
                             <span class="ds-comp-icon ds-comp-icon--check" aria-hidden="true">
                                 <svg viewBox="0 0 12 12" fill="none" stroke="#d4af37" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2,6 5,9 10,3"/></svg>
                             </span>
-                            <span class="ds-comp-text">Zero infrastructure cost upfront</span>
+                            <span class="ds-comp-text">{{ __('dedicated-server.cloud_pro2') }}</span>
                         </li>
                         <li class="ds-comparison-item">
                             <span class="ds-comp-icon ds-comp-icon--check" aria-hidden="true">
                                 <svg viewBox="0 0 12 12" fill="none" stroke="#d4af37" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2,6 5,9 10,3"/></svg>
                             </span>
-                            <span class="ds-comp-text">Automatic scaling</span>
+                            <span class="ds-comp-text">{{ __('dedicated-server.cloud_pro3') }}</span>
                         </li>
                         <li class="ds-comparison-item">
                             <span class="ds-comp-icon ds-comp-icon--x" aria-hidden="true">
                                 <svg viewBox="0 0 12 12" fill="none" stroke="#ff5050" stroke-width="2.5" stroke-linecap="round"><line x1="2" y1="2" x2="10" y2="10"/><line x1="10" y1="2" x2="2" y2="10"/></svg>
                             </span>
-                            <span class="ds-comp-text">Higher per-token costs at scale</span>
+                            <span class="ds-comp-text">{{ __('dedicated-server.cloud_con1') }}</span>
                         </li>
                         <li class="ds-comparison-item">
                             <span class="ds-comp-icon ds-comp-icon--x" aria-hidden="true">
                                 <svg viewBox="0 0 12 12" fill="none" stroke="#ff5050" stroke-width="2.5" stroke-linecap="round"><line x1="2" y1="2" x2="10" y2="10"/><line x1="10" y1="2" x2="2" y2="10"/></svg>
                             </span>
-                            <span class="ds-comp-text">Sensitive data sent to vendor</span>
+                            <span class="ds-comp-text">{{ __('dedicated-server.cloud_con2') }}</span>
                         </li>
                     </ul>
                 </div>
 
                 {{-- Resayil Hybrid --}}
                 <div class="ds-comparison-card highlight ds-fade-in delay-3" aria-label="Recommended: Resayil plus Dedicated approach">
-                    <p class="ds-comparison-label">Hybrid Approach</p>
-                    <h3 class="ds-comparison-title">Resayil + Dedicated</h3>
-                    <ul class="ds-comparison-items" aria-label="Resayil hybrid features">
+                    <p class="ds-comparison-label">{{ __('dedicated-server.hybrid_label') }}</p>
+                    <h3 class="ds-comparison-title">{{ __('dedicated-server.hybrid_title') }}</h3>
+                    <ul class="ds-comparison-items" aria-label="{{ __('dedicated-server.hybrid_title') }} features">
                         <li class="ds-comparison-item">
                             <span class="ds-comp-icon ds-comp-icon--check" aria-hidden="true">
                                 <svg viewBox="0 0 12 12" fill="none" stroke="#d4af37" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2,6 5,9 10,3"/></svg>
                             </span>
-                            <span class="ds-comp-text">Best of both worlds</span>
+                            <span class="ds-comp-text">{{ __('dedicated-server.hybrid_pro1') }}</span>
                         </li>
                         <li class="ds-comparison-item">
                             <span class="ds-comp-icon ds-comp-icon--check" aria-hidden="true">
                                 <svg viewBox="0 0 12 12" fill="none" stroke="#d4af37" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2,6 5,9 10,3"/></svg>
                             </span>
-                            <span class="ds-comp-text">API simplicity with full control</span>
+                            <span class="ds-comp-text">{{ __('dedicated-server.hybrid_pro2') }}</span>
                         </li>
                         <li class="ds-comparison-item">
                             <span class="ds-comp-icon ds-comp-icon--check" aria-hidden="true">
                                 <svg viewBox="0 0 12 12" fill="none" stroke="#d4af37" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2,6 5,9 10,3"/></svg>
                             </span>
-                            <span class="ds-comp-text">Data stays on-premises</span>
+                            <span class="ds-comp-text">{{ __('dedicated-server.hybrid_pro3') }}</span>
                         </li>
                         <li class="ds-comparison-item">
                             <span class="ds-comp-icon ds-comp-icon--check" aria-hidden="true">
                                 <svg viewBox="0 0 12 12" fill="none" stroke="#d4af37" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2,6 5,9 10,3"/></svg>
                             </span>
-                            <span class="ds-comp-text">Predictable, transparent pricing</span>
+                            <span class="ds-comp-text">{{ __('dedicated-server.hybrid_pro4') }}</span>
                         </li>
                         <li class="ds-comparison-item">
                             <span class="ds-comp-icon ds-comp-icon--check" aria-hidden="true">
                                 <svg viewBox="0 0 12 12" fill="none" stroke="#d4af37" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2,6 5,9 10,3"/></svg>
                             </span>
-                            <span class="ds-comp-text">Enterprise support included</span>
+                            <span class="ds-comp-text">{{ __('dedicated-server.hybrid_pro5') }}</span>
                         </li>
                     </ul>
                 </div>
@@ -1605,240 +1604,180 @@
     {{-- ═══════════════════════════════════════════ --}}
     <section class="ds-section" role="region" aria-labelledby="tiers-heading">
         <div class="ds-section-header centered">
-            <h2 class="ds-section-title" id="tiers-heading">Hosting Tiers</h2>
-            <p class="ds-section-sub">From development to enterprise scale. All tiers include Resayil LLM API access.</p>
+            <h2 class="ds-section-title" id="tiers-heading">{{ __('dedicated-server.tiers_title') }}</h2>
+            <p class="ds-section-sub">{{ __('dedicated-server.tiers_subtitle') }}</p>
         </div>
         <div class="ds-tiers-grid">
 
             {{-- Starter --}}
             <article class="ds-tier-card ds-fade-in delay-1" aria-labelledby="tier-starter-name">
-                <h3 class="ds-tier-name" id="tier-starter-name">Starter</h3>
-                <p class="ds-tier-sub">Small dedicated server for development and early production workloads.</p>
+                <h3 class="ds-tier-name" id="tier-starter-name">{{ __('dedicated-server.starter_name') }}</h3>
+                <p class="ds-tier-sub">{{ __('dedicated-server.starter_sub') }}</p>
 
                 <div class="ds-tier-pricing">
                     <div class="ds-price-row">
                         <span class="ds-price-currency" aria-hidden="true">$</span>
                         <span class="ds-price-value">299</span>
-                        <span class="ds-price-period">/month</span>
+                        <span class="ds-price-period">{{ __('dedicated-server.per_month') }}</span>
                     </div>
                 </div>
 
-                <div class="ds-tier-specs" aria-label="Starter tier hardware specifications">
+                <div class="ds-tier-specs" aria-label="{{ __('dedicated-server.starter_name') }} tier hardware specifications">
                     <div class="ds-spec-row">
-                        <span class="ds-spec-label">CPU</span>
+                        <span class="ds-spec-label">{{ __('dedicated-server.spec_cpu') }}</span>
                         <span class="ds-spec-value">4-core</span>
                     </div>
                     <div class="ds-spec-row">
-                        <span class="ds-spec-label">RAM</span>
+                        <span class="ds-spec-label">{{ __('dedicated-server.spec_ram') }}</span>
                         <span class="ds-spec-value">16 GB</span>
                     </div>
                     <div class="ds-spec-row">
-                        <span class="ds-spec-label">Storage</span>
+                        <span class="ds-spec-label">{{ __('dedicated-server.spec_storage') }}</span>
                         <span class="ds-spec-value">256 GB SSD</span>
                     </div>
                     <div class="ds-spec-row">
-                        <span class="ds-spec-label">Bandwidth</span>
+                        <span class="ds-spec-label">{{ __('dedicated-server.spec_bandwidth') }}</span>
                         <span class="ds-spec-value">5 Tbps</span>
                     </div>
                     <div class="ds-spec-row">
-                        <span class="ds-spec-label">API Calls</span>
+                        <span class="ds-spec-label">{{ __('dedicated-server.spec_api_calls') }}</span>
                         <span class="ds-spec-value">Up to 100K/mo</span>
                     </div>
                 </div>
 
-                <ul class="ds-tier-features" aria-label="Starter tier features">
+                <ul class="ds-tier-features" aria-label="{{ __('dedicated-server.starter_name') }} tier features">
+                    @foreach([
+                        __('dedicated-server.starter_feature1'),
+                        __('dedicated-server.starter_feature2'),
+                        __('dedicated-server.starter_feature3'),
+                        __('dedicated-server.starter_feature4'),
+                        __('dedicated-server.starter_feature5'),
+                    ] as $feat)
                     <li class="ds-feature-item">
                         <svg class="ds-feature-check-svg" viewBox="0 0 20 20" fill="none" aria-hidden="true">
                             <circle cx="10" cy="10" r="9" fill="rgba(212,175,55,0.12)"/>
                             <polyline points="6,10 9,13 14,7" stroke="#d4af37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
-                        <span>Resayil API access included</span>
+                        <span>{{ $feat }}</span>
                     </li>
-                    <li class="ds-feature-item">
-                        <svg class="ds-feature-check-svg" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-                            <circle cx="10" cy="10" r="9" fill="rgba(212,175,55,0.12)"/>
-                            <polyline points="6,10 9,13 14,7" stroke="#d4af37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                        <span>Standard support (8h response)</span>
-                    </li>
-                    <li class="ds-feature-item">
-                        <svg class="ds-feature-check-svg" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-                            <circle cx="10" cy="10" r="9" fill="rgba(212,175,55,0.12)"/>
-                            <polyline points="6,10 9,13 14,7" stroke="#d4af37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                        <span>Basic monitoring &amp; alerts</span>
-                    </li>
-                    <li class="ds-feature-item">
-                        <svg class="ds-feature-check-svg" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-                            <circle cx="10" cy="10" r="9" fill="rgba(212,175,55,0.12)"/>
-                            <polyline points="6,10 9,13 14,7" stroke="#d4af37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                        <span>1 public IP address</span>
-                    </li>
-                    <li class="ds-feature-item">
-                        <svg class="ds-feature-check-svg" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-                            <circle cx="10" cy="10" r="9" fill="rgba(212,175,55,0.12)"/>
-                            <polyline points="6,10 9,13 14,7" stroke="#d4af37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                        <span>99.5% uptime SLA</span>
-                    </li>
+                    @endforeach
                 </ul>
 
-                <a href="{{ route('contact') }}" class="ds-tier-cta ds-tier-cta--outline" aria-label="Get started with Starter tier — $299 per month">Get Started</a>
+                <a href="{{ route('contact') }}" class="ds-tier-cta ds-tier-cta--outline" aria-label="{{ __('dedicated-server.get_started') }} — {{ __('dedicated-server.starter_name') }}">{{ __('dedicated-server.get_started') }}</a>
             </article>
 
             {{-- Professional (featured) --}}
             <article class="ds-tier-card featured ds-fade-in delay-2" aria-labelledby="tier-pro-name">
-                <span class="ds-tier-popular" aria-label="Most popular plan">Most Popular</span>
-                <h3 class="ds-tier-name" id="tier-pro-name">Professional</h3>
-                <p class="ds-tier-sub">Medium dedicated server for production applications with high availability.</p>
+                <span class="ds-tier-popular" aria-label="{{ __('dedicated-server.most_popular') }}">{{ __('dedicated-server.most_popular') }}</span>
+                <h3 class="ds-tier-name" id="tier-pro-name">{{ __('dedicated-server.professional_name') }}</h3>
+                <p class="ds-tier-sub">{{ __('dedicated-server.professional_sub') }}</p>
 
                 <div class="ds-tier-pricing">
                     <div class="ds-price-row">
                         <span class="ds-price-currency" aria-hidden="true">$</span>
                         <span class="ds-price-value">799</span>
-                        <span class="ds-price-period">/month</span>
+                        <span class="ds-price-period">{{ __('dedicated-server.per_month') }}</span>
                     </div>
                 </div>
 
-                <div class="ds-tier-specs" aria-label="Professional tier hardware specifications">
+                <div class="ds-tier-specs" aria-label="{{ __('dedicated-server.professional_name') }} tier hardware specifications">
                     <div class="ds-spec-row">
-                        <span class="ds-spec-label">CPU</span>
+                        <span class="ds-spec-label">{{ __('dedicated-server.spec_cpu') }}</span>
                         <span class="ds-spec-value">8-core</span>
                     </div>
                     <div class="ds-spec-row">
-                        <span class="ds-spec-label">RAM</span>
+                        <span class="ds-spec-label">{{ __('dedicated-server.spec_ram') }}</span>
                         <span class="ds-spec-value">64 GB</span>
                     </div>
                     <div class="ds-spec-row">
-                        <span class="ds-spec-label">Storage</span>
+                        <span class="ds-spec-label">{{ __('dedicated-server.spec_storage') }}</span>
                         <span class="ds-spec-value">1 TB SSD</span>
                     </div>
                     <div class="ds-spec-row">
-                        <span class="ds-spec-label">Bandwidth</span>
+                        <span class="ds-spec-label">{{ __('dedicated-server.spec_bandwidth') }}</span>
                         <span class="ds-spec-value">10 Tbps</span>
                     </div>
                     <div class="ds-spec-row">
-                        <span class="ds-spec-label">API Calls</span>
+                        <span class="ds-spec-label">{{ __('dedicated-server.spec_api_calls') }}</span>
                         <span class="ds-spec-value">Up to 500K/mo</span>
                     </div>
                 </div>
 
-                <ul class="ds-tier-features" aria-label="Professional tier features">
+                <ul class="ds-tier-features" aria-label="{{ __('dedicated-server.professional_name') }} tier features">
+                    @foreach([
+                        __('dedicated-server.professional_feature1'),
+                        __('dedicated-server.professional_feature2'),
+                        __('dedicated-server.professional_feature3'),
+                        __('dedicated-server.professional_feature4'),
+                        __('dedicated-server.professional_feature5'),
+                    ] as $feat)
                     <li class="ds-feature-item">
                         <svg class="ds-feature-check-svg" viewBox="0 0 20 20" fill="none" aria-hidden="true">
                             <circle cx="10" cy="10" r="9" fill="rgba(212,175,55,0.2)"/>
                             <polyline points="6,10 9,13 14,7" stroke="#d4af37" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
-                        <span>Priority API support</span>
+                        <span>{{ $feat }}</span>
                     </li>
-                    <li class="ds-feature-item">
-                        <svg class="ds-feature-check-svg" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-                            <circle cx="10" cy="10" r="9" fill="rgba(212,175,55,0.2)"/>
-                            <polyline points="6,10 9,13 14,7" stroke="#d4af37" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                        <span>4h SLA response time</span>
-                    </li>
-                    <li class="ds-feature-item">
-                        <svg class="ds-feature-check-svg" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-                            <circle cx="10" cy="10" r="9" fill="rgba(212,175,55,0.2)"/>
-                            <polyline points="6,10 9,13 14,7" stroke="#d4af37" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                        <span>Advanced monitoring &amp; alerts</span>
-                    </li>
-                    <li class="ds-feature-item">
-                        <svg class="ds-feature-check-svg" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-                            <circle cx="10" cy="10" r="9" fill="rgba(212,175,55,0.2)"/>
-                            <polyline points="6,10 9,13 14,7" stroke="#d4af37" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                        <span>4 public IP addresses</span>
-                    </li>
-                    <li class="ds-feature-item">
-                        <svg class="ds-feature-check-svg" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-                            <circle cx="10" cy="10" r="9" fill="rgba(212,175,55,0.2)"/>
-                            <polyline points="6,10 9,13 14,7" stroke="#d4af37" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                        <span>99.8% uptime SLA</span>
-                    </li>
+                    @endforeach
                 </ul>
 
-                <a href="{{ route('contact') }}" class="ds-tier-cta" aria-label="Get started with Professional tier — $799 per month">Get Started</a>
+                <a href="{{ route('contact') }}" class="ds-tier-cta" aria-label="{{ __('dedicated-server.get_started') }} — {{ __('dedicated-server.professional_name') }}">{{ __('dedicated-server.get_started') }}</a>
             </article>
 
             {{-- Enterprise --}}
             <article class="ds-tier-card ds-fade-in delay-3" aria-labelledby="tier-enterprise-name">
-                <h3 class="ds-tier-name" id="tier-enterprise-name">Enterprise</h3>
-                <p class="ds-tier-sub">Large dedicated server with white-glove support and custom configuration.</p>
+                <h3 class="ds-tier-name" id="tier-enterprise-name">{{ __('dedicated-server.enterprise_name') }}</h3>
+                <p class="ds-tier-sub">{{ __('dedicated-server.enterprise_sub') }}</p>
 
                 <div class="ds-tier-pricing">
                     <div class="ds-price-row">
-                        <span class="ds-price-value custom-price">Custom</span>
+                        <span class="ds-price-value custom-price">{{ __('dedicated-server.custom_price') }}</span>
                     </div>
-                    <div class="ds-price-period" style="margin-top:0.5rem;">Contact sales for pricing</div>
+                    <div class="ds-price-period" style="margin-top:0.5rem;">{{ __('dedicated-server.contact_sales_for_pricing') }}</div>
                 </div>
 
-                <div class="ds-tier-specs" aria-label="Enterprise tier hardware specifications">
+                <div class="ds-tier-specs" aria-label="{{ __('dedicated-server.enterprise_name') }} tier hardware specifications">
                     <div class="ds-spec-row">
-                        <span class="ds-spec-label">CPU</span>
+                        <span class="ds-spec-label">{{ __('dedicated-server.spec_cpu') }}</span>
                         <span class="ds-spec-value">16+ core</span>
                     </div>
                     <div class="ds-spec-row">
-                        <span class="ds-spec-label">RAM</span>
+                        <span class="ds-spec-label">{{ __('dedicated-server.spec_ram') }}</span>
                         <span class="ds-spec-value">256 GB+</span>
                     </div>
                     <div class="ds-spec-row">
-                        <span class="ds-spec-label">Storage</span>
+                        <span class="ds-spec-label">{{ __('dedicated-server.spec_storage') }}</span>
                         <span class="ds-spec-value">4 TB+ SSD</span>
                     </div>
                     <div class="ds-spec-row">
-                        <span class="ds-spec-label">Bandwidth</span>
+                        <span class="ds-spec-label">{{ __('dedicated-server.spec_bandwidth') }}</span>
                         <span class="ds-spec-value">20 Tbps</span>
                     </div>
                     <div class="ds-spec-row">
-                        <span class="ds-spec-label">API Calls</span>
-                        <span class="ds-spec-value">Unlimited</span>
+                        <span class="ds-spec-label">{{ __('dedicated-server.spec_api_calls') }}</span>
+                        <span class="ds-spec-value">{{ __('dedicated-server.spec_unlimited') }}</span>
                     </div>
                 </div>
 
-                <ul class="ds-tier-features" aria-label="Enterprise tier features">
+                <ul class="ds-tier-features" aria-label="{{ __('dedicated-server.enterprise_name') }} tier features">
+                    @foreach([
+                        __('dedicated-server.enterprise_feature1'),
+                        __('dedicated-server.enterprise_feature2'),
+                        __('dedicated-server.enterprise_feature3'),
+                        __('dedicated-server.enterprise_feature4'),
+                        __('dedicated-server.enterprise_feature5'),
+                    ] as $feat)
                     <li class="ds-feature-item">
                         <svg class="ds-feature-check-svg" viewBox="0 0 20 20" fill="none" aria-hidden="true">
                             <circle cx="10" cy="10" r="9" fill="rgba(212,175,55,0.12)"/>
                             <polyline points="6,10 9,13 14,7" stroke="#d4af37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
-                        <span>Dedicated account manager</span>
+                        <span>{{ $feat }}</span>
                     </li>
-                    <li class="ds-feature-item">
-                        <svg class="ds-feature-check-svg" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-                            <circle cx="10" cy="10" r="9" fill="rgba(212,175,55,0.12)"/>
-                            <polyline points="6,10 9,13 14,7" stroke="#d4af37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                        <span>1h SLA response time</span>
-                    </li>
-                    <li class="ds-feature-item">
-                        <svg class="ds-feature-check-svg" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-                            <circle cx="10" cy="10" r="9" fill="rgba(212,175,55,0.12)"/>
-                            <polyline points="6,10 9,13 14,7" stroke="#d4af37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                        <span>Custom hardware configurations</span>
-                    </li>
-                    <li class="ds-feature-item">
-                        <svg class="ds-feature-check-svg" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-                            <circle cx="10" cy="10" r="9" fill="rgba(212,175,55,0.12)"/>
-                            <polyline points="6,10 9,13 14,7" stroke="#d4af37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                        <span>Unlimited IP addresses</span>
-                    </li>
-                    <li class="ds-feature-item">
-                        <svg class="ds-feature-check-svg" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-                            <circle cx="10" cy="10" r="9" fill="rgba(212,175,55,0.12)"/>
-                            <polyline points="6,10 9,13 14,7" stroke="#d4af37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                        <span>99.95% uptime SLA</span>
-                    </li>
+                    @endforeach
                 </ul>
 
-                <a href="{{ route('contact') }}" class="ds-tier-cta ds-tier-cta--outline" aria-label="Contact sales for Enterprise tier pricing">Contact Sales</a>
+                <a href="{{ route('contact') }}" class="ds-tier-cta ds-tier-cta--outline" aria-label="{{ __('dedicated-server.contact_sales') }} — {{ __('dedicated-server.enterprise_name') }}">{{ __('dedicated-server.contact_sales') }}</a>
             </article>
 
         </div>
@@ -1851,8 +1790,8 @@
     <section class="ds-section ds-section--alt" role="region" aria-labelledby="benefits-heading">
         <div class="ds-section-inner">
             <div class="ds-section-header centered">
-                <h2 class="ds-section-title" id="benefits-heading">Perfect For</h2>
-                <p class="ds-section-sub">Purpose-built for industries and teams where data control and compliance are non-negotiable.</p>
+                <h2 class="ds-section-title" id="benefits-heading">{{ __('dedicated-server.benefits_title') }}</h2>
+                <p class="ds-section-sub">{{ __('dedicated-server.benefits_subtitle') }}</p>
             </div>
             <div class="ds-benefits-scroll" role="list">
 
@@ -1862,8 +1801,8 @@
                             <rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8"/><path d="M12 17v4"/>
                         </svg>
                     </div>
-                    <h3 class="ds-benefit-title">Financial Services</h3>
-                    <p class="ds-benefit-desc">Regulatory compliance (SOC 2, PCI DSS), data sovereignty, and zero data sharing requirements met with dedicated infrastructure.</p>
+                    <h3 class="ds-benefit-title">{{ __('dedicated-server.benefit_finance_title') }}</h3>
+                    <p class="ds-benefit-desc">{{ __('dedicated-server.benefit_finance_desc') }}</p>
                 </article>
 
                 <article class="ds-benefit-card ds-fade-in delay-2" role="listitem">
@@ -1872,8 +1811,8 @@
                             <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
                         </svg>
                     </div>
-                    <h3 class="ds-benefit-title">Healthcare</h3>
-                    <p class="ds-benefit-desc">Patient data privacy, HIPAA compliance, and encrypted on-premise processing — no cloud data exposure.</p>
+                    <h3 class="ds-benefit-title">{{ __('dedicated-server.benefit_healthcare_title') }}</h3>
+                    <p class="ds-benefit-desc">{{ __('dedicated-server.benefit_healthcare_desc') }}</p>
                 </article>
 
                 <article class="ds-benefit-card ds-fade-in delay-3" role="listitem">
@@ -1882,8 +1821,8 @@
                             <circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/>
                         </svg>
                     </div>
-                    <h3 class="ds-benefit-title">Enterprise SaaS</h3>
-                    <p class="ds-benefit-desc">White-label AI features, customer data isolation, and guaranteed uptime with multi-region failover.</p>
+                    <h3 class="ds-benefit-title">{{ __('dedicated-server.benefit_saas_title') }}</h3>
+                    <p class="ds-benefit-desc">{{ __('dedicated-server.benefit_saas_desc') }}</p>
                 </article>
 
                 <article class="ds-benefit-card ds-fade-in delay-1" role="listitem">
@@ -1892,8 +1831,8 @@
                             <line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>
                         </svg>
                     </div>
-                    <h3 class="ds-benefit-title">High-Volume Production</h3>
-                    <p class="ds-benefit-desc">Millions of API calls, predictable costs, and dedicated compute resources without sharing capacity with others.</p>
+                    <h3 class="ds-benefit-title">{{ __('dedicated-server.benefit_highvol_title') }}</h3>
+                    <p class="ds-benefit-desc">{{ __('dedicated-server.benefit_highvol_desc') }}</p>
                 </article>
 
                 <article class="ds-benefit-card ds-fade-in delay-2" role="listitem">
@@ -1902,8 +1841,8 @@
                             <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
                         </svg>
                     </div>
-                    <h3 class="ds-benefit-title">Regulated Industries</h3>
-                    <p class="ds-benefit-desc">Government, defense, and critical infrastructure needs with full audit trails and compliance reporting.</p>
+                    <h3 class="ds-benefit-title">{{ __('dedicated-server.benefit_regulated_title') }}</h3>
+                    <p class="ds-benefit-desc">{{ __('dedicated-server.benefit_regulated_desc') }}</p>
                 </article>
 
                 <article class="ds-benefit-card ds-fade-in delay-3" role="listitem">
@@ -1912,8 +1851,8 @@
                             <circle cx="18" cy="18" r="3"/><circle cx="6" cy="6" r="3"/><path d="M6 21V9a9 9 0 0 0 9 9"/>
                         </svg>
                     </div>
-                    <h3 class="ds-benefit-title">Multi-Tenant Platforms</h3>
-                    <p class="ds-benefit-desc">Customer-specific isolation, consolidated billing, and dedicated capacity per tenant at scale.</p>
+                    <h3 class="ds-benefit-title">{{ __('dedicated-server.benefit_multitenant_title') }}</h3>
+                    <p class="ds-benefit-desc">{{ __('dedicated-server.benefit_multitenant_desc') }}</p>
                 </article>
 
             </div>
@@ -1926,26 +1865,26 @@
     {{-- ═══════════════════════════════════════════ --}}
     <section class="ds-section" role="region" aria-labelledby="arch-heading">
         <div class="ds-section-header">
-            <h2 class="ds-section-title" id="arch-heading">How It Works</h2>
-            <p class="ds-section-sub">Your infrastructure handles your data. Resayil handles the models. Simple separation of concerns.</p>
+            <h2 class="ds-section-title" id="arch-heading">{{ __('dedicated-server.arch_title') }}</h2>
+            <p class="ds-section-sub">{{ __('dedicated-server.arch_subtitle') }}</p>
         </div>
         <div class="ds-arch-grid">
 
             {{-- Visual diagram --}}
             <div class="ds-arch-visual" aria-hidden="true">
-                <div class="ds-arch-node">Your Applications</div>
+                <div class="ds-arch-node">{{ __('dedicated-server.arch_node_apps') }}</div>
                 <div class="ds-arch-connector">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <line x1="12" y1="5" x2="12" y2="19"/><polyline points="19,12 12,19 5,12"/>
                     </svg>
                 </div>
-                <div class="ds-arch-node">Your Dedicated Server</div>
+                <div class="ds-arch-node">{{ __('dedicated-server.arch_node_server') }}</div>
                 <div class="ds-arch-connector">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <line x1="5" y1="12" x2="19" y2="12"/><polyline points="15,8 19,12 15,16"/><polyline points="9,8 5,12 9,16"/>
                     </svg>
                 </div>
-                <div class="ds-arch-node highlight-node">Resayil LLM API</div>
+                <div class="ds-arch-node highlight-node">{{ __('dedicated-server.arch_node_api') }}</div>
             </div>
 
             {{-- Step list --}}
@@ -1953,29 +1892,29 @@
                 <div class="ds-arch-point">
                     <div class="ds-arch-step" aria-hidden="true">1</div>
                     <div class="ds-arch-point-body">
-                        <div class="ds-arch-point-title">Your Infrastructure</div>
-                        <div class="ds-arch-point-desc">Applications run on a dedicated server under your full control. Data processing, storage, and business logic all stay on-premises with root access.</div>
+                        <div class="ds-arch-point-title">{{ __('dedicated-server.arch_step1_title') }}</div>
+                        <div class="ds-arch-point-desc">{{ __('dedicated-server.arch_step1_desc') }}</div>
                     </div>
                 </div>
                 <div class="ds-arch-point">
                     <div class="ds-arch-step" aria-hidden="true">2</div>
                     <div class="ds-arch-point-body">
-                        <div class="ds-arch-point-title">Resayil Connection</div>
-                        <div class="ds-arch-point-desc">Your applications call the Resayil API for LLM inference only. Only the prompt text is transmitted — no sensitive data leaves your server.</div>
+                        <div class="ds-arch-point-title">{{ __('dedicated-server.arch_step2_title') }}</div>
+                        <div class="ds-arch-point-desc">{{ __('dedicated-server.arch_step2_desc') }}</div>
                     </div>
                 </div>
                 <div class="ds-arch-point">
                     <div class="ds-arch-step" aria-hidden="true">3</div>
                     <div class="ds-arch-point-body">
-                        <div class="ds-arch-point-title">Model Management</div>
-                        <div class="ds-arch-point-desc">Resayil handles 45+ models, automatic scaling, failover, and updates. Zero infrastructure complexity on your side.</div>
+                        <div class="ds-arch-point-title">{{ __('dedicated-server.arch_step3_title') }}</div>
+                        <div class="ds-arch-point-desc">{{ __('dedicated-server.arch_step3_desc') }}</div>
                     </div>
                 </div>
                 <div class="ds-arch-point">
                     <div class="ds-arch-step" aria-hidden="true">4</div>
                     <div class="ds-arch-point-body">
-                        <div class="ds-arch-point-title">Predictable Costs</div>
-                        <div class="ds-arch-point-desc">Pay-per-token for API calls plus a fixed monthly server cost. No surprise bills, easy budget planning for finance teams.</div>
+                        <div class="ds-arch-point-title">{{ __('dedicated-server.arch_step4_title') }}</div>
+                        <div class="ds-arch-point-desc">{{ __('dedicated-server.arch_step4_desc') }}</div>
                     </div>
                 </div>
             </div>
@@ -1990,99 +1929,99 @@
     <section class="ds-section ds-section--alt" role="region" aria-labelledby="faq-heading">
         <div class="ds-section-inner">
             <div class="ds-section-header centered">
-                <h2 class="ds-section-title" id="faq-heading">Frequently Asked Questions</h2>
-                <p class="ds-section-sub">Everything you need to know about dedicated server infrastructure with Resayil.</p>
+                <h2 class="ds-section-title" id="faq-heading">{{ __('dedicated-server.faq_title') }}</h2>
+                <p class="ds-section-sub">{{ __('dedicated-server.faq_subtitle') }}</p>
             </div>
 
             <div class="ds-faq-list">
 
                 <div class="ds-faq-item">
                     <button class="ds-faq-btn" aria-expanded="false" aria-controls="faq-answer-1" id="faq-btn-1">
-                        <span class="ds-faq-question-text">Can I host Resayil models on my dedicated server?</span>
+                        <span class="ds-faq-question-text">{{ __('dedicated-server.faq_q1') }}</span>
                         <svg class="ds-faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6,9 12,15 18,9"/></svg>
                     </button>
                     <div class="ds-faq-answer" id="faq-answer-1" role="region" aria-labelledby="faq-btn-1">
-                        No, that would require self-hosted Ollama. Resayil Dedicated offers the API approach: your server calls Resayil's inference endpoints. This keeps model management, scaling, and updates out of your operations while data stays on-premises.
+                        {{ __('dedicated-server.faq_a1') }}
                     </div>
                 </div>
 
                 <div class="ds-faq-item">
                     <button class="ds-faq-btn" aria-expanded="false" aria-controls="faq-answer-2" id="faq-btn-2">
-                        <span class="ds-faq-question-text">How is this different from self-hosted Ollama?</span>
+                        <span class="ds-faq-question-text">{{ __('dedicated-server.faq_q2') }}</span>
                         <svg class="ds-faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6,9 12,15 18,9"/></svg>
                     </button>
                     <div class="ds-faq-answer" id="faq-answer-2" role="region" aria-labelledby="faq-btn-2">
-                        Self-hosted Ollama requires you to manage models, VRAM, failover, and updates. Resayil Dedicated gives you dedicated infrastructure for your apps (data stays on-premises) while Resayil handles all model operations. You get 95% of the control with 0% of the complexity.
+                        {{ __('dedicated-server.faq_a2') }}
                     </div>
                 </div>
 
                 <div class="ds-faq-item">
                     <button class="ds-faq-btn" aria-expanded="false" aria-controls="faq-answer-3" id="faq-btn-3">
-                        <span class="ds-faq-question-text">What's included in the dedicated server pricing?</span>
+                        <span class="ds-faq-question-text">{{ __('dedicated-server.faq_q3') }}</span>
                         <svg class="ds-faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6,9 12,15 18,9"/></svg>
                     </button>
                     <div class="ds-faq-answer" id="faq-answer-3" role="region" aria-labelledby="faq-btn-3">
-                        The monthly price covers hardware (CPU, RAM, storage), bandwidth, server management, OS, security updates, and monitoring. Resayil API access is included. Additional charges apply only when you call the API — pay-per-token, same as pay-as-you-go.
+                        {{ __('dedicated-server.faq_a3') }}
                     </div>
                 </div>
 
                 <div class="ds-faq-item">
                     <button class="ds-faq-btn" aria-expanded="false" aria-controls="faq-answer-4" id="faq-btn-4">
-                        <span class="ds-faq-question-text">Can I customize the server configuration?</span>
+                        <span class="ds-faq-question-text">{{ __('dedicated-server.faq_q4') }}</span>
                         <svg class="ds-faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6,9 12,15 18,9"/></svg>
                     </button>
                     <div class="ds-faq-answer" id="faq-answer-4" role="region" aria-labelledby="faq-btn-4">
-                        Yes. Starter and Professional tiers have fixed specs, but the Enterprise tier is fully customizable. Contact sales to discuss specific CPU, RAM, storage, or GPU requirements. Custom configurations are available on a case-by-case basis.
+                        {{ __('dedicated-server.faq_a4') }}
                     </div>
                 </div>
 
                 <div class="ds-faq-item">
                     <button class="ds-faq-btn" aria-expanded="false" aria-controls="faq-answer-5" id="faq-btn-5">
-                        <span class="ds-faq-question-text">What SLA do you offer?</span>
+                        <span class="ds-faq-question-text">{{ __('dedicated-server.faq_q5') }}</span>
                         <svg class="ds-faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6,9 12,15 18,9"/></svg>
                     </button>
                     <div class="ds-faq-answer" id="faq-answer-5" role="region" aria-labelledby="faq-btn-5">
-                        Starter: 99.5% uptime. Professional: 99.8% uptime with 4-hour response SLA. Enterprise: 99.95% uptime with 1-hour response SLA, dedicated account manager, and custom terms upon request.
+                        {{ __('dedicated-server.faq_a5') }}
                     </div>
                 </div>
 
                 <div class="ds-faq-item">
                     <button class="ds-faq-btn" aria-expanded="false" aria-controls="faq-answer-6" id="faq-btn-6">
-                        <span class="ds-faq-question-text">How do I migrate from self-hosted Ollama?</span>
+                        <span class="ds-faq-question-text">{{ __('dedicated-server.faq_q6') }}</span>
                         <svg class="ds-faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6,9 12,15 18,9"/></svg>
                     </button>
                     <div class="ds-faq-answer" id="faq-answer-6" role="region" aria-labelledby="faq-btn-6">
-                        Update your model endpoints to point to Resayil API URLs and use your API key. Since Resayil is OpenAI-compatible, most code changes are minimal — just swap the base URL and API key. Our support team provides migration assistance and load testing before go-live.
+                        {{ __('dedicated-server.faq_a6') }}
                     </div>
                 </div>
 
                 <div class="ds-faq-item">
                     <button class="ds-faq-btn" aria-expanded="false" aria-controls="faq-answer-7" id="faq-btn-7">
-                        <span class="ds-faq-question-text">Is there a minimum contract?</span>
+                        <span class="ds-faq-question-text">{{ __('dedicated-server.faq_q7') }}</span>
                         <svg class="ds-faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6,9 12,15 18,9"/></svg>
                     </button>
                     <div class="ds-faq-answer" id="faq-answer-7" role="region" aria-labelledby="faq-btn-7">
-                        Starter and Professional tiers are month-to-month with no lock-in. Enterprise contracts are custom and discussed during sales. We offer discounts for annual or multi-year commitments if you prefer predictable, budgeted costs.
+                        {{ __('dedicated-server.faq_a7') }}
                     </div>
                 </div>
 
                 <div class="ds-faq-item">
                     <button class="ds-faq-btn" aria-expanded="false" aria-controls="faq-answer-8" id="faq-btn-8">
-                        <span class="ds-faq-question-text">Can I run other workloads on the server?</span>
+                        <span class="ds-faq-question-text">{{ __('dedicated-server.faq_q8') }}</span>
                         <svg class="ds-faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6,9 12,15 18,9"/></svg>
                     </button>
                     <div class="ds-faq-answer" id="faq-answer-8" role="region" aria-labelledby="faq-btn-8">
-                        Yes. The dedicated server is yours to use. Run your applications, databases, caches, or any other workloads. We provide bare metal or managed Linux with root/admin access — install anything you need.
+                        {{ __('dedicated-server.faq_a8') }}
                     </div>
                 </div>
 
                 <div class="ds-faq-item">
                     <button class="ds-faq-btn" aria-expanded="false" aria-controls="faq-answer-9" id="faq-btn-9">
-                        <span class="ds-faq-question-text">What if I need more capacity later?</span>
+                        <span class="ds-faq-question-text">{{ __('dedicated-server.faq_q9') }}</span>
                         <svg class="ds-faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6,9 12,15 18,9"/></svg>
                     </button>
                     <div class="ds-faq-answer" id="faq-answer-9" role="region" aria-labelledby="faq-btn-9">
-                        Upgrade anytime. Move from Starter to Professional to Enterprise, or modify your server specs. We coordinate downtime-free upgrades where possible. API scaling is automatic — just use more tokens and the API handles it.
+                        {{ __('dedicated-server.faq_a9') }}
                     </div>
                 </div>
 
@@ -2095,29 +2034,30 @@
     {{-- FOOTER CTA                                  --}}
     {{-- ═══════════════════════════════════════════ --}}
     <section class="ds-footer-cta" role="region" aria-labelledby="cta-heading">
-        <h2 class="ds-footer-headline" id="cta-heading">Ready to Deploy?</h2>
+        <h2 class="ds-footer-headline" id="cta-heading">{{ __('dedicated-server.footer_cta_title') }}</h2>
         <p class="ds-footer-text">
-            Get dedicated infrastructure with enterprise-grade LLM API. Start your free trial today
-            or schedule a demo to discuss your compliance and performance requirements.
+            {{ __('dedicated-server.footer_cta_text') }}
         </p>
         <div class="ds-footer-btns">
-            <a href="{{ route('register') }}" class="btn-primary">Start Free Trial</a>
-            <a href="{{ route('contact') }}" class="btn-secondary">Schedule Demo</a>
+            <a href="{{ route('register') }}" class="btn-primary">{{ __('dedicated-server.footer_cta_primary') }}</a>
+            <a href="{{ route('contact') }}" class="btn-secondary">{{ __('dedicated-server.footer_cta_secondary') }}</a>
         </div>
         <div class="ds-contact-row" aria-label="Contact options">
             <span class="ds-contact-item">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-                <a href="mailto:sales@resayil.io" class="ds-contact-link">sales@resayil.io</a>
+                <a href="mailto:{{ __('dedicated-server.footer_contact_email') }}" class="ds-contact-link">{{ __('dedicated-server.footer_contact_email') }}</a>
             </span>
             <span class="ds-contact-item">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-                <a href="{{ route('contact') }}" class="ds-contact-link">Live Chat</a>
+                <a href="{{ route('contact') }}" class="ds-contact-link">{{ __('dedicated-server.footer_live_chat') }}</a>
             </span>
         </div>
         <p class="ds-footer-explore">
-            Explore our <a href="{{ route('docs') }}">API documentation</a>,
-            review <a href="{{ route('billing.plans') }}">pricing plans</a>,
-            or compare <a href="{{ route('comparison') }}">alternatives</a>.
+            {!! __('dedicated-server.footer_explore', [
+                'docs_link'       => '<a href="' . route('docs') . '">' . __('dedicated-server.footer_docs_link') . '</a>',
+                'plans_link'      => '<a href="' . route('billing.plans') . '">' . __('dedicated-server.footer_plans_link') . '</a>',
+                'comparison_link' => '<a href="' . route('comparison') . '">' . __('dedicated-server.footer_comparison_link') . '</a>',
+            ]) !!}
         </p>
     </section>
 
