@@ -594,6 +594,7 @@
 </style>
 @endpush
 
+@section('content')
 <main class="comp-wrap">
     <!-- HERO SECTION -->
     <section class="comp-hero">

@@ -888,6 +888,7 @@
 </style>
 @endpush
 
+@section('content')
 <main class="ds-wrap">
     <!-- HERO SECTION -->
     <section class="ds-hero">
