@@ -4,16 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ $pageTitle ?? (@yield('title', 'LLM Resayil')) }}</title>
+    <title>{{ $pageTitle ?? $__env->yieldContent('title', 'LLM Resayil') }}</title>
     <meta name="description" content="{{ $pageDescription ?? 'Affordable OpenAI-compatible LLM API with 45+ models. Pay-per-token pricing, free tier with 1,000 credits.' }}">
     <meta name="keywords" content="{{ $pageKeywords ?? 'llm api, openai alternative, ai api' }}">
-    <meta property="og:title" content="{{ $pageTitle ?? (@yield('title', 'LLM Resayil')) }}">
+    <meta property="og:title" content="{{ $pageTitle ?? $__env->yieldContent('title', 'LLM Resayil') }}">
     <meta property="og:description" content="{{ $pageDescription ?? '' }}">
     <meta property="og:image" content="{{ $ogImage ?? 'https://llm.resayil.io/og-images/og-default.png' }}">
     <meta property="og:url" content="{{ request()->url() }}">
     <meta property="og:type" content="{{ $ogType ?? 'website' }}">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="{{ $pageTitle ?? (@yield('title', 'LLM Resayil')) }}">
+    <meta name="twitter:title" content="{{ $pageTitle ?? $__env->yieldContent('title', 'LLM Resayil') }}">
     <meta name="twitter:description" content="{{ $pageDescription ?? '' }}">
     <meta name="twitter:image" content="{{ $ogImage ?? 'https://llm.resayil.io/og-images/og-default.png' }}">
     <link rel="canonical" href="{{ url(request()->getPathInfo()) }}">
