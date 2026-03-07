@@ -311,13 +311,13 @@ Plan 01 covers:
 
 **Depends on:** Phase 10 completion
 
-**Status:** In Progress (Plans 02/03 complete, 2/4)
+**Status:** In Progress (Plans 02/03/04 complete, 3/4)
 
 **Plans:**
 - [ ] 11-01: Expand /docs content (getting-started, authentication, models)
 - [x] 11-02: Implement hreflang and language switching infrastructure — COMPLETE (18 pages covered)
 - [x] 11-03: Image alt text optimization — COMPLETE (audit: 0 missing alt text)
-- [ ] 11-04: FAQ and features pages with schema markup
+- [x] 11-04: FAQ and features pages with schema markup — COMPLETE (15 FAQ items, 8 features, FAQPage + Product schema)
 
 **Requirements:**
 - Expand /docs from 737 → 2,500+ words with code examples
