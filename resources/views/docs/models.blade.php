@@ -5,6 +5,7 @@
 @push('styles')
 <style>
     /* ── Documentation Page Styles ── */
+    .mult-svg-icon { flex-shrink: 0; vertical-align: middle; }
     .docs-page {
         background: var(--bg-secondary);
         padding: 3rem 2rem;
@@ -638,27 +639,27 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td><span class="multiplier mult-05">0.5×</span></td>
+                            <td><div style="display:inline-flex;align-items:center;gap:0.5rem;"><x-multiplier-icon multiplier="0.5" :size="18" /><span class="multiplier mult-05">0.5×</span></div></td>
                             <td>@if(app()->getLocale() === 'ar') قياسي — خفيف @else Standard — Lightweight @endif</td>
                             <td>@if(app()->getLocale() === 'ar') نماذج صغيرة وسريعة جداً، مثالية للمهام البسيطة @else Small, ultra-fast models ideal for simple tasks @endif</td>
                         </tr>
                         <tr>
-                            <td><span class="multiplier mult-10">1.0×</span></td>
+                            <td><div style="display:inline-flex;align-items:center;gap:0.5rem;"><x-multiplier-icon multiplier="1.0" :size="18" /><span class="multiplier mult-10">1.0×</span></div></td>
                             <td>@if(app()->getLocale() === 'ar') متقدم — تضمين @else Frontier — Embedding @endif</td>
                             <td>@if(app()->getLocale() === 'ar') نماذج التضمين خفيفة الاستهلاك @else Lightweight embedding models @endif</td>
                         </tr>
                         <tr>
-                            <td><span class="multiplier mult-15">1.5×</span></td>
+                            <td><div style="display:inline-flex;align-items:center;gap:0.5rem;"><x-multiplier-icon multiplier="1.5" :size="18" /><span class="multiplier mult-15">1.5×</span></div></td>
                             <td>@if(app()->getLocale() === 'ar') قياسي — متوسط @else Standard — Mid @endif</td>
                             <td>@if(app()->getLocale() === 'ar') نماذج متوسطة الحجم وعالية الكفاءة @else Mid-size models with strong performance @endif</td>
                         </tr>
                         <tr>
-                            <td><span class="multiplier mult-25">2.5×</span></td>
+                            <td><div style="display:inline-flex;align-items:center;gap:0.5rem;"><x-multiplier-icon multiplier="2.5" :size="18" /><span class="multiplier mult-25">2.5×</span></div></td>
                             <td>@if(app()->getLocale() === 'ar') متقدم — متوسط @else Frontier — Mid @endif</td>
                             <td>@if(app()->getLocale() === 'ar') نماذج متقدمة متوازنة بين الأداء والتكلفة @else Balanced frontier models for quality and cost @endif</td>
                         </tr>
                         <tr>
-                            <td><span class="multiplier mult-35">3.5×</span></td>
+                            <td><div style="display:inline-flex;align-items:center;gap:0.5rem;"><x-multiplier-icon multiplier="3.5" :size="18" /><span class="multiplier mult-35">3.5×</span></div></td>
                             <td>@if(app()->getLocale() === 'ar') متقدم — كبير @else Frontier — Large @endif</td>
                             <td>@if(app()->getLocale() === 'ar') النماذج الأعلى أداءً والأكبر حجماً @else Highest-performance, largest-scale models @endif</td>
                         </tr>
@@ -766,7 +767,12 @@
                             <td><div class="model-id-cell"><code>{{ $modelId }}</code><button class="model-copy-btn" data-model="{{ $modelId }}" aria-label="Copy model ID">Copy</button></div></td>
                             <td><span class="badge badge-{{ $cat }}">{{ $cat }}</span></td>
                             <td>{{ $model['params'] ?? '—' }}</td>
-                            <td><span class="multiplier {{ $multClass }}">{{ $mult }}×</span></td>
+                            <td>
+                              <div style="display:inline-flex;align-items:center;gap:0.4rem;">
+                                <x-multiplier-icon :multiplier="$mult" :size="16" />
+                                <span class="multiplier {{ $multClass }}">{{ $mult }}×</span>
+                              </div>
+                            </td>
                             <td>@if(app()->getLocale() === 'ar')<span dir="rtl" style="font-family:'Tajawal',sans-serif;">{{ $descAr }}</span>@else{{ $descEn }}@endif</td>
                         </tr>
                         @endforeach
@@ -868,7 +874,12 @@
                             <td><div class="model-id-cell"><code>{{ $modelId }}</code><button class="model-copy-btn" data-model="{{ $modelId }}" aria-label="Copy model ID">Copy</button></div></td>
                             <td><span class="badge badge-{{ $cat }}">{{ $cat }}</span></td>
                             <td>{{ $model['params'] ?? '—' }}</td>
-                            <td><span class="multiplier {{ $multClass }}">{{ $mult }}×</span></td>
+                            <td>
+                              <div style="display:inline-flex;align-items:center;gap:0.4rem;">
+                                <x-multiplier-icon :multiplier="$mult" :size="16" />
+                                <span class="multiplier {{ $multClass }}">{{ $mult }}×</span>
+                              </div>
+                            </td>
                             <td>@if(app()->getLocale() === 'ar')<span dir="rtl" style="font-family:'Tajawal',sans-serif;">{{ $descAr }}</span>@else{{ $descEn }}@endif</td>
                         </tr>
                         @endforeach
