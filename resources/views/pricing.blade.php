@@ -351,6 +351,90 @@
 }
 .btn-cta-outline:hover { background: rgba(10,13,20,0.08); border-color: rgba(10,13,20,0.5); color: #0a0d14; }
 
+/* ═══════════════════════════════════════
+   TRIAL BANNER
+═══════════════════════════════════════ */
+.trial-banner {
+    max-width: 1100px; margin: 0 auto; padding: 3.5rem 1.5rem 0;
+}
+.trial-banner-inner {
+    background: linear-gradient(135deg, rgba(212,175,55,0.07) 0%, rgba(212,175,55,0.03) 100%);
+    border: 1px solid rgba(212,175,55,0.35);
+    border-radius: 24px; padding: 2.75rem 3rem;
+    position: relative; overflow: hidden;
+    display: flex; align-items: center; gap: 3rem;
+}
+.trial-banner-inner::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+.trial-banner-inner::after {
+    content: ''; position: absolute; bottom: -60px; right: -60px;
+    width: 200px; height: 200px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(212,175,55,0.08) 0%, transparent 70%);
+    pointer-events: none;
+}
+.trial-badge-pill {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    background: linear-gradient(135deg, var(--gold), var(--gold-light));
+    color: #0f1115; padding: 0.3rem 0.9rem;
+    border-radius: 100px; font-size: 0.72rem; font-weight: 800;
+    text-transform: uppercase; letter-spacing: 0.08em;
+    margin-bottom: 0.85rem; width: fit-content;
+}
+.trial-banner-body { flex: 1; }
+.trial-banner-body h2 {
+    font-size: clamp(1.35rem, 2.5vw, 1.75rem);
+    font-weight: 800; line-height: 1.2;
+    letter-spacing: -0.02em; margin-bottom: 0.65rem;
+}
+.trial-banner-body p {
+    font-size: 0.92rem; color: var(--text-secondary);
+    line-height: 1.7; max-width: 540px; margin-bottom: 1.5rem;
+}
+.trial-features-row {
+    display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem;
+    margin-bottom: 0;
+}
+.trial-feat {
+    display: flex; align-items: center; gap: 0.45rem;
+    font-size: 0.85rem; color: var(--text-secondary);
+}
+.trial-feat .tf-chk {
+    color: var(--gold); font-weight: 700; font-size: 0.9rem; flex-shrink: 0;
+}
+.trial-cta-wrap {
+    display: flex; flex-direction: column; align-items: flex-end;
+    gap: 0.75rem; flex-shrink: 0; min-width: 210px;
+}
+.btn-trial {
+    display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+    background: linear-gradient(135deg, var(--gold), var(--gold-light));
+    color: #0f1115; padding: 0.95rem 2rem;
+    border-radius: 12px; font-weight: 800; font-size: 0.92rem;
+    text-decoration: none; white-space: nowrap; width: 100%;
+    transition: opacity 0.2s, transform 0.2s; border: none; cursor: pointer;
+}
+.btn-trial:hover { opacity: 0.88; transform: translateY(-2px); color: #0f1115; }
+.trial-note {
+    font-size: 0.77rem; color: var(--text-muted);
+    text-align: center; line-height: 1.5;
+}
+@media (max-width: 820px) {
+    .trial-banner-inner { flex-direction: column; gap: 2rem; padding: 2rem 1.75rem; }
+    .trial-cta-wrap { align-items: stretch; width: 100%; min-width: unset; }
+    .trial-note { text-align: left; }
+}
+[dir="rtl"] .trial-banner-inner { flex-direction: row-reverse; }
+[dir="rtl"] .trial-features-row { flex-direction: row-reverse; }
+[dir="rtl"] .trial-badge-pill { margin-right: 0; }
+[dir="rtl"] .trial-cta-wrap { align-items: flex-start; }
+[dir="rtl"] .trial-note { text-align: right; }
+@media (max-width: 820px) {
+    [dir="rtl"] .trial-banner-inner { flex-direction: column; }
+    [dir="rtl"] .trial-note { text-align: right; }
+}
+
 /* ── RTL overrides ── */
 [dir="rtl"] .pr-label::before { display: none; }
 [dir="rtl"] .pr-label::after  { content: ''; display: block; width: 18px; height: 2px; background: var(--gold); border-radius: 2px; }
@@ -424,25 +508,25 @@
             <div class="pack-card fu">
                 @if(app()->getLocale() === 'ar')
                     <div class="pack-name" dir="rtl" style="font-family:'Tajawal',sans-serif;">الباقة الأساسية</div>
-                    <div class="pack-credits">5,000</div>
+                    <div class="pack-credits">500</div>
                     <div class="pack-credits-label" dir="rtl" style="font-family:'Tajawal',sans-serif;">رصيد</div>
-                    <div class="pack-price">2 <span>د.ك</span></div>
-                    <div class="pack-per-credit" dir="rtl" style="font-family:'Tajawal',sans-serif;">0.0004 د.ك لكل رصيد</div>
+                    <div class="pack-price">5 <span>د.ك</span></div>
+                    <div class="pack-per-credit" dir="rtl" style="font-family:'Tajawal',sans-serif;">0.010 د.ك لكل رصيد</div>
                     <a href="/register" class="pack-cta-ghost" style="font-family:'Tajawal',sans-serif;">ابدأ الآن</a>
                     <ul class="pack-features" dir="rtl" style="font-family:'Tajawal',sans-serif;">
-                        <li><span class="chk">✓</span> 5,000 رمز ناتج من API</li>
+                        <li><span class="chk">✓</span> 500 رمز ناتج من API</li>
                         <li><span class="chk">✓</span> جميع النماذج 46+ مشمولة</li>
                         <li><span class="chk">✓</span> الرصيد لا تنتهي صلاحيته</li>
                     </ul>
                 @else
                     <div class="pack-name"><x-tier-icon tier="starter" :size="18" />Starter</div>
-                    <div class="pack-credits">5,000</div>
+                    <div class="pack-credits">500</div>
                     <div class="pack-credits-label">Credits</div>
-                    <div class="pack-price">2 <span>KWD</span></div>
-                    <div class="pack-per-credit">0.0004 KWD per credit</div>
+                    <div class="pack-price">5 <span>KWD</span></div>
+                    <div class="pack-per-credit">0.010 KWD per credit</div>
                     <a href="/register" class="pack-cta-ghost">Get Started</a>
                     <ul class="pack-features">
-                        <li><span class="chk">✓</span> 5,000 API output tokens</li>
+                        <li><span class="chk">✓</span> 500 API output tokens</li>
                         <li><span class="chk">✓</span> All 46+ models included</li>
                         <li><span class="chk">✓</span> Credits never expire</li>
                     </ul>
@@ -454,30 +538,30 @@
                 @if(app()->getLocale() === 'ar')
                     <div class="pack-ribbon" style="font-family:'Tajawal',sans-serif;">أفضل قيمة</div>
                     <div class="pack-name" dir="rtl" style="font-family:'Tajawal',sans-serif; margin-top:0.75rem;">باقة النمو</div>
-                    <div class="pack-credits">15,000</div>
+                    <div class="pack-credits">1,100</div>
                     <div class="pack-credits-label" dir="rtl" style="font-family:'Tajawal',sans-serif;">رصيد</div>
-                    <div class="pack-price">5 <span>د.ك</span></div>
-                    <div class="pack-per-credit" dir="rtl" style="font-family:'Tajawal',sans-serif;">0.00033 د.ك لكل رصيد · أرخص 17%</div>
+                    <div class="pack-price">10 <span>د.ك</span></div>
+                    <div class="pack-per-credit" dir="rtl" style="font-family:'Tajawal',sans-serif;">0.0091 د.ك لكل رصيد · بونص 10%</div>
                     <a href="/register" class="pack-cta" style="font-family:'Tajawal',sans-serif;">ابدأ الآن</a>
                     <ul class="pack-features" dir="rtl" style="font-family:'Tajawal',sans-serif;">
-                        <li><span class="chk">✓</span> 15,000 رمز ناتج من API</li>
+                        <li><span class="chk">✓</span> 1,100 رمز ناتج من API</li>
                         <li><span class="chk">✓</span> جميع النماذج 46+ مشمولة</li>
                         <li><span class="chk">✓</span> الرصيد لا تنتهي صلاحيته</li>
-                        <li><span class="chk">✓</span> أرخص 17% لكل رصيد</li>
+                        <li><span class="chk">✓</span> بونص 10% رصيد إضافي</li>
                     </ul>
                 @else
                     <div class="pack-ribbon">Best Value</div>
                     <div class="pack-name" style="margin-top:0.75rem;"><x-tier-icon tier="basic" :size="18" />Growth</div>
-                    <div class="pack-credits">15,000</div>
+                    <div class="pack-credits">1,100</div>
                     <div class="pack-credits-label">Credits</div>
-                    <div class="pack-price">5 <span>KWD</span></div>
-                    <div class="pack-per-credit">0.00033 KWD per credit · 17% cheaper</div>
+                    <div class="pack-price">10 <span>KWD</span></div>
+                    <div class="pack-per-credit">0.0091 KWD per credit · 10% bonus credits</div>
                     <a href="/register" class="pack-cta">Get Started</a>
                     <ul class="pack-features">
-                        <li><span class="chk">✓</span> 15,000 API output tokens</li>
+                        <li><span class="chk">✓</span> 1,100 API output tokens</li>
                         <li><span class="chk">✓</span> All 46+ models included</li>
                         <li><span class="chk">✓</span> Credits never expire</li>
-                        <li><span class="chk">✓</span> 17% cheaper per credit</li>
+                        <li><span class="chk">✓</span> 10% bonus credits included</li>
                     </ul>
                 @endif
             </div>
@@ -486,29 +570,29 @@
             <div class="pack-card fu d2">
                 @if(app()->getLocale() === 'ar')
                     <div class="pack-name" dir="rtl" style="font-family:'Tajawal',sans-serif;">الباقة الاحترافية</div>
-                    <div class="pack-credits">50,000</div>
+                    <div class="pack-credits">3,000</div>
                     <div class="pack-credits-label" dir="rtl" style="font-family:'Tajawal',sans-serif;">رصيد</div>
-                    <div class="pack-price">15 <span>د.ك</span></div>
-                    <div class="pack-per-credit" dir="rtl" style="font-family:'Tajawal',sans-serif;">0.0003 د.ك لكل رصيد · أرخص 25%</div>
+                    <div class="pack-price">25 <span>د.ك</span></div>
+                    <div class="pack-per-credit" dir="rtl" style="font-family:'Tajawal',sans-serif;">0.0083 د.ك لكل رصيد · بونص 20%</div>
                     <a href="/register" class="pack-cta-ghost" style="font-family:'Tajawal',sans-serif;">ابدأ الآن</a>
                     <ul class="pack-features" dir="rtl" style="font-family:'Tajawal',sans-serif;">
-                        <li><span class="chk">✓</span> 50,000 رمز ناتج من API</li>
+                        <li><span class="chk">✓</span> 3,000 رمز ناتج من API</li>
                         <li><span class="chk">✓</span> جميع النماذج 46+ مشمولة</li>
                         <li><span class="chk">✓</span> الرصيد لا تنتهي صلاحيته</li>
-                        <li><span class="chk">✓</span> أرخص 25% لكل رصيد</li>
+                        <li><span class="chk">✓</span> بونص 20% رصيد إضافي</li>
                     </ul>
                 @else
                     <div class="pack-name"><x-tier-icon tier="pro" :size="18" />Pro</div>
-                    <div class="pack-credits">50,000</div>
+                    <div class="pack-credits">3,000</div>
                     <div class="pack-credits-label">Credits</div>
-                    <div class="pack-price">15 <span>KWD</span></div>
-                    <div class="pack-per-credit">0.0003 KWD per credit · 25% cheaper</div>
+                    <div class="pack-price">25 <span>KWD</span></div>
+                    <div class="pack-per-credit">0.0083 KWD per credit · 20% bonus credits</div>
                     <a href="/register" class="pack-cta-ghost">Get Started</a>
                     <ul class="pack-features">
-                        <li><span class="chk">✓</span> 50,000 API output tokens</li>
+                        <li><span class="chk">✓</span> 3,000 API output tokens</li>
                         <li><span class="chk">✓</span> All 46+ models included</li>
                         <li><span class="chk">✓</span> Credits never expire</li>
-                        <li><span class="chk">✓</span> 25% cheaper per credit</li>
+                        <li><span class="chk">✓</span> 20% bonus credits included</li>
                     </ul>
                 @endif
             </div>
