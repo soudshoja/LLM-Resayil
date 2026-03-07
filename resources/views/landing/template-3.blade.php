@@ -347,6 +347,8 @@
             .hiw-num { width: 40px; height: 40px; font-size: 1.05rem; }
         }
     </style>
+    <!-- Hreflang Tags for Multilingual SEO -->
+    <x-hreflang :currentPath="request()->path()" :isXDefault="true" />
 </head>
 <body>
 
