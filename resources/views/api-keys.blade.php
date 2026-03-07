@@ -44,6 +44,15 @@
     .btn-copy:hover { background: rgba(212,175,55,0.1); }
     .key-warning { font-size: 0.78rem; color: #f87171; margin-top: 0.5rem; }
 
+    /* Delete confirmation modal */
+    .del-modal-title { font-size: 1.1rem; font-weight: 600; margin: 0 0 0.75rem; color: var(--text-primary); }
+    .del-modal-body { font-size: 0.875rem; color: var(--text-muted); margin: 0 0 1.5rem; line-height: 1.6; }
+    .del-modal-body strong { color: var(--text-primary); }
+    .del-modal-error { font-size: 0.825rem; color: #f87171; margin-top: 0.75rem; display: none; }
+    .btn-danger { background: #ef4444; border: none; color: #fff; padding: 0.6rem 1.2rem; border-radius: 8px; font-size: 0.875rem; font-weight: 600; cursor: pointer; transition: background 0.2s, opacity 0.2s; }
+    .btn-danger:hover { background: #dc2626; }
+    .btn-danger:disabled { opacity: 0.6; cursor: not-allowed; }
+
     /* Toast */
     .ak-toast { position: fixed; bottom: 1.5rem; right: 1.5rem; background: #1a1e26; border: 1px solid var(--border); border-radius: 10px; padding: 0.75rem 1.25rem; font-size: 0.875rem; color: var(--text-primary); box-shadow: 0 8px 24px rgba(0,0,0,0.4); z-index: 300; transform: translateY(20px); opacity: 0; transition: all 0.3s; pointer-events: none; }
     .ak-toast.show { opacity: 1; transform: translateY(0); }
@@ -133,6 +142,37 @@
         <div class="modal-actions">
             <button class="btn-gold" onclick="closeRevealModal()">{{ __('api_keys.done') }}</button>
         </div>
+    </div>
+</div>
+
+{{-- Delete Confirmation Modal --}}
+<div class="modal-overlay" id="deleteModal">
+    <div class="modal-box">
+        <h3 class="del-modal-title">
+            @if(app()->getLocale() === 'ar')
+                حذف مفتاح API
+            @else
+                Delete API Key
+            @endif
+        </h3>
+        <p class="del-modal-body">
+            @if(app()->getLocale() === 'ar')
+                هل أنت متأكد أنك تريد حذف مفتاح API هذا؟ <strong>لا يمكن التراجع عن هذا الإجراء.</strong> أي تطبيقات تستخدم هذا المفتاح ستفقد الوصول فورًا.
+            @else
+                Are you sure you want to delete this API key? <strong>This action cannot be undone.</strong> Any applications using this key will immediately lose access.
+            @endif
+        </p>
+        <div class="modal-actions">
+            <button class="btn-cancel" id="deleteCancelBtn">{{ __('api_keys.cancel') }}</button>
+            <button class="btn-danger" id="deleteConfirmBtn">
+                @if(app()->getLocale() === 'ar')
+                    حذف المفتاح
+                @else
+                    Delete Key
+                @endif
+            </button>
+        </div>
+        <p class="del-modal-error" id="deleteModalError"></p>
     </div>
 </div>
 

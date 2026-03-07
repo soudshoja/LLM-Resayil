@@ -193,6 +193,37 @@
         color: #a0d468;
     }
 
+    /* Category badges */
+    .badge {
+        display: inline-block;
+        padding: 0.2rem 0.55rem;
+        border-radius: 4px;
+        font-size: 0.78rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.03em;
+    }
+
+    .badge-chat      { background: rgba(96,165,250,0.15); color: #60a5fa; }
+    .badge-code      { background: rgba(52,211,153,0.15); color: #34d399; }
+    .badge-vision    { background: rgba(167,139,250,0.15); color: #a78bfa; }
+    .badge-embedding { background: rgba(251,191,36,0.15);  color: #fbbf24; }
+    .badge-thinking  { background: rgba(251,113,133,0.15); color: #fb7185; }
+    .badge-tools     { background: rgba(148,163,184,0.15); color: #94a3b8; }
+
+    /* Multiplier chips */
+    .multiplier {
+        display: inline-block;
+        padding: 0.15rem 0.5rem;
+        border-radius: 4px;
+        font-size: 0.8rem;
+        font-weight: 700;
+        font-family: 'Monaco', 'Courier New', monospace;
+        background: rgba(212,175,55,0.12);
+        color: var(--gold);
+        border: 1px solid rgba(212,175,55,0.25);
+    }
+
     /* Next Section Link */
     .docs-next-section {
         margin-top: 3rem;
@@ -238,7 +269,7 @@
         }
 
         .docs-table {
-            font-size: 0.85rem;
+            font-size: 0.82rem;
         }
 
         .docs-table th,
@@ -255,153 +286,655 @@
 
         <!-- Breadcrumb -->
         <div class="docs-breadcrumb">
-            <a href="{{ route('welcome') }}">Home</a>
+            <a href="{{ route('welcome') }}">
+                @if(app()->getLocale() === 'ar') الرئيسية @else Home @endif
+            </a>
             <span>&rarr;</span>
-            <a href="{{ route('docs.index') }}">Documentation</a>
+            <a href="{{ route('docs.index') }}">
+                @if(app()->getLocale() === 'ar') التوثيق @else Documentation @endif
+            </a>
             <span>&rarr;</span>
-            <span>Available Models</span>
+            <span>
+                @if(app()->getLocale() === 'ar') النماذج المتاحة @else Available Models @endif
+            </span>
         </div>
 
         <!-- Title -->
-        <h1 class="docs-title">Available <span>Models</span></h1>
+        <h1 class="docs-title">
+            @if(app()->getLocale() === 'ar')
+                النماذج <span>المتاحة</span>
+            @else
+                Available <span>Models</span>
+            @endif
+        </h1>
+
         <p class="docs-intro">
-            LLM Resayil provides access to 45+ large language models from leading providers.
-            Choose the right model for your use case based on speed, accuracy, and cost.
+            @if(app()->getLocale() === 'ar')
+                يوفر LLM Resayil وصولاً إلى 46 نموذجاً من النماذج اللغوية الكبيرة — 15 نموذجاً محلياً يعمل على بنيتنا التحتية الخاصة، و31 نموذجاً سحابياً عالي الأداء. اختر النموذج المناسب لحالة الاستخدام لديك بناءً على السرعة والدقة ومعامل الاستهلاك.
+            @else
+                LLM Resayil provides access to 46 large language models — 15 local models running on our own infrastructure and 31 high-performance cloud models. Choose the right model for your use case based on speed, accuracy, and credit multiplier.
+            @endif
         </p>
 
-        <!-- Section 1: Available Models -->
+        <!-- Section 1: Credit Multiplier System -->
         <section class="docs-section">
-            <h2>Popular Models</h2>
+            <h2>
+                @if(app()->getLocale() === 'ar') نظام معامل الأرصدة @else Credit Multiplier System @endif
+            </h2>
             <p>
-                Our platform includes a curated selection of the most powerful and efficient language models available today.
-                Each model has different strengths, performance characteristics, and token consumption rates. Below are some
-                of our most popular models:
+                @if(app()->getLocale() === 'ar')
+                    كل طلب يستهلك رصيداً بناءً على عدد الرموز المُعالَجة مضروباً في معامل النموذج. المعامل الأساسي هو <strong>1.0×</strong>، وتتراوح المعاملات بين <strong>0.5×</strong> للنماذج الخفيفة السريعة وحتى <strong>3.5×</strong> للنماذج الضخمة عالية القدرة.
+                @else
+                    Every request consumes credits equal to the number of tokens processed multiplied by the model's credit multiplier. The base rate is <strong>1.0×</strong>, ranging from <strong>0.5×</strong> for lightweight fast models up to <strong>3.5×</strong> for large, high-capability models.
+                @endif
             </p>
 
             <table class="docs-table">
                 <thead>
                     <tr>
-                        <th>Model</th>
-                        <th>Provider</th>
-                        <th>Context Window</th>
-                        <th>Best For</th>
+                        <th>@if(app()->getLocale() === 'ar') المعامل @else Multiplier @endif</th>
+                        <th>@if(app()->getLocale() === 'ar') النوع @else Tier @endif</th>
+                        <th>@if(app()->getLocale() === 'ar') الوصف @else Description @endif</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td><code>mistral</code></td>
-                        <td>Mistral AI</td>
-                        <td>32K tokens</td>
-                        <td>Speed, general tasks, low latency</td>
+                        <td><span class="multiplier">0.5×</span></td>
+                        <td>@if(app()->getLocale() === 'ar') محلي — خفيف @else Local — Lightweight @endif</td>
+                        <td>@if(app()->getLocale() === 'ar') نماذج صغيرة وسريعة جداً، مثالية للمهام البسيطة @else Small, ultra-fast models ideal for simple tasks @endif</td>
                     </tr>
                     <tr>
-                        <td><code>llama2</code></td>
-                        <td>Meta</td>
-                        <td>4K tokens</td>
-                        <td>Reasoning, dialogue, complex queries</td>
+                        <td><span class="multiplier">1.0×</span></td>
+                        <td>@if(app()->getLocale() === 'ar') سحابي — تضمين @else Cloud — Embedding @endif</td>
+                        <td>@if(app()->getLocale() === 'ar') نماذج التضمين السحابية خفيفة الاستهلاك @else Lightweight cloud embedding models @endif</td>
                     </tr>
                     <tr>
-                        <td><code>neural-chat</code></td>
-                        <td>Intel</td>
-                        <td>4K tokens</td>
-                        <td>Conversational AI, customer support</td>
+                        <td><span class="multiplier">1.5×</span></td>
+                        <td>@if(app()->getLocale() === 'ar') محلي — متوسط @else Local — Standard @endif</td>
+                        <td>@if(app()->getLocale() === 'ar') نماذج محلية متوسطة الحجم وعالية الكفاءة @else Mid-size local models with strong performance @endif</td>
                     </tr>
                     <tr>
-                        <td><code>deepseek</code></td>
-                        <td>DeepSeek</td>
-                        <td>4K tokens</td>
-                        <td>Code generation, technical tasks</td>
+                        <td><span class="multiplier">2.5×</span></td>
+                        <td>@if(app()->getLocale() === 'ar') سحابي — متوسط @else Cloud — Mid @endif</td>
+                        <td>@if(app()->getLocale() === 'ar') نماذج سحابية متوسطة الحجم متوازنة بين الأداء والتكلفة @else Balanced cloud models for quality and cost @endif</td>
                     </tr>
                     <tr>
-                        <td><code>qwen</code></td>
-                        <td>Alibaba</td>
-                        <td>8K tokens</td>
-                        <td>Multilingual, Chinese content</td>
+                        <td><span class="multiplier">3.5×</span></td>
+                        <td>@if(app()->getLocale() === 'ar') سحابي — كبير @else Cloud — Large @endif</td>
+                        <td>@if(app()->getLocale() === 'ar') النماذج الأعلى أداءً والأكبر حجماً @else Highest-performance, largest-scale models @endif</td>
                     </tr>
                 </tbody>
             </table>
 
             <div class="docs-info-box">
-                <p><strong>Note:</strong> We currently maintain 45+ models total. This table shows the most popular options.
-                For a complete list of available models, check your dashboard or <a href="{{ route('contact') }}" class="docs-link">contact support</a>.</p>
+                <p>
+                    @if(app()->getLocale() === 'ar')
+                        <strong>مثال:</strong> إذا أرسلت طلباً يستهلك 1,000 رمز باستخدام نموذج بمعامل 1.5×، فسيُخصم 1,500 رصيد. يمكنك مراقبة الاستهلاك الدقيق من خلال حقل <code>usage</code> في كل استجابة.
+                    @else
+                        <strong>Example:</strong> A request consuming 1,000 tokens on a 1.5× model deducts 1,500 credits. Monitor exact consumption via the <code>usage</code> field in every response.
+                    @endif
+                </p>
             </div>
         </section>
 
-        <!-- Section 2: Model Selection Guide -->
+        <!-- Section 2: Local Models -->
         <section class="docs-section">
-            <h2>Model Selection Guide</h2>
+            <h2>
+                @if(app()->getLocale() === 'ar') النماذج المحلية (15 نموذجاً) @else Local Models (15) @endif
+            </h2>
             <p>
-                Choosing the right model depends on your specific requirements. Here's a guide to help you decide:
+                @if(app()->getLocale() === 'ar')
+                    تعمل هذه النماذج مباشرةً على خوادمنا المخصصة، مما يضمن زمن استجابة منخفضاً وخصوصية تامة للبيانات. المعامل الأساسي هو <strong>1 رصيد لكل رمز</strong> مع تعديلات بحسب حجم النموذج.
+                @else
+                    These models run directly on our dedicated hardware, ensuring low latency and full data privacy. The base rate is <strong>1 credit per token</strong> adjusted by the model multiplier.
+                @endif
             </p>
 
-            <h3>Use Mistral When You Need:</h3>
-            <ul>
-                <li><strong>Speed:</strong> Mistral is one of the fastest models with latency under 1 second on average</li>
-                <li><strong>Low Cost:</strong> Fastest token consumption means lower credits used per request</li>
-                <li><strong>General Tasks:</strong> Works well for content generation, summarization, and general Q&A</li>
-                <li><strong>Low Latency APIs:</strong> Best for real-time applications and user-facing features</li>
-            </ul>
-
-            <h3>Use Llama 2 When You Need:</h3>
-            <ul>
-                <li><strong>Reasoning:</strong> Better for complex logical tasks and multi-step reasoning</li>
-                <li><strong>Longer Context:</strong> Handles longer documents and conversations better</li>
-                <li><strong>Quality Over Speed:</strong> More accurate responses at the cost of slightly longer latency</li>
-                <li><strong>Open Source:</strong> Community-supported model with extensive documentation</li>
-            </ul>
-
-            <h3>Use Neural Chat When You Need:</h3>
-            <ul>
-                <li><strong>Conversation:</strong> Optimized for dialogue and back-and-forth interactions</li>
-                <li><strong>Customer Support:</strong> Trained to be helpful, polite, and contextually aware</li>
-                <li><strong>User Experience:</strong> Natural, conversational responses</li>
-            </ul>
-
-            <h3>Use Deepseek When You Need:</h3>
-            <ul>
-                <li><strong>Code Generation:</strong> Specialized for writing and explaining code</li>
-                <li><strong>Technical Tasks:</strong> Better understanding of programming concepts</li>
-                <li><strong>Debugging:</strong> Can analyze and explain technical errors</li>
-            </ul>
-
-            <h3>Use Qwen When You Need:</h3>
-            <ul>
-                <li><strong>Multilingual Support:</strong> Excellent for Chinese and other Asian languages</li>
-                <li><strong>Asian Language Tasks:</strong> Better cultural and linguistic understanding</li>
-                <li><strong>Extended Context:</strong> 8K token window for longer documents</li>
-            </ul>
+            <table class="docs-table">
+                <thead>
+                    <tr>
+                        <th>@if(app()->getLocale() === 'ar') معرّف النموذج @else Model ID @endif</th>
+                        <th>@if(app()->getLocale() === 'ar') الفئة @else Category @endif</th>
+                        <th>@if(app()->getLocale() === 'ar') الحجم @else Size @endif</th>
+                        <th>@if(app()->getLocale() === 'ar') المعامل @else Multiplier @endif</th>
+                        <th>@if(app()->getLocale() === 'ar') الاستخدام الأمثل @else Best For @endif</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>llama3.2:3b</code></td>
+                        <td><span class="badge badge-chat">chat</span></td>
+                        <td>3B</td>
+                        <td><span class="multiplier">0.5×</span></td>
+                        <td>@if(app()->getLocale() === 'ar') محادثة عامة، سرعة عالية @else General chat, fast @endif</td>
+                    </tr>
+                    <tr>
+                        <td><code>smollm2:135m</code></td>
+                        <td><span class="badge badge-chat">chat</span></td>
+                        <td>135M</td>
+                        <td><span class="multiplier">0.5×</span></td>
+                        <td>@if(app()->getLocale() === 'ar') فائق السرعة، المهام الخفيفة @else Ultra-fast, lightweight tasks @endif</td>
+                    </tr>
+                    <tr>
+                        <td><code>phi3.5-mini:3.8b</code></td>
+                        <td><span class="badge badge-chat">chat</span></td>
+                        <td>3.8B</td>
+                        <td><span class="multiplier">0.5×</span></td>
+                        <td>@if(app()->getLocale() === 'ar') سريع وكفؤ، نافذة سياق 128K @else Fast, efficient, 128K context @endif</td>
+                    </tr>
+                    <tr>
+                        <td><code>starcoder2:3b</code></td>
+                        <td><span class="badge badge-code">code</span></td>
+                        <td>3B</td>
+                        <td><span class="multiplier">0.5×</span></td>
+                        <td>@if(app()->getLocale() === 'ar') توليد الكود، سريع @else Code generation, fast @endif</td>
+                    </tr>
+                    <tr>
+                        <td><code>codellama:7b</code></td>
+                        <td><span class="badge badge-code">code</span></td>
+                        <td>7B</td>
+                        <td><span class="multiplier">0.5×</span></td>
+                        <td>@if(app()->getLocale() === 'ar') برمجة، شرح الكود @else Coding, code explanation @endif</td>
+                    </tr>
+                    <tr>
+                        <td><code>nomic-embed-text</code></td>
+                        <td><span class="badge badge-embedding">embedding</span></td>
+                        <td>110M</td>
+                        <td><span class="multiplier">0.5×</span></td>
+                        <td>@if(app()->getLocale() === 'ar') تضمين النصوص @else Text embeddings @endif</td>
+                    </tr>
+                    <tr>
+                        <td><code>all-minilm</code></td>
+                        <td><span class="badge badge-embedding">embedding</span></td>
+                        <td>23M</td>
+                        <td><span class="multiplier">0.5×</span></td>
+                        <td>@if(app()->getLocale() === 'ar') تضمين خفيف الوزن @else Lightweight embeddings @endif</td>
+                    </tr>
+                    <tr>
+                        <td><code>qwen2.5-coder:14b</code></td>
+                        <td><span class="badge badge-code">code</span></td>
+                        <td>14B</td>
+                        <td><span class="multiplier">1.5×</span></td>
+                        <td>@if(app()->getLocale() === 'ar') توليد الكود المتقدم @else Advanced code generation @endif</td>
+                    </tr>
+                    <tr>
+                        <td><code>mistral-small3.2:24b</code></td>
+                        <td><span class="badge badge-chat">chat</span></td>
+                        <td>24B</td>
+                        <td><span class="multiplier">1.5×</span></td>
+                        <td>@if(app()->getLocale() === 'ar') محادثة متوازنة، أداء عالٍ @else Balanced chat, high performance @endif</td>
+                    </tr>
+                    <tr>
+                        <td><code>gemma2:9b</code></td>
+                        <td><span class="badge badge-chat">chat</span></td>
+                        <td>9B</td>
+                        <td><span class="multiplier">1.5×</span></td>
+                        <td>@if(app()->getLocale() === 'ar') محادثة عامة @else General chat @endif</td>
+                    </tr>
+                    <tr>
+                        <td><code>deepseek-coder:6.7b</code></td>
+                        <td><span class="badge badge-code">code</span></td>
+                        <td>6.7B</td>
+                        <td><span class="multiplier">1.5×</span></td>
+                        <td>@if(app()->getLocale() === 'ar') برمجة ومهام تقنية @else Coding and technical tasks @endif</td>
+                    </tr>
+                    <tr>
+                        <td><code>llama3.1:8b</code></td>
+                        <td><span class="badge badge-chat">chat</span></td>
+                        <td>8B</td>
+                        <td><span class="multiplier">1.5×</span></td>
+                        <td>@if(app()->getLocale() === 'ar') محادثة متعددة الأغراض @else Versatile general chat @endif</td>
+                    </tr>
+                    <tr>
+                        <td><code>mistral-7b</code></td>
+                        <td><span class="badge badge-chat">chat</span></td>
+                        <td>7B</td>
+                        <td><span class="multiplier">1.5×</span></td>
+                        <td>@if(app()->getLocale() === 'ar') محادثة عامة @else General chat @endif</td>
+                    </tr>
+                    <tr>
+                        <td><code>bge-m3</code></td>
+                        <td><span class="badge badge-embedding">embedding</span></td>
+                        <td>580M</td>
+                        <td><span class="multiplier">1.5×</span></td>
+                        <td>@if(app()->getLocale() === 'ar') تضمين متعدد التمثيلات @else Multi-representation embeddings @endif</td>
+                    </tr>
+                    <tr>
+                        <td><code>snowflake-arctic-embed</code></td>
+                        <td><span class="badge badge-embedding">embedding</span></td>
+                        <td>137M</td>
+                        <td><span class="multiplier">1.5×</span></td>
+                        <td>@if(app()->getLocale() === 'ar') تضمين عالي الجودة @else High-quality embeddings @endif</td>
+                    </tr>
+                </tbody>
+            </table>
         </section>
 
-        <!-- Section 3: Model Capabilities -->
+        <!-- Section 3: Cloud Models -->
         <section class="docs-section">
-            <h2>Universal Model Capabilities</h2>
+            <h2>
+                @if(app()->getLocale() === 'ar') النماذج السحابية (31 نموذجاً) @else Cloud Models (31) @endif
+            </h2>
             <p>
-                All LLM Resayil models share common capabilities:
+                @if(app()->getLocale() === 'ar')
+                    النماذج السحابية تُعالَج عبر خوادم GPU متخصصة بعيدة، مما يتيح الوصول إلى نماذج ضخمة بعشرات أو مئات المليارات من المعاملات. تبدأ معاملاتها من <strong>2.5×</strong> وتصل إلى <strong>3.5×</strong>.
+                @else
+                    Cloud models are processed via remote specialized GPU servers, enabling access to models with tens or hundreds of billions of parameters. Multipliers range from <strong>2.5×</strong> to <strong>3.5×</strong>.
+                @endif
             </p>
 
-            <h3>Supported Request Types</h3>
-            <ul>
-                <li><strong>Text Completion:</strong> Continue text from a prompt</li>
-                <li><strong>Chat Interface:</strong> Multi-turn conversations with message history</li>
-                <li><strong>System Prompts:</strong> Define model behavior and personality with a system message</li>
-                <li><strong>Streaming Responses:</strong> Real-time token-by-token output for better UX</li>
-                <li><strong>Temperature & Top-P:</strong> Control randomness and diversity of responses</li>
-            </ul>
+            <h3>@if(app()->getLocale() === 'ar') نماذج المحادثة والتفكير @else Chat &amp; Thinking Models @endif</h3>
+            <table class="docs-table">
+                <thead>
+                    <tr>
+                        <th>@if(app()->getLocale() === 'ar') معرّف النموذج @else Model ID @endif</th>
+                        <th>@if(app()->getLocale() === 'ar') الفئة @else Category @endif</th>
+                        <th>@if(app()->getLocale() === 'ar') الحجم @else Size @endif</th>
+                        <th>@if(app()->getLocale() === 'ar') المعامل @else Multiplier @endif</th>
+                        <th>@if(app()->getLocale() === 'ar') الاستخدام الأمثل @else Best For @endif</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>gpt-oss:20b</code></td>
+                        <td><span class="badge badge-chat">chat</span></td>
+                        <td>20B</td>
+                        <td><span class="multiplier">2.5×</span></td>
+                        <td>@if(app()->getLocale() === 'ar') محادثة عامة @else General purpose @endif</td>
+                    </tr>
+                    <tr>
+                        <td><code>mistral-large:24b</code></td>
+                        <td><span class="badge badge-chat">chat</span></td>
+                        <td>24B</td>
+                        <td><span class="multiplier">2.5×</span></td>
+                        <td>@if(app()->getLocale() === 'ar') محادثة عالية الجودة @else High-quality chat @endif</td>
+                    </tr>
+                    <tr>
+                        <td><code>mistral-nemo:12b</code></td>
+                        <td><span class="badge badge-chat">chat</span></td>
+                        <td>12B</td>
+                        <td><span class="multiplier">2.5×</span></td>
+                        <td>@if(app()->getLocale() === 'ar') محادثة متوازنة @else Balanced chat @endif</td>
+                    </tr>
+                    <tr>
+                        <td><code>qwen3-30b</code></td>
+                        <td><span class="badge badge-thinking">thinking</span></td>
+                        <td>30B</td>
+                        <td><span class="multiplier">2.5×</span></td>
+                        <td>@if(app()->getLocale() === 'ar') تفكير واستدلال @else Reasoning and thinking @endif</td>
+                    </tr>
+                    <tr>
+                        <td><code>llama3.2:70b</code></td>
+                        <td><span class="badge badge-chat">chat</span></td>
+                        <td>70B</td>
+                        <td><span class="multiplier">3.5×</span></td>
+                        <td>@if(app()->getLocale() === 'ar') محادثة عالية الأداء @else High-performance chat @endif</td>
+                    </tr>
+                    <tr>
+                        <td><code>llama3.1:70b</code></td>
+                        <td><span class="badge badge-chat">chat</span></td>
+                        <td>70B</td>
+                        <td><span class="multiplier">3.5×</span></td>
+                        <td>@if(app()->getLocale() === 'ar') محادثة عامة متقدمة @else Advanced general chat @endif</td>
+                    </tr>
+                    <tr>
+                        <td><code>llama3.1:405b</code></td>
+                        <td><span class="badge badge-chat">chat</span></td>
+                        <td>405B</td>
+                        <td><span class="multiplier">3.5×</span></td>
+                        <td>@if(app()->getLocale() === 'ar') أكبر نماذج Llama @else Largest Llama model @endif</td>
+                    </tr>
+                    <tr>
+                        <td><code>llama3-gradient:70b</code></td>
+                        <td><span class="badge badge-chat">chat</span></td>
+                        <td>70B</td>
+                        <td><span class="multiplier">3.5×</span></td>
+                        <td>@if(app()->getLocale() === 'ar') سياق ممتد (262K رمز) @else Extended context (262K tokens) @endif</td>
+                    </tr>
+                    <tr>
+                        <td><code>gemma2:27b</code></td>
+                        <td><span class="badge badge-chat">chat</span></td>
+                        <td>27B</td>
+                        <td><span class="multiplier">3.5×</span></td>
+                        <td>@if(app()->getLocale() === 'ar') محادثة عامة @else General chat @endif</td>
+                    </tr>
+                    <tr>
+                        <td><code>mixtral:8x7b</code></td>
+                        <td><span class="badge badge-chat">chat</span></td>
+                        <td>8×7B</td>
+                        <td><span class="multiplier">3.5×</span></td>
+                        <td>@if(app()->getLocale() === 'ar') بنية MoE متوازنة @else Balanced MoE architecture @endif</td>
+                    </tr>
+                    <tr>
+                        <td><code>mixtral:8x22b</code></td>
+                        <td><span class="badge badge-chat">chat</span></td>
+                        <td>8×22B</td>
+                        <td><span class="multiplier">3.5×</span></td>
+                        <td>@if(app()->getLocale() === 'ar') MoE الأداء العالي @else High-performance MoE @endif</td>
+                    </tr>
+                    <tr>
+                        <td><code>qwen2:72b</code></td>
+                        <td><span class="badge badge-chat">chat</span></td>
+                        <td>72B</td>
+                        <td><span class="multiplier">3.5×</span></td>
+                        <td>@if(app()->getLocale() === 'ar') محادثة متعددة اللغات @else Multilingual chat @endif</td>
+                    </tr>
+                    <tr>
+                        <td><code>qwen2.5:32b</code></td>
+                        <td><span class="badge badge-chat">chat</span></td>
+                        <td>32B</td>
+                        <td><span class="multiplier">3.5×</span></td>
+                        <td>@if(app()->getLocale() === 'ar') محادثة عامة @else General chat @endif</td>
+                    </tr>
+                    <tr>
+                        <td><code>yi:34b</code></td>
+                        <td><span class="badge badge-chat">chat</span></td>
+                        <td>34B</td>
+                        <td><span class="multiplier">3.5×</span></td>
+                        <td>@if(app()->getLocale() === 'ar') محادثة متعددة اللغات @else Multilingual chat @endif</td>
+                    </tr>
+                    <tr>
+                        <td><code>qwen3.5:397b</code></td>
+                        <td><span class="badge badge-thinking">thinking</span></td>
+                        <td>397B</td>
+                        <td><span class="multiplier">3.5×</span></td>
+                        <td>@if(app()->getLocale() === 'ar') تفكير، الأكبر حجماً @else Thinking, largest model @endif</td>
+                    </tr>
+                    <tr>
+                        <td><code>deepseek-v3.1:671b</code></td>
+                        <td><span class="badge badge-thinking">thinking</span></td>
+                        <td>671B</td>
+                        <td><span class="multiplier">3.5×</span></td>
+                        <td>@if(app()->getLocale() === 'ar') تفكير عميق واستدلال @else Deep thinking and reasoning @endif</td>
+                    </tr>
+                    <tr>
+                        <td><code>deepseek-v3.2</code></td>
+                        <td><span class="badge badge-thinking">thinking</span></td>
+                        <td>671B</td>
+                        <td><span class="multiplier">3.5×</span></td>
+                        <td>@if(app()->getLocale() === 'ar') أحدث إصدار DeepSeek @else Latest DeepSeek release @endif</td>
+                    </tr>
+                    <tr>
+                        <td><code>deepseek-v2.5</code></td>
+                        <td><span class="badge badge-thinking">thinking</span></td>
+                        <td>236B</td>
+                        <td><span class="multiplier">3.5×</span></td>
+                        <td>@if(app()->getLocale() === 'ar') تفكير واستدلال MoE @else MoE thinking and reasoning @endif</td>
+                    </tr>
+                    <tr>
+                        <td><code>deepseek-chat:671b</code></td>
+                        <td><span class="badge badge-thinking">thinking</span></td>
+                        <td>671B</td>
+                        <td><span class="multiplier">3.5×</span></td>
+                        <td>@if(app()->getLocale() === 'ar') محادثة وتفكير متقدم @else Advanced chat and reasoning @endif</td>
+                    </tr>
+                </tbody>
+            </table>
 
-            <h3>API Request Format</h3>
+            <h3>@if(app()->getLocale() === 'ar') نماذج الرؤية @else Vision Models @endif</h3>
+            <table class="docs-table">
+                <thead>
+                    <tr>
+                        <th>@if(app()->getLocale() === 'ar') معرّف النموذج @else Model ID @endif</th>
+                        <th>@if(app()->getLocale() === 'ar') الفئة @else Category @endif</th>
+                        <th>@if(app()->getLocale() === 'ar') الحجم @else Size @endif</th>
+                        <th>@if(app()->getLocale() === 'ar') المعامل @else Multiplier @endif</th>
+                        <th>@if(app()->getLocale() === 'ar') الاستخدام الأمثل @else Best For @endif</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>glm-4.7-flash</code></td>
+                        <td><span class="badge badge-vision">vision</span></td>
+                        <td>12B</td>
+                        <td><span class="multiplier">2.5×</span></td>
+                        <td>@if(app()->getLocale() === 'ar') رؤية متعددة الوسائط @else Multimodal vision @endif</td>
+                    </tr>
+                    <tr>
+                        <td><code>llama3.2:11b</code></td>
+                        <td><span class="badge badge-vision">vision</span></td>
+                        <td>11B</td>
+                        <td><span class="multiplier">2.5×</span></td>
+                        <td>@if(app()->getLocale() === 'ar') رؤية ومحادثة @else Vision and chat @endif</td>
+                    </tr>
+                    <tr>
+                        <td><code>Qwen3-VL-32B</code></td>
+                        <td><span class="badge badge-vision">vision</span></td>
+                        <td>32B</td>
+                        <td><span class="multiplier">3.5×</span></td>
+                        <td>@if(app()->getLocale() === 'ar') رؤية متقدمة @else Advanced vision-language @endif</td>
+                    </tr>
+                    <tr>
+                        <td><code>qwen3-vl:235b-instruct</code></td>
+                        <td><span class="badge badge-vision">vision</span></td>
+                        <td>235B</td>
+                        <td><span class="multiplier">3.5×</span></td>
+                        <td>@if(app()->getLocale() === 'ar') رؤية، النموذج الرائد @else Vision, flagship model @endif</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>@if(app()->getLocale() === 'ar') نماذج البرمجة @else Code Models @endif</h3>
+            <table class="docs-table">
+                <thead>
+                    <tr>
+                        <th>@if(app()->getLocale() === 'ar') معرّف النموذج @else Model ID @endif</th>
+                        <th>@if(app()->getLocale() === 'ar') الفئة @else Category @endif</th>
+                        <th>@if(app()->getLocale() === 'ar') الحجم @else Size @endif</th>
+                        <th>@if(app()->getLocale() === 'ar') المعامل @else Multiplier @endif</th>
+                        <th>@if(app()->getLocale() === 'ar') الاستخدام الأمثل @else Best For @endif</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>codestral:22b</code></td>
+                        <td><span class="badge badge-code">code</span></td>
+                        <td>22B</td>
+                        <td><span class="multiplier">2.5×</span></td>
+                        <td>@if(app()->getLocale() === 'ar') توليد الكود @else Code generation @endif</td>
+                    </tr>
+                    <tr>
+                        <td><code>deepseek-coder:33b</code></td>
+                        <td><span class="badge badge-code">code</span></td>
+                        <td>33B</td>
+                        <td><span class="multiplier">3.5×</span></td>
+                        <td>@if(app()->getLocale() === 'ar') برمجة متقدمة @else Advanced coding @endif</td>
+                    </tr>
+                    <tr>
+                        <td><code>devstral-2:123b</code></td>
+                        <td><span class="badge badge-code">code</span></td>
+                        <td>123B</td>
+                        <td><span class="multiplier">3.5×</span></td>
+                        <td>@if(app()->getLocale() === 'ar') برمجة، نموذج كبير @else Coding, large model @endif</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>@if(app()->getLocale() === 'ar') نماذج الأدوات والتضمين السحابي @else Tools &amp; Cloud Embedding Models @endif</h3>
+            <table class="docs-table">
+                <thead>
+                    <tr>
+                        <th>@if(app()->getLocale() === 'ar') معرّف النموذج @else Model ID @endif</th>
+                        <th>@if(app()->getLocale() === 'ar') الفئة @else Category @endif</th>
+                        <th>@if(app()->getLocale() === 'ar') الحجم @else Size @endif</th>
+                        <th>@if(app()->getLocale() === 'ar') المعامل @else Multiplier @endif</th>
+                        <th>@if(app()->getLocale() === 'ar') الاستخدام الأمثل @else Best For @endif</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>firefunction-v2:18b</code></td>
+                        <td><span class="badge badge-tools">tools</span></td>
+                        <td>18B</td>
+                        <td><span class="multiplier">2.5×</span></td>
+                        <td>@if(app()->getLocale() === 'ar') استدعاء الدوال @else Function calling @endif</td>
+                    </tr>
+                    <tr>
+                        <td><code>command-r:35b</code></td>
+                        <td><span class="badge badge-tools">tools</span></td>
+                        <td>35B</td>
+                        <td><span class="multiplier">3.5×</span></td>
+                        <td>@if(app()->getLocale() === 'ar') RAG والأدوات @else RAG and tool use @endif</td>
+                    </tr>
+                    <tr>
+                        <td><code>command-r-plus:104b</code></td>
+                        <td><span class="badge badge-tools">tools</span></td>
+                        <td>104B</td>
+                        <td><span class="multiplier">3.5×</span></td>
+                        <td>@if(app()->getLocale() === 'ar') RAG المتقدم @else Advanced RAG @endif</td>
+                    </tr>
+                    <tr>
+                        <td><code>nomic-embed:27m</code></td>
+                        <td><span class="badge badge-embedding">embedding</span></td>
+                        <td>27M</td>
+                        <td><span class="multiplier">1.0×</span></td>
+                        <td>@if(app()->getLocale() === 'ar') تضمين النصوص @else Text embeddings @endif</td>
+                    </tr>
+                    <tr>
+                        <td><code>gte-qwen:7m</code></td>
+                        <td><span class="badge badge-embedding">embedding</span></td>
+                        <td>7M</td>
+                        <td><span class="multiplier">1.0×</span></td>
+                        <td>@if(app()->getLocale() === 'ar') تضمين سريع @else Fast embeddings @endif</td>
+                    </tr>
+                    <tr>
+                        <td><code>nvidia-embed:1b</code></td>
+                        <td><span class="badge badge-embedding">embedding</span></td>
+                        <td>1B</td>
+                        <td><span class="multiplier">1.0×</span></td>
+                        <td>@if(app()->getLocale() === 'ar') تضمين NeMo @else NeMo embeddings @endif</td>
+                    </tr>
+                    <tr>
+                        <td><code>all-minilm-l6:22m</code></td>
+                        <td><span class="badge badge-embedding">embedding</span></td>
+                        <td>22M</td>
+                        <td><span class="multiplier">1.0×</span></td>
+                        <td>@if(app()->getLocale() === 'ar') تضمين خفيف @else Lightweight embeddings @endif</td>
+                    </tr>
+                    <tr>
+                        <td><code>gte-base:110m</code></td>
+                        <td><span class="badge badge-embedding">embedding</span></td>
+                        <td>110M</td>
+                        <td><span class="multiplier">1.0×</span></td>
+                        <td>@if(app()->getLocale() === 'ar') تضمين قياسي @else Standard embeddings @endif</td>
+                    </tr>
+                    <tr>
+                        <td><code>bge-small:8m</code></td>
+                        <td><span class="badge badge-embedding">embedding</span></td>
+                        <td>8M</td>
+                        <td><span class="multiplier">1.0×</span></td>
+                        <td>@if(app()->getLocale() === 'ar') تضمين صغير @else Small embeddings @endif</td>
+                    </tr>
+                    <tr>
+                        <td><code>minilm-l12:39m</code></td>
+                        <td><span class="badge badge-embedding">embedding</span></td>
+                        <td>39M</td>
+                        <td><span class="multiplier">1.0×</span></td>
+                        <td>@if(app()->getLocale() === 'ar') تضمين MiniLM @else MiniLM embeddings @endif</td>
+                    </tr>
+                    <tr>
+                        <td><code>bge-large:335m</code></td>
+                        <td><span class="badge badge-embedding">embedding</span></td>
+                        <td>335M</td>
+                        <td><span class="multiplier">2.5×</span></td>
+                        <td>@if(app()->getLocale() === 'ar') تضمين عالي الجودة @else High-quality embeddings @endif</td>
+                    </tr>
+                    <tr>
+                        <td><code>e5-mistral:7b</code></td>
+                        <td><span class="badge badge-embedding">embedding</span></td>
+                        <td>7B</td>
+                        <td><span class="multiplier">2.5×</span></td>
+                        <td>@if(app()->getLocale() === 'ar') تضمين متقدم @else Advanced embeddings @endif</td>
+                    </tr>
+                    <tr>
+                        <td><code>snowflake-arctic-embed-l:335m</code></td>
+                        <td><span class="badge badge-embedding">embedding</span></td>
+                        <td>335M</td>
+                        <td><span class="multiplier">2.5×</span></td>
+                        <td>@if(app()->getLocale() === 'ar') تضمين Snowflake الكبير @else Snowflake large embeddings @endif</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Section 4: API Endpoint -->
+        <section class="docs-section">
+            <h2>
+                @if(app()->getLocale() === 'ar') واجهة برمجة النماذج @else Models API Endpoint @endif
+            </h2>
             <p>
-                All models use the OpenAI-compatible Chat Completions endpoint:
+                @if(app()->getLocale() === 'ar')
+                    يمكنك الحصول على القائمة الكاملة للنماذج المتاحة عبر نقطة النهاية التالية المتوافقة مع OpenAI:
+                @else
+                    Retrieve the full list of available models via the following OpenAI-compatible endpoint:
+                @endif
             </p>
+
+            <div class="docs-code-block">
+                <div class="docs-code-label">Endpoint</div>
+                <code>GET https://llm.resayil.io/v1/models</code>
+            </div>
+
+            <div class="docs-code-block">
+                <div class="docs-code-label">Request</div>
+                <code>curl https://llm.resayil.io/v1/models \
+  -H "Authorization: Bearer YOUR_API_KEY"</code>
+            </div>
+
+            <div class="docs-code-block">
+                <div class="docs-code-label">Response</div>
+                <code>{
+  "object": "list",
+  "data": [
+    {
+      "id": "llama3.2:3b",
+      "object": "model",
+      "created": 1700000000,
+      "owned_by": "llm-resayil"
+    },
+    {
+      "id": "qwen3.5:397b",
+      "object": "model",
+      "created": 1700000000,
+      "owned_by": "llm-resayil"
+    }
+  ]
+}</code>
+            </div>
+
+            <div class="docs-info-box">
+                <p>
+                    @if(app()->getLocale() === 'ar')
+                        <strong>ملاحظة:</strong> يمكن أيضاً الوصول إلى هذه النقطة عبر المسار البديل <code>GET /api/v1/models</code>. كلا المسارَين يعيدان نفس القائمة.
+                    @else
+                        <strong>Note:</strong> The endpoint is also accessible at the alternative path <code>GET /api/v1/models</code>. Both paths return the same list.
+                    @endif
+                </p>
+            </div>
+        </section>
+
+        <!-- Section 5: Sending Requests -->
+        <section class="docs-section">
+            <h2>
+                @if(app()->getLocale() === 'ar') إرسال الطلبات @else Sending Requests @endif
+            </h2>
+            <p>
+                @if(app()->getLocale() === 'ar')
+                    جميع النماذج تستخدم نقطة نهاية واحدة متوافقة مع OpenAI. ما عليك سوى تغيير حقل <code>model</code> لاستخدام نموذج مختلف:
+                @else
+                    All models share a single OpenAI-compatible endpoint. Simply change the <code>model</code> field to switch models:
+                @endif
+            </p>
+
             <div class="docs-code-block">
                 <div class="docs-code-label">Endpoint</div>
                 <code>POST https://llm.resayil.io/api/v1/chat/completions</code>
             </div>
 
-            <h3>Example Request</h3>
             <div class="docs-code-block">
                 <div class="docs-code-label">Chat Completion Request</div>
                 <code>{
-  "model": "mistral",
+  "model": "mistral-small3.2:24b",
   "messages": [
     {"role": "system", "content": "You are a helpful assistant."},
     {"role": "user", "content": "Explain quantum computing in simple terms."}
@@ -413,79 +946,94 @@
 }</code>
             </div>
 
-            <h3>Output Tokens Per Model</h3>
             <p>
-                Each model has different maximum output lengths. The <code>max_tokens</code> parameter limits the response length,
-                but each model has its own absolute maximum. All models return <code>usage</code> information showing
-                <code>prompt_tokens</code> and <code>completion_tokens</code> consumed, allowing you to calculate costs accurately.
-            </p>
-        </section>
-
-        <!-- Section 4: Token Consumption -->
-        <section class="docs-section">
-            <h2>Token Consumption & Pricing</h2>
-            <p>
-                Token consumption varies by model. Smaller, faster models consume fewer tokens per request,
-                while larger models with more capabilities consume more. Check the <a href="{{ route('docs.billing') }}" class="docs-link">Billing & Credits</a> guide
-                for detailed pricing information and token consumption rates per model.
-            </p>
-
-            <p>
-                Every API response includes a <code>usage</code> field showing exactly how many tokens were consumed,
-                making it easy to forecast costs and budget your API usage:
+                @if(app()->getLocale() === 'ar')
+                    كل استجابة تتضمن حقل <code>usage</code> يوضح عدد الرموز المستهلكة بدقة:
+                @else
+                    Every response includes a <code>usage</code> field showing exact token consumption:
+                @endif
             </p>
 
             <div class="docs-code-block">
-                <div class="docs-code-label">Usage Information in Response</div>
+                <div class="docs-code-label">Usage in Response</div>
                 <code>"usage": {
   "prompt_tokens": 15,
-  "completion_tokens": 42,
-  "total_tokens": 57
+  "completion_tokens": 142,
+  "total_tokens": 157
 }</code>
             </div>
         </section>
 
-        <!-- Section 5: Model Availability -->
+        <!-- Section 6: Model Availability -->
         <section class="docs-section">
-            <h2>Model Availability & Status</h2>
+            <h2>
+                @if(app()->getLocale() === 'ar') توفر النماذج وحالتها @else Model Availability &amp; Status @endif
+            </h2>
 
-            <h3>Checking Available Models</h3>
+            <h3>@if(app()->getLocale() === 'ar') الوصول الكامل لجميع المستويات @else Full Access Across All Tiers @endif</h3>
             <p>
-                Models are listed in your dashboard and available via the models API endpoint.
-                All models listed are available and ready to use immediately. There are no access restrictions
-                based on subscription tier—all tiers can access all 45+ models.
+                @if(app()->getLocale() === 'ar')
+                    جميع المستويات يمكنها الوصول إلى جميع النماذج الـ 46 فوراً دون أي قيود. الفارق الوحيد هو رصيدك المتاح.
+                @else
+                    All subscription tiers have immediate access to all 46 models with no restrictions. The only differentiator is your available credit balance.
+                @endif
             </p>
 
-            <h3>Model Updates</h3>
+            <h3>@if(app()->getLocale() === 'ar') تحديثات النماذج @else Model Updates @endif</h3>
             <p>
-                We regularly update our model catalog to include the latest and most capable models.
-                When new models are released, they're tested for quality and then added to our platform.
-                Existing models may be updated to newer versions automatically for continuous improvements.
+                @if(app()->getLocale() === 'ar')
+                    نحرص على تحديث كتالوج النماذج باستمرار لإضافة أحدث وأقوى النماذج المتاحة. عند إضافة نماذج جديدة تظهر فوراً في نتائج <code>GET /v1/models</code> وتصبح جاهزة للاستخدام.
+                @else
+                    We continuously update the model catalog to include the latest and most capable models. New models appear immediately in <code>GET /v1/models</code> results and are ready to use.
+                @endif
             </p>
 
-            <h3>Deprecations</h3>
+            <h3>@if(app()->getLocale() === 'ar') إيقاف النماذج @else Deprecations @endif</h3>
             <p>
-                If a model is ever deprecated, we provide at least 30 days notice and guidance on migration
-                to replacement models. You'll be notified via email and dashboard notifications.
+                @if(app()->getLocale() === 'ar')
+                    في حال إيقاف أي نموذج، سيتم إشعارك بمهلة لا تقل عن 30 يوماً مع توجيهات الانتقال إلى البديل. ستصل الإشعارات عبر البريد الإلكتروني ولوحة التحكم.
+                @else
+                    If a model is deprecated, at least 30 days notice is provided along with migration guidance. Notifications are sent via email and dashboard alerts.
+                @endif
             </p>
         </section>
 
         <!-- Related Links -->
         <section class="docs-section">
-            <h2>Related Resources</h2>
+            <h2>
+                @if(app()->getLocale() === 'ar') موارد ذات صلة @else Related Resources @endif
+            </h2>
             <ul>
-                <li><a href="{{ route('docs.getting-started') }}" class="docs-link">Getting Started</a> — Your first API request</li>
-                <li><a href="{{ route('docs.billing') }}" class="docs-link">Billing & Credits</a> — Token consumption rates</li>
-                <li><a href="{{ route('docs.rate-limits') }}" class="docs-link">Rate Limits</a> — Request quotas per tier</li>
-                <li><a href="{{ route('pricing') }}" class="docs-link">Pricing</a> — Subscription tiers and costs</li>
+                <li><a href="{{ route('docs.getting-started') }}" class="docs-link">
+                    @if(app()->getLocale() === 'ar') البدء السريع @else Getting Started @endif
+                </a> — @if(app()->getLocale() === 'ar') أول طلب API لك @else Your first API request @endif</li>
+                <li><a href="{{ route('docs.billing') }}" class="docs-link">
+                    @if(app()->getLocale() === 'ar') الفواتير والأرصدة @else Billing &amp; Credits @endif
+                </a> — @if(app()->getLocale() === 'ar') معدلات استهلاك الأرصدة @else Credit consumption rates @endif</li>
+                <li><a href="{{ route('docs.rate-limits') }}" class="docs-link">
+                    @if(app()->getLocale() === 'ar') حدود المعدل @else Rate Limits @endif
+                </a> — @if(app()->getLocale() === 'ar') حصص الطلبات لكل مستوى @else Request quotas per tier @endif</li>
+                <li><a href="{{ route('pricing') }}" class="docs-link">
+                    @if(app()->getLocale() === 'ar') الأسعار @else Pricing @endif
+                </a> — @if(app()->getLocale() === 'ar') مستويات الاشتراك والتكاليف @else Subscription tiers and costs @endif</li>
             </ul>
         </section>
 
         <!-- Next Section Link -->
         <div class="docs-next-section">
-            <h3>Ready to start building?</h3>
-            <p>Learn about token consumption and billing to understand costs.</p>
-            <a href="{{ route('docs.billing') }}">Go to Billing & Credits →</a>
+            <h3>
+                @if(app()->getLocale() === 'ar') هل أنت مستعد للبدء؟ @else Ready to start building? @endif
+            </h3>
+            <p>
+                @if(app()->getLocale() === 'ar')
+                    تعرّف على نظام الأرصدة والفواتير لفهم التكاليف.
+                @else
+                    Learn about the credit system and billing to understand costs.
+                @endif
+            </p>
+            <a href="{{ route('docs.billing') }}">
+                @if(app()->getLocale() === 'ar') الانتقال إلى الفواتير والأرصدة &larr; @else Go to Billing &amp; Credits &rarr; @endif
+            </a>
         </div>
 
     </div>

@@ -212,6 +212,39 @@ Route::group([], function () {
         ]);
     })->name('docs.error-codes');
 
+    Route::get('/docs/usage', function () {
+        $meta = \App\Helpers\SeoHelper::getPageMeta('docs.usage');
+        return view('docs.usage', [
+            'pageTitle' => $meta['title'],
+            'pageDescription' => $meta['description'],
+            'pageKeywords' => $meta['keywords'],
+            'ogImage' => $meta['ogImage'],
+            'ogType' => $meta['ogType'],
+        ]);
+    })->name('docs.usage');
+
+    Route::get('/docs/topup', function () {
+        $meta = \App\Helpers\SeoHelper::getPageMeta('docs.topup');
+        return view('docs.topup', [
+            'pageTitle' => $meta['title'],
+            'pageDescription' => $meta['description'],
+            'pageKeywords' => $meta['keywords'],
+            'ogImage' => $meta['ogImage'],
+            'ogType' => $meta['ogType'],
+        ]);
+    })->name('docs.topup');
+
+    Route::get('/docs/credits', function () {
+        $meta = \App\Helpers\SeoHelper::getPageMeta('docs.credits');
+        return view('docs.credits', [
+            'pageTitle' => $meta['title'],
+            'pageDescription' => $meta['description'],
+            'pageKeywords' => $meta['keywords'],
+            'ogImage' => $meta['ogImage'],
+            'ogType' => $meta['ogType'],
+        ]);
+    })->name('docs.credits');
+
     // Contact page (public, no auth required)
     Route::get('/contact', function () {
         $meta = \App\Helpers\SeoHelper::getPageMeta('contact');

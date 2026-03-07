@@ -398,5 +398,60 @@
 </footer>
 
 @stack('scripts')
+
+@auth
+<div id="idle-modal" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.75);align-items:center;justify-content:center;">
+    <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:2rem;max-width:380px;width:90%;text-align:center;">
+        <div style="font-size:2rem;margin-bottom:1rem;">⏱</div>
+        <h3 style="color:var(--text-primary);margin-bottom:0.75rem;font-size:1.1rem;">Session Expiring</h3>
+        <p style="color:var(--text-secondary);font-size:0.9rem;margin-bottom:1.5rem;">
+            You've been inactive. Logging out in <strong id="idle-countdown" style="color:var(--gold);">30</strong>s.
+        </p>
+        <button onclick="resetIdleTimer()" style="background:var(--gold);color:#000;border:none;padding:0.6rem 1.5rem;border-radius:8px;font-weight:600;cursor:pointer;font-size:0.9rem;">Stay Logged In</button>
+    </div>
+</div>
+
+<form id="idle-logout-form" method="POST" action="/logout" style="display:none;">
+    @csrf
+</form>
+
+<script>
+(function() {
+    const IDLE_TIMEOUT = 5 * 60 * 1000;  // 5 minutes
+    const WARN_DURATION = 30;             // 30-second countdown
+
+    let idleTimer, countdownTimer, countdown;
+    const modal = document.getElementById('idle-modal');
+    const countdownEl = document.getElementById('idle-countdown');
+
+    function showModal() {
+        countdown = WARN_DURATION;
+        countdownEl.textContent = countdown;
+        modal.style.display = 'flex';
+        countdownTimer = setInterval(function() {
+            countdown--;
+            countdownEl.textContent = countdown;
+            if (countdown <= 0) {
+                clearInterval(countdownTimer);
+                document.getElementById('idle-logout-form').submit();
+            }
+        }, 1000);
+    }
+
+    window.resetIdleTimer = function() {
+        clearTimeout(idleTimer);
+        clearInterval(countdownTimer);
+        modal.style.display = 'none';
+        idleTimer = setTimeout(showModal, IDLE_TIMEOUT);
+    };
+
+    ['mousemove','mousedown','keydown','touchstart','scroll','click'].forEach(function(evt) {
+        document.addEventListener(evt, window.resetIdleTimer, { passive: true });
+    });
+
+    idleTimer = setTimeout(showModal, IDLE_TIMEOUT);
+})();
+</script>
+@endauth
 </body>
 </html>
