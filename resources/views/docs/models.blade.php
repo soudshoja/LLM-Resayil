@@ -589,9 +589,9 @@
 
         <p class="docs-intro">
             @if(app()->getLocale() === 'ar')
-                يوفر LLM Resayil وصولاً إلى {{ $models->count() }} نموذجاً من النماذج اللغوية الكبيرة — {{ $localModels->count() }} نموذجاً محلياً يعمل على بنيتنا التحتية الخاصة، و{{ $cloudModels->count() }} نموذجاً سحابياً عالي الأداء. اختر النموذج المناسب لحالة الاستخدام لديك بناءً على السرعة والدقة ومعامل الاستهلاك.
+                يوفر LLM Resayil وصولاً إلى {{ $models->count() }} نموذجاً من النماذج اللغوية الكبيرة — {{ $localModels->count() }} نموذجاً قياسياً و{{ $cloudModels->count() }} نموذجاً متقدماً عالي الأداء. اختر النموذج المناسب لحالة الاستخدام لديك بناءً على السرعة والدقة ومعامل الاستهلاك.
             @else
-                LLM Resayil provides access to {{ $models->count() }} large language models — {{ $localModels->count() }} local models running on our own infrastructure and {{ $cloudModels->count() }} high-performance cloud models. Choose the right model for your use case based on speed, accuracy, and credit multiplier.
+                LLM Resayil provides access to {{ $models->count() }} large language models — {{ $localModels->count() }} standard models and {{ $cloudModels->count() }} high-performance frontier models. Choose the right model for your use case based on speed, accuracy, and credit multiplier.
             @endif
         </p>
 
@@ -601,10 +601,10 @@
                 @if(app()->getLocale() === 'ar') نظام المعاملات @else Credit Multipliers @endif
             </a>
             <a href="#section-local" class="docs-jump-link">
-                @if(app()->getLocale() === 'ar') النماذج المحلية ({{ $localModels->count() }}) @else Local Models ({{ $localModels->count() }}) @endif
+                @if(app()->getLocale() === 'ar') النماذج القياسية ({{ $localModels->count() }}) @else Standard Models ({{ $localModels->count() }}) @endif
             </a>
             <a href="#section-cloud" class="docs-jump-link">
-                @if(app()->getLocale() === 'ar') النماذج السحابية ({{ $cloudModels->count() }}) @else Cloud Models ({{ $cloudModels->count() }}) @endif
+                @if(app()->getLocale() === 'ar') النماذج المتقدمة ({{ $cloudModels->count() }}) @else Frontier Models ({{ $cloudModels->count() }}) @endif
             </a>
             <a href="#section-api" class="docs-jump-link">
                 @if(app()->getLocale() === 'ar') واجهة API @else Models API @endif
@@ -639,27 +639,27 @@
                     <tbody>
                         <tr>
                             <td><span class="multiplier mult-05">0.5×</span></td>
-                            <td>@if(app()->getLocale() === 'ar') محلي — خفيف @else Local — Lightweight @endif</td>
+                            <td>@if(app()->getLocale() === 'ar') قياسي — خفيف @else Standard — Lightweight @endif</td>
                             <td>@if(app()->getLocale() === 'ar') نماذج صغيرة وسريعة جداً، مثالية للمهام البسيطة @else Small, ultra-fast models ideal for simple tasks @endif</td>
                         </tr>
                         <tr>
                             <td><span class="multiplier mult-10">1.0×</span></td>
-                            <td>@if(app()->getLocale() === 'ar') سحابي — تضمين @else Cloud — Embedding @endif</td>
-                            <td>@if(app()->getLocale() === 'ar') نماذج التضمين السحابية خفيفة الاستهلاك @else Lightweight cloud embedding models @endif</td>
+                            <td>@if(app()->getLocale() === 'ar') متقدم — تضمين @else Frontier — Embedding @endif</td>
+                            <td>@if(app()->getLocale() === 'ar') نماذج التضمين خفيفة الاستهلاك @else Lightweight embedding models @endif</td>
                         </tr>
                         <tr>
                             <td><span class="multiplier mult-15">1.5×</span></td>
-                            <td>@if(app()->getLocale() === 'ar') محلي — متوسط @else Local — Standard @endif</td>
-                            <td>@if(app()->getLocale() === 'ar') نماذج محلية متوسطة الحجم وعالية الكفاءة @else Mid-size local models with strong performance @endif</td>
+                            <td>@if(app()->getLocale() === 'ar') قياسي — متوسط @else Standard — Mid @endif</td>
+                            <td>@if(app()->getLocale() === 'ar') نماذج متوسطة الحجم وعالية الكفاءة @else Mid-size models with strong performance @endif</td>
                         </tr>
                         <tr>
                             <td><span class="multiplier mult-25">2.5×</span></td>
-                            <td>@if(app()->getLocale() === 'ar') سحابي — متوسط @else Cloud — Mid @endif</td>
-                            <td>@if(app()->getLocale() === 'ar') نماذج سحابية متوسطة الحجم متوازنة بين الأداء والتكلفة @else Balanced cloud models for quality and cost @endif</td>
+                            <td>@if(app()->getLocale() === 'ar') متقدم — متوسط @else Frontier — Mid @endif</td>
+                            <td>@if(app()->getLocale() === 'ar') نماذج متقدمة متوازنة بين الأداء والتكلفة @else Balanced frontier models for quality and cost @endif</td>
                         </tr>
                         <tr>
                             <td><span class="multiplier mult-35">3.5×</span></td>
-                            <td>@if(app()->getLocale() === 'ar') سحابي — كبير @else Cloud — Large @endif</td>
+                            <td>@if(app()->getLocale() === 'ar') متقدم — كبير @else Frontier — Large @endif</td>
                             <td>@if(app()->getLocale() === 'ar') النماذج الأعلى أداءً والأكبر حجماً @else Highest-performance, largest-scale models @endif</td>
                         </tr>
                     </tbody>
@@ -677,16 +677,16 @@
             </div>
         </section>
 
-        <!-- Section 2: Local Models -->
+        <!-- Section 2: Standard Models -->
         <section class="docs-section" id="section-local">
             <h2>
-                @if(app()->getLocale() === 'ar') النماذج المحلية ({{ $localModels->count() }} نموذجاً) @else Local Models ({{ $localModels->count() }}) @endif
+                @if(app()->getLocale() === 'ar') النماذج القياسية ({{ $localModels->count() }} نموذجاً) @else Standard Models ({{ $localModels->count() }}) @endif
             </h2>
             <p>
                 @if(app()->getLocale() === 'ar')
-                    تعمل هذه النماذج مباشرةً على خوادمنا المخصصة، مما يضمن زمن استجابة منخفضاً وخصوصية تامة للبيانات. المعامل الأساسي هو <strong>1 رصيد لكل رمز</strong> مع تعديلات بحسب حجم النموذج.
+                    نماذج مُحسَّنة للأداء السريع والاستخدام الفعّال للأرصدة. المعامل الأساسي هو <strong>1 رصيد لكل رمز</strong> مع تعديلات بحسب حجم النموذج.
                 @else
-                    These models run directly on our dedicated hardware, ensuring low latency and full data privacy. The base rate is <strong>1 credit per token</strong> adjusted by the model multiplier.
+                    Models optimized for fast performance and efficient credit usage. The base rate is <strong>1 credit per token</strong> adjusted by the model multiplier.
                 @endif
             </p>
 
@@ -722,12 +722,22 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr data-category="chat">
-                            <td><div class="model-id-cell"><code>llama3.2:3b</code><button class="model-copy-btn" data-model="llama3.2:3b" aria-label="Copy model ID">Copy</button></div></td>
-                            <td><span class="badge badge-chat">chat</span></td>
-                            <td>3B</td>
-                            <td><span class="multiplier mult-05">0.5×</span></td>
-                            <td>@if(app()->getLocale() === 'ar') محادثة عامة، سرعة عالية @else General chat, fast @endif</td>
+                        @foreach($localModels as $modelId => $model)
+                        @php
+                            $cat = $model['category'] ?? 'chat';
+                            $mult = number_format($model['credit_multiplier'] ?? 1.0, 1);
+                            $multClass = 'mult-' . str_replace('.', '', $mult);
+                        @endphp
+                        <tr data-category="{{ $cat }}">
+                            <td><div class="model-id-cell"><code>{{ $modelId }}</code><button class="model-copy-btn" data-model="{{ $modelId }}" aria-label="Copy model ID">Copy</button></div></td>
+                            <td><span class="badge badge-{{ $cat }}">{{ $cat }}</span></td>
+                            <td>{{ $model['params'] ?? '—' }}</td>
+                            <td><span class="multiplier {{ $multClass }}">{{ $mult }}×</span></td>
+                            <td>{{ $model['description'] ?? '' }}</td>
+                        </tr>
+                        @endforeach
+                        <tr data-category="____remove____" style="display:none">
+                            <td></td><td></td><td></td><td></td><td></td>
                         </tr>
                         <tr data-category="chat">
                             <td><div class="model-id-cell"><code>smollm2:135m</code><button class="model-copy-btn" data-model="smollm2:135m" aria-label="Copy model ID">Copy</button></div></td>
@@ -835,13 +845,13 @@
         <!-- Section 3: Cloud Models -->
         <section class="docs-section" id="section-cloud">
             <h2>
-                @if(app()->getLocale() === 'ar') النماذج السحابية (31 نموذجاً) @else Cloud Models (31) @endif
+                @if(app()->getLocale() === 'ar') النماذج المتقدمة (31 نموذجاً) @else Frontier Models (31) @endif
             </h2>
             <p>
                 @if(app()->getLocale() === 'ar')
-                    النماذج السحابية تُعالَج عبر خوادم GPU متخصصة بعيدة، مما يتيح الوصول إلى نماذج ضخمة بعشرات أو مئات المليارات من المعاملات. تبدأ معاملاتها من <strong>2.5×</strong> وتصل إلى <strong>3.5×</strong>.
+                    النماذج المتقدمة تتيح الوصول إلى بعض أقوى نماذج الذكاء الاصطناعي المتاحة، بعشرات أو مئات المليارات من المعاملات. تبدأ معاملاتها من <strong>2.5×</strong> وتصل إلى <strong>3.5×</strong>.
                 @else
-                    Cloud models are processed via remote specialized GPU servers, enabling access to models with tens or hundreds of billions of parameters. Multipliers range from <strong>2.5×</strong> to <strong>3.5×</strong>.
+                    Frontier models provide access to some of the most powerful AI models available, with tens or hundreds of billions of parameters. Multipliers range from <strong>2.5×</strong> to <strong>3.5×</strong>.
                 @endif
             </p>
 

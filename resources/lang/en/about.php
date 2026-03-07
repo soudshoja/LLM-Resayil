@@ -13,7 +13,7 @@ return [
     'setup_time' => 'Setup Time',
     'our_mission' => 'Our Mission',
     'mission_title' => 'Powerful AI shouldn\'t require a PhD in infrastructure',
-    'mission_description' => 'We built LLM Resayil to remove the friction between "I want to use AI" and "my app is live." GPU servers, model weights, provider APIs, billing — we handle it. You focus on building.',
+    'mission_description' => 'We built LLM Resayil to remove the friction between "I want to use AI" and "my app is live." AI infrastructure, model selection, provider APIs, billing — we handle it. You focus on building.',
     'what_we_offer' => 'What We Offer',
     'api_compatibility' => 'OpenAI-Compatible API',
     'api_compatibility_desc' => 'Drop-in replacement. Change your base URL, keep your code. Works with any SDK that targets OpenAI\'s API — Python, Node, curl, n8n, LangChain.',
