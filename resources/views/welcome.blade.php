@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>LLM Resayil — AI Assistant Platform</title>
-    <meta name="description" content="Powerful AI assistant platform. Write faster, answer anything, and get results instantly. 1,000 free credits — no credit card required.">
+    <title>{{ app()->getLocale() === 'ar' ? 'LLM Resayil — منصة المساعد الذكي' : 'LLM Resayil — AI Assistant Platform' }}</title>
+    <meta name="description" content="{{ app()->getLocale() === 'ar' ? 'منصة ذكاء اصطناعي قوية. اكتب أسرع، أجب على أي سؤال، واحصل على النتائج فوراً. 1,000 رصيد مجاني — بدون بطاقة ائتمان.' : 'Powerful AI assistant platform. Write faster, answer anything, and get results instantly. 1,000 free credits — no credit card required.' }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Tajawal:wght@300;400;500;700;900&display=swap" rel="stylesheet">
@@ -455,7 +455,7 @@
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
                 </div>
                 <h3>{{ app()->getLocale() === 'ar' ? 'خاص وآمن' : 'Private &amp; Secure' }}</h3>
-                <p>{{ app()->getLocale() === 'ar' ? 'محادثاتك وبيانатك تبقى آمنة. مبني مع الخصوصية كإعداد افتراضي &mdash; لا نقوم بتدريب نماذجنا على بيانатك.' : 'Your conversations and data stay safe. Built with privacy as the default &mdash; we do not train on your data.' }}</p>
+                <p>{{ app()->getLocale() === 'ar' ? 'محادثاتك وبياناتك تبقى آمنة. مبني مع الخصوصية كإعداد افتراضي &mdash; لا نقوم بتدريب نماذجنا على بياناتك.' : 'Your conversations and data stay safe. Built with privacy as the default &mdash; we do not train on your data.' }}</p>
             </div>
             <div class="bc fu d2">
                 <div class="bi" aria-hidden="true">
@@ -717,7 +717,7 @@
                 <a href="/terms-of-service">{{ app()->getLocale() === 'ar' ? 'الشروط' : 'Terms' }}</a>
                 <a href="/privacy-policy">{{ app()->getLocale() === 'ar' ? 'الخصوصية' : 'Privacy' }}</a>
             </nav>
-            <p class="foot-copy">&copy; {{ date('Y') }} LLM Resayil. All rights reserved.</p>
+            <p class="foot-copy">&copy; {{ date('Y') }} LLM Resayil. {{ app()->getLocale() === 'ar' ? 'جميع الحقوق محفوظة.' : 'All rights reserved.' }}</p>
         </div>
     </div>
 </footer>
