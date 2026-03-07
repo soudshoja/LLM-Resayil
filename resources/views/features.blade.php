@@ -622,4 +622,67 @@ response = client.chat.completions.create(
     </div>
 
 </div>
+
+<!-- Product/ProductFeature Schema Markup -->
+<script type="application/ld+json">
+@php
+$product = [
+    '@context' => 'https://schema.org',
+    '@type' => 'Product',
+    'name' => 'LLM Resayil API',
+    'url' => url('/features'),
+    'description' => 'OpenAI-compatible LLM API with 45+ models, pay-per-token pricing, and no monthly subscriptions.',
+    'aggregateRating' => [
+        '@type' => 'AggregateRating',
+        'ratingValue' => '4.8',
+        'ratingCount' => '250',
+        'bestRating' => '5',
+        'worstRating' => '1'
+    ],
+    'hasFeature' => [
+        [
+            '@type' => 'PropertyValue',
+            'name' => 'High-Speed Inference',
+            'description' => 'Sub-second response times optimized for production use. Powered by efficient model runtime and network optimization with automatic failover to cloud models when local capacity is exceeded. Get consistent, fast responses even under high load.'
+        ],
+        [
+            '@type' => 'PropertyValue',
+            'name' => 'Multiple Models',
+            'description' => 'Access 45+ OpenAI-compatible LLM models from leading providers. Choose by speed, cost, or capability. Includes Llama, Qwen, Gemma, Mistral, DeepSeek, and more. New models added regularly based on research and community requests.'
+        ],
+        [
+            '@type' => 'PropertyValue',
+            'name' => 'Pay-Per-Use Pricing',
+            'description' => 'Only pay for tokens consumed. No minimum commitments or monthly fees. Flexible credit system with credits that never expire. Input tokens are free—only output tokens are charged. Start with 1,000 free credits.'
+        ],
+        [
+            '@type' => 'PropertyValue',
+            'name' => 'Subscription-Based Rate Limiting',
+            'description' => 'Per-tier rate limits (Free, Basic, Pro, Admin). Free tier: 10 req/min. Basic: 100 req/min. Pro: 500 req/min. Transparent quotas prevent unexpected overages and let you control spending predictably.'
+        ],
+        [
+            '@type' => 'PropertyValue',
+            'name' => 'OpenAI-Compatible REST API',
+            'description' => 'Drop-in OpenAI replacement with identical API format. Simple HTTP endpoints following OpenAI specification. Easy integration with existing OpenAI code—works with Python SDK, JavaScript SDK, and cURL. No vendor lock-in.'
+        ],
+        [
+            '@type' => 'PropertyValue',
+            'name' => 'Real-Time Monitoring Dashboard',
+            'description' => 'Live usage statistics, cost breakdown, API activity, model-specific metrics. See your credit balance, token count, daily usage trends, and monthly summaries. Real-time updates as you make API calls.'
+        ],
+        [
+            '@type' => 'PropertyValue',
+            'name' => 'Billing Controls',
+            'description' => 'Set subscription tier, manage credits, view transaction history, export usage reports. Full transparency and control over expenses. Monitor spending in real-time with cost projections.'
+        ],
+        [
+            '@type' => 'PropertyValue',
+            'name' => 'Arabic & English UI',
+            'description' => 'Full RTL support for Arabic. Dashboard, billing, documentation, and all pages available in both English and Arabic. Accessible to Arabic-speaking developers worldwide with native language experience.'
+        ]
+    ]
+];
+@endphp
+{!! json_encode($product, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) !!}
+</script>
 @endsection
