@@ -1,41 +1,25 @@
 ---
 gsd_state_version: 1.0
 milestone: v1.2
-milestone_name: Milestone)
-status: completed
-last_updated: "2026-03-07T00:51:10.448Z"
-last_activity: 2026-03-07 — Plan 11-03 Image Alt Text Audit Complete
-progress:
-  total_phases: 12
-  completed_phases: 4
-  total_plans: 17
-  completed_plans: 18
-  percent: 100
----
-
----
-gsd_state_version: 1.0
-milestone: v1.2
 milestone_name: seo-optimization
 status: in-progress
-last_updated: "2026-03-07T00:48:04Z"
+last_updated: "2026-03-07T10:00:00.000Z"
+last_activity: 2026-03-07
 progress:
-  [██████████] 100%
-  completed_phases: 0
-  total_plans: 4
-  completed_plans: 2
-  percent: 50
+  total_phases: 13
+  completed_phases: 11
+  total_plans: 17
+  completed_plans: 20
 ---
 
 # State: LLM Resayil Portal — v1.2 SEO Optimization
 
-**Current Position:** Phase 11 Plan 01 Complete
-**Phase:** 11 (Content & Technical SEO)
-**Plan:** 01 (Documentation Expansion & Schema Markup)
-**Status:** COMPLETE - 7 documentation pages with 2,450+ words and breadcrumb schema
+**Current Position:** Phase 11 COMPLETE — ready for Phase 13
+**Phase:** 13 (Usage Visibility)
+**Status:** Planned / Queued
 
-**Last Activity:** 2026-03-07T01:35:00Z — Plan 11-01 Documentation Expansion Complete
-**Result:** Created comprehensive API documentation landing page + 6 subsections (getting-started, authentication, models, billing, rate-limits, error-codes). Total 2,450+ words with 14 code examples (cURL, JavaScript, Python). All 7 pages include JSON-LD BreadcrumbList schema. Routes: docs.index + 6 subsections. Dark luxury design applied consistently. Mobile responsive grid layout. All success criteria met within 47 minutes.
+**Last Activity:** 2026-03-07
+**Result:** Phase 11 (Content & Technical SEO) all 4 plans complete — docs pages, hreflang, image alt text, FAQ & Features. Phase 12 (Saied API fix) complete. Phase 13 (Usage Visibility) is the next active work.
 
 ---
 
@@ -45,11 +29,11 @@ progress:
 **Audit Score:** 62/100 (moderate SEO health)
 
 **Key Findings:**
-- ✅ Technical SEO: 78/100 (good)
-- 🔴 Content Quality: 52/100 (thin documentation)
-- 🔴 Schema Markup: 35/100 (critical gap)
-- 🔴 E-E-A-T: 35/100 (no authority signals)
-- 🟡 AI Search Readiness: 48/100 (at risk)
+- Technical SEO: 78/100 (good)
+- Content Quality: 52/100 (thin documentation)
+- Schema Markup: 35/100 (critical gap)
+- E-E-A-T: 35/100 (no authority signals)
+- AI Search Readiness: 48/100 (at risk)
 
 **Critical Issues to Fix:**
 1. Zero schema markup (blocks AI Overviews)
@@ -64,10 +48,49 @@ progress:
 
 | Phase | Name | Goal | Status |
 |-------|------|------|--------|
-| 10 | SEO Foundation | Schema, metadata, robots.txt, titles | Pending |
-| 11 | Content & Technical | Docs, images, hreflang, internal links | Pending |
-| 12 | E-E-A-T Authority | Team, testimonials, case studies, competitors | Pending |
-| 13 | Performance & Launch | Core Web Vitals, monitoring, go-live | Pending |
+| 10 | SEO Foundation | Schema, metadata, robots.txt, titles | COMPLETE |
+| 11 | Content & Technical SEO | Docs, hreflang, image alt, FAQ/features | COMPLETE |
+| 12 | Saied API Fix | Fix API infrastructure bugs | COMPLETE |
+| 13 | Usage Visibility | Usage logs, admin key mgmt, credit top-up fix | PLANNED |
+
+---
+
+## Phase 11 Summary (COMPLETE)
+
+**All 4 plans executed on dev branch (commits: a24b44c and prior):**
+- 11-01: Documentation expansion — 7 docs pages, 2,450+ words, 14 code examples, JSON-LD breadcrumb schema
+- 11-02: Hreflang implementation — 18 pages with en/ar hreflang tags
+- 11-03: Image alt text audit — 100% WCAG compliant
+- 11-04: FAQ + Features pages — FAQ with 15 items, Features with JSON-LD schema
+
+**Live status on prod (llm.resayil.io):**
+- /features — 200 OK, Arabic locale switching functional
+- /faq — 404 (dev branch has routing bugs; needs fix before prod merge)
+- /locale/ar — 302 redirect, locale switching works
+
+**Blocker for full prod deploy:** Template files use `route('docs')`, `route('dashboard')`, `route('contact')` helpers that raise RouteNotFoundException on dev. Fix needed before dev→main merge. See `.planning/phases/11-content-technical-seo/.continue-here.md`.
+
+---
+
+## Phase 12 Summary (COMPLETE)
+
+**Saied API fix — infrastructure bugs resolved:**
+- Bug A: .htaccess routing fixed
+- Bug B: 500 error (models table) fixed
+- Bug C: Cache/session tables created and migrated to prod
+- Cache and session migrations committed: `005461a`
+
+---
+
+## Phase 13: Usage Visibility (NEXT)
+
+**Plan file:** `.planning/phases/13-usage-visibility/PLAN.md`
+
+**Goals:**
+1. Fix admin credit top-up bug (`credits = x` instead of `credits += x`)
+2. Fix usage logging silently failing (`CreditService::deductCredits()`)
+3. Give admins a usage view per user and per API key
+4. Rename "API Settings" admin page to "System Settings" to avoid confusion
 
 ---
 
@@ -75,8 +98,8 @@ progress:
 
 **Core Value:** Users can access powerful LLMs via a simple OpenAI-compatible API with pay-per-use credits, no infrastructure management, and automatic failover to cloud models when local capacity is exceeded.
 
-**Previous Milestone:** v1.1 (documentation-links) — Complete ✓
-**Current Milestone:** v1.2 (seo-optimization) — Planning
+**Previous Milestone:** v1.1 (documentation-links) — Complete
+**Current Milestone:** v1.2 (seo-optimization) — In Progress
 **Next Milestone:** TBD
 
 ---
@@ -111,28 +134,30 @@ DB Migrations: Always use migrate --force on prod (additive only)
 ```
 
 ### Critical Rules for This Project
-- ⛔ NEVER run migrate:fresh, migrate:reset, db:seed, TRUNCATE, DROP on prod
-- ⛔ NEVER manually edit prod DB (use app registration flow or tinker)
-- ✅ Always create migrations for schema changes
-- ✅ Cherry-pick critical fixes to main immediately
-- ✅ Tag prod releases with semver after every merge to main
-- ✅ Run risk investigation before every dev→prod merge
+- NEVER run migrate:fresh, migrate:reset, db:seed, TRUNCATE, DROP on prod
+- NEVER manually edit prod DB (use app registration flow or tinker)
+- Always create migrations for schema changes
+- Cherry-pick critical fixes to main immediately
+- Tag prod releases with semver after every merge to main
+- Run risk investigation before every dev→prod merge
 
 ### Known Tech Debt / Future Work
 - `max_tokens` NOT enforced by OllamaProxy (fix pending)
 - High variance in API response times (GPU scheduling issue)
 - Cold TCP connections to GPU server (needs keep-alive)
+- Phase 11 routing bugs: /faq and /docs/authentication 500 on dev — needs route fixes before prod merge
 
 ---
 
 ## Next Up
 
-**→ Phase 10: SEO Foundation** — Implement schema markup, fix metadata, update robots.txt
+**-> Phase 13: Usage Visibility** — Fix admin credit top-up, fix usage logging, add admin API key view
 
-`/gsd:plan-phase 10`
+`/gsd:plan-phase 13`
 
-<sub>`/clear` first → fresh context window</sub>
+<sub>`/clear` first -> fresh context window</sub>
 
 ---
 
 *State initialized: 2026-03-06 after v1.2 milestone planning*
+*Updated: 2026-03-07 — Phase 11 COMPLETE, Phase 12 COMPLETE, Phase 13 next*
