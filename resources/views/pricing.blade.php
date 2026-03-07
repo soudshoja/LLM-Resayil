@@ -488,6 +488,106 @@
     </div>
 
     <!-- ═══════════════════════════════════════
+         TRIAL BANNER
+    ═══════════════════════════════════════ -->
+    <div class="trial-banner fu">
+        <div class="trial-banner-inner">
+            <div class="trial-banner-body">
+                @if(app()->getLocale() === 'ar')
+                    <div class="trial-badge-pill" style="font-family:'Tajawal',sans-serif;">
+                        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                        تجربة مجانية
+                    </div>
+                    <h2 dir="rtl" style="font-family:'Tajawal',sans-serif;">جرّب LLM Resayil مجاناً لمدة 7 أيام</h2>
+                    <p dir="rtl" style="font-family:'Tajawal',sans-serif;">
+                        ابدأ تجربتك المجانية واستكشف الـ API بالكامل — 1,000 رصيد، جميع النماذج، بدون أي التزام.
+                        يتطلب التحقق من البطاقة (0.100 د.ك قابلة للاسترداد). يمكنك الإلغاء في أي وقت خلال فترة التجربة.
+                    </p>
+                    <div class="trial-features-row" dir="rtl" style="font-family:'Tajawal',sans-serif;">
+                        <div class="trial-feat"><span class="tf-chk">✓</span> 1,000 رصيد مجاناً</div>
+                        <div class="trial-feat"><span class="tf-chk">✓</span> 7 أيام كاملة</div>
+                        <div class="trial-feat"><span class="tf-chk">✓</span> جميع النماذج 46+</div>
+                        <div class="trial-feat"><span class="tf-chk">✓</span> مفتاح API مجاني</div>
+                        <div class="trial-feat"><span class="tf-chk">✓</span> إلغاء في أي وقت</div>
+                    </div>
+                @else
+                    <div class="trial-badge-pill">
+                        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                        Free Trial
+                    </div>
+                    <h2>Try LLM Resayil Free for 7 Days</h2>
+                    <p>
+                        Start a free trial and explore the full API — 1,000 credits, all models, zero commitment.
+                        Card verification required (0.100 KWD, refundable). Cancel anytime during the trial period.
+                    </p>
+                    <div class="trial-features-row">
+                        <div class="trial-feat"><span class="tf-chk">✓</span> 1,000 free credits</div>
+                        <div class="trial-feat"><span class="tf-chk">✓</span> Full 7 days</div>
+                        <div class="trial-feat"><span class="tf-chk">✓</span> All 46+ models</div>
+                        <div class="trial-feat"><span class="tf-chk">✓</span> 1 free API key</div>
+                        <div class="trial-feat"><span class="tf-chk">✓</span> Cancel anytime</div>
+                    </div>
+                @endif
+            </div>
+
+            <div class="trial-cta-wrap">
+                @auth
+                    @if(auth()->user()->trial_started_at)
+                        {{-- Trial already used — show status --}}
+                        @if(app()->getLocale() === 'ar')
+                            <div class="btn-trial" style="background:rgba(212,175,55,0.12); color:var(--gold); border:1px solid rgba(212,175,55,0.3); cursor:default; font-family:'Tajawal',sans-serif;">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                                التجربة نشطة
+                            </div>
+                            <div class="trial-note" dir="rtl" style="font-family:'Tajawal',sans-serif;">
+                                تنتهي {{ auth()->user()->trial_started_at->addDays(7)->format('d M Y') }}
+                            </div>
+                        @else
+                            <div class="btn-trial" style="background:rgba(212,175,55,0.12); color:var(--gold); border:1px solid rgba(212,175,55,0.3); cursor:default;">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                                Trial Active
+                            </div>
+                            <div class="trial-note">
+                                Expires {{ auth()->user()->trial_started_at->addDays(7)->format('d M Y') }}
+                            </div>
+                        @endif
+                    @else
+                        {{-- Logged in, no trial yet — link to billing/plans for full payment flow --}}
+                        @if(app()->getLocale() === 'ar')
+                            <a href="{{ route('billing.plans') }}" class="btn-trial" style="font-family:'Tajawal',sans-serif;">
+                                ابدأ التجربة المجانية
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
+                            </a>
+                            <div class="trial-note" dir="rtl" style="font-family:'Tajawal',sans-serif;">رسوم تحقق 0.100 د.ك · قابلة للاسترداد</div>
+                        @else
+                            <a href="{{ route('billing.plans') }}" class="btn-trial">
+                                Start Free Trial
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+                            </a>
+                            <div class="trial-note">0.100 KWD card verification · refundable</div>
+                        @endif
+                    @endif
+                @else
+                    {{-- Guest — send to register first --}}
+                    @if(app()->getLocale() === 'ar')
+                        <a href="/register" class="btn-trial" style="font-family:'Tajawal',sans-serif;">
+                            ابدأ التجربة مجاناً
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
+                        </a>
+                        <div class="trial-note" dir="rtl" style="font-family:'Tajawal',sans-serif;">سجّل مجاناً ثم أضف بطاقتك</div>
+                    @else
+                        <a href="/register" class="btn-trial">
+                            Start Free Trial
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+                        </a>
+                        <div class="trial-note">Register free, then add your card</div>
+                    @endif
+                @endauth
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════
          CREDIT PACKS
     ═══════════════════════════════════════ -->
     <section class="pr-section" style="padding-top:4rem;">
