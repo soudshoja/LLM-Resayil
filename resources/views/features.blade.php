@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', $pageTitle ?? 'Features & Models — LLM Resayil')
+@section('title', $pageTitle ?? __('features.page_title'))
 
 @push('styles')
 <style>
@@ -393,29 +393,28 @@
 
     <!-- Hero -->
     <div class="features-hero">
-        <div class="features-badge">Platform Features</div>
-        <h1>45+ Models, One <span>OpenAI-Compatible</span> API</h1>
+        <div class="features-badge">{{ __('features.hero_badge') }}</div>
+        <h1>{{ __('features.hero_title_plain') }} <span>{{ __('features.hero_title_gold') }}</span> {{ __('features.hero_title_suffix') }}</h1>
         <p class="features-hero-lead">
-            LLM Resayil gives you access to a growing library of LLM models through a single, familiar API.
-            No vendor lock-in, no complex setup — just change your base URL and start building.
+            {{ __('features.hero_lead') }}
         </p>
 
         <div class="hero-stats">
             <div class="hero-stat">
-                <span class="hero-stat-value">45+</span>
-                <div class="hero-stat-label">Available Models</div>
+                <span class="hero-stat-value">{{ __('features.stat_models_value') }}</span>
+                <div class="hero-stat-label">{{ __('features.stat_models_label') }}</div>
             </div>
             <div class="hero-stat">
-                <span class="hero-stat-value">1</span>
-                <div class="hero-stat-label">API Endpoint</div>
+                <span class="hero-stat-value">{{ __('features.stat_endpoint_value') }}</span>
+                <div class="hero-stat-label">{{ __('features.stat_endpoint_label') }}</div>
             </div>
             <div class="hero-stat">
-                <span class="hero-stat-value">1,000</span>
-                <div class="hero-stat-label">Free Credits</div>
+                <span class="hero-stat-value">{{ __('features.stat_credits_value') }}</span>
+                <div class="hero-stat-label">{{ __('features.stat_credits_label') }}</div>
             </div>
             <div class="hero-stat">
-                <span class="hero-stat-value">0</span>
-                <div class="hero-stat-label">Monthly Fees</div>
+                <span class="hero-stat-value">{{ __('features.stat_fees_value') }}</span>
+                <div class="hero-stat-label">{{ __('features.stat_fees_label') }}</div>
             </div>
         </div>
     </div>
@@ -424,21 +423,20 @@
     <section class="features-section">
         <div class="compat-section">
             <div class="compat-left">
-                <h3>Drop-in OpenAI Replacement</h3>
+                <h3>{{ __('features.compat_title') }}</h3>
                 <p>
-                    The API follows the OpenAI specification exactly. If you already use OpenAI's SDK or any
-                    OpenAI-compatible client, switching takes one line of code — change the base URL, keep everything else.
+                    {{ __('features.compat_desc') }}
                 </p>
                 <ul class="compat-list">
-                    <li><span class="check">✓</span> <code>/v1/chat/completions</code> endpoint</li>
-                    <li><span class="check">✓</span> Streaming responses (SSE)</li>
-                    <li><span class="check">✓</span> Model listing via <code>/v1/models</code></li>
-                    <li><span class="check">✓</span> Bearer token authentication</li>
-                    <li><span class="check">✓</span> Works with OpenAI Python & JS SDKs</li>
+                    <li><span class="check">✓</span> <code>/v1/chat/completions</code> {{ __('features.compat_item_chat') }}</li>
+                    <li><span class="check">✓</span> {{ __('features.compat_item_streaming') }}</li>
+                    <li><span class="check">✓</span> {{ __('features.compat_item_models') }}</li>
+                    <li><span class="check">✓</span> {{ __('features.compat_item_auth') }}</li>
+                    <li><span class="check">✓</span> {{ __('features.compat_item_sdks') }}</li>
                 </ul>
             </div>
             <div class="compat-code">
-<span class="code-comment"># Python — one-line change</span>
+<span class="code-comment">{{ __('features.code_comment') }}</span>
 <span class="code-key">from</span> openai <span class="code-key">import</span> OpenAI
 
 client = OpenAI(
@@ -459,87 +457,87 @@ response = client.chat.completions.create(
 
     <!-- Core Features -->
     <section class="features-section" style="padding-top: 1rem;">
-        <div class="features-section-label">What You Get</div>
-        <h2 class="features-section-title">Everything You Need</h2>
-        <p class="features-section-subtitle">From API keys and usage tracking to team management — all in one place.</p>
+        <div class="features-section-label">{{ __('features.core_label') }}</div>
+        <h2 class="features-section-title">{{ __('features.core_title') }}</h2>
+        <p class="features-section-subtitle">{{ __('features.core_subtitle') }}</p>
 
         <div class="core-features-grid">
             <div class="feature-card">
                 <span class="feature-card-icon">&#128273;</span>
-                <h3>Multiple API Keys</h3>
-                <p>Create unlimited API keys per account. Assign keys to different projects, revoke them individually, and monitor usage per key.</p>
+                <h3>{{ __('features.feat_keys_title') }}</h3>
+                <p>{{ __('features.feat_keys_desc') }}</p>
             </div>
             <div class="feature-card">
                 <span class="feature-card-icon">&#128200;</span>
-                <h3>Usage Dashboard</h3>
-                <p>Real-time credit balance, per-request cost breakdown, usage history, and monthly summaries — all visible in your dashboard.</p>
+                <h3>{{ __('features.feat_dashboard_title') }}</h3>
+                <p>{{ __('features.feat_dashboard_desc') }}</p>
             </div>
             <div class="feature-card">
                 <span class="feature-card-icon">&#129689;</span>
-                <h3>45+ Language Models</h3>
-                <p>Llama, Qwen, Gemma, Mistral, DeepSeek, and more. New models added regularly. See the full list via the API.</p>
+                <h3>{{ __('features.feat_models_title') }}</h3>
+                <p>{{ __('features.feat_models_desc') }}</p>
             </div>
             <div class="feature-card">
                 <span class="feature-card-icon">&#128357;</span>
-                <h3>Pay-Per-Token Credits</h3>
-                <p>No subscriptions. Buy credits as needed. Credits never expire. Only output tokens are charged — input is free.</p>
+                <h3>{{ __('features.feat_credits_title') }}</h3>
+                <p>{{ __('features.feat_credits_desc') }}</p>
             </div>
             <div class="feature-card">
                 <span class="feature-card-icon">&#128274;</span>
-                <h3>Secure Authentication</h3>
-                <p>API keys with bearer token auth. OTP-verified account registration. No unauthorized access.</p>
+                <h3>{{ __('features.feat_auth_title') }}</h3>
+                <p>{{ __('features.feat_auth_desc') }}</p>
             </div>
             <div class="feature-card">
                 <span class="feature-card-icon">&#127760;</span>
-                <h3>Arabic & English UI</h3>
-                <p>Full RTL support for Arabic. The dashboard, billing, and all pages are available in both English and Arabic.</p>
+                <h3>{{ __('features.feat_lang_title') }}</h3>
+                <p>{{ __('features.feat_lang_desc') }}</p>
             </div>
         </div>
     </section>
 
     <!-- Available Models -->
     <section class="features-section" style="padding-top: 1rem;">
-        <div class="features-section-label">Model Library</div>
-        <h2 class="features-section-title">Available Models</h2>
-        <p class="features-section-subtitle">A curated selection of open-source models, continuously updated. Query <code style="background: var(--bg-card); padding: 0.15rem 0.4rem; border-radius: 4px; font-size: 0.85em;">/v1/models</code> for the current list.</p>
+        <div class="features-section-label">{{ __('features.models_label') }}</div>
+        <h2 class="features-section-title">{{ __('features.models_title') }}</h2>
+        <p class="features-section-subtitle">{{ __('features.models_subtitle') }} <code style="background: var(--bg-card); padding: 0.15rem 0.4rem; border-radius: 4px; font-size: 0.85em;">/v1/models</code> {{ __('features.models_subtitle_suffix') }}</p>
 
         <div class="model-category-grid">
             <div class="model-category-card">
-                <h4>Chat & Instruction</h4>
+                <h4>{{ __('features.cat_chat') }}</h4>
                 <div class="model-tags">
                     <span class="model-tag">Llama 3.1 8B</span>
                     <span class="model-tag">Llama 3.1 70B</span>
                     <span class="model-tag">Qwen 2.5</span>
                     <span class="model-tag">Gemma 2</span>
                     <span class="model-tag">Mistral 7B</span>
-                    <span class="model-tag">+ more</span>
+                    <span class="model-tag">{{ __('features.model_more') }}</span>
                 </div>
             </div>
             <div class="model-category-card">
-                <h4>Coding</h4>
+                <h4>{{ __('features.cat_coding') }}</h4>
                 <div class="model-tags">
                     <span class="model-tag">Qwen 2.5 Coder</span>
                     <span class="model-tag">DeepSeek Coder</span>
                     <span class="model-tag">CodeLlama</span>
-                    <span class="model-tag">+ more</span>
+                    <span class="model-tag">{{ __('features.model_more') }}</span>
                 </div>
             </div>
             <div class="model-category-card">
-                <h4>Reasoning</h4>
+                <h4>{{ __('features.cat_reasoning') }}</h4>
                 <div class="model-tags">
                     <span class="model-tag">DeepSeek R1</span>
                     <span class="model-tag">DeepSeek V3</span>
                     <span class="model-tag">Qwen QwQ</span>
-                    <span class="model-tag">+ more</span>
+                    <span class="model-tag">{{ __('features.model_more') }}</span>
                 </div>
             </div>
             <div class="model-category-card">
-                <h4>Multilingual</h4>
+                <h4>{{ __('features.cat_multilingual') }}</h4>
                 <div class="model-tags">
-                    <span class="model-tag">Arabic-optimized</span>
+                    <span class="model-tag">{{ __('features.model_arabic_optimized') }}</span>
                     <span class="model-tag">Aya Expanse</span>
                     <span class="model-tag">Command R</span>
-                    <span class="model-tag">+ more</span>
+                    <span class="model-tag">{{ __('features.model_more') }}</span>
                 </div>
             </div>
         </div>
@@ -547,77 +545,77 @@ response = client.chat.completions.create(
 
     <!-- Comparison table -->
     <section class="features-section" style="padding-top: 1rem;">
-        <div class="features-section-label">Why Choose Us</div>
-        <h2 class="features-section-title">LLM Resayil vs. Alternatives</h2>
-        <p class="features-section-subtitle">See how we compare on the features that matter most.</p>
+        <div class="features-section-label">{{ __('features.compare_label') }}</div>
+        <h2 class="features-section-title">{{ __('features.compare_title') }}</h2>
+        <p class="features-section-subtitle">{{ __('features.compare_subtitle') }}</p>
 
         <table class="benefits-table">
             <thead>
                 <tr>
-                    <th>Feature</th>
-                    <th>LLM Resayil</th>
-                    <th>OpenAI</th>
-                    <th>OpenRouter</th>
+                    <th>{{ __('features.table_feature') }}</th>
+                    <th>{{ __('features.table_us') }}</th>
+                    <th>{{ __('features.table_openai') }}</th>
+                    <th>{{ __('features.table_openrouter') }}</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td>Free tier (no card)</td>
-                    <td class="ours">1,000 credits</td>
-                    <td class="no">Paid only</td>
-                    <td class="yes">Yes</td>
+                    <td>{{ __('features.row_free_tier') }}</td>
+                    <td class="ours">{{ __('features.row_free_tier_us') }}</td>
+                    <td class="no">{{ __('features.row_free_tier_openai') }}</td>
+                    <td class="yes">{{ __('features.row_free_tier_openrouter') }}</td>
                 </tr>
                 <tr>
-                    <td>OpenAI-compatible API</td>
-                    <td class="ours">Yes</td>
-                    <td class="yes">Yes</td>
-                    <td class="yes">Yes</td>
+                    <td>{{ __('features.row_compat') }}</td>
+                    <td class="ours">{{ __('features.row_compat_yes') }}</td>
+                    <td class="yes">{{ __('features.row_compat_yes') }}</td>
+                    <td class="yes">{{ __('features.row_compat_yes') }}</td>
                 </tr>
                 <tr>
-                    <td>Input tokens charged</td>
-                    <td class="ours">No (free)</td>
-                    <td class="no">Yes</td>
-                    <td class="no">Yes</td>
+                    <td>{{ __('features.row_input_tokens') }}</td>
+                    <td class="ours">{{ __('features.row_input_tokens_us') }}</td>
+                    <td class="no">{{ __('features.row_input_tokens_yes') }}</td>
+                    <td class="no">{{ __('features.row_input_tokens_yes') }}</td>
                 </tr>
                 <tr>
-                    <td>Pricing currency</td>
-                    <td class="ours">KWD</td>
-                    <td>USD</td>
-                    <td>USD</td>
+                    <td>{{ __('features.row_currency') }}</td>
+                    <td class="ours">{{ __('features.row_currency_us') }}</td>
+                    <td>{{ __('features.row_currency_usd') }}</td>
+                    <td>{{ __('features.row_currency_usd') }}</td>
                 </tr>
                 <tr>
-                    <td>Credits expire</td>
-                    <td class="ours">Never</td>
-                    <td class="no">Yes</td>
-                    <td class="yes">No</td>
+                    <td>{{ __('features.row_expire') }}</td>
+                    <td class="ours">{{ __('features.row_expire_us') }}</td>
+                    <td class="no">{{ __('features.row_expire_openai') }}</td>
+                    <td class="yes">{{ __('features.row_expire_openrouter') }}</td>
                 </tr>
                 <tr>
-                    <td>Arabic language UI</td>
-                    <td class="ours">Full RTL</td>
-                    <td class="no">No</td>
-                    <td class="no">No</td>
+                    <td>{{ __('features.row_arabic') }}</td>
+                    <td class="ours">{{ __('features.row_arabic_us') }}</td>
+                    <td class="no">{{ __('features.row_arabic_no') }}</td>
+                    <td class="no">{{ __('features.row_arabic_no') }}</td>
                 </tr>
                 <tr>
-                    <td>Shared credit balance across keys</td>
-                    <td class="ours">Yes</td>
-                    <td class="yes">Yes</td>
-                    <td class="yes">Yes</td>
+                    <td>{{ __('features.row_shared_credits') }}</td>
+                    <td class="ours">{{ __('features.row_compat_yes') }}</td>
+                    <td class="yes">{{ __('features.row_compat_yes') }}</td>
+                    <td class="yes">{{ __('features.row_compat_yes') }}</td>
                 </tr>
             </tbody>
         </table>
 
         <div style="text-align: center; margin-top: 1rem;">
-            <a href="/comparison" style="color: var(--gold); font-size: 0.9rem; font-weight: 600;">See the full cost comparison &rarr;</a>
+            <a href="/comparison" style="color: var(--gold); font-size: 0.9rem; font-weight: 600;">{{ __('features.full_comparison_link') }} &rarr;</a>
         </div>
     </section>
 
     <!-- CTA -->
     <div class="features-cta-section">
-        <h2>Ready to Get Started?</h2>
-        <p>Create a free account, get 1,000 credits, and make your first API call in under 5 minutes.</p>
+        <h2>{{ __('features.cta_title') }}</h2>
+        <p>{{ __('features.cta_desc') }}</p>
         <div class="cta-buttons">
-            <a href="/register" class="btn btn-gold">Create Free Account</a>
-            <a href="/docs" class="btn-outline-gold">Read the Docs</a>
+            <a href="/register" class="btn btn-gold">{{ __('features.cta_register') }}</a>
+            <a href="/docs" class="btn-outline-gold">{{ __('features.cta_docs') }}</a>
         </div>
     </div>
 

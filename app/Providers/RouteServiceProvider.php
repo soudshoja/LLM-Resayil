@@ -19,8 +19,14 @@ class RouteServiceProvider extends ServiceProvider
         });
 
         $this->routes(function () {
+            // Standard Laravel prefix: /api/v1/...
             Route::middleware('api')
                 ->prefix('api')
+                ->group(base_path('routes/api.php'));
+
+            // OpenAI-compatible shorthand prefix: /v1/... (no /api/ prefix)
+            Route::middleware('api')
+                ->prefix('')
                 ->group(base_path('routes/api.php'));
 
             Route::middleware('web')

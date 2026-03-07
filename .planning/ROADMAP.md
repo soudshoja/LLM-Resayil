@@ -15,9 +15,10 @@
 - [x] **Phase 8: User Documentation** - Complete markdown API docs + /docs Blade page with syntax highlighting — 100% COMPLETE
 - [x] **Phase 9: User Profile & Billing Enhancements** - Full Arabic translations, token-split logging, translation keys, profile management — 100% COMPLETE
 - [x] **Phase 10: SEO Foundation** - Schema markup, metadata, comparison pages, cost calculator, internal linking, WCAG AA fixes — 100% COMPLETE & DEPLOYED
-- [ ] **Phase 11: Content & Technical SEO** - Expand docs, hreflang, image optimization, FAQ/features pages
-- [ ] **Phase 12: E-E-A-T Authority** - Team page, testimonials, case studies, credentials
-- [ ] **Phase 13: Performance & Launch** - Core Web Vitals, monitoring, SEO go-live checklist
+- [x] **Phase 11: Content & Technical SEO** - Expand docs, hreflang, image optimization, FAQ/features pages — COMPLETE, deployed v1.11.0
+- [~] **Phase 12: Saied API Fix** - Fix API infrastructure bugs for external client (OpenClaw) — MOSTLY COMPLETE
+- [ ] **Phase 13: Usage Visibility** - Admin credit top-up fix, usage log repair, admin API key management, user usage dashboard
+- [ ] **Phase 14: Monitoring** - Sentry, WhatsApp alerts for queue/daily summary, UptimeRobot setup
 
 ## Phase Details
 
@@ -204,6 +205,8 @@ Plan 01 covers:
 - Execute all seeders with initial data
 - Verify production application is operational
 
+---
+
 ### Phase 8: User Documentation
 
 **Goal:** End-user API docs (markdown + in-portal /docs page) for API consumers
@@ -218,15 +221,10 @@ Plan 01 covers:
 3. Code examples in 4 languages (cURL, Python, JavaScript, n8n)
 4. All pages accessible without authentication
 
-**Status:** 10% complete (skeleton exists, full API docs pending)
+**Status:** COMPLETE
 
-**Plans:** 0/1 plans executed
-- [ ] 08-01: Create markdown docs and /docs Blade page — PLAN.md written (600+ lines detailed spec), awaiting execution
-
-**Pending Details:**
-- 8 markdown files: getting-started, authentication, api-reference, models, billing-credits, rate-limits, error-codes, code-examples
-- Blade /docs page with sidebar nav, highlight.js syntax highlighting, copy buttons, tab-based code example switcher
-- Full self-contained HTML (own nav, not extending layouts.app)
+**Plans:** 1/1 plans complete
+- [x] 08-01: Create markdown docs and /docs Blade page — COMPLETE
 
 ---
 
@@ -236,7 +234,7 @@ Plan 01 covers:
 
 **Depends on:** Phase 1 (auth), Phase 3 (API usage), Phase 4 (WhatsApp OTP infrastructure)
 
-**Status:** 40% complete (2/5 sub-plans executed, 3 pending)
+**Status:** COMPLETE (5/5 sub-plans executed)
 
 **Completed Plans:**
 - [x] **09-02: Savings Dashboard with token-split logging** (deployed 2026-03-05)
@@ -244,7 +242,6 @@ Plan 01 covers:
   - CostService with multi-model price comparison (GPT-4o, Claude 3, Gemini 2.0)
   - Migration: `prompt_tokens` + `completion_tokens` nullable columns on usage_logs
   - Dashboard savings widget showing monthly savings % vs 5 public LLM APIs
-  - Status: ✅ Complete and live in production
 
 - [x] **09-01: Full Arabic translations** (deployed 2026-03-07)
   - 100% translation coverage for welcome.blade.php
@@ -252,12 +249,6 @@ Plan 01 covers:
   - All sections bilingual: navigation, hero, features, pricing, testimonials, footer, buttons
   - RTL/LTR support with dynamic `dir` attribute
   - Default: Arabic (app()->getLocale() === 'ar')
-  - Status: ✅ Complete and live in production
-
-**Pending Plans:**
-- [ ] **09-03: User profile management** (25 KB PLAN.md written) — password change, email update, phone OTP verification, profile view redesign
-- [ ] **09-04: Language switcher enhancements** (2.9 KB PLAN.md written) — UX improvements, mobile menu integration
-- [ ] **09-05: Translation key backfill** (12.8 KB PLAN.md written) — dashboard, billing, admin pages translation coverage
 
 ---
 
@@ -267,125 +258,138 @@ Plan 01 covers:
 
 **Depends on:** Phase 5 (dashboards/landing page exist)
 
-**Status:** 0% (Specifications complete, design fixes in progress — requires WCAG AA compliance on 4 pages)
+**Status:** COMPLETE & DEPLOYED
 
-**Deliverables (from Phase 10 v2 Completion Report, 2026-03-06):**
-
-**Complete Design Specifications:**
+**Deliverables:**
 - [x] Schema Markup (240+ lines JSON-LD) — Organization + SoftwareApplication + FAQPage (3 types)
 - [x] Metadata (100% coverage) — 20+ pages with keyword-optimized meta descriptions
-- [x] Comparison Pages (11,400+ words) — 3 high-design pages:
-  - `/comparison` — LLM Resayil vs OpenRouter (3,800 words, 6 sections, 7 FAQ entries)
-  - `/alternatives` — Top 5 OpenAI alternatives (3,800 words, 7 sections, 9 FAQ entries)
-  - `/dedicated-server` — Enterprise hosting + API hybrid (2,800 words, 8 sections, 9 FAQ entries)
-- [x] Cost Calculator — Interactive real-time widget (unique tool, no competitors)
-- [x] Internal Linking (55+ links) — 3 content clusters (Cost/ROI, API/Integration, Education)
-- [x] OG Images (20+ SVG files) — 1200×630px, dark luxury design
+- [x] Comparison Pages (11,400+ words) — /comparison, /alternatives, /dedicated-server
+- [x] Cost Calculator — Interactive real-time widget
+- [x] Internal Linking (55+ links) — 3 content clusters
+- [x] OG Images (20+ SVG files) — 1200x630px, dark luxury design
 - [x] Robots.txt — Strategic AI crawler rules (GPTBot, ClaudeBot, PerplexityBot)
-
-**Design Fixes Required (from Quick Task 14 — 4 teams, in progress):**
-- [ ] Team A: /cost-calculator — WCAG AA compliance fixes (currently 8/10 score)
-- [ ] Team B: /comparison — HTML validation, focus states (currently 7.8/10 score)
-- [ ] Team C: /alternatives — Keyboard navigation, mobile typography (currently 7.8/10 score)
-- [ ] Team D: /dedicated-server — Accessibility polish (currently 8.5/10 score)
-
-**Expected SEO Impact (from completion report):**
-- +20-30% SERP visibility (metadata optimization)
-- +10-15% CTR improvement (keyword-rich titles)
-- Top 3 ranking: "openai alternative" (8 weeks)
-- Top 1 ranking: "llm api cost calculator" (4 weeks — zero competition)
-- 40-50% organic traffic growth (Month 2-3)
 
 **Code Delivery Stats:**
 - 4,000+ lines of new code
 - 1,500+ lines of modified code
-- 489+ CSS classes
 - 14,200+ words of new content
-- 8 files created/modified
 
 ---
 
 ### Phase 11: Content & Technical SEO
 
-**Goal:** Expand /docs, implement hreflang, optimize images, add breadcrumb schema
+**Goal:** Expand /docs, implement hreflang, optimize images, add FAQ/features pages with schema
 
 **Depends on:** Phase 10 completion
 
-**Status:** In Progress (Plans 02/03/04 complete, 3/4)
+**Status:** COMPLETE — deployed as v1.11.0 on 2026-03-07
 
-**Plans:**
-- [ ] 11-01: Expand /docs content (getting-started, authentication, models)
-- [x] 11-02: Implement hreflang and language switching infrastructure — COMPLETE (18 pages covered)
-- [x] 11-03: Image alt text optimization — COMPLETE (audit: 0 missing alt text)
-- [x] 11-04: FAQ and features pages with schema markup — COMPLETE (15 FAQ items, 8 features, FAQPage + Product schema)
+**Plans:** 4/4 plans complete
+- [x] 11-01: Documentation expansion — 7 docs pages, 2,450+ words, 14 code examples, JSON-LD breadcrumb schema
+- [x] 11-02: Hreflang implementation — 18 pages with en/ar hreflang tags
+- [x] 11-03: Image alt text audit — 100% WCAG compliant, 0 missing alt text
+- [x] 11-04: FAQ + Features pages — 15 FAQ items, 8 features, 87 translation calls, FAQPage + Product schema
 
-**Requirements:**
-- Expand /docs from 737 → 2,500+ words with code examples
-- Implement hreflang for EN/AR versions on all pages
-- Add semantic alt text to 50+ images (COMPLETE - existing SVG/img already accessible)
-- Create /faq and /features pages with schema
-- Add breadcrumb schema to /docs subsections
+**Key fixes (auto-applied during execution):**
+- Fixed broken route() references across 7 files (route('docs') → route('docs.index'), route('dashboard') → url('/dashboard'))
+- Created lang/en/faq.php, lang/en/features.php, lang/ar/faq.php, lang/ar/features.php
+- Merged dev → main, deployed to prod, tagged v1.11.0
+- All 8 public routes return 200 on prod
 
 ---
 
-### Phase 12: E-E-A-T Authority Building
+### Phase 12: Saied API Fix
 
-**Goal:** Build entity authority through team page, testimonials, case studies, competitive comparisons
+**Goal:** Fix API infrastructure bugs so external clients (Saied/OpenClaw) can use the /v1/ endpoints reliably
 
 **Depends on:** Phase 11 completion
 
-**Status:** Planned (TBD)
+**Status:** MOSTLY COMPLETE — streaming fix and /v1/ 404 still in progress (2026-03-07)
+
+**Plans:** 1 plan (in progress)
+
+**Bugs fixed:**
+- Bug A: Created routes/v1.php loaded without /api prefix — /v1/ routes now accessible
+- Bug B: Non-issue — models table empty is correct, API queries Ollama directly
+- Bug C: Created cache + sessions tables via migration (commit: 005461a)
+- Streaming code: Added StreamedResponse to return type union + early delegation in store() (commit: 1c70c86)
+- Added qwen3-vl:235b-instruct-cloud to GPU server + app config (credit_multiplier: 3.5, 128k context)
+- Created perftest@llm.resayil.io account (50k credits, enterprise) for performance testing
+
+**Performance tests completed:**
+- Effective context limit: ~105k tokens (503 above that)
+- Concurrency: 4 concurrent users all pass, 3.23x speedup confirmed
+- Local (smollm2:135m): 1.24s avg | Cloud (qwen3-vl:235b): 5.95s avg
+- Results: .planning/phases/12-saied-api-fix/perf-results-*.md
+
+**Still open:**
+- LiteSpeed SSE buffering: Header set X-Accel-Buffering "no" in .htaccess (fix in progress)
+- /v1/ 404: Cloudflare may be caching old 404 — needs cache purge
+- Saied's AWS client: sending stale key — action on Saied (update OpenClaw config)
 
 ---
 
-### Phase 13: Performance & Launch
+### Phase 13: Usage Visibility
 
-**Goal:** Core Web Vitals optimization, monitoring setup, go-live readiness
+**Goal:** Give admins visibility into per-user and per-API-key usage; fix credit top-up overwrite bug; fix silent usage log failures
 
-**Depends on:** Phases 10-12 completion
+**Depends on:** Phase 12 completion
 
-**Status:** Planned — Final phase in v1.2 SEO optimization milestone
+**Status:** PLANNED — plan written, research complete (2026-03-07)
+
+**Plan files:**
+- `.planning/phases/13-usage-visibility/13-PLAN.md`
+- `.planning/phases/13-usage-visibility/RESEARCH.md`
+
+**Plans:** 4 plans, 3 waves
+- [ ] Wave 1, Plan 1: Fix credit top-up bug (credits = x → credits += x) + created_by migration + ApiKeyAuth status check
+- [ ] Wave 2a, Plan 2: User usage dashboard (/usage route, CSV export)
+- [ ] Wave 2b, Plan 3: Admin usage views (by user, by API key)
+- [ ] Wave 3, Plan 4: Admin API key management + user key badges + human checkpoint
+
+**Key bugs to fix:**
+1. Admin credit top-up overwrites instead of adds (credits = x instead of credits += x)
+2. CreditService::deductCredits() never passes api_key_id/response_time_ms/status_code — usage_logs always get 0/null for these fields
 
 ---
 
-**Goal:** Users can update their password, email address, and verified mobile number from the profile page. Mobile number changes require WhatsApp OTP confirmation before the new number is saved.
+### Phase 14: Monitoring
 
-**Depends on:** Phase 1 (auth), Phase 4 (WhatsApp OTP infrastructure)
+**Goal:** Set up error monitoring (Sentry), operational alerts (WhatsApp), and uptime monitoring (UptimeRobot)
 
-**Requirements:**
-- Password change: current password required, new password min 8 chars with confirmation
-- Email change: unique validation, save directly (no email OTP needed)
-- Mobile change: two-step AJAX flow — send OTP to new number via WhatsApp, verify 6-digit code, then save
-- UI: dark luxury design system (cards, gold accents, Inter+Tajawal fonts), no inline styles
-- After phone OTP verification, "Verified" badge updates in-page without reload
-- Arabic translation support (`__()` wrapping) for all strings
-- Fix: `phone_verified_at` cast as datetime in User model
-- Fix: `email_verified_at` reset to null when email changes
+**Depends on:** Phase 13 completion
 
-**Plans:** 1 plan
-- [ ] 09-01-PLAN.md — Backend fixes (model cast, email_verified_at reset, lang keys) + profile view redesign (CSS classes, __() wrapping, JS badge fix)
+**Status:** PLANNED — plan written (2026-03-07)
+
+**Plan file:** `.planning/phases/14-monitoring/PLAN.md`
+
+**Plans:** 1 plan, 3 tasks
+- [ ] Task 1: Sentry integration + response_time_ms fix in usage_logs
+- [ ] Task 2: WhatsApp alerts (queue failures + daily summary to admin)
+- [ ] Task 3: UptimeRobot setup for all critical routes
 
 ---
 
 ## Progress Summary
 
 | Phase | Plans Complete | Status | Last Update |
-|-------|----------------|--------|-----------|
-| 1 - Foundation & Auth | 1/1 | ✅ 100% Complete | 2026-02-26 |
-| 2 - Billing & Subscriptions | 1/1 | ✅ 100% Complete | 2026-02-26 |
-| 3 - API Access | 1/1 | ✅ 100% Complete | 2026-02-26 |
-| 4 - Notifications | 1/1 | ✅ 100% Complete | 2026-02-26 |
-| 5 - Dashboards | 3/3 | ✅ 100% Complete | 2026-02-26 |
-| 6 - MySQL Production Setup | 1/1 | ✅ 100% Complete | 2026-03-02 |
-| 7 - Backend Services | 7/7 | ✅ 100% Complete | 2026-03-03 |
-| 8 - User Documentation | 1/1 | ✅ 100% Complete | 2026-03-07 |
-| 9 - User Profile & Billing | 5/5 | ✅ 100% Complete | 2026-03-07 |
-| 10 - SEO Foundation | 1/1 | ✅ 100% Complete & Deployed | 2026-03-08 |
-| 11 - Content & Technical SEO | 1/4 | 🔄 In Progress | 2026-03-07 |
-| 12 - E-E-A-T Authority | 0/1 | 📋 Planned | TBD |
-| 13 - Performance & Launch | 0/1 | 📋 Planned | TBD |
+|-------|----------------|--------|-------------|
+| 1 - Foundation & Auth | 1/1 | Complete | 2026-02-26 |
+| 2 - Billing & Subscriptions | 1/1 | Complete | 2026-02-26 |
+| 3 - API Access | 1/1 | Complete | 2026-02-26 |
+| 4 - Notifications | 1/1 | Complete | 2026-02-26 |
+| 5 - Dashboards | 3/3 | Complete | 2026-02-26 |
+| 6 - MySQL Production Setup | 1/1 | Complete | 2026-03-02 |
+| 7 - Backend Services | 7/7 | Complete | 2026-03-03 |
+| 8 - User Documentation | 1/1 | Complete | 2026-03-07 |
+| 9 - User Profile & Billing | 5/5 | Complete | 2026-03-07 |
+| 10 - SEO Foundation | 1/1 | Complete & Deployed | 2026-03-08 |
+| 11 - Content & Technical SEO | 4/4 | Complete — v1.11.0 prod | 2026-03-07 |
+| 12 - Saied API Fix | 1/1 (partial) | Mostly Complete | 2026-03-07 |
+| 13 - Usage Visibility | 0/4 | Planned | TBD |
+| 14 - Monitoring | 0/1 | Planned | TBD |
 
 ---
 
 *Roadmap defined: 2026-02-26*
-*Last updated: 2026-03-07 - Phase status corrected based on actual completion (Phase 8: 10%, Phase 9: 40%, Phase 10: 0% with specs complete)*
+*Last updated: 2026-03-07 — Phase 11 COMPLETE (v1.11.0), Phase 12 mostly complete, Phase 13+14 planned*

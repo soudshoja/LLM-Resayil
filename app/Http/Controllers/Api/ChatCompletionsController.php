@@ -264,41 +264,12 @@ class ChatCompletionsController extends Controller
             }
         }
 
-        // Return streaming response
-        return response()->stream(function () use ($request, $provider, $modelName, $user, $validated, $modelId, $isAdmin) {
-            $response = $this->proxy->proxyChatCompletions($request, $provider, $modelName);
-
-            // Stream the response
-            echo $response->getContent();
-
-            // Deduct credits on successful response (bypass for admin)
-            if ($response->getStatusCode() === 200 && !$isAdmin) {
-                $content = json_decode($response->getContent(), true);
-
-                // Streaming: token split not tracked per-chunk — pass null for prompt/completion split
-                $tokensUsed = 0;
-                if (isset($content['prompt_eval_count'])) {
-                    $tokensUsed += (int) $content['prompt_eval_count'];
-                }
-                if (isset($content['eval_count'])) {
-                    $tokensUsed += (int) $content['eval_count'];
-                }
-                if ($tokensUsed === 0 && isset($content['message']['content'])) {
-                    $tokensUsed = (int) (mb_strlen($content['message']['content']) / 3);
-                }
-
-                // Use the provider determined before the request (cloud vs local)
-                $cost = $this->creditService->calculateCost($tokensUsed, $provider, $modelId);
-
-                if ($cost > 0) {
-                    $this->creditService->deductCredits($user, $tokensUsed, $provider, $modelId,
-                        null, null);
-                }
-            }
-        }, 200, [
-            'Content-Type' => 'text/event-stream',
-            'X-Accel-Buffering' => 'no',
-        ]);
+        // Return the proxy's StreamedResponse directly so chunks are flushed
+        // as they arrive from Ollama rather than buffered.
+        // The proxy handles ob_flush()/flush() per chunk and sets
+        // X-Accel-Buffering: no. Credit deduction for streaming is handled
+        // inside OllamaProxy::proxyChatCompletions() via logUsage().
+        return $this->proxy->proxyChatCompletions($request, $provider, $modelName);
     }
 
     /**

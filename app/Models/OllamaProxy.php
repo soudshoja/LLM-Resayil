@@ -128,7 +128,21 @@ class OllamaProxy
                     $created = time();
                     $firstChunk = true;
 
-                    foreach ($response->getIterator() as $chunk) {
+                    $body = $response->getBody();
+                    while (!$body->eof()) {
+                        $chunk = '';
+                        // Read one newline-terminated JSON line from the stream
+                        while (!$body->eof()) {
+                            $byte = $body->read(1);
+                            if ($byte === "\n") {
+                                break;
+                            }
+                            $chunk .= $byte;
+                        }
+                        $chunk = trim($chunk);
+                        if ($chunk === '') {
+                            continue;
+                        }
                         $data = json_decode($chunk, true);
 
                         if (!$data) {

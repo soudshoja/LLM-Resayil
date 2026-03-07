@@ -15,6 +15,8 @@ class TrustHosts extends Middleware
     {
         return [
             $this->allSubdomainsOfApplicationUrl(),
+            '^(.+\.)?llmapi\.resayil\.io$',
+            '^llmapi\.resayil\.io$',
         ];
     }
 }
