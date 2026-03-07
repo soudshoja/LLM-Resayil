@@ -589,9 +589,9 @@
 
         <p class="docs-intro">
             @if(app()->getLocale() === 'ar')
-                يوفر LLM Resayil وصولاً إلى 46 نموذجاً من النماذج اللغوية الكبيرة — 15 نموذجاً محلياً يعمل على بنيتنا التحتية الخاصة، و31 نموذجاً سحابياً عالي الأداء. اختر النموذج المناسب لحالة الاستخدام لديك بناءً على السرعة والدقة ومعامل الاستهلاك.
+                يوفر LLM Resayil وصولاً إلى {{ $models->count() }} نموذجاً من النماذج اللغوية الكبيرة — {{ $localModels->count() }} نموذجاً محلياً يعمل على بنيتنا التحتية الخاصة، و{{ $cloudModels->count() }} نموذجاً سحابياً عالي الأداء. اختر النموذج المناسب لحالة الاستخدام لديك بناءً على السرعة والدقة ومعامل الاستهلاك.
             @else
-                LLM Resayil provides access to 46 large language models — 15 local models running on our own infrastructure and 31 high-performance cloud models. Choose the right model for your use case based on speed, accuracy, and credit multiplier.
+                LLM Resayil provides access to {{ $models->count() }} large language models — {{ $localModels->count() }} local models running on our own infrastructure and {{ $cloudModels->count() }} high-performance cloud models. Choose the right model for your use case based on speed, accuracy, and credit multiplier.
             @endif
         </p>
 
@@ -601,10 +601,10 @@
                 @if(app()->getLocale() === 'ar') نظام المعاملات @else Credit Multipliers @endif
             </a>
             <a href="#section-local" class="docs-jump-link">
-                @if(app()->getLocale() === 'ar') النماذج المحلية (15) @else Local Models (15) @endif
+                @if(app()->getLocale() === 'ar') النماذج المحلية ({{ $localModels->count() }}) @else Local Models ({{ $localModels->count() }}) @endif
             </a>
             <a href="#section-cloud" class="docs-jump-link">
-                @if(app()->getLocale() === 'ar') النماذج السحابية (31) @else Cloud Models (31) @endif
+                @if(app()->getLocale() === 'ar') النماذج السحابية ({{ $cloudModels->count() }}) @else Cloud Models ({{ $cloudModels->count() }}) @endif
             </a>
             <a href="#section-api" class="docs-jump-link">
                 @if(app()->getLocale() === 'ar') واجهة API @else Models API @endif
@@ -680,7 +680,7 @@
         <!-- Section 2: Local Models -->
         <section class="docs-section" id="section-local">
             <h2>
-                @if(app()->getLocale() === 'ar') النماذج المحلية (15 نموذجاً) @else Local Models (15) @endif
+                @if(app()->getLocale() === 'ar') النماذج المحلية ({{ $localModels->count() }} نموذجاً) @else Local Models ({{ $localModels->count() }}) @endif
             </h2>
             <p>
                 @if(app()->getLocale() === 'ar')

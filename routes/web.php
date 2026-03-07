@@ -170,12 +170,19 @@ Route::group([], function () {
 
     Route::get('/docs/models', function () {
         $meta = \App\Helpers\SeoHelper::getPageMeta('docs.models');
+        $models = collect(config('models.models'))
+            ->filter(fn($m) => $m['is_active'] ?? true);
+        $localModels = $models->filter(fn($m) => ($m['type'] ?? 'local') === 'local');
+        $cloudModels = $models->filter(fn($m) => ($m['type'] ?? 'local') === 'cloud');
         return view('docs.models', [
             'pageTitle' => $meta['title'],
             'pageDescription' => $meta['description'],
             'pageKeywords' => $meta['keywords'],
             'ogImage' => $meta['ogImage'],
             'ogType' => $meta['ogType'],
+            'models' => $models,
+            'localModels' => $localModels,
+            'cloudModels' => $cloudModels,
         ]);
     })->name('docs.models');
 
