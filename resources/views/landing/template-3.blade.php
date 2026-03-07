@@ -1007,7 +1007,7 @@ response = client.chat.completions.create(
                 var otpBtn  = document.getElementById('otp-btn');
                 var otpCode = (document.getElementById('r-otp').value || '').trim();
                 var ce2 = {};
-                if (!otpCode || otpCode.length !== 6) ce2.otp_code = ['Please enter the 6-digit code sent to your WhatsApp.'];
+                if (!otpCode || otpCode.length !== 6) ce2.otp_code = ['Please enter the 6-digit code we sent to your WhatsApp. If you did not receive it, check your WhatsApp app and make sure notifications are enabled.'];
                 if (Object.keys(ce2).length) {
                     showErrors(ce2);
                     return;
@@ -1064,6 +1064,7 @@ response = client.chat.completions.create(
             if (!regPayload.name)                       ce.name     = ['Please enter your full name.'];
             if (!regPayload.email)                      ce.email    = ['Please enter your email address.'];
             if (!phoneLocal)                            ce.phone    = ['Please enter your phone number.'];
+            else if (!/^[569]\d{7}$/.test(phoneLocal))  ce.phone    = ['Phone must be 8 digits, starting with 5, 6, or 9. This must be a Kuwaiti phone number (e.g., 50123456). A WhatsApp message will be sent to verify your number.'];
             if (!regPayload.password)                   ce.password = ['Please choose a password.'];
             else if (regPayload.password.length < 8)    ce.password = ['Password must be at least 8 characters.'];
 

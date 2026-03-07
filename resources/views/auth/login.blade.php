@@ -66,7 +66,7 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
     try {
         const res = await fetch('/login', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': data._token },
+            headers: { 'Accept': 'application/json', 'Content-Type': 'application/json', 'X-CSRF-TOKEN': data._token },
             body: JSON.stringify(data)
         });
         const json = await res.json();

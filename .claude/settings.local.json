@@ -45,7 +45,8 @@
       "Skill(seo)",
       "Skill(gsd:execute-phase)",
       "Bash(start:*)",
-      "mcp__plugin_playwright_playwright__browser_close"
+      "mcp__plugin_playwright_playwright__browser_close",
+      "Bash(node:*)"
     ]
   }
 }
