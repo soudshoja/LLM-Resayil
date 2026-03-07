@@ -13,6 +13,8 @@
         }
         input[type="password"]:not(:focus) { font-family: monospace; letter-spacing: 0.15em; }
     </style>
+    <!-- Hreflang Tags for Multilingual SEO -->
+    <x-hreflang :currentPath="request()->path()" :isXDefault="false" />
 </head>
 <body class="bg-gray-900 text-gray-100 min-h-screen">
 <div class="flex h-screen">
