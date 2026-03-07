@@ -727,13 +727,47 @@
                             $cat = $model['category'] ?? 'chat';
                             $mult = number_format($model['credit_multiplier'] ?? 1.0, 1);
                             $multClass = 'mult-' . str_replace('.', '', $mult);
+                            $descEn = $model['description'] ?? '';
+                            $descArMap = [
+                                'General chat, fast' => 'محادثة عامة، سريع',
+                                'Ultra-fast, lightweight' => 'فائق السرعة، خفيف الوزن',
+                                'Code generation' => 'توليد الأكواد',
+                                'General chat, balanced' => 'محادثة عامة، متوازن',
+                                'Fast, efficient' => 'سريع وفعّال',
+                                'General chat' => 'محادثة عامة',
+                                'Code' => 'برمجة',
+                                'Embeddings' => 'تضمينات',
+                                'Vision' => 'رؤية',
+                                'Thinking/reasoning' => 'تفكير واستدلال',
+                                'Thinking, largest' => 'تفكير - الأكبر',
+                                'Code, large' => 'برمجة - كبير',
+                                'General, large' => 'عام - كبير',
+                                'Thinking' => 'تفكير',
+                                'General' => 'عام',
+                                'Lightweight 3B parameter model for fast inference' => 'نموذج خفيف بـ 3 مليار معامل للاستدلال السريع',
+                                'Tiny 135M parameter model for quick tasks' => 'نموذج صغير جداً بـ 135 مليون معامل للمهام السريعة',
+                                'Code-focused model with 14B parameters' => 'نموذج متخصص في البرمجة بـ 14 مليار معامل',
+                                'High-performance 24B parameter model' => 'نموذج عالي الأداء بـ 24 مليار معامل',
+                                'Small model with large context window' => 'نموذج صغير بنافذة سياق كبيرة',
+                                'Google Gemma 2 with 9B parameters' => 'جوجل جيما 2 بـ 9 مليار معامل',
+                                'Code-focused model with 6.7B parameters' => 'نموذج متخصص في البرمجة بـ 6.7 مليار معامل',
+                                'Versatile 8B parameter model' => 'نموذج متعدد الاستخدامات بـ 8 مليار معامل',
+                                'Text embedding model' => 'نموذج تضمين النصوص',
+                                'Dense, sparse, and multi-quantizer embeddings' => 'تضمينات كثيفة وخفيفة ومتعددة المحولات',
+                                'Lightweight embedding model' => 'نموذج تضمين خفيف الوزن',
+                                'High-quality embedding model' => 'نموذج تضمين عالي الجودة',
+                                'Original Mistral with 7B parameters' => 'ميسترال الأصلي بـ 7 مليار معامل',
+                                'Code generation model' => 'نموذج توليد الأكواد',
+                                'Code-specific Llama model' => 'نموذج لاما متخصص في البرمجة',
+                            ];
+                            $descAr = $descArMap[$descEn] ?? $descEn;
                         @endphp
                         <tr data-category="{{ $cat }}">
                             <td><div class="model-id-cell"><code>{{ $modelId }}</code><button class="model-copy-btn" data-model="{{ $modelId }}" aria-label="Copy model ID">Copy</button></div></td>
                             <td><span class="badge badge-{{ $cat }}">{{ $cat }}</span></td>
                             <td>{{ $model['params'] ?? '—' }}</td>
                             <td><span class="multiplier {{ $multClass }}">{{ $mult }}×</span></td>
-                            <td>{{ $model['description'] ?? '' }}</td>
+                            <td>@if(app()->getLocale() === 'ar')<span dir="rtl" style="font-family:'Tajawal',sans-serif;">{{ $descAr }}</span>@else{{ $descEn }}@endif</td>
                         </tr>
                         @endforeach
                     </tbody>
@@ -741,10 +775,10 @@
             </div>
         </section>
 
-        <!-- Section 3: Cloud Models -->
+        <!-- Section 3: Frontier Models -->
         <section class="docs-section" id="section-cloud">
             <h2>
-                @if(app()->getLocale() === 'ar') النماذج السحابية ({{ $cloudModels->count() }} نموذجاً) @else Cloud Models ({{ $cloudModels->count() }}) @endif
+                @if(app()->getLocale() === 'ar') نماذج الحدود ({{ $cloudModels->count() }} نموذجاً) @else Frontier Models ({{ $cloudModels->count() }}) @endif
             </h2>
             <p>
                 @if(app()->getLocale() === 'ar')
@@ -771,13 +805,71 @@
                             $cat = $model['category'] ?? 'chat';
                             $mult = number_format($model['credit_multiplier'] ?? 2.0, 1);
                             $multClass = 'mult-' . str_replace('.', '', $mult);
+                            $descEn = $model['description'] ?? '';
+                            $descArMap = [
+                                'General chat, fast' => 'محادثة عامة، سريع',
+                                'Ultra-fast, lightweight' => 'فائق السرعة، خفيف الوزن',
+                                'Code generation' => 'توليد الأكواد',
+                                'General chat, balanced' => 'محادثة عامة، متوازن',
+                                'Fast, efficient' => 'سريع وفعّال',
+                                'General chat' => 'محادثة عامة',
+                                'Code' => 'برمجة',
+                                'Embeddings' => 'تضمينات',
+                                'Vision' => 'رؤية',
+                                'Thinking/reasoning' => 'تفكير واستدلال',
+                                'Thinking, largest' => 'تفكير - الأكبر',
+                                'Code, large' => 'برمجة - كبير',
+                                'General, large' => 'عام - كبير',
+                                'Thinking' => 'تفكير',
+                                'General' => 'عام',
+                                'Zhipu AI multimodal model' => 'نموذج متعدد الوسائط من Zhipu AI',
+                                'Qwen 3 with 30B parameters' => 'كيوين 3 بـ 30 مليار معامل',
+                                'OpenAI open source model' => 'نموذج أوبن سورس من OpenAI',
+                                'Qwen3 Vision-Language model' => 'نموذج رؤية ولغة Qwen3',
+                                'Qwen3 Vision-Language 235B flagship multimodal model' => 'نموذج Qwen3 متعدد الوسائط الرائد بـ 235 مليار معامل',
+                                'Qwen 3.5 with 397B parameters (MoE)' => 'كيوين 3.5 بـ 397 مليار معامل (MoE)',
+                                'Mistral Devstral 2 with 123B parameters' => 'Devstral 2 من ميسترال بـ 123 مليار معامل',
+                                'DeepSeek V3.1 with 671B parameters' => 'ديب سيك V3.1 بـ 671 مليار معامل',
+                                'DeepSeek V3.2 latest version' => 'ديب سيك V3.2 الإصدار الأحدث',
+                                'Llama 3.2 with 11B parameters' => 'لاما 3.2 بـ 11 مليار معامل',
+                                'Llama 3.2 with 70B parameters' => 'لاما 3.2 بـ 70 مليار معامل',
+                                'Llama 3.1 with 70B parameters' => 'لاما 3.1 بـ 70 مليار معامل',
+                                'Llama 3.1 with 405B parameters (MoE)' => 'لاما 3.1 بـ 405 مليار معامل (MoE)',
+                                'Google Gemma 2 with 27B parameters' => 'جوجل جيما 2 بـ 27 مليار معامل',
+                                'Mistral Mixtral 8x7B MoE' => 'ميسترال Mixtral 8x7B MoE',
+                                'Mistral Mixtral 8x22B MoE' => 'ميسترال Mixtral 8x22B MoE',
+                                'Mistral Large with 24B parameters' => 'ميسترال Large بـ 24 مليار معامل',
+                                'Mistral Nemo with 12B parameters' => 'ميسترال Nemo بـ 12 مليار معامل',
+                                'Mistral Codestral for code generation' => 'Codestral من ميسترال لتوليد الأكواد',
+                                'DeepSeek Coder with 33B parameters' => 'ديب سيك Coder بـ 33 مليار معامل',
+                                'DeepSeek Chat with 671B parameters' => 'ديب سيك Chat بـ 671 مليار معامل',
+                                'Qwen 2 with 72B parameters' => 'كيوين 2 بـ 72 مليار معامل',
+                                'Qwen 2.5 with 32B parameters' => 'كيوين 2.5 بـ 32 مليار معامل',
+                                '01.AI Yi with 34B parameters' => '01.AI Yi بـ 34 مليار معامل',
+                                'DeepSeek V2.5 with MoE architecture' => 'ديب سيك V2.5 بمعمارية MoE',
+                                'Llama 3 with extended context' => 'لاما 3 بسياق موسّع',
+                                'Cohere Command R for RAG' => 'Command R من Cohere لـ RAG',
+                                'Cohere Command R+ for advanced RAG' => 'Command R+ من Cohere لـ RAG المتقدم',
+                                'Fireworks FireFunction for function calling' => 'FireFunction من Fireworks لاستدعاء الدوال',
+                                'Nomic Embed for text embeddings' => 'Nomic Embed لتضمين النصوص',
+                                'GTE Qwen embedding model' => 'نموذج تضمين GTE Qwen',
+                                'BGE Large embedding model' => 'نموذج تضمين BGE Large',
+                                'E5 Mistral embedding model' => 'نموذج تضمين E5 Mistral',
+                                'NVIDIA NeMo Embedding model' => 'نموذج تضمين NVIDIA NeMo',
+                                'All-MiniLM L6 v2 embedding model' => 'نموذج تضمين All-MiniLM L6 v2',
+                                'GTE Base embedding model' => 'نموذج تضمين GTE Base',
+                                'Snowflake Arctic Embed Large' => 'Snowflake Arctic Embed الكبير',
+                                'BGE Small embedding model' => 'نموذج تضمين BGE Small',
+                                'MiniLM L12 embedding model' => 'نموذج تضمين MiniLM L12',
+                            ];
+                            $descAr = $descArMap[$descEn] ?? $descEn;
                         @endphp
                         <tr data-category="{{ $cat }}">
                             <td><div class="model-id-cell"><code>{{ $modelId }}</code><button class="model-copy-btn" data-model="{{ $modelId }}" aria-label="Copy model ID">Copy</button></div></td>
                             <td><span class="badge badge-{{ $cat }}">{{ $cat }}</span></td>
                             <td>{{ $model['params'] ?? '—' }}</td>
                             <td><span class="multiplier {{ $multClass }}">{{ $mult }}×</span></td>
-                            <td>{{ $model['description'] ?? '' }}</td>
+                            <td>@if(app()->getLocale() === 'ar')<span dir="rtl" style="font-family:'Tajawal',sans-serif;">{{ $descAr }}</span>@else{{ $descEn }}@endif</td>
                         </tr>
                         @endforeach
                     </tbody>
