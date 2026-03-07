@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Cache;
 use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class ChatCompletionsController extends Controller
 {
@@ -37,8 +38,13 @@ class ChatCompletionsController extends Controller
     /**
      * Handle chat completions request (non-streaming).
      */
-    public function store(Request $request): Response|JsonResponse
+    public function store(Request $request): Response|JsonResponse|StreamedResponse
     {
+        // Delegate to stream() when stream: true is requested
+        if ($request->boolean('stream', false)) {
+            return $this->stream($request);
+        }
+
         // Validate request
         $validated = $request->validate([
             'model' => 'required|string',
@@ -166,7 +172,7 @@ class ChatCompletionsController extends Controller
     /**
      * Handle chat completions request (streaming).
      */
-    public function stream(Request $request): Response|JsonResponse
+    public function stream(Request $request): Response|JsonResponse|StreamedResponse
     {
         // Validate request
         $validated = $request->validate([
