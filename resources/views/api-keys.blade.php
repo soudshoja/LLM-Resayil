@@ -191,39 +191,112 @@ function showToast(msg, type) {
     t._timer = setTimeout(function() { t.className = 'ak-toast'; }, 3500);
 }
 
-// ── Delete via event delegation ────────────────────
-document.getElementById('keysBody').addEventListener('click', function(e) {
-    const btn = e.target.closest('.btn-delete');
-    if (!btn) return;
-    const id = btn.dataset.id;
-    const name = btn.dataset.name;
-    if (!confirm('Delete API key "' + name + '"? This cannot be undone.')) return;
+// ── Delete Modal ───────────────────────────────────
+var _deleteKeyId = null;
+
+function openDeleteModal(id) {
+    _deleteKeyId = id;
+    var errEl = document.getElementById('deleteModalError');
+    errEl.style.display = 'none';
+    errEl.textContent = '';
+    var confirmBtn = document.getElementById('deleteConfirmBtn');
+    confirmBtn.disabled = false;
+    @if(app()->getLocale() === 'ar')
+    confirmBtn.textContent = 'حذف المفتاح';
+    @else
+    confirmBtn.textContent = 'Delete Key';
+    @endif
+    document.getElementById('deleteModal').classList.add('active');
+}
+
+function closeDeleteModal() {
+    document.getElementById('deleteModal').classList.remove('active');
+    _deleteKeyId = null;
+}
+
+document.getElementById('deleteCancelBtn').addEventListener('click', closeDeleteModal);
+document.getElementById('deleteModal').addEventListener('click', function(e) {
+    if (e.target === this) closeDeleteModal();
+});
+
+document.getElementById('deleteConfirmBtn').addEventListener('click', function() {
+    if (!_deleteKeyId) return;
+    var id = _deleteKeyId;
+    var confirmBtn = this;
+    var errEl = document.getElementById('deleteModalError');
+
+    confirmBtn.disabled = true;
+    @if(app()->getLocale() === 'ar')
+    confirmBtn.textContent = 'جارٍ الحذف...';
+    @else
+    confirmBtn.textContent = 'Deleting...';
+    @endif
+    errEl.style.display = 'none';
 
     fetch('/api-keys/' + encodeURIComponent(id), {
         method: 'DELETE',
-        headers: { 'X-CSRF-TOKEN': CSRF, 'Accept': 'application/json' }
-    })
-    .then(function(r) { return r.json().then(function(d) { return { status: r.status, data: d }; }); })
-    .then(function(res) {
-        if (res.status === 200) {
-            const row = document.getElementById('row-' + id);
-            if (row) row.remove();
-            showToast('API key deleted.', 'success');
-            if (!document.querySelector('#keysBody tr')) {
-                const tr = document.createElement('tr');
-                tr.id = 'emptyRow';
-                const td = document.createElement('td');
-                td.colSpan = 5;
-                td.className = 'ak-empty';
-                td.textContent = '{{ __('api_keys.empty_state') }}';
-                tr.appendChild(td);
-                document.getElementById('keysBody').appendChild(tr);
-            }
-        } else {
-            showToast(res.data.message || 'Failed to delete key.', 'error');
+        headers: {
+            'X-CSRF-TOKEN': CSRF,
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
         }
     })
-    .catch(function() { showToast('Network error. Please try again.', 'error'); });
+    .then(function(r) { return r.json().then(function(d) { return { ok: r.ok, data: d }; }); })
+    .then(function(res) {
+        if (res.data.success) {
+            closeDeleteModal();
+            var row = document.getElementById('row-' + id);
+            if (row) {
+                row.style.transition = 'opacity 0.3s, transform 0.3s';
+                row.style.opacity = '0';
+                row.style.transform = 'translateX(10px)';
+                setTimeout(function() {
+                    row.remove();
+                    if (!document.querySelector('#keysBody tr')) {
+                        var tr = document.createElement('tr');
+                        tr.id = 'emptyRow';
+                        var td = document.createElement('td');
+                        td.colSpan = 5;
+                        td.className = 'ak-empty';
+                        td.textContent = '{{ __('api_keys.empty_state') }}';
+                        tr.appendChild(td);
+                        document.getElementById('keysBody').appendChild(tr);
+                    }
+                }, 300);
+            }
+            @if(app()->getLocale() === 'ar')
+            showToast('تم حذف مفتاح API.', 'success');
+            @else
+            showToast('API key deleted.', 'success');
+            @endif
+        } else {
+            confirmBtn.disabled = false;
+            @if(app()->getLocale() === 'ar')
+            confirmBtn.textContent = 'حذف المفتاح';
+            @else
+            confirmBtn.textContent = 'Delete Key';
+            @endif
+            errEl.textContent = res.data.message || 'Failed to delete key.';
+            errEl.style.display = 'block';
+        }
+    })
+    .catch(function() {
+        confirmBtn.disabled = false;
+        @if(app()->getLocale() === 'ar')
+        confirmBtn.textContent = 'حذف المفتاح';
+        @else
+        confirmBtn.textContent = 'Delete Key';
+        @endif
+        errEl.textContent = 'Network error. Please try again.';
+        errEl.style.display = 'block';
+    });
+});
+
+// ── Delete via event delegation ────────────────────
+document.getElementById('keysBody').addEventListener('click', function(e) {
+    var btn = e.target.closest('.btn-delete');
+    if (!btn) return;
+    openDeleteModal(btn.dataset.id);
 });
 
 // ── Create Modal ───────────────────────────────────

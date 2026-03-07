@@ -12,7 +12,7 @@
     }
 
     .docs-content {
-        max-width: 900px;
+        max-width: 960px;
         margin: 0 auto;
     }
 
@@ -31,50 +31,44 @@
         transition: opacity 0.2s;
     }
 
-    .docs-breadcrumb a:hover {
-        opacity: 0.8;
-    }
-
-    .docs-breadcrumb span {
-        color: var(--text-secondary);
-    }
+    .docs-breadcrumb a:hover { opacity: 0.8; }
+    .docs-breadcrumb span { color: var(--text-secondary); }
 
     /* Page Title */
     .docs-title {
-        font-size: 2rem;
+        font-size: 2.5rem;
         font-weight: 800;
         margin-bottom: 1rem;
         line-height: 1.2;
         color: var(--text-primary);
     }
 
-    .docs-title span {
-        color: var(--gold);
-    }
+    .docs-title span { color: var(--gold); }
 
     .docs-intro {
         font-size: 1rem;
         color: var(--text-secondary);
-        margin-bottom: 2rem;
+        margin-bottom: 2.5rem;
         line-height: 1.8;
+        max-width: 72ch;
     }
 
     /* Sections */
     .docs-section {
-        margin-bottom: 3rem;
+        margin-bottom: 3.5rem;
     }
 
     .docs-section h2 {
-        font-size: 1.5rem;
+        font-size: 1.75rem;
         font-weight: 700;
         margin-bottom: 1rem;
         color: var(--text-primary);
     }
 
     .docs-section h3 {
-        font-size: 1.2rem;
+        font-size: 1.25rem;
         font-weight: 600;
-        margin-bottom: 0.75rem;
+        margin: 1.5rem 0 0.75rem;
         color: var(--text-primary);
     }
 
@@ -105,50 +99,451 @@
         left: 0;
     }
 
-    .docs-section strong {
-        color: var(--text-primary);
+    .docs-section strong { color: var(--text-primary); }
+
+    /* ── Credit Formula Block ── */
+    .formula-block {
+        background: linear-gradient(135deg, rgba(212,175,55,0.06) 0%, rgba(212,175,55,0.02) 100%);
+        border: 1px solid rgba(212,175,55,0.3);
+        border-radius: 12px;
+        padding: 2rem 2rem 1.5rem;
+        margin: 1.75rem 0;
+        text-align: center;
     }
 
-    /* Code Blocks */
+    .formula-label {
+        font-size: 0.72rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--gold);
+        margin-bottom: 1rem;
+        display: block;
+    }
+
+    .formula-equation {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 0.6rem;
+        margin-bottom: 1rem;
+    }
+
+    .formula-var {
+        display: inline-block;
+        padding: 0.45rem 0.85rem;
+        border-radius: 8px;
+        font-family: 'Monaco', 'Courier New', monospace;
+        font-size: 0.9rem;
+        font-weight: 600;
+        background: rgba(96,165,250,0.12);
+        color: #60a5fa;
+        border: 1px solid rgba(96,165,250,0.25);
+    }
+
+    .formula-var.out {
+        background: rgba(212,175,55,0.14);
+        color: var(--gold);
+        border-color: rgba(212,175,55,0.3);
+        font-size: 1rem;
+    }
+
+    .formula-op {
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: var(--text-muted);
+        font-family: 'Monaco', 'Courier New', monospace;
+    }
+
+    .formula-paren {
+        font-size: 1.4rem;
+        color: var(--text-muted);
+        font-family: 'Monaco', 'Courier New', monospace;
+    }
+
+    .formula-note {
+        font-size: 0.8rem;
+        color: var(--text-muted);
+        font-style: italic;
+    }
+
+    /* ── Code Blocks ── */
     .docs-code-block {
-        background: rgba(0, 0, 0, 0.3);
+        background: #0d1017;
         border: 1px solid var(--border);
         border-radius: 8px;
-        padding: 1.5rem;
         margin: 1.5rem 0;
+        overflow: hidden;
+        position: relative;
+    }
+
+    .docs-code-block-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0.5rem 1rem;
+        background: rgba(255,255,255,0.03);
+        border-bottom: 1px solid var(--border);
+    }
+
+    .docs-code-lang {
+        font-size: 0.72rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        padding: 0.15rem 0.5rem;
+        border-radius: 4px;
+        font-family: 'Monaco', 'Courier New', monospace;
+    }
+
+    .lang-bash    { background: rgba(52,211,153,0.15); color: #34d399; }
+    .lang-json    { background: rgba(251,191,36,0.15);  color: #fbbf24; }
+    .lang-get     { background: rgba(52,211,153,0.15);  color: #34d399; }
+    .lang-post    { background: rgba(96,165,250,0.15);  color: #60a5fa; }
+    .lang-example { background: rgba(167,139,250,0.15); color: #a78bfa; }
+    .lang-formula { background: rgba(212,175,55,0.15);  color: var(--gold); }
+
+    .docs-copy-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.3rem;
+        padding: 0.25rem 0.6rem;
+        background: transparent;
+        border: 1px solid var(--border);
+        border-radius: 5px;
+        color: var(--text-muted);
+        font-size: 0.72rem;
+        cursor: pointer;
+        transition: all 0.18s;
+        font-family: inherit;
+    }
+
+    .docs-copy-btn:hover { border-color: var(--gold); color: var(--gold); }
+    .docs-copy-btn.copied { border-color: #34d399; color: #34d399; }
+
+    .docs-code-block pre {
+        margin: 0;
+        padding: 1.25rem;
         overflow-x: auto;
     }
 
     .docs-code-block code {
         display: block;
         font-size: 0.85rem;
-        line-height: 1.6;
+        line-height: 1.65;
         color: #a0d468;
         font-family: 'Monaco', 'Courier New', monospace;
+        white-space: pre;
     }
 
-    .docs-code-label {
-        font-size: 0.8rem;
+    /* ── API Endpoint Blocks ── */
+    .api-endpoint-block {
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        overflow: hidden;
+        margin: 1.5rem 0;
+        background: var(--bg-card);
+    }
+
+    .api-endpoint-header {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.9rem 1.25rem;
+        cursor: pointer;
+        user-select: none;
+        transition: background 0.18s;
+    }
+
+    .api-endpoint-header:hover {
+        background: rgba(255,255,255,0.03);
+    }
+
+    .method-badge {
+        display: inline-block;
+        padding: 0.2rem 0.65rem;
+        border-radius: 5px;
+        font-size: 0.72rem;
+        font-weight: 800;
+        font-family: 'Monaco', 'Courier New', monospace;
+        letter-spacing: 0.04em;
+        flex-shrink: 0;
+    }
+
+    .method-get  { background: rgba(52,211,153,0.15); color: #34d399; border: 1px solid rgba(52,211,153,0.3); }
+    .method-post { background: rgba(96,165,250,0.15); color: #60a5fa; border: 1px solid rgba(96,165,250,0.3); }
+
+    .api-endpoint-path {
+        font-family: 'Monaco', 'Courier New', monospace;
+        font-size: 0.88rem;
+        color: var(--text-primary);
+        flex: 1;
+    }
+
+    .api-endpoint-toggle {
+        font-size: 0.75rem;
         color: var(--text-muted);
-        margin-bottom: 0.5rem;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
+        transition: transform 0.2s;
+        flex-shrink: 0;
     }
 
-    /* Info Box */
+    .api-endpoint-header.open .api-endpoint-toggle {
+        transform: rotate(180deg);
+    }
+
+    .api-endpoint-body {
+        display: none;
+        border-top: 1px solid var(--border);
+    }
+
+    .api-endpoint-body.open {
+        display: block;
+    }
+
+    .api-endpoint-desc {
+        padding: 0.75rem 1.25rem;
+        font-size: 0.9rem;
+        color: var(--text-secondary);
+        line-height: 1.7;
+        border-bottom: 1px solid var(--border);
+        background: rgba(255,255,255,0.015);
+    }
+
+    .api-endpoint-body .docs-code-block {
+        margin: 0;
+        border-radius: 0;
+        border: none;
+        border-bottom: 1px solid var(--border);
+    }
+
+    .api-endpoint-body .docs-code-block:last-child {
+        border-bottom: none;
+    }
+
+    /* ── Info / Warning / Note Boxes ── */
     .docs-info-box {
         background: rgba(212, 175, 55, 0.08);
         border-left: 4px solid var(--gold);
-        border-radius: 4px;
+        border-radius: 0 6px 6px 0;
         padding: 1rem 1.5rem;
         margin: 1.5rem 0;
     }
 
-    .docs-info-box p {
-        margin: 0;
+    .docs-info-box.note {
+        background: rgba(96,165,250,0.07);
+        border-left-color: #60a5fa;
     }
 
-    /* Link */
+    .docs-info-box.warning {
+        background: rgba(251,113,133,0.07);
+        border-left-color: #fb7185;
+    }
+
+    .docs-info-box p { margin: 0; color: var(--text-secondary); }
+
+    /* ── Top-Up Callout ── */
+    .topup-callout {
+        background: linear-gradient(135deg, rgba(212,175,55,0.1) 0%, rgba(212,175,55,0.04) 100%);
+        border: 1px solid rgba(212,175,55,0.35);
+        border-radius: 12px;
+        padding: 1.75rem 2rem;
+        margin: 1.75rem 0;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1.5rem;
+        flex-wrap: wrap;
+    }
+
+    .topup-callout-content h4 {
+        font-size: 1.05rem;
+        font-weight: 700;
+        color: var(--gold);
+        margin-bottom: 0.4rem;
+    }
+
+    .topup-callout-content p {
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+        margin: 0;
+        line-height: 1.6;
+    }
+
+    .topup-callout-btn {
+        display: inline-block;
+        padding: 0.65rem 1.5rem;
+        background: var(--gold);
+        color: #0f1115;
+        border-radius: 8px;
+        font-weight: 700;
+        font-size: 0.9rem;
+        text-decoration: none;
+        transition: opacity 0.2s;
+        white-space: nowrap;
+        flex-shrink: 0;
+    }
+
+    .topup-callout-btn:hover { opacity: 0.85; }
+
+    /* ── Subscription Tier Cards ── */
+    .tier-cards-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+        gap: 1rem;
+        margin: 1.5rem 0;
+    }
+
+    .tier-card {
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 1.4rem 1.2rem 1.2rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        transition: border-color 0.2s, box-shadow 0.2s;
+        position: relative;
+    }
+
+    .tier-card:hover {
+        border-color: rgba(212,175,55,0.35);
+        box-shadow: 0 4px 24px rgba(0,0,0,0.25);
+    }
+
+    .tier-card.recommended {
+        border-color: var(--gold);
+        box-shadow: 0 0 0 1px rgba(212,175,55,0.25), 0 6px 28px rgba(212,175,55,0.08);
+    }
+
+    .tier-card-badge {
+        position: absolute;
+        top: -11px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: var(--gold);
+        color: #0f1115;
+        font-size: 0.65rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        padding: 0.2rem 0.65rem;
+        border-radius: 20px;
+        white-space: nowrap;
+    }
+
+    .tier-card-name {
+        font-size: 1.05rem;
+        font-weight: 700;
+        color: var(--text-primary);
+    }
+
+    .tier-card.recommended .tier-card-name {
+        color: var(--gold);
+    }
+
+    .tier-card-divider {
+        height: 1px;
+        background: var(--border);
+        margin: 0.25rem 0;
+    }
+
+    .tier-card-row {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 0.5rem;
+    }
+
+    .tier-card-label {
+        font-size: 0.72rem;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        flex-shrink: 0;
+    }
+
+    .tier-card-value {
+        font-size: 0.85rem;
+        color: var(--text-secondary);
+        font-weight: 500;
+        text-align: right;
+    }
+
+    .tier-card-value.highlight {
+        color: var(--gold);
+        font-weight: 700;
+    }
+
+    /* ── Multiplier table (billing page) ── */
+    .docs-table-wrap {
+        overflow-x: auto;
+        border-radius: 10px;
+        border: 1px solid var(--border);
+        margin: 1.25rem 0;
+    }
+
+    .docs-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.9rem;
+    }
+
+    .docs-table thead { position: sticky; top: 0; z-index: 2; }
+
+    .docs-table th {
+        background: var(--bg-card);
+        font-weight: 600;
+        color: var(--text-primary);
+        padding: 0.8rem 0.9rem;
+        text-align: left;
+        border-bottom: 2px solid var(--gold);
+        white-space: nowrap;
+        font-size: 0.82rem;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+    }
+
+    .docs-table td {
+        padding: 0.7rem 0.9rem;
+        color: var(--text-secondary);
+        border-bottom: 1px solid var(--border);
+        vertical-align: middle;
+    }
+
+    .docs-table tbody tr:nth-child(odd) td  { background: rgba(255,255,255,0.015); }
+    .docs-table tbody tr:nth-child(even) td { background: transparent; }
+    .docs-table tbody tr:last-child td      { border-bottom: none; }
+    .docs-table tbody tr:hover td           { background: rgba(212,175,55,0.045); }
+
+    .docs-table code {
+        background: rgba(0, 0, 0, 0.25);
+        padding: 0.2rem 0.5rem;
+        border-radius: 4px;
+        font-family: 'Monaco', 'Courier New', monospace;
+        color: #a0d468;
+        font-size: 0.82rem;
+        border: 1px solid rgba(255,255,255,0.06);
+    }
+
+    /* ── Multiplier Chips (consistent with models page) ── */
+    .multiplier {
+        display: inline-block;
+        padding: 0.18rem 0.55rem;
+        border-radius: 4px;
+        font-size: 0.8rem;
+        font-weight: 700;
+        font-family: 'Monaco', 'Courier New', monospace;
+        white-space: nowrap;
+    }
+
+    .mult-05  { background: rgba(52,211,153,0.15);  color: #34d399;  border: 1px solid rgba(52,211,153,0.3); }
+    .mult-10  { background: rgba(96,165,250,0.15);  color: #60a5fa;  border: 1px solid rgba(96,165,250,0.3); }
+    .mult-15  { background: rgba(251,191,36,0.15);  color: #fbbf24;  border: 1px solid rgba(251,191,36,0.3); }
+    .mult-25  { background: rgba(251,146,60,0.15);  color: #fb923c;  border: 1px solid rgba(251,146,60,0.3); }
+    .mult-35  { background: rgba(251,113,133,0.15); color: #fb7185;  border: 1px solid rgba(251,113,133,0.3); }
+
+    /* ── Link ── */
     .docs-link {
         color: var(--gold);
         text-decoration: none;
@@ -156,44 +551,9 @@
         transition: opacity 0.2s;
     }
 
-    .docs-link:hover {
-        opacity: 0.8;
-    }
+    .docs-link:hover { opacity: 0.8; }
 
-    /* Table */
-    .docs-table {
-        width: 100%;
-        border-collapse: collapse;
-        margin: 1.5rem 0;
-        font-size: 0.95rem;
-    }
-
-    .docs-table th,
-    .docs-table td {
-        padding: 0.75rem;
-        text-align: left;
-        border-bottom: 1px solid var(--border);
-    }
-
-    .docs-table th {
-        background: var(--bg-card);
-        font-weight: 600;
-        color: var(--text-primary);
-    }
-
-    .docs-table td {
-        color: var(--text-secondary);
-    }
-
-    .docs-table code {
-        background: rgba(0, 0, 0, 0.2);
-        padding: 0.25rem 0.5rem;
-        border-radius: 3px;
-        font-family: 'Monaco', 'Courier New', monospace;
-        color: #a0d468;
-    }
-
-    /* Next Section Link */
+    /* ── Next Section Link ── */
     .docs-next-section {
         margin-top: 3rem;
         padding: 2rem;
@@ -203,48 +563,53 @@
         text-align: center;
     }
 
-    .docs-next-section h3 {
-        margin-bottom: 1rem;
+    .docs-next-section h3 { margin-bottom: 0.5rem; }
+
+    .docs-next-section p {
+        color: var(--text-secondary);
+        margin-bottom: 1.25rem;
+        font-size: 0.95rem;
     }
 
     .docs-next-section a {
         display: inline-block;
-        padding: 0.75rem 1.5rem;
+        padding: 0.75rem 1.75rem;
         background: var(--gold);
-        color: var(--bg-primary);
+        color: #0f1115;
         border-radius: 8px;
-        font-weight: 600;
+        font-weight: 700;
         text-decoration: none;
         transition: opacity 0.2s;
+        font-size: 0.95rem;
     }
 
-    .docs-next-section a:hover {
-        opacity: 0.85;
-    }
+    .docs-next-section a:hover { opacity: 0.85; }
 
     @media (max-width: 768px) {
-        .docs-title {
-            font-size: 1.5rem;
-        }
+        .docs-title { font-size: 1.75rem; }
+        .docs-section h2 { font-size: 1.35rem; }
 
-        .docs-section h2 {
-            font-size: 1.25rem;
-        }
+        .formula-equation { gap: 0.4rem; }
+        .formula-var { font-size: 0.8rem; padding: 0.35rem 0.6rem; }
 
-        .docs-code-block {
+        .topup-callout { flex-direction: column; text-align: center; }
+        .topup-callout-btn { width: 100%; text-align: center; }
+
+        .tier-cards-grid { grid-template-columns: 1fr 1fr; }
+
+        .docs-table-wrap {
             margin-left: -2rem;
             margin-right: -2rem;
             border-radius: 0;
+            border-left: none;
+            border-right: none;
         }
 
-        .docs-table {
-            font-size: 0.85rem;
-        }
+        .api-endpoint-path { font-size: 0.78rem; }
+    }
 
-        .docs-table th,
-        .docs-table td {
-            padding: 0.5rem;
-        }
+    @media (max-width: 480px) {
+        .tier-cards-grid { grid-template-columns: 1fr; }
     }
 </style>
 @endpush
@@ -346,9 +711,29 @@
                 </p>
             @endif
 
-            <div class="docs-code-block">
-                <div class="docs-code-label">Formula</div>
-                <code>Credits Deducted = (prompt_tokens + completion_tokens) × credit_multiplier</code>
+            <!-- Visual formula equation block -->
+            <div class="formula-block">
+                <span class="formula-label">
+                    @if(app()->getLocale() === 'ar') معادلة الاحتساب @else Calculation Formula @endif
+                </span>
+                <div class="formula-equation" dir="ltr">
+                    <span class="formula-var out">credits_deducted</span>
+                    <span class="formula-op">=</span>
+                    <span class="formula-paren">(</span>
+                    <span class="formula-var">prompt_tokens</span>
+                    <span class="formula-op">+</span>
+                    <span class="formula-var">completion_tokens</span>
+                    <span class="formula-paren">)</span>
+                    <span class="formula-op">&times;</span>
+                    <span class="formula-var">credit_multiplier</span>
+                </div>
+                <p class="formula-note">
+                    @if(app()->getLocale() === 'ar')
+                        تُحتسب رموز المدخلات والمخرجات معاً، ثم تُضرب في معامل النموذج.
+                    @else
+                        Prompt and completion tokens are summed, then multiplied by the model's credit multiplier.
+                    @endif
+                </p>
             </div>
 
             @if(app()->getLocale() === 'ar')
@@ -359,37 +744,47 @@
                 <p>Multiplier values vary by model type:</p>
             @endif
 
-            <table class="docs-table">
-                <thead>
-                    <tr>
-                        @if(app()->getLocale() === 'ar')
-                            <th>نوع النموذج</th>
-                            <th>نطاق المعامل</th>
-                        @else
-                            <th>Model Type</th>
-                            <th>Multiplier Range</th>
-                        @endif
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        @if(app()->getLocale() === 'ar')
-                            <td>النماذج المحلية</td>
-                        @else
-                            <td>Local Models</td>
-                        @endif
-                        <td>0.5× – 1.5×</td>
-                    </tr>
-                    <tr>
-                        @if(app()->getLocale() === 'ar')
-                            <td>النماذج السحابية</td>
-                        @else
-                            <td>Cloud Models</td>
-                        @endif
-                        <td>2× – 3.5×</td>
-                    </tr>
-                </tbody>
-            </table>
+            <div class="docs-table-wrap">
+                <table class="docs-table">
+                    <thead>
+                        <tr>
+                            @if(app()->getLocale() === 'ar')
+                                <th>نوع النموذج</th>
+                                <th>نطاق المعامل</th>
+                            @else
+                                <th>Model Type</th>
+                                <th>Multiplier Range</th>
+                            @endif
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            @if(app()->getLocale() === 'ar')
+                                <td>النماذج المحلية</td>
+                            @else
+                                <td>Local Models</td>
+                            @endif
+                            <td>
+                                <span class="multiplier mult-05">0.5×</span>
+                                &nbsp;–&nbsp;
+                                <span class="multiplier mult-15">1.5×</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            @if(app()->getLocale() === 'ar')
+                                <td>النماذج السحابية</td>
+                            @else
+                                <td>Cloud Models</td>
+                            @endif
+                            <td>
+                                <span class="multiplier mult-25">2.5×</span>
+                                &nbsp;–&nbsp;
+                                <span class="multiplier mult-35">3.5×</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
 
             @if(app()->getLocale() === 'ar')
                 <h3>مثال على الاحتساب</h3>
@@ -406,15 +801,21 @@
             @endif
 
             <div class="docs-code-block">
-                <div class="docs-code-label">Example</div>
-                <code>prompt_tokens:      100
+                <div class="docs-code-block-header">
+                    <span class="docs-code-lang lang-example">example</span>
+                    <button class="docs-copy-btn" aria-label="Copy example">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                        Copy
+                    </button>
+                </div>
+                <pre><code>prompt_tokens:      100
 completion_tokens:  200
 total_tokens:       300
 credit_multiplier:  1.0  (local model)
 credits_deducted:   300 × 1.0 = 300 credits
 
 -- Cloud model example (multiplier 2.5×) --
-credits_deducted:   300 × 2.5 = 750 credits</code>
+credits_deducted:   300 × 2.5 = 750 credits</code></pre>
             </div>
 
             @if(app()->getLocale() === 'ar')
@@ -482,12 +883,18 @@ credits_deducted:   300 × 2.5 = 750 credits</code>
             @endif
 
             <div class="docs-code-block">
-                <div class="docs-code-label">Usage Field in Response</div>
-                <code>"usage": {
+                <div class="docs-code-block-header">
+                    <span class="docs-code-lang lang-json">json</span>
+                    <button class="docs-copy-btn" aria-label="Copy usage field">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                        Copy
+                    </button>
+                </div>
+                <pre><code>"usage": {
   "prompt_tokens": 45,
   "completion_tokens": 128,
   "total_tokens": 173
-}</code>
+}</code></pre>
             </div>
         </section>
 
@@ -507,22 +914,43 @@ credits_deducted:   300 × 2.5 = 750 credits</code>
                 </p>
             @endif
 
-            <h3>GET /api/billing/subscription</h3>
-            @if(app()->getLocale() === 'ar')
-                <p>يُعيد معلومات اشتراكك الحالي، بما يشمل مستوى الخطة، والحالة، وتاريخ الانتهاء، ورصيد الأرصدة.</p>
-            @else
-                <p>Returns your current subscription details including tier, status, expiry date, and credit balance.</p>
-            @endif
-
-            <div class="docs-code-block">
-                <div class="docs-code-label">Request</div>
-                <code>GET https://llm.resayil.io/api/billing/subscription
-Authorization: Bearer YOUR_API_KEY</code>
-            </div>
-
-            <div class="docs-code-block">
-                <div class="docs-code-label">Response</div>
-                <code>{
+            <!-- GET /api/billing/subscription -->
+            <div class="api-endpoint-block">
+                <div class="api-endpoint-header" role="button" tabindex="0" aria-expanded="false">
+                    <span class="method-badge method-get">GET</span>
+                    <span class="api-endpoint-path">/api/billing/subscription</span>
+                    <span class="api-endpoint-toggle">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+                    </span>
+                </div>
+                <div class="api-endpoint-body">
+                    <div class="api-endpoint-desc">
+                        @if(app()->getLocale() === 'ar')
+                            يُعيد معلومات اشتراكك الحالي، بما يشمل مستوى الخطة، والحالة، وتاريخ الانتهاء، ورصيد الأرصدة.
+                        @else
+                            Returns your current subscription details including tier, status, expiry date, and credit balance.
+                        @endif
+                    </div>
+                    <div class="docs-code-block">
+                        <div class="docs-code-block-header">
+                            <span class="docs-code-lang lang-bash">Request</span>
+                            <button class="docs-copy-btn" aria-label="Copy request">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                                Copy
+                            </button>
+                        </div>
+                        <pre><code>GET https://llm.resayil.io/api/billing/subscription
+Authorization: Bearer YOUR_API_KEY</code></pre>
+                    </div>
+                    <div class="docs-code-block">
+                        <div class="docs-code-block-header">
+                            <span class="docs-code-lang lang-json">Response</span>
+                            <button class="docs-copy-btn" aria-label="Copy response">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                                Copy
+                            </button>
+                        </div>
+                        <pre><code>{
   "tier": "pro",
   "status": "active",
   "expires_at": "2025-06-01T00:00:00Z",
@@ -530,55 +958,97 @@ Authorization: Bearer YOUR_API_KEY</code>
     "balance": 4250,
     "currency": "credits"
   }
-}</code>
+}</code></pre>
+                    </div>
+                </div>
             </div>
 
-            <h3>GET /api/billing/topup-packs</h3>
-            @if(app()->getLocale() === 'ar')
-                <p>يُعيد قائمة بحزم الرصيد المتاحة للشراء مع التفاصيل الخاصة بكل حزمة.</p>
-            @else
-                <p>Returns the list of available credit top-up packs with their pricing details.</p>
-            @endif
-
-            <div class="docs-code-block">
-                <div class="docs-code-label">Request</div>
-                <code>GET https://llm.resayil.io/api/billing/topup-packs
-Authorization: Bearer YOUR_API_KEY</code>
-            </div>
-
-            <div class="docs-code-block">
-                <div class="docs-code-label">Response</div>
-                <code>{
+            <!-- GET /api/billing/topup-packs -->
+            <div class="api-endpoint-block">
+                <div class="api-endpoint-header" role="button" tabindex="0" aria-expanded="false">
+                    <span class="method-badge method-get">GET</span>
+                    <span class="api-endpoint-path">/api/billing/topup-packs</span>
+                    <span class="api-endpoint-toggle">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+                    </span>
+                </div>
+                <div class="api-endpoint-body">
+                    <div class="api-endpoint-desc">
+                        @if(app()->getLocale() === 'ar')
+                            يُعيد قائمة بحزم الرصيد المتاحة للشراء مع التفاصيل الخاصة بكل حزمة.
+                        @else
+                            Returns the list of available credit top-up packs with their pricing details.
+                        @endif
+                    </div>
+                    <div class="docs-code-block">
+                        <div class="docs-code-block-header">
+                            <span class="docs-code-lang lang-bash">Request</span>
+                            <button class="docs-copy-btn" aria-label="Copy request">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                                Copy
+                            </button>
+                        </div>
+                        <pre><code>GET https://llm.resayil.io/api/billing/topup-packs
+Authorization: Bearer YOUR_API_KEY</code></pre>
+                    </div>
+                    <div class="docs-code-block">
+                        <div class="docs-code-block-header">
+                            <span class="docs-code-lang lang-json">Response</span>
+                            <button class="docs-copy-btn" aria-label="Copy response">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                                Copy
+                            </button>
+                        </div>
+                        <pre><code>{
   "packs": [
     { "id": "pack_500",  "credits": 500,   "price": 5.00,  "currency": "USD" },
     { "id": "pack_2000", "credits": 2000,  "price": 18.00, "currency": "USD" },
     { "id": "pack_5000", "credits": 5000,  "price": 40.00, "currency": "USD" }
   ]
-}</code>
+}</code></pre>
+                    </div>
+                </div>
             </div>
 
-            <h3>GET /api/billing/topup-history</h3>
-            @if(app()->getLocale() === 'ar')
-                <p>
-                    يُعيد سجلاً مُرقَّماً بعمليات شراء الرصيد السابقة (20 عملية لكل صفحة).
-                    استخدم معامل <code>page</code> للتنقل بين الصفحات.
-                </p>
-            @else
-                <p>
-                    Returns a paginated list of past credit top-up purchases (20 per page).
-                    Use the <code>page</code> query parameter to navigate between pages.
-                </p>
-            @endif
-
-            <div class="docs-code-block">
-                <div class="docs-code-label">Request</div>
-                <code>GET https://llm.resayil.io/api/billing/topup-history?page=1
-Authorization: Bearer YOUR_API_KEY</code>
-            </div>
-
-            <div class="docs-code-block">
-                <div class="docs-code-label">Response</div>
-                <code>{
+            <!-- GET /api/billing/topup-history -->
+            <div class="api-endpoint-block">
+                <div class="api-endpoint-header" role="button" tabindex="0" aria-expanded="false">
+                    <span class="method-badge method-get">GET</span>
+                    <span class="api-endpoint-path">/api/billing/topup-history</span>
+                    <span class="api-endpoint-toggle">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+                    </span>
+                </div>
+                <div class="api-endpoint-body">
+                    <div class="api-endpoint-desc">
+                        @if(app()->getLocale() === 'ar')
+                            يُعيد سجلاً مُرقَّماً بعمليات شراء الرصيد السابقة (20 عملية لكل صفحة).
+                            استخدم معامل <code>page</code> للتنقل بين الصفحات.
+                        @else
+                            Returns a paginated list of past credit top-up purchases (20 per page).
+                            Use the <code>page</code> query parameter to navigate between pages.
+                        @endif
+                    </div>
+                    <div class="docs-code-block">
+                        <div class="docs-code-block-header">
+                            <span class="docs-code-lang lang-bash">Request</span>
+                            <button class="docs-copy-btn" aria-label="Copy request">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                                Copy
+                            </button>
+                        </div>
+                        <pre><code>GET https://llm.resayil.io/api/billing/topup-history?page=1
+Authorization: Bearer YOUR_API_KEY</code></pre>
+                    </div>
+                    <div class="docs-code-block">
+                        <div class="docs-code-block-header">
+                            <span class="docs-code-lang lang-json">Response</span>
+                            <button class="docs-copy-btn" aria-label="Copy response">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                                Copy
+                            </button>
+                        </div>
+                        <pre><code>{
   "data": [
     {
       "id": "txn_abc123",
@@ -592,10 +1062,12 @@ Authorization: Bearer YOUR_API_KEY</code>
   "current_page": 1,
   "per_page": 20,
   "total": 5
-}</code>
+}</code></pre>
+                    </div>
+                </div>
             </div>
 
-            <div class="docs-info-box">
+            <div class="docs-info-box note">
                 @if(app()->getLocale() === 'ar')
                     <p><strong>ملاحظة:</strong> عمليات شراء الرصيد تتم حصراً عبر واجهة الويب على
                     <a href="{{ url('/billing/plans') }}" class="docs-link">/billing/plans</a>.
@@ -622,61 +1094,140 @@ Authorization: Bearer YOUR_API_KEY</code>
                 </p>
             @endif
 
-            <table class="docs-table">
-                <thead>
-                    <tr>
-                        @if(app()->getLocale() === 'ar')
-                            <th>المستوى</th>
-                            <th>المميزات</th>
-                        @else
-                            <th>Tier</th>
-                            <th>Benefits</th>
-                        @endif
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><strong>Free</strong></td>
-                        @if(app()->getLocale() === 'ar')
-                            <td>1,000 رصيد مجاني للبدء، حدود قياسية للطلبات</td>
-                        @else
-                            <td>1,000 starting credits, standard rate limits</td>
-                        @endif
-                    </tr>
-                    <tr>
-                        <td><strong>Starter</strong></td>
-                        @if(app()->getLocale() === 'ar')
-                            <td>رصيد شهري أعلى، وصول إلى نماذج إضافية</td>
-                        @else
-                            <td>Higher monthly credits, access to additional models</td>
-                        @endif
-                    </tr>
-                    <tr>
-                        <td><strong>Basic</strong></td>
-                        @if(app()->getLocale() === 'ar')
-                            <td>حدود طلبات محسّنة، أولوية في المعالجة</td>
-                        @else
-                            <td>Improved rate limits, processing priority</td>
-                        @endif
-                    </tr>
-                    <tr>
-                        <td><strong>Pro</strong></td>
-                        @if(app()->getLocale() === 'ar')
-                            <td>حدود طلبات عالية، وصول كامل إلى جميع النماذج</td>
-                        @else
-                            <td>High rate limits, full access to all models</td>
-                        @endif
-                    </tr>
-                    <tr>
-                        <td><strong>Enterprise</strong></td>
-                        @if(app()->getLocale() === 'ar')
-                            <td>حدود مخصصة، دعم مخصص، حلول API مؤسسية</td>
-                        @else
-                            <td>Custom limits, dedicated support, enterprise API solutions</td>
-                        @endif
-                    </tr>
-                </tbody>
-            </table>
+            <div class="tier-cards-grid">
+                <!-- Free -->
+                <div class="tier-card">
+                    <div class="tier-card-name">Free</div>
+                    <div class="tier-card-divider"></div>
+                    <div class="tier-card-row">
+                        <span class="tier-card-label">
+                            @if(app()->getLocale() === 'ar') الرصيد @else Credits @endif
+                        </span>
+                        <span class="tier-card-value">1,000</span>
+                    </div>
+                    <div class="tier-card-row">
+                        <span class="tier-card-label">
+                            @if(app()->getLocale() === 'ar') الحد @else Limits @endif
+                        </span>
+                        <span class="tier-card-value">
+                            @if(app()->getLocale() === 'ar') قياسية @else Standard @endif
+                        </span>
+                    </div>
+                    <div class="tier-card-row">
+                        <span class="tier-card-label">
+                            @if(app()->getLocale() === 'ar') السعر @else Price @endif
+                        </span>
+                        <span class="tier-card-value">
+                            @if(app()->getLocale() === 'ar') مجاني @else Free @endif
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Starter -->
+                <div class="tier-card">
+                    <div class="tier-card-name">Starter</div>
+                    <div class="tier-card-divider"></div>
+                    <div class="tier-card-row">
+                        <span class="tier-card-label">
+                            @if(app()->getLocale() === 'ar') الرصيد @else Credits @endif
+                        </span>
+                        <span class="tier-card-value">
+                            @if(app()->getLocale() === 'ar') شهري أعلى @else Higher monthly @endif
+                        </span>
+                    </div>
+                    <div class="tier-card-row">
+                        <span class="tier-card-label">
+                            @if(app()->getLocale() === 'ar') الحد @else Limits @endif
+                        </span>
+                        <span class="tier-card-value">
+                            @if(app()->getLocale() === 'ar') موسّعة @else Expanded @endif
+                        </span>
+                    </div>
+                    <div class="tier-card-row">
+                        <span class="tier-card-label">
+                            @if(app()->getLocale() === 'ar') النماذج @else Models @endif
+                        </span>
+                        <span class="tier-card-value">
+                            @if(app()->getLocale() === 'ar') إضافية @else Additional @endif
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Basic -->
+                <div class="tier-card">
+                    <div class="tier-card-name">Basic</div>
+                    <div class="tier-card-divider"></div>
+                    <div class="tier-card-row">
+                        <span class="tier-card-label">
+                            @if(app()->getLocale() === 'ar') الحد @else Limits @endif
+                        </span>
+                        <span class="tier-card-value">
+                            @if(app()->getLocale() === 'ar') محسّنة @else Improved @endif
+                        </span>
+                    </div>
+                    <div class="tier-card-row">
+                        <span class="tier-card-label">
+                            @if(app()->getLocale() === 'ar') المعالجة @else Processing @endif
+                        </span>
+                        <span class="tier-card-value">
+                            @if(app()->getLocale() === 'ar') أولوية @else Priority @endif
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Pro (recommended) -->
+                <div class="tier-card recommended">
+                    <div class="tier-card-badge">
+                        @if(app()->getLocale() === 'ar') موصى به @else Recommended @endif
+                    </div>
+                    <div class="tier-card-name">Pro</div>
+                    <div class="tier-card-divider"></div>
+                    <div class="tier-card-row">
+                        <span class="tier-card-label">
+                            @if(app()->getLocale() === 'ar') الحد @else Limits @endif
+                        </span>
+                        <span class="tier-card-value highlight">
+                            @if(app()->getLocale() === 'ar') عالية @else High @endif
+                        </span>
+                    </div>
+                    <div class="tier-card-row">
+                        <span class="tier-card-label">
+                            @if(app()->getLocale() === 'ar') النماذج @else Models @endif
+                        </span>
+                        <span class="tier-card-value highlight">
+                            @if(app()->getLocale() === 'ar') كاملة @else Full access @endif
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Enterprise -->
+                <div class="tier-card">
+                    <div class="tier-card-name">Enterprise</div>
+                    <div class="tier-card-divider"></div>
+                    <div class="tier-card-row">
+                        <span class="tier-card-label">
+                            @if(app()->getLocale() === 'ar') الحد @else Limits @endif
+                        </span>
+                        <span class="tier-card-value">
+                            @if(app()->getLocale() === 'ar') مخصصة @else Custom @endif
+                        </span>
+                    </div>
+                    <div class="tier-card-row">
+                        <span class="tier-card-label">
+                            @if(app()->getLocale() === 'ar') الدعم @else Support @endif
+                        </span>
+                        <span class="tier-card-value">
+                            @if(app()->getLocale() === 'ar') مخصص @else Dedicated @endif
+                        </span>
+                    </div>
+                    <div class="tier-card-row">
+                        <span class="tier-card-label">API</span>
+                        <span class="tier-card-value">
+                            @if(app()->getLocale() === 'ar') مؤسسي @else Enterprise @endif
+                        </span>
+                    </div>
+                </div>
+            </div>
 
             @if(app()->getLocale() === 'ar')
                 <p>
@@ -700,15 +1251,6 @@ Authorization: Bearer YOUR_API_KEY</code>
                     عبر بوابة <a href="https://myfatoorah.com" class="docs-link">MyFatoorah</a>.
                     الرصيد المشترى لا تنتهي صلاحيته.
                 </p>
-
-                <h3>خطوات شراء الرصيد</h3>
-                <ol style="list-style: decimal; margin-left: 2rem;">
-                    <li>سجّل دخولك إلى <a href="{{ url('/dashboard') }}" class="docs-link">لوحة التحكم</a></li>
-                    <li>انتقل إلى <strong>الفوترة</strong> &larr; <strong>خطط الاشتراك</strong></li>
-                    <li>اختر حزمة الرصيد المناسبة</li>
-                    <li>أكمل عملية الدفع عبر MyFatoorah</li>
-                    <li>يُضاف الرصيد إلى حسابك فوراً بعد تأكيد الدفع</li>
-                </ol>
             @else
                 <h2>Purchasing Credits</h2>
                 <p>
@@ -716,9 +1258,39 @@ Authorization: Bearer YOUR_API_KEY</code>
                     <a href="https://myfatoorah.com" class="docs-link">MyFatoorah</a> payment gateway.
                     Purchased credits never expire.
                 </p>
+            @endif
 
+            <!-- Top-up callout -->
+            <div class="topup-callout">
+                <div class="topup-callout-content">
+                    <h4>
+                        @if(app()->getLocale() === 'ar') شحن الرصيد الآن @else Top Up Your Credits @endif
+                    </h4>
+                    <p>
+                        @if(app()->getLocale() === 'ar')
+                            أضف رصيداً لحسابك عبر بوابة MyFatoorah. الرصيد المشترى لا ينتهي أبداً.
+                        @else
+                            Add credits to your account instantly via MyFatoorah. Purchased credits never expire.
+                        @endif
+                    </p>
+                </div>
+                <a href="{{ url('/billing/plans') }}" class="topup-callout-btn">
+                    @if(app()->getLocale() === 'ar') اشترِ الآن &larr; @else View Plans &rarr; @endif
+                </a>
+            </div>
+
+            @if(app()->getLocale() === 'ar')
+                <h3>خطوات شراء الرصيد</h3>
+                <ol style="list-style: decimal; margin-left: 2rem; color: var(--text-secondary); line-height: 2;">
+                    <li>سجّل دخولك إلى <a href="{{ url('/dashboard') }}" class="docs-link">لوحة التحكم</a></li>
+                    <li>انتقل إلى <strong>الفوترة</strong> &larr; <strong>خطط الاشتراك</strong></li>
+                    <li>اختر حزمة الرصيد المناسبة</li>
+                    <li>أكمل عملية الدفع عبر MyFatoorah</li>
+                    <li>يُضاف الرصيد إلى حسابك فوراً بعد تأكيد الدفع</li>
+                </ol>
+            @else
                 <h3>How to Top-Up</h3>
-                <ol style="list-style: decimal; margin-left: 2rem;">
+                <ol style="list-style: decimal; margin-left: 2rem; color: var(--text-secondary); line-height: 2;">
                     <li>Log in to your <a href="{{ url('/dashboard') }}" class="docs-link">LLM Resayil dashboard</a></li>
                     <li>Go to <strong>Billing</strong> &rarr; <strong>Plans</strong></li>
                     <li>Select the credit pack you want to purchase</li>
@@ -830,5 +1402,69 @@ Authorization: Bearer YOUR_API_KEY</code>
 <script type="application/ld+json">
   @json($schema)
 </script>
+
+@push('scripts')
+<script>
+(function () {
+    'use strict';
+
+    // ── Copy-to-clipboard helper ──────────────────────────────────────────
+    function copyText(text, btn) {
+        navigator.clipboard.writeText(text).then(function () {
+            btn.classList.add('copied');
+            var orig = btn.innerHTML;
+            btn.innerHTML = btn.innerHTML.replace('Copy', 'Copied!');
+            setTimeout(function () {
+                btn.classList.remove('copied');
+                btn.innerHTML = orig;
+            }, 1800);
+        }).catch(function () {
+            var ta = document.createElement('textarea');
+            ta.value = text;
+            ta.style.position = 'fixed';
+            ta.style.opacity = '0';
+            document.body.appendChild(ta);
+            ta.select();
+            document.execCommand('copy');
+            document.body.removeChild(ta);
+        });
+    }
+
+    // Code block copy buttons
+    document.querySelectorAll('.docs-copy-btn').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+            var text = btn.dataset.copy;
+            if (!text) {
+                var block = btn.closest('.docs-code-block');
+                var code = block ? block.querySelector('code') : null;
+                text = code ? code.textContent : '';
+            }
+            copyText(text, btn);
+        });
+    });
+
+    // ── Collapsible API endpoint blocks ──────────────────────────────────
+    document.querySelectorAll('.api-endpoint-header').forEach(function (header) {
+        header.addEventListener('click', function () {
+            var body = header.nextElementSibling;
+            var isOpen = body && body.classList.contains('open');
+
+            if (body) {
+                body.classList.toggle('open', !isOpen);
+            }
+            header.classList.toggle('open', !isOpen);
+            header.setAttribute('aria-expanded', String(!isOpen));
+        });
+
+        header.addEventListener('keydown', function (e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                header.click();
+            }
+        });
+    });
+}());
+</script>
+@endpush
 
 @endsection
