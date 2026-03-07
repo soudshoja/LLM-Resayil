@@ -319,6 +319,8 @@
             <a href="/api-keys">{{ __('navigation.api_keys') }}</a>
             <a href="/billing/plans" class="nav-link-gold">{{ __('navigation.billing') }}</a>
             <a href="/docs">{{ __('navigation.docs') }}</a>
+            <a href="/faq">{{ __('navigation.faq') }}</a>
+            <a href="/features">{{ __('navigation.features') }}</a>
             <a href="/credits">{{ __('navigation.credits') }}</a>
             <a href="/billing/payment-methods">{{ __('navigation.payment_methods') }}</a>
             @if(auth()->user()->subscription_tier === 'enterprise')
@@ -336,6 +338,9 @@
             </form>
         @else
             <a href="/login">{{ __('navigation.login') }}</a>
+            <a href="/docs">{{ __('navigation.docs') }}</a>
+            <a href="/faq">{{ __('navigation.faq') }}</a>
+            <a href="/features">{{ __('navigation.features') }}</a>
             <a href="/register" class="btn btn-gold btn-sm">{{ __('navigation.get_started') }}</a>
         @endauth
     </div>

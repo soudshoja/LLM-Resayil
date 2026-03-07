@@ -13,6 +13,8 @@ return [
     'login' => 'Login',
     'get_started' => 'Get Started',
     'docs' => 'Docs',
+    'faq' => 'FAQ',
+    'features' => 'Features',
     'contact' => 'Contact',
     'admin' => 'Admin',
     'monitor' => 'Monitor',
