@@ -294,7 +294,7 @@
                 To manage your API keys:
             </p>
             <ol style="list-style: decimal; margin-left: 2rem;">
-                <li>Log in to your <a href="{{ route('dashboard') }}" class="docs-link">LLM Resayil dashboard</a></li>
+                <li>Log in to your <a href="{{ url('/dashboard') }}" class="docs-link">LLM Resayil dashboard</a></li>
                 <li>Navigate to <strong>API Keys</strong> in the left sidebar</li>
                 <li>Click <strong>"Generate New Key"</strong> to create a new key</li>
                 <li>Your key will display once—copy it immediately and store it securely</li>

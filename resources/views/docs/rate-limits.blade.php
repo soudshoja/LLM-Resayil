@@ -347,7 +347,7 @@
                 To find your current tier:
             </p>
             <ol style="list-style: decimal; margin-left: 2rem;">
-                <li>Log in to your <a href="{{ route('dashboard') }}" class="docs-link">LLM Resayil dashboard</a></li>
+                <li>Log in to your <a href="{{ url('/dashboard') }}" class="docs-link">LLM Resayil dashboard</a></li>
                 <li>Go to <strong>Billing</strong> or <strong>Account Settings</strong></li>
                 <li>Your subscription tier will be displayed</li>
             </ol>

@@ -231,7 +231,7 @@
             </button>
             <div class="faq-answer">
                 <div class="faq-answer-content">
-                    <p>Getting started with LLM Resayil is quick and simple. First, create a free account at <a href="{{ route('register') }}">LLM Resayil</a>. You'll receive 1,000 free credits immediately to start testing. Then, generate an API key from your dashboard under "API Keys" section. Your API key should be included in every request as a Bearer token in the Authorization header. You can use our <a href="{{ route('docs') }}">API documentation</a> to find code examples for Python, JavaScript, and cURL. Start by making a simple chat completion request to test your setup, and you're ready to integrate LLM Resayil into your application.</p>
+                    <p>Getting started with LLM Resayil is quick and simple. First, create a free account at <a href="{{ route('register') }}">LLM Resayil</a>. You'll receive 1,000 free credits immediately to start testing. Then, generate an API key from your dashboard under "API Keys" section. Your API key should be included in every request as a Bearer token in the Authorization header. You can use our <a href="{{ route('docs.index') }}">API documentation</a> to find code examples for Python, JavaScript, and cURL. Start by making a simple chat completion request to test your setup, and you're ready to integrate LLM Resayil into your application.</p>
                 </div>
             </div>
         </div>
@@ -255,7 +255,7 @@
             </button>
             <div class="faq-answer">
                 <div class="faq-answer-content">
-                    <p>LLM Resayil offers access to 45+ powerful language models. We support popular models including Meta Llama 2 (7B, 13B, 70B), Mistral (7B, Instruct, Mixtral), Neural Chat, Orca, and many more. Each model has different capabilities, speeds, and pricing. The smaller models (7B parameters) are faster and cheaper, ideal for simple tasks and high-volume applications. Larger models (70B) offer better reasoning and understanding for complex tasks. You can see all available models on our <a href="{{ route('features') }}">Features page</a> or in your dashboard under "Models." We regularly add new models based on community requests and emerging research. Visit our <a href="{{ route('docs') }}">API documentation</a> for a complete list with performance metrics.</p>
+                    <p>LLM Resayil offers access to 45+ powerful language models. We support popular models including Meta Llama 2 (7B, 13B, 70B), Mistral (7B, Instruct, Mixtral), Neural Chat, Orca, and many more. Each model has different capabilities, speeds, and pricing. The smaller models (7B parameters) are faster and cheaper, ideal for simple tasks and high-volume applications. Larger models (70B) offer better reasoning and understanding for complex tasks. You can see all available models on our <a href="{{ route('features') }}">Features page</a> or in your dashboard under "Models." We regularly add new models based on community requests and emerging research. Visit our <a href="{{ route('docs.index') }}">API documentation</a> for a complete list with performance metrics.</p>
                 </div>
             </div>
         </div>
@@ -279,7 +279,7 @@
             </button>
             <div class="faq-answer">
                 <div class="faq-answer-content">
-                    <p>The LLM Resayil API returns standard HTTP status codes and error messages. Always check the status code in your response: 2xx (200-299) means success, 4xx (400-499) indicates client errors, 5xx (500-599) indicates server errors. Common errors include 401 Unauthorized (invalid API key), 429 Too Many Requests (rate limit exceeded), and 400 Bad Request (invalid parameters). Error responses include a JSON body with an error message explaining what went wrong. Implement proper error handling in your code: validate parameters before sending requests, handle rate limit errors with exponential backoff, and log errors for debugging. For persistent issues, check our system status and <a href="{{ route('contact') }}">contact support</a>. See the <a href="{{ route('docs') }}">documentation</a> for detailed error codes and recovery strategies.</p>
+                    <p>The LLM Resayil API returns standard HTTP status codes and error messages. Always check the status code in your response: 2xx (200-299) means success, 4xx (400-499) indicates client errors, 5xx (500-599) indicates server errors. Common errors include 401 Unauthorized (invalid API key), 429 Too Many Requests (rate limit exceeded), and 400 Bad Request (invalid parameters). Error responses include a JSON body with an error message explaining what went wrong. Implement proper error handling in your code: validate parameters before sending requests, handle rate limit errors with exponential backoff, and log errors for debugging. For persistent issues, check our system status and <a href="{{ route('contact') }}">contact support</a>. See the <a href="{{ route('docs.index') }}">documentation</a> for detailed error codes and recovery strategies.</p>
                 </div>
             </div>
         </div>
@@ -327,7 +327,7 @@
             </button>
             <div class="faq-answer">
                 <div class="faq-answer-content">
-                    <p>Yes, LLM Resayil fully supports streaming responses using Server-Sent Events (SSE). Instead of waiting for the entire response, streaming sends tokens to your client as they're generated by the model, providing a much faster perceived response time. This is especially useful for chat applications and long-form content generation. To use streaming, set <code>stream: true</code> in your API request parameters. The response will be a stream of <code>data: {...}</code> lines, each containing one or more tokens. This is identical to the streaming format used by OpenAI, so if you have existing OpenAI streaming code, it will work with LLM Resayil with minimal changes. See code examples in our <a href="{{ route('docs') }}">documentation</a>.</p>
+                    <p>Yes, LLM Resayil fully supports streaming responses using Server-Sent Events (SSE). Instead of waiting for the entire response, streaming sends tokens to your client as they're generated by the model, providing a much faster perceived response time. This is especially useful for chat applications and long-form content generation. To use streaming, set <code>stream: true</code> in your API request parameters. The response will be a stream of <code>data: {...}</code> lines, each containing one or more tokens. This is identical to the streaming format used by OpenAI, so if you have existing OpenAI streaming code, it will work with LLM Resayil with minimal changes. See code examples in our <a href="{{ route('docs.index') }}">documentation</a>.</p>
                 </div>
             </div>
         </div>
@@ -363,7 +363,7 @@
             </button>
             <div class="faq-answer">
                 <div class="faq-answer-content">
-                    <p>A 401 Unauthorized error means your API key is missing, invalid, or expired. First, verify you're including the API key in your request header: <code>Authorization: Bearer YOUR_API_KEY</code>. Check that you copied the entire API key correctly—even one missing character will fail. If your API key seems correct, generate a new one in your dashboard: go to "API Keys," click the create button, copy the new key, and test it. If you revoked an old key, you must use the new one. Make sure your API key hasn't been regenerated in another session. If problems persist, check that you're using the correct API endpoint URL. See the <a href="{{ route('docs') }}">documentation</a> for complete authentication details.</p>
+                    <p>A 401 Unauthorized error means your API key is missing, invalid, or expired. First, verify you're including the API key in your request header: <code>Authorization: Bearer YOUR_API_KEY</code>. Check that you copied the entire API key correctly—even one missing character will fail. If your API key seems correct, generate a new one in your dashboard: go to "API Keys," click the create button, copy the new key, and test it. If you revoked an old key, you must use the new one. Make sure your API key hasn't been regenerated in another session. If problems persist, check that you're using the correct API endpoint URL. See the <a href="{{ route('docs.index') }}">documentation</a> for complete authentication details.</p>
                 </div>
             </div>
         </div>
@@ -387,7 +387,7 @@
             </button>
             <div class="faq-answer">
                 <div class="faq-answer-content">
-                    <p>Optimizing API usage saves both time and money. Here are key strategies: (1) Write clear, concise prompts—fewer words means fewer input tokens and faster responses. (2) Use the smallest model that works for your task—Llama 7B is often sufficient for simple tasks and costs less. (3) Implement caching for common requests using your application's cache layer. (4) Use batch processing during off-peak hours for non-urgent requests. (5) Set appropriate temperature and max_tokens parameters—lower max_tokens ends generation earlier. (6) Use system prompts effectively to guide the model's behavior. (7) Monitor your token usage in the dashboard and adjust your approach as needed. (8) Consider using streaming for better perceived performance. See our <a href="{{ route('docs') }}">documentation</a> for detailed optimization examples.</p>
+                    <p>Optimizing API usage saves both time and money. Here are key strategies: (1) Write clear, concise prompts—fewer words means fewer input tokens and faster responses. (2) Use the smallest model that works for your task—Llama 7B is often sufficient for simple tasks and costs less. (3) Implement caching for common requests using your application's cache layer. (4) Use batch processing during off-peak hours for non-urgent requests. (5) Set appropriate temperature and max_tokens parameters—lower max_tokens ends generation earlier. (6) Use system prompts effectively to guide the model's behavior. (7) Monitor your token usage in the dashboard and adjust your approach as needed. (8) Consider using streaming for better perceived performance. See our <a href="{{ route('docs.index') }}">documentation</a> for detailed optimization examples.</p>
                 </div>
             </div>
         </div>
@@ -411,7 +411,7 @@
             <h3>Still Have Questions?</h3>
             <p>Can't find the answer you're looking for? Our support team is here to help.</p>
             <div class="faq-cta-links">
-                <a href="{{ route('docs') }}" class="faq-cta-link">Read Documentation</a>
+                <a href="{{ route('docs.index') }}" class="faq-cta-link">Read Documentation</a>
                 <a href="{{ route('features') }}" class="faq-cta-link">Explore Features</a>
                 <a href="{{ route('contact') }}" class="faq-cta-link">Contact Support</a>
             </div>

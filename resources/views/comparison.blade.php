@@ -1411,7 +1411,7 @@
             </p>
             <div class="comp-footer-buttons">
                 <a href="{{ route('register') }}" class="btn-primary">{{ __('comparison.footer_cta_primary') }}</a>
-                <a href="{{ route('docs') }}" class="btn-secondary">{{ __('comparison.footer_cta_secondary') }}</a>
+                <a href="{{ route('docs.index') }}" class="btn-secondary">{{ __('comparison.footer_cta_secondary') }}</a>
             </div>
             <p class="comp-footer-links">
                 {!! __('comparison.footer_cta_links', [

@@ -2054,7 +2054,7 @@
         </div>
         <p class="ds-footer-explore">
             {!! __('dedicated-server.footer_explore', [
-                'docs_link'       => '<a href="' . route('docs') . '">' . __('dedicated-server.footer_docs_link') . '</a>',
+                'docs_link'       => '<a href="' . route('docs.index') . '">' . __('dedicated-server.footer_docs_link') . '</a>',
                 'plans_link'      => '<a href="' . route('billing.plans') . '">' . __('dedicated-server.footer_plans_link') . '</a>',
                 'comparison_link' => '<a href="' . route('comparison') . '">' . __('dedicated-server.footer_comparison_link') . '</a>',
             ]) !!}

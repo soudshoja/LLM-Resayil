@@ -348,7 +348,7 @@ Credits Used: 0.3</code>
 
             <p>
                 This would consume approximately 0.3 credits from your account. The exact rate depends on the model.
-                Check your <a href="{{ route('dashboard') }}" class="docs-link">dashboard</a> for model-specific pricing.
+                Check your <a href="{{ url('/dashboard') }}" class="docs-link">dashboard</a> for model-specific pricing.
             </p>
         </section>
 
@@ -415,7 +415,7 @@ Credits Used: 0.3</code>
 
             <h3>How to Top-Up</h3>
             <ol style="list-style: decimal; margin-left: 2rem;">
-                <li>Log in to your <a href="{{ route('dashboard') }}" class="docs-link">LLM Resayil dashboard</a></li>
+                <li>Log in to your <a href="{{ url('/dashboard') }}" class="docs-link">LLM Resayil dashboard</a></li>
                 <li>Go to <strong>Billing</strong> → <strong>Top-Up Credits</strong></li>
                 <li>Select the amount of credits you want to purchase</li>
                 <li>Complete payment via MyFatoorah</li>
@@ -458,7 +458,7 @@ Credits Used: 0.3</code>
                 <li><a href="{{ route('docs.rate-limits') }}" class="docs-link">Rate Limits & Quotas</a> — Request limits by tier</li>
                 <li><a href="{{ route('docs.models') }}" class="docs-link">Available Models</a> — Token consumption varies by model</li>
                 <li><a href="{{ route('pricing') }}" class="docs-link">Pricing</a> — Subscription plans and rates</li>
-                <li><a href="{{ route('dashboard') }}" class="docs-link">Dashboard</a> — View your usage and account balance</li>
+                <li><a href="{{ url('/dashboard') }}" class="docs-link">Dashboard</a> — View your usage and account balance</li>
             </ul>
         </section>
 
