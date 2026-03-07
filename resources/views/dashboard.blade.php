@@ -106,6 +106,33 @@
     .card-subheading { font-size: 0.875rem; font-weight: 600; margin-bottom: 0.75rem; }
     @media(max-width: 900px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } .section-grid { grid-template-columns: 1fr; } .detail-grid { grid-template-columns: 1fr; } }
     @media(max-width: 600px) { .stats-grid { grid-template-columns: 1fr; } .model-grid { grid-template-columns: 1fr; } .catalog-header { flex-direction: column; align-items: stretch; } .filter-group { flex-direction: column; align-items: stretch; } }
+    /* ── Usage History Section ── */
+    .usage-stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 1.5rem; }
+    .usage-stat-card { background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 10px; padding: 1rem 1.25rem; }
+    .usage-stat-label { font-size: 0.7rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.4rem; }
+    .usage-stat-value { font-size: 1.5rem; font-weight: 700; color: var(--gold); font-variant-numeric: tabular-nums; }
+    .usage-stat-sub { font-size: 0.72rem; color: var(--text-muted); margin-top: 0.2rem; }
+    .usage-table-wrap { overflow-x: auto; }
+    .usage-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+    .usage-table th { font-size: 0.7rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; padding: 0.55rem 0.75rem; border-bottom: 1px solid var(--border); text-align: left; white-space: nowrap; }
+    .usage-table td { padding: 0.65rem 0.75rem; border-bottom: 1px solid rgba(30,34,48,0.5); vertical-align: middle; }
+    .usage-table tbody tr:last-child td { border-bottom: none; }
+    .usage-table tbody tr:hover td { background: rgba(212,175,55,0.03); }
+    .usage-model-pill { display: inline-block; font-family: monospace; font-size: 0.75rem; color: var(--gold); background: rgba(212,175,55,0.08); border: 1px solid rgba(212,175,55,0.2); border-radius: 4px; padding: 0.15rem 0.5rem; white-space: nowrap; max-width: 220px; overflow: hidden; text-overflow: ellipsis; vertical-align: middle; }
+    .usage-num { font-family: monospace; font-size: 0.8rem; color: var(--text-primary); }
+    .usage-muted { color: var(--text-muted); font-family: monospace; font-size: 0.8rem; }
+    .usage-credits { font-family: monospace; font-size: 0.82rem; font-weight: 600; color: var(--gold); }
+    .usage-dot-ok  { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: #22c55e; margin-right: 0.35rem; vertical-align: middle; }
+    .usage-dot-err { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: #ef4444; margin-right: 0.35rem; vertical-align: middle; }
+    .usage-empty { text-align: center; padding: 3rem 1.5rem; }
+    .usage-empty-icon { font-size: 2.5rem; margin-bottom: 0.75rem; opacity: 0.35; }
+    .usage-empty h3 { font-size: 0.95rem; font-weight: 600; margin-bottom: 0.4rem; color: var(--text-primary); }
+    .usage-empty p { font-size: 0.82rem; color: var(--text-muted); }
+    .usage-section-header { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.25rem; }
+    .usage-docs-link { font-size: 0.78rem; color: var(--gold); text-decoration: none; opacity: 0.85; }
+    .usage-docs-link:hover { opacity: 1; }
+    @media(max-width: 900px) { .usage-stats-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media(max-width: 600px) { .usage-stats-grid { grid-template-columns: 1fr 1fr; } }
 </style>
 @endpush
 
@@ -114,7 +141,7 @@
     <div class="dash-header">
         <h1>{{ __('dashboard.welcome_back', ['name' => auth()->user()->name ?: auth()->user()->email]) }}</h1>
         <div class="text-secondary text-sm">
-            {{ __('dashboard.plan') }}: <span class="badge badge-gold">{{ ucfirst(auth()->user()->subscription_tier) }}</span>
+            {{ __('dashboard.plan') }}: <span class="badge badge-gold" style="display:inline-flex;align-items:center;gap:0.4rem;vertical-align:middle;"><x-tier-icon :tier="auth()->user()->subscription_tier ?? 'free'" :size="16" />{{ ucfirst(auth()->user()->subscription_tier) }}</span>
             @if(auth()->user()->subscription_expiry)
             &nbsp;· {{ __('dashboard.expires') }}: {{ auth()->user()->subscription_expiry->format('d M Y') }}
             @endif
@@ -447,44 +474,148 @@ response = requests.post(
         </div>
     </div>
 
-    <!-- Recent Usage -->
-    <div class="card">
-        <h2 class="card-heading-mb">{{ __('dashboard.recent_api_usage') }}</h2>
-        @php $recentComparisons = $costService->getRecentCallComparisons(auth()->user(), 10); @endphp
-        @if(count($recentComparisons) > 0)
-        <div style="overflow-x:auto">
-        <table class="keys-table">
-            <thead>
-                <tr>
-                    <th>{{ __('dashboard.model') }}</th>
-                    <th>{{ __('dashboard.usage_input_tokens') }}</th>
-                    <th>{{ __('dashboard.usage_output_tokens') }}</th>
-                    <th>{{ __('dashboard.tokens') }}</th>
-                    <th>{{ __('dashboard.usage_our_cost') }}</th>
-                    <th>{{ __('dashboard.usage_vs_gpt4o') }}</th>
-                    <th>{{ __('dashboard.credits_used') }}</th>
-                    <th>{{ __('dashboard.time') }}</th>
-                </tr>
-            </thead>
-            <tbody>
-            @foreach($recentComparisons as $row)
-                @php $log = $row['log']; @endphp
-                <tr>
-                    <td style="font-family:monospace;font-size:0.8rem">{{ preg_replace('/(-cloud|:cloud)$/', '', $log->model) }}</td>
-                    <td class="text-muted">{{ is_null($log->prompt_tokens) ? '&mdash;' : number_format($log->prompt_tokens) }}</td>
-                    <td class="text-muted">{{ is_null($log->completion_tokens) ? '&mdash;' : number_format($log->completion_tokens) }}</td>
-                    <td>{{ number_format($log->tokens_used) }}</td>
-                    <td class="text-gold">${{ number_format($row['our_cost_usd'], 4) }}</td>
-                    <td class="text-muted">{{ $row['is_estimate'] ? '~' : '' }}${{ number_format($row['gpt4o_cost_usd'], 4) }}</td>
-                    <td class="text-gold">{{ $log->credits_deducted }}</td>
-                    <td class="text-muted">{{ $log->created_at->diffForHumans() }}</td>
-                </tr>
-            @endforeach
-            </tbody>
-        </table>
+    <!-- Usage History -->
+    <div id="usage" class="card">
+        <div class="usage-section-header">
+            <div>
+                <h2 class="card-heading" style="margin-bottom:0.2rem">
+                    @if(app()->getLocale() === 'ar')
+                        سجل الاستخدام
+                    @else
+                        {{ __('dashboard.usage_history_title') }}
+                    @endif
+                </h2>
+                <p class="usage-stat-sub" style="margin-top:0">
+                    @if(app()->getLocale() === 'ar')
+                        نشاط واجهة API الخاصة بك — آخر 20 طلب
+                    @else
+                        {{ __('dashboard.usage_history_subtitle') }}
+                    @endif
+                </p>
+            </div>
+            <a href="{{ route('docs.usage') }}" class="usage-docs-link">
+                @if(app()->getLocale() === 'ar')
+                    تعرّف على كيفية احتساب الرموز &rarr;
+                @else
+                    {!! __('dashboard.usage_docs_link') !!}
+                @endif
+            </a>
+        </div>
+
+        {{-- Lifetime usage stats cards --}}
+        <div class="usage-stats-grid">
+            <div class="usage-stat-card">
+                <div class="usage-stat-label">
+                    @if(app()->getLocale() === 'ar') إجمالي الطلبات @else {{ __('dashboard.usage_stat_total_calls') }} @endif
+                </div>
+                <div class="usage-stat-value">{{ number_format($totalCalls) }}</div>
+                <div class="usage-stat-sub">
+                    @if(app()->getLocale() === 'ar') منذ البداية @else {{ __('dashboard.usage_stat_all_time') }} @endif
+                </div>
+            </div>
+            <div class="usage-stat-card">
+                <div class="usage-stat-label">
+                    @if(app()->getLocale() === 'ar') إجمالي الرموز @else {{ __('dashboard.usage_stat_total_tokens') }} @endif
+                </div>
+                <div class="usage-stat-value">{{ number_format($totalTokens) }}</div>
+                <div class="usage-stat-sub">
+                    @if(app()->getLocale() === 'ar') منذ البداية @else {{ __('dashboard.usage_stat_all_time') }} @endif
+                </div>
+            </div>
+            <div class="usage-stat-card">
+                <div class="usage-stat-label">
+                    @if(app()->getLocale() === 'ar') إجمالي الرصيد المُستهلك @else {{ __('dashboard.usage_stat_credits_spent') }} @endif
+                </div>
+                <div class="usage-stat-value">{{ number_format($totalCreditsSpent) }}</div>
+                <div class="usage-stat-sub">
+                    @if(app()->getLocale() === 'ar') منذ البداية @else {{ __('dashboard.usage_stat_all_time') }} @endif
+                </div>
+            </div>
+            <div class="usage-stat-card">
+                <div class="usage-stat-label">
+                    @if(app()->getLocale() === 'ar') الرصيد المتبقي @else {{ __('dashboard.usage_stat_credits_left') }} @endif
+                </div>
+                <div class="usage-stat-value">{{ number_format(auth()->user()->credits) }}</div>
+                <div class="usage-stat-sub">
+                    @if(app()->getLocale() === 'ar') متاح الآن @else available now @endif
+                </div>
+            </div>
+        </div>
+
+        {{-- Usage log table --}}
+        @if($usageLogs->count() > 0)
+        <div class="usage-table-wrap">
+            <table class="usage-table">
+                <thead>
+                    <tr>
+                        <th>
+                            @if(app()->getLocale() === 'ar') الوقت @else {{ __('dashboard.usage_col_time') }} @endif
+                        </th>
+                        <th>
+                            @if(app()->getLocale() === 'ar') النموذج @else {{ __('dashboard.usage_col_model') }} @endif
+                        </th>
+                        <th>
+                            @if(app()->getLocale() === 'ar') رموز الإدخال @else {{ __('dashboard.usage_col_prompt') }} @endif
+                        </th>
+                        <th>
+                            @if(app()->getLocale() === 'ar') رموز الإخراج @else {{ __('dashboard.usage_col_completion') }} @endif
+                        </th>
+                        <th>
+                            @if(app()->getLocale() === 'ar') إجمالي الرموز @else {{ __('dashboard.usage_col_total_tokens') }} @endif
+                        </th>
+                        <th>
+                            @if(app()->getLocale() === 'ar') الرصيد المخصوم @else {{ __('dashboard.usage_col_credits') }} @endif
+                        </th>
+                        <th>
+                            @if(app()->getLocale() === 'ar') الحالة @else {{ __('dashboard.usage_col_status') }} @endif
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                @foreach($usageLogs as $log)
+                    <tr>
+                        <td class="usage-muted" title="{{ $log->created_at->format('Y-m-d H:i:s') }}">
+                            {{ $log->created_at->diffForHumans() }}
+                        </td>
+                        <td>
+                            <span class="usage-model-pill" title="{{ $log->model }}">
+                                {{ preg_replace('/(-cloud|:cloud)$/', '', $log->model) }}
+                            </span>
+                        </td>
+                        <td class="usage-muted">
+                            {{ is_null($log->prompt_tokens) ? '&mdash;' : number_format($log->prompt_tokens) }}
+                        </td>
+                        <td class="usage-muted">
+                            {{ is_null($log->completion_tokens) ? '&mdash;' : number_format($log->completion_tokens) }}
+                        </td>
+                        <td class="usage-num">{{ number_format($log->tokens_used) }}</td>
+                        <td class="usage-credits">{{ number_format($log->credits_deducted) }}</td>
+                        <td>
+                            @if($log->status_code >= 200 && $log->status_code < 300)
+                                <span class="usage-dot-ok"></span><span class="usage-muted">{{ $log->status_code }}</span>
+                            @else
+                                <span class="usage-dot-err"></span><span style="color:#f87171;font-family:monospace;font-size:0.8rem">{{ $log->status_code }}</span>
+                            @endif
+                        </td>
+                    </tr>
+                @endforeach
+                </tbody>
+            </table>
         </div>
         @else
-        <div class="empty-state">{{ __('dashboard.no_api_calls') }} {{ __('dashboard.create_api_key_first') }}</div>
+        <div class="usage-empty">
+            <div class="usage-empty-icon">&#9998;</div>
+            <h3>
+                @if(app()->getLocale() === 'ar') لا يوجد نشاط بعد @else {{ __('dashboard.usage_empty_heading') }} @endif
+            </h3>
+            <p>
+                @if(app()->getLocale() === 'ar')
+                    سيظهر سجل استخدامك هنا بعد أول طلب عبر API.
+                @else
+                    {{ __('dashboard.usage_empty_body') }}
+                @endif
+            </p>
+        </div>
         @endif
     </div>
 </main>

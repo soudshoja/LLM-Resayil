@@ -27,4 +27,24 @@ return [
     'language' => 'Language',
     'english' => 'English',
     'arabic' => 'Arabic',
+
+    // Footer sections
+    'footer_pricing_heading' => 'Pricing & Savings',
+    'footer_pricing_plans' => 'Pricing Plans',
+    'footer_cost_calculator' => 'Cost Calculator',
+    'footer_compare_openrouter' => 'Compare OpenRouter',
+    'footer_llm_alternatives' => 'LLM Alternatives',
+
+    'footer_developer_heading' => 'Developer Tools',
+    'footer_api_documentation' => 'API Documentation',
+    'footer_available_models' => 'Available Models',
+    'footer_api_keys' => 'API Keys',
+    'footer_how_credits_work' => 'How Credits Work',
+
+    'footer_learn_heading' => 'Learn & Compare',
+    'footer_about_us' => 'About Us',
+    'footer_contact_support' => 'Contact Support',
+    'footer_privacy' => 'Privacy',
+
+    'footer_copyright' => 'LLM Resayil © :year. Affordable, OpenAI-compatible LLM API.',
 ];

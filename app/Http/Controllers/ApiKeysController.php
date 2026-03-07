@@ -102,6 +102,7 @@ class ApiKeysController extends Controller
 
         if (!$apiKey) {
             return response()->json([
+                'success' => false,
                 'message' => 'API key not found.',
             ], 404);
         }
@@ -109,6 +110,7 @@ class ApiKeysController extends Controller
         $apiKey->delete();
 
         return response()->json([
+            'success' => true,
             'message' => 'API key deleted successfully.',
         ]);
     }

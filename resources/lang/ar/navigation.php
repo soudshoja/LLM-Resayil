@@ -4,7 +4,7 @@ return [
     'about' => 'من نحن',
     'dashboard' => 'لوحة التحكم',
     'api_keys' => 'مفاتيح API',
-    'billing' => 'الفواتير',
+    'billing' => 'الفوترة',
     'credits' => 'الرصيد',
     'payment_methods' => 'طرق الدفع',
     'team' => 'الفريق',
@@ -14,7 +14,7 @@ return [
     'get_started' => 'ابدأ الآن',
     'docs' => 'التوثيق',
     'faq' => 'الأسئلة الشائعة',
-    'features' => 'المميزات',
+    'features' => 'الميزات',
     'contact' => 'تواصل معنا',
     'admin' => 'الإدارة',
     'monitor' => 'المراقبة',
@@ -25,6 +25,26 @@ return [
     'og_description_short' => 'API الذكاء الاصطناعي بالكويت',
     'meta_description_default' => 'منصة API للذكاء الاصطناعي في الكويت - وصول إلى أقوى نماذج LLM بنظام الدفع حسب الاستخدام',
     'language' => 'اللغة',
-    'english' => 'الإنجليزية',
+    'english' => 'English',
     'arabic' => 'العربية',
+
+    // Footer sections
+    'footer_pricing_heading' => 'الأسعار والتوفير',
+    'footer_pricing_plans' => 'خطط الأسعار',
+    'footer_cost_calculator' => 'حاسبة التكلفة',
+    'footer_compare_openrouter' => 'مقارنة مع OpenRouter',
+    'footer_llm_alternatives' => 'بدائل نماذج LLM',
+
+    'footer_developer_heading' => 'أدوات المطورين',
+    'footer_api_documentation' => 'توثيق API',
+    'footer_available_models' => 'النماذج المتاحة',
+    'footer_api_keys' => 'مفاتيح API',
+    'footer_how_credits_work' => 'كيف يعمل الرصيد',
+
+    'footer_learn_heading' => 'تعلم وقارن',
+    'footer_about_us' => 'من نحن',
+    'footer_contact_support' => 'تواصل مع الدعم',
+    'footer_privacy' => 'الخصوصية',
+
+    'footer_copyright' => 'LLM Resayil © :year. واجهة برمجية متوافقة مع OpenAI بأسعار معقولة.',
 ];

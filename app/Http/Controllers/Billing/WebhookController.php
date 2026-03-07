@@ -127,14 +127,19 @@ class WebhookController extends Controller
      */
     protected function isTransactionProcessed(string $invoiceId): bool
     {
-        // Check subscriptions
-        $subscription = Subscription::where('MyFatoorah_invoice_id', $invoiceId)->first();
+        // Check subscriptions — only active ones are fully processed
+        $subscription = Subscription::where('MyFatoorah_invoice_id', $invoiceId)
+            ->where('status', 'active')
+            ->first();
         if ($subscription) {
             return true;
         }
 
-        // Check topup purchases
-        $topup = TopupPurchase::where('transaction_id', $invoiceId)->first();
+        // Check topup purchases — only completed ones are fully processed
+        // Pending records exist before payment starts and must NOT block processing
+        $topup = TopupPurchase::where('transaction_id', $invoiceId)
+            ->where('status', 'completed')
+            ->first();
         if ($topup) {
             return true;
         }

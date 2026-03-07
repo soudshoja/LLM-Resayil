@@ -364,39 +364,94 @@
     <div style="max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem;">
         <!-- CLUSTER 1: COST/ROI -->
         <div>
-            <p style="font-weight: 600; color: var(--text-primary); margin-bottom: 1rem;">Pricing & Savings</p>
+            <p style="font-weight: 600; color: var(--text-primary); margin-bottom: 1rem;">{{ __('navigation.footer_pricing_heading') }}</p>
             <ul style="list-style: none; padding: 0; margin: 0;">
-                <li style="margin-bottom: 0.5rem;"><a href="/pricing" style="color: var(--text-secondary); text-decoration: none; transition: color 0.2s;">Pricing Plans</a></li>
-                <li style="margin-bottom: 0.5rem;"><a href="/cost-calculator" style="color: var(--text-secondary); text-decoration: none; transition: color 0.2s;">Cost Calculator</a></li>
-                <li style="margin-bottom: 0.5rem;"><a href="/comparison" style="color: var(--text-secondary); text-decoration: none; transition: color 0.2s;">Compare OpenRouter</a></li>
-                <li style="margin-bottom: 0.5rem;"><a href="/alternatives" style="color: var(--text-secondary); text-decoration: none; transition: color 0.2s;">LLM Alternatives</a></li>
+                <li style="margin-bottom: 0.5rem;"><a href="/pricing" style="color: var(--text-secondary); text-decoration: none; transition: color 0.2s;">{{ __('navigation.footer_pricing_plans') }}</a></li>
+                <li style="margin-bottom: 0.5rem;"><a href="/cost-calculator" style="color: var(--text-secondary); text-decoration: none; transition: color 0.2s;">{{ __('navigation.footer_cost_calculator') }}</a></li>
+                <li style="margin-bottom: 0.5rem;"><a href="/comparison" style="color: var(--text-secondary); text-decoration: none; transition: color 0.2s;">{{ __('navigation.footer_compare_openrouter') }}</a></li>
+                <li style="margin-bottom: 0.5rem;"><a href="/alternatives" style="color: var(--text-secondary); text-decoration: none; transition: color 0.2s;">{{ __('navigation.footer_llm_alternatives') }}</a></li>
             </ul>
         </div>
         <!-- CLUSTER 2: INTEGRATION/API -->
         <div>
-            <p style="font-weight: 600; color: var(--text-primary); margin-bottom: 1rem;">Developer Tools</p>
+            <p style="font-weight: 600; color: var(--text-primary); margin-bottom: 1rem;">{{ __('navigation.footer_developer_heading') }}</p>
             <ul style="list-style: none; padding: 0; margin: 0;">
-                <li style="margin-bottom: 0.5rem;"><a href="/docs" style="color: var(--text-secondary); text-decoration: none; transition: color 0.2s;">API Documentation</a></li>
-                <li style="margin-bottom: 0.5rem;"><a href="/features" style="color: var(--text-secondary); text-decoration: none; transition: color 0.2s;">Available Models</a></li>
-                <li style="margin-bottom: 0.5rem;"><a href="/api-keys" style="color: var(--text-secondary); text-decoration: none; transition: color 0.2s;">API Keys</a></li>
-                <li style="margin-bottom: 0.5rem;"><a href="/credits" style="color: var(--text-secondary); text-decoration: none; transition: color 0.2s;">How Credits Work</a></li>
+                <li style="margin-bottom: 0.5rem;"><a href="/docs" style="color: var(--text-secondary); text-decoration: none; transition: color 0.2s;">{{ __('navigation.footer_api_documentation') }}</a></li>
+                <li style="margin-bottom: 0.5rem;"><a href="/features" style="color: var(--text-secondary); text-decoration: none; transition: color 0.2s;">{{ __('navigation.footer_available_models') }}</a></li>
+                <li style="margin-bottom: 0.5rem;"><a href="/api-keys" style="color: var(--text-secondary); text-decoration: none; transition: color 0.2s;">{{ __('navigation.footer_api_keys') }}</a></li>
+                <li style="margin-bottom: 0.5rem;"><a href="/credits" style="color: var(--text-secondary); text-decoration: none; transition: color 0.2s;">{{ __('navigation.footer_how_credits_work') }}</a></li>
             </ul>
         </div>
         <!-- CLUSTER 3: EDUCATION -->
         <div>
-            <p style="font-weight: 600; color: var(--text-primary); margin-bottom: 1rem;">Learn & Compare</p>
+            <p style="font-weight: 600; color: var(--text-primary); margin-bottom: 1rem;">{{ __('navigation.footer_learn_heading') }}</p>
             <ul style="list-style: none; padding: 0; margin: 0;">
-                <li style="margin-bottom: 0.5rem;"><a href="/about" style="color: var(--text-secondary); text-decoration: none; transition: color 0.2s;">About Us</a></li>
-                <li style="margin-bottom: 0.5rem;"><a href="/contact" style="color: var(--text-secondary); text-decoration: none; transition: color 0.2s;">Contact Support</a></li>
-                <li style="margin-bottom: 0.5rem;"><a href="/privacy-policy" style="color: var(--text-secondary); text-decoration: none; transition: color 0.2s;">Privacy</a></li>
+                <li style="margin-bottom: 0.5rem;"><a href="/about" style="color: var(--text-secondary); text-decoration: none; transition: color 0.2s;">{{ __('navigation.footer_about_us') }}</a></li>
+                <li style="margin-bottom: 0.5rem;"><a href="/contact" style="color: var(--text-secondary); text-decoration: none; transition: color 0.2s;">{{ __('navigation.footer_contact_support') }}</a></li>
+                <li style="margin-bottom: 0.5rem;"><a href="/privacy-policy" style="color: var(--text-secondary); text-decoration: none; transition: color 0.2s;">{{ __('navigation.footer_privacy') }}</a></li>
             </ul>
         </div>
     </div>
     <div style="max-width: 1200px; margin: 2rem auto 0; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; color: var(--text-muted); font-size: 0.85rem;">
-        <p>LLM Resayil &copy; 2026. Affordable, OpenAI-compatible LLM API.</p>
+        <p>{{ __('navigation.footer_copyright', ['year' => date('Y')]) }}</p>
     </div>
 </footer>
 
 @stack('scripts')
+
+@auth
+<div id="idle-modal" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.75);align-items:center;justify-content:center;">
+    <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:2rem;max-width:380px;width:90%;text-align:center;">
+        <div style="font-size:2rem;margin-bottom:1rem;">⏱</div>
+        <h3 style="color:var(--text-primary);margin-bottom:0.75rem;font-size:1.1rem;">Session Expiring</h3>
+        <p style="color:var(--text-secondary);font-size:0.9rem;margin-bottom:1.5rem;">
+            You've been inactive. Logging out in <strong id="idle-countdown" style="color:var(--gold);">30</strong>s.
+        </p>
+        <button onclick="resetIdleTimer()" style="background:var(--gold);color:#000;border:none;padding:0.6rem 1.5rem;border-radius:8px;font-weight:600;cursor:pointer;font-size:0.9rem;">Stay Logged In</button>
+    </div>
+</div>
+
+<form id="idle-logout-form" method="POST" action="/logout" style="display:none;">
+    @csrf
+</form>
+
+<script>
+(function() {
+    const IDLE_TIMEOUT = 5 * 60 * 1000;  // 5 minutes
+    const WARN_DURATION = 30;             // 30-second countdown
+
+    let idleTimer, countdownTimer, countdown;
+    const modal = document.getElementById('idle-modal');
+    const countdownEl = document.getElementById('idle-countdown');
+
+    function showModal() {
+        countdown = WARN_DURATION;
+        countdownEl.textContent = countdown;
+        modal.style.display = 'flex';
+        countdownTimer = setInterval(function() {
+            countdown--;
+            countdownEl.textContent = countdown;
+            if (countdown <= 0) {
+                clearInterval(countdownTimer);
+                document.getElementById('idle-logout-form').submit();
+            }
+        }, 1000);
+    }
+
+    window.resetIdleTimer = function() {
+        clearTimeout(idleTimer);
+        clearInterval(countdownTimer);
+        modal.style.display = 'none';
+        idleTimer = setTimeout(showModal, IDLE_TIMEOUT);
+    };
+
+    ['mousemove','mousedown','keydown','touchstart','scroll','click'].forEach(function(evt) {
+        document.addEventListener(evt, window.resetIdleTimer, { passive: true });
+    });
+
+    idleTimer = setTimeout(showModal, IDLE_TIMEOUT);
+})();
+</script>
+@endauth
 </body>
 </html>

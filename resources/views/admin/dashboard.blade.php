@@ -78,10 +78,29 @@
         </div>
     </div>
 
+    <!-- Quick Links -->
+    <div style="display:flex;gap:1rem;margin-bottom:2rem;flex-wrap:wrap">
+        <a href="{{ route('admin.users') }}" style="display:flex;align-items:center;gap:0.75rem;background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:1rem 1.5rem;text-decoration:none;color:var(--text-primary);transition:border-color 0.2s" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='var(--border)'">
+            <span style="font-size:1.25rem">👥</span>
+            <div>
+                <div style="font-weight:600;font-size:0.9rem">User Monitoring</div>
+                <div style="font-size:0.75rem;color:var(--text-muted)">API calls, tokens &amp; credits per user</div>
+            </div>
+        </a>
+        <a href="{{ route('admin.monitoring') }}" style="display:flex;align-items:center;gap:0.75rem;background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:1rem 1.5rem;text-decoration:none;color:var(--text-primary);transition:border-color 0.2s" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='var(--border)'">
+            <span style="font-size:1.25rem">📊</span>
+            <div>
+                <div style="font-weight:600;font-size:0.9rem">Platform Monitoring</div>
+                <div style="font-size:0.75rem;color:var(--text-muted)">Real-time API call feed &amp; model stats</div>
+            </div>
+        </a>
+    </div>
+
     <!-- Users Table -->
     <div class="card">
         <div class="flex items-center justify-between mb-4">
             <h2 style="font-size:1rem;font-weight:600">{{ __('admin.all_users') }}</h2>
+            <a href="{{ route('admin.users') }}" style="font-size:0.8rem;color:var(--gold);text-decoration:none">View full usage →</a>
         </div>
         <table class="users-table">
             <thead>
@@ -107,6 +126,7 @@
                     <td class="text-muted">{{ $user->created_at->format('d M Y') }}</td>
                     <td>
                         <div class="action-buttons">
+                            <a href="{{ route('admin.users.detail', $user->id) }}" class="btn-action" style="background:rgba(212,175,55,0.1);color:var(--gold);text-decoration:none;display:inline-block">Usage</a>
                             <button class="btn-action btn-set-credits" onclick="openCreditsModal('{{ $user->id }}')">{{ __('admin.credits_action') }}</button>
                             <button class="btn-action btn-set-tier" onclick="openTierModal('{{ $user->id }}')">{{ __('admin.tier_action') }}</button>
                             <button class="btn-action btn-set-expiry" onclick="openExpiryModal('{{ $user->id }}')">{{ __('admin.expiry_action') }}</button>

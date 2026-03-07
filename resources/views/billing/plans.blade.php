@@ -21,7 +21,9 @@
     .plan-card:hover { border-color: var(--gold-muted); transform: translateY(-2px); }
     .plan-card.featured { border-color: var(--gold-muted); box-shadow: 0 0 0 1px rgba(212,175,55,0.2), 0 8px 32px rgba(212,175,55,0.08); }
     .plan-badge { position: absolute; top: -13px; left: 50%; transform: translateX(-50%); background: linear-gradient(135deg, var(--gold), var(--gold-light)); color: #0a0d14; font-size: 0.7rem; font-weight: 700; padding: 0.25rem 0.85rem; border-radius: 20px; text-transform: uppercase; letter-spacing: 0.05em; white-space: nowrap; }
-    .plan-name { font-size: 1rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-secondary); margin-bottom: 0.75rem; }
+    .plan-name { font-size: 1rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-secondary); margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem; }
+    .tier-svg-icon { width: 22px; height: 22px; flex-shrink: 0; vertical-align: middle; }
+    [dir="rtl"] .tier-svg-icon { margin-right: 0; margin-left: 0; }
     .plan-price { font-size: 2.5rem; font-weight: 700; color: var(--gold); line-height: 1; margin-bottom: 0.25rem; }
     .plan-price span { font-size: 1rem; font-weight: 500; color: var(--text-secondary); }
     .plan-billing { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1.5rem; }
@@ -101,7 +103,7 @@
 @elseif(auth()->user()->subscription_expiry)
     <div class="billing-banner billing-banner-gold">
         <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-        <strong>{{ __('billing.current_plan') }}</strong>: {{ ucfirst(auth()->user()->subscription_tier) }}
+        <strong>{{ __('billing.current_plan') }}</strong>: <span style="display:inline-flex;align-items:center;gap:0.35rem;vertical-align:middle;"><x-tier-icon :tier="auth()->user()->subscription_tier ?? 'free'" :size="16" />{{ ucfirst(auth()->user()->subscription_tier) }}</span>
         &mdash; {{ __('billing.renews') }} {{ auth()->user()->subscription_expiry->format('d M Y') }}
     </div>
 @endif
@@ -171,7 +173,7 @@
         {{-- Starter Tier --}}
         <div class="plan-card">
             <div class="plan-badge">{{ __('billing.most_popular') }}</div>
-            <div class="plan-name">{{ __('billing.starter') }}</div>
+            <div class="plan-name"><x-tier-icon tier="starter" :size="22" />{{ __('billing.starter') }}</div>
             <div class="plan-price">15 <span>KWD</span></div>
             <div class="plan-billing">{{ __('billing.per_month') }} &nbsp;&middot;&nbsp; {{ __('billing.billed_monthly') }}</div>
             <hr class="plan-divider">
@@ -199,7 +201,7 @@
         {{-- Basic Tier (featured) --}}
         <div class="plan-card featured">
             <div class="plan-badge">{{ __('billing.best_value') }}</div>
-            <div class="plan-name">{{ __('billing.basic') }}</div>
+            <div class="plan-name"><x-tier-icon tier="basic" :size="22" />{{ __('billing.basic') }}</div>
             <div class="plan-price">25 <span>KWD</span></div>
             <div class="plan-billing">{{ __('billing.per_month') }} &nbsp;&middot;&nbsp; {{ __('billing.billed_monthly') }}</div>
             <hr class="plan-divider">
@@ -226,7 +228,7 @@
 
         {{-- Pro Tier --}}
         <div class="plan-card">
-            <div class="plan-name">{{ __('billing.pro') }}</div>
+            <div class="plan-name"><x-tier-icon tier="pro" :size="22" />{{ __('billing.pro') }}</div>
             <div class="plan-price">45 <span>KWD</span></div>
             <div class="plan-billing">{{ __('billing.per_month') }} &nbsp;&middot;&nbsp; {{ __('billing.billed_monthly') }}</div>
             <hr class="plan-divider">

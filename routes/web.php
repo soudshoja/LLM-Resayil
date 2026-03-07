@@ -70,12 +70,32 @@ Route::group([], function () {
     // Dashboard (protected)
     Route::get('/dashboard', function () {
         $meta = \App\Helpers\SeoHelper::getPageMeta('dashboard');
+        $userId = auth()->id();
+
+        $usageLogs = \App\Models\UsageLog::where('user_id', $userId)
+            ->latest()
+            ->take(20)
+            ->get();
+
+        $totalCalls = \App\Models\UsageLog::where('user_id', $userId)->count();
+
+        $totalTokens = \App\Models\UsageLog::where('user_id', $userId)
+            ->selectRaw('SUM(tokens_used) as total')
+            ->value('total') ?? 0;
+
+        $totalCreditsSpent = \App\Models\UsageLog::where('user_id', $userId)
+            ->sum('credits_deducted') ?? 0;
+
         return view('dashboard', [
-            'pageTitle' => $meta['title'],
-            'pageDescription' => $meta['description'],
-            'pageKeywords' => $meta['keywords'],
-            'ogImage' => $meta['ogImage'],
-            'ogType' => $meta['ogType'],
+            'pageTitle'         => $meta['title'],
+            'pageDescription'   => $meta['description'],
+            'pageKeywords'      => $meta['keywords'],
+            'ogImage'           => $meta['ogImage'],
+            'ogType'            => $meta['ogType'],
+            'usageLogs'         => $usageLogs,
+            'totalCalls'        => $totalCalls,
+            'totalTokens'       => $totalTokens,
+            'totalCreditsSpent' => $totalCreditsSpent,
         ]);
     })->middleware('auth');
 
@@ -170,12 +190,19 @@ Route::group([], function () {
 
     Route::get('/docs/models', function () {
         $meta = \App\Helpers\SeoHelper::getPageMeta('docs.models');
+        $models = collect(config('models.models'))
+            ->filter(fn($m) => $m['is_active'] ?? true);
+        $localModels = $models->filter(fn($m) => ($m['type'] ?? 'local') === 'local');
+        $cloudModels = $models->filter(fn($m) => ($m['type'] ?? 'local') === 'cloud');
         return view('docs.models', [
             'pageTitle' => $meta['title'],
             'pageDescription' => $meta['description'],
             'pageKeywords' => $meta['keywords'],
             'ogImage' => $meta['ogImage'],
             'ogType' => $meta['ogType'],
+            'models' => $models,
+            'localModels' => $localModels,
+            'cloudModels' => $cloudModels,
         ]);
     })->name('docs.models');
 
@@ -211,6 +238,39 @@ Route::group([], function () {
             'ogType' => $meta['ogType'],
         ]);
     })->name('docs.error-codes');
+
+    Route::get('/docs/usage', function () {
+        $meta = \App\Helpers\SeoHelper::getPageMeta('docs.usage');
+        return view('docs.usage', [
+            'pageTitle' => $meta['title'],
+            'pageDescription' => $meta['description'],
+            'pageKeywords' => $meta['keywords'],
+            'ogImage' => $meta['ogImage'],
+            'ogType' => $meta['ogType'],
+        ]);
+    })->name('docs.usage');
+
+    Route::get('/docs/topup', function () {
+        $meta = \App\Helpers\SeoHelper::getPageMeta('docs.topup');
+        return view('docs.topup', [
+            'pageTitle' => $meta['title'],
+            'pageDescription' => $meta['description'],
+            'pageKeywords' => $meta['keywords'],
+            'ogImage' => $meta['ogImage'],
+            'ogType' => $meta['ogType'],
+        ]);
+    })->name('docs.topup');
+
+    Route::get('/docs/credits', function () {
+        $meta = \App\Helpers\SeoHelper::getPageMeta('docs.credits');
+        return view('docs.credits', [
+            'pageTitle' => $meta['title'],
+            'pageDescription' => $meta['description'],
+            'pageKeywords' => $meta['keywords'],
+            'ogImage' => $meta['ogImage'],
+            'ogType' => $meta['ogType'],
+        ]);
+    })->name('docs.credits');
 
     // Contact page (public, no auth required)
     Route::get('/contact', function () {
@@ -363,6 +423,8 @@ Route::group([], function () {
         Route::post('/models/update', [AdminModelController::class, 'update'])->name('admin.models.update');
 
         // User management routes
+        Route::get('/users', [AdminController::class, 'users'])->name('admin.users');
+        Route::get('/users/{user}', [AdminController::class, 'userDetail'])->name('admin.users.detail');
         Route::post('/users/{user}/keys', [AdminController::class, 'createApiKeyForUser'])->name('admin.users.keys.create');
         Route::post('/users/{user}/credits', [AdminController::class, 'setUserCredits'])->name('admin.users.credits.set');
         Route::post('/users/{user}/tier', [AdminController::class, 'setUserTier'])->name('admin.users.tier.set');

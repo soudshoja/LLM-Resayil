@@ -13,6 +13,10 @@ class AuthenticatedSessionController extends Controller
 {
     public function create()
     {
+        if (Auth::check()) {
+            return redirect(\App\Providers\RouteServiceProvider::HOME);
+        }
+
         $meta = \App\Helpers\SeoHelper::getPageMeta('login');
         return view('auth.login', [
             'pageTitle' => $meta['title'],

@@ -44,6 +44,15 @@
     .btn-copy:hover { background: rgba(212,175,55,0.1); }
     .key-warning { font-size: 0.78rem; color: #f87171; margin-top: 0.5rem; }
 
+    /* Delete confirmation modal */
+    .del-modal-title { font-size: 1.1rem; font-weight: 600; margin: 0 0 0.75rem; color: var(--text-primary); }
+    .del-modal-body { font-size: 0.875rem; color: var(--text-muted); margin: 0 0 1.5rem; line-height: 1.6; }
+    .del-modal-body strong { color: var(--text-primary); }
+    .del-modal-error { font-size: 0.825rem; color: #f87171; margin-top: 0.75rem; display: none; }
+    .btn-danger { background: #ef4444; border: none; color: #fff; padding: 0.6rem 1.2rem; border-radius: 8px; font-size: 0.875rem; font-weight: 600; cursor: pointer; transition: background 0.2s, opacity 0.2s; }
+    .btn-danger:hover { background: #dc2626; }
+    .btn-danger:disabled { opacity: 0.6; cursor: not-allowed; }
+
     /* Toast */
     .ak-toast { position: fixed; bottom: 1.5rem; right: 1.5rem; background: #1a1e26; border: 1px solid var(--border); border-radius: 10px; padding: 0.75rem 1.25rem; font-size: 0.875rem; color: var(--text-primary); box-shadow: 0 8px 24px rgba(0,0,0,0.4); z-index: 300; transform: translateY(20px); opacity: 0; transition: all 0.3s; pointer-events: none; }
     .ak-toast.show { opacity: 1; transform: translateY(0); }
@@ -136,6 +145,37 @@
     </div>
 </div>
 
+{{-- Delete Confirmation Modal --}}
+<div class="modal-overlay" id="deleteModal">
+    <div class="modal-box">
+        <h3 class="del-modal-title">
+            @if(app()->getLocale() === 'ar')
+                حذف مفتاح API
+            @else
+                Delete API Key
+            @endif
+        </h3>
+        <p class="del-modal-body">
+            @if(app()->getLocale() === 'ar')
+                هل أنت متأكد أنك تريد حذف مفتاح API هذا؟ <strong>لا يمكن التراجع عن هذا الإجراء.</strong> أي تطبيقات تستخدم هذا المفتاح ستفقد الوصول فورًا.
+            @else
+                Are you sure you want to delete this API key? <strong>This action cannot be undone.</strong> Any applications using this key will immediately lose access.
+            @endif
+        </p>
+        <div class="modal-actions">
+            <button class="btn-cancel" id="deleteCancelBtn">{{ __('api_keys.cancel') }}</button>
+            <button class="btn-danger" id="deleteConfirmBtn">
+                @if(app()->getLocale() === 'ar')
+                    حذف المفتاح
+                @else
+                    Delete Key
+                @endif
+            </button>
+        </div>
+        <p class="del-modal-error" id="deleteModalError"></p>
+    </div>
+</div>
+
 <div class="ak-toast" id="toast"></div>
 
 @push('scripts')
@@ -151,39 +191,112 @@ function showToast(msg, type) {
     t._timer = setTimeout(function() { t.className = 'ak-toast'; }, 3500);
 }
 
-// ── Delete via event delegation ────────────────────
-document.getElementById('keysBody').addEventListener('click', function(e) {
-    const btn = e.target.closest('.btn-delete');
-    if (!btn) return;
-    const id = btn.dataset.id;
-    const name = btn.dataset.name;
-    if (!confirm('Delete API key "' + name + '"? This cannot be undone.')) return;
+// ── Delete Modal ───────────────────────────────────
+var _deleteKeyId = null;
+
+function openDeleteModal(id) {
+    _deleteKeyId = id;
+    var errEl = document.getElementById('deleteModalError');
+    errEl.style.display = 'none';
+    errEl.textContent = '';
+    var confirmBtn = document.getElementById('deleteConfirmBtn');
+    confirmBtn.disabled = false;
+    @if(app()->getLocale() === 'ar')
+    confirmBtn.textContent = 'حذف المفتاح';
+    @else
+    confirmBtn.textContent = 'Delete Key';
+    @endif
+    document.getElementById('deleteModal').classList.add('active');
+}
+
+function closeDeleteModal() {
+    document.getElementById('deleteModal').classList.remove('active');
+    _deleteKeyId = null;
+}
+
+document.getElementById('deleteCancelBtn').addEventListener('click', closeDeleteModal);
+document.getElementById('deleteModal').addEventListener('click', function(e) {
+    if (e.target === this) closeDeleteModal();
+});
+
+document.getElementById('deleteConfirmBtn').addEventListener('click', function() {
+    if (!_deleteKeyId) return;
+    var id = _deleteKeyId;
+    var confirmBtn = this;
+    var errEl = document.getElementById('deleteModalError');
+
+    confirmBtn.disabled = true;
+    @if(app()->getLocale() === 'ar')
+    confirmBtn.textContent = 'جارٍ الحذف...';
+    @else
+    confirmBtn.textContent = 'Deleting...';
+    @endif
+    errEl.style.display = 'none';
 
     fetch('/api-keys/' + encodeURIComponent(id), {
         method: 'DELETE',
-        headers: { 'X-CSRF-TOKEN': CSRF, 'Accept': 'application/json' }
-    })
-    .then(function(r) { return r.json().then(function(d) { return { status: r.status, data: d }; }); })
-    .then(function(res) {
-        if (res.status === 200) {
-            const row = document.getElementById('row-' + id);
-            if (row) row.remove();
-            showToast('API key deleted.', 'success');
-            if (!document.querySelector('#keysBody tr')) {
-                const tr = document.createElement('tr');
-                tr.id = 'emptyRow';
-                const td = document.createElement('td');
-                td.colSpan = 5;
-                td.className = 'ak-empty';
-                td.textContent = '{{ __('api_keys.empty_state') }}';
-                tr.appendChild(td);
-                document.getElementById('keysBody').appendChild(tr);
-            }
-        } else {
-            showToast(res.data.message || 'Failed to delete key.', 'error');
+        headers: {
+            'X-CSRF-TOKEN': CSRF,
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
         }
     })
-    .catch(function() { showToast('Network error. Please try again.', 'error'); });
+    .then(function(r) { return r.json().then(function(d) { return { ok: r.ok, data: d }; }); })
+    .then(function(res) {
+        if (res.data.success) {
+            closeDeleteModal();
+            var row = document.getElementById('row-' + id);
+            if (row) {
+                row.style.transition = 'opacity 0.3s, transform 0.3s';
+                row.style.opacity = '0';
+                row.style.transform = 'translateX(10px)';
+                setTimeout(function() {
+                    row.remove();
+                    if (!document.querySelector('#keysBody tr')) {
+                        var tr = document.createElement('tr');
+                        tr.id = 'emptyRow';
+                        var td = document.createElement('td');
+                        td.colSpan = 5;
+                        td.className = 'ak-empty';
+                        td.textContent = '{{ __('api_keys.empty_state') }}';
+                        tr.appendChild(td);
+                        document.getElementById('keysBody').appendChild(tr);
+                    }
+                }, 300);
+            }
+            @if(app()->getLocale() === 'ar')
+            showToast('تم حذف مفتاح API.', 'success');
+            @else
+            showToast('API key deleted.', 'success');
+            @endif
+        } else {
+            confirmBtn.disabled = false;
+            @if(app()->getLocale() === 'ar')
+            confirmBtn.textContent = 'حذف المفتاح';
+            @else
+            confirmBtn.textContent = 'Delete Key';
+            @endif
+            errEl.textContent = res.data.message || 'Failed to delete key.';
+            errEl.style.display = 'block';
+        }
+    })
+    .catch(function() {
+        confirmBtn.disabled = false;
+        @if(app()->getLocale() === 'ar')
+        confirmBtn.textContent = 'حذف المفتاح';
+        @else
+        confirmBtn.textContent = 'Delete Key';
+        @endif
+        errEl.textContent = 'Network error. Please try again.';
+        errEl.style.display = 'block';
+    });
+});
+
+// ── Delete via event delegation ────────────────────
+document.getElementById('keysBody').addEventListener('click', function(e) {
+    var btn = e.target.closest('.btn-delete');
+    if (!btn) return;
+    openDeleteModal(btn.dataset.id);
 });
 
 // ── Create Modal ───────────────────────────────────
