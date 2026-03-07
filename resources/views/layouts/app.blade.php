@@ -267,6 +267,8 @@
             });
         });
     </script>
+    <!-- Hreflang Tags for Multilingual SEO -->
+    <x-hreflang :currentPath="request()->path()" :isXDefault="false" />
 </head>
 <body>
 <nav>
