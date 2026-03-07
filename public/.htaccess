@@ -4,6 +4,11 @@ Options -Indexes
 # Enable directory index
 DirectoryIndex index.php
 
+# Disable proxy buffering for SSE/streaming responses (LiteSpeed + Nginx compatibility)
+<IfModule mod_headers.c>
+    Header set X-Accel-Buffering "no"
+</IfModule>
+
 RewriteEngine On
 
 # Redirect all requests to Laravel's index.php
