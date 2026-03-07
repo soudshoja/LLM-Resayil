@@ -728,58 +728,95 @@
         <!-- Section 4: Multiplier Table -->
         <section class="docs-section">
             <h2>
-                @if(app()->getLocale() === 'ar') معاملات الضرب حسب نوع النموذج @else Credit Multipliers by Model Type @endif
+                @if(app()->getLocale() === 'ar') معاملات الضرب حسب فئة النموذج @else Credit Rates by Model Tier @endif
             </h2>
             @if(app()->getLocale() === 'ar')
                 <p>
-                    يختلف معدل خصم الرصيد بحسب نوع النموذج. النماذج المحلية التي تعمل على خوادمنا المخصصة أقل تكلفةً،
-                    بينما تحمل النماذج السحابية تكاليف تشغيل أعلى تنعكس على معامل ضربها:
+                    يختلف معدل خصم الرصيد بحسب فئة النموذج — النماذج القياسية أو النماذج المتقدمة. اختر النموذج المناسب لحالة استخدامك لتحقيق أقصى استفادة من رصيدك:
                 </p>
             @else
                 <p>
-                    The credit deduction rate varies by model type. Local models running on our dedicated infrastructure
-                    are less expensive, while cloud-proxied models carry higher operational costs reflected in their multiplier:
+                    The credit deduction rate varies by model tier — Standard Models or Frontier Models. Choose the right tier for your use case to get the most from your credits:
                 </p>
             @endif
 
-            <div class="docs-table-wrap">
+            {{-- Standard Models --}}
+            <div style="margin: 1.5rem 0 0.6rem; display: flex; align-items: center; gap: 0.65rem;">
+                <svg width="22" height="22" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <circle cx="16" cy="16" r="12" stroke="#6b7280" stroke-width="1.5" fill="#6b7280" fill-opacity="0.07"/>
+                    <circle cx="16" cy="16" r="3.5" stroke="#6b7280" stroke-width="1.5" fill="#6b7280" fill-opacity="0.15"/>
+                    <circle cx="16" cy="16" r="1.2" fill="#6b7280"/>
+                </svg>
+                <span style="font-size: 1rem; font-weight: 700; color: var(--text-primary);">
+                    @if(app()->getLocale() === 'ar') النماذج القياسية @else Standard Models @endif
+                </span>
+            </div>
+            <div class="docs-table-wrap" style="margin-top: 0.5rem;">
                 <table class="docs-table">
                     <thead>
                         <tr>
                             <th>@if(app()->getLocale() === 'ar')نوع النموذج@else Model Type@endif</th>
                             <th>@if(app()->getLocale() === 'ar')معامل الضرب@else Multiplier@endif</th>
-                            <th>@if(app()->getLocale() === 'ar')أمثلة على النماذج@else Example Models@endif</th>
-                            <th>@if(app()->getLocale() === 'ar')الاستخدام الأمثل@else Best Used For@endif</th>
+                            <th>@if(app()->getLocale() === 'ar')أمثلة@else Examples@endif</th>
+                            <th>@if(app()->getLocale() === 'ar')الاستخدام الأمثل@else Best For@endif</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td>@if(app()->getLocale() === 'ar')نماذج محلية خفيفة@else Light local models@endif</td>
+                            <td>@if(app()->getLocale() === 'ar')خفيف — صغير وسريع@else Lightweight models@endif</td>
                             <td><span class="mult-pill mult-05">0.5&times;</span></td>
                             <td>Phi-3 Mini, TinyLlama</td>
                             <td>@if(app()->getLocale() === 'ar')التصنيف، الملخصات القصيرة@else Classification, short summaries@endif</td>
                         </tr>
                         <tr>
-                            <td>@if(app()->getLocale() === 'ar')نماذج محلية قياسية@else Standard local models@endif</td>
-                            <td><span class="mult-pill mult-1">1&times;</span></td>
-                            <td>Mistral 7B, Llama 3 8B, Neural Chat</td>
+                            <td>@if(app()->getLocale() === 'ar')قياسي — متوازن@else Standard models@endif</td>
+                            <td><span class="mult-pill mult-1">1.0&times;</span></td>
+                            <td>Mistral 7B, Llama 3 8B</td>
                             <td>@if(app()->getLocale() === 'ar')الدردشة العامة، الكتابة، البرمجة@else General chat, writing, coding@endif</td>
                         </tr>
                         <tr>
-                            <td>@if(app()->getLocale() === 'ar')نماذج محلية كبيرة@else Large local models@endif</td>
+                            <td>@if(app()->getLocale() === 'ar')متوسط — كبير الحجم@else Mid-range models@endif</td>
                             <td><span class="mult-pill mult-15">1.5&times;</span></td>
                             <td>Llama 3 70B, Mixtral 8x7B</td>
                             <td>@if(app()->getLocale() === 'ar')الاستدلال المعقد، المحتوى الطويل@else Complex reasoning, long content@endif</td>
                         </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            {{-- Frontier Models --}}
+            <div style="margin: 1.75rem 0 0.6rem; display: flex; align-items: center; gap: 0.65rem;">
+                <svg width="22" height="22" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <circle cx="16" cy="16" r="12" stroke="#ef4444" stroke-width="1.5" fill="#ef4444" fill-opacity="0.08"/>
+                    <circle cx="16" cy="16" r="7.5" stroke="#ef4444" stroke-width="1" fill="#ef4444" fill-opacity="0.06" stroke-dasharray="2.5 1.5"/>
+                    <path d="M16 9.5l3.5 6.5-3.5 6.5-3.5-6.5L16 9.5z" fill="#ef4444" fill-opacity="0.25" stroke="#ef4444" stroke-width="1.5" stroke-linejoin="round"/>
+                    <path d="M9.5 16l6.5-3.5 6.5 3.5-6.5 3.5L9.5 16z" fill="#ef4444" fill-opacity="0.15" stroke="#ef4444" stroke-width="1.5" stroke-linejoin="round"/>
+                    <circle cx="16" cy="16" r="1.75" fill="#ef4444" fill-opacity="0.9"/>
+                </svg>
+                <span style="font-size: 1rem; font-weight: 700; color: var(--text-primary);">
+                    @if(app()->getLocale() === 'ar') النماذج المتقدمة @else Frontier Models @endif
+                </span>
+            </div>
+            <div class="docs-table-wrap" style="margin-top: 0.5rem;">
+                <table class="docs-table">
+                    <thead>
                         <tr>
-                            <td>@if(app()->getLocale() === 'ar')نماذج سحابية متوسطة@else Mid-tier cloud models@endif</td>
-                            <td><span class="mult-pill mult-2">2× – 2.5×</span></td>
+                            <th>@if(app()->getLocale() === 'ar')نوع النموذج@else Model Type@endif</th>
+                            <th>@if(app()->getLocale() === 'ar')معامل الضرب@else Multiplier@endif</th>
+                            <th>@if(app()->getLocale() === 'ar')أمثلة@else Examples@endif</th>
+                            <th>@if(app()->getLocale() === 'ar')الاستخدام الأمثل@else Best For@endif</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>@if(app()->getLocale() === 'ar')متقدم — متوسط@else Frontier Standard@endif</td>
+                            <td><span class="mult-pill mult-2">2.0× – 2.5×</span></td>
                             <td>GPT-4o Mini, Claude Haiku</td>
-                            <td>@if(app()->getLocale() === 'ar')مهام تتطلب دقةً عالية@else Tasks requiring high accuracy@endif</td>
+                            <td>@if(app()->getLocale() === 'ar')مهام تتطلب دقةً عالية@else High-accuracy tasks@endif</td>
                         </tr>
                         <tr>
-                            <td>@if(app()->getLocale() === 'ar')نماذج سحابية متقدمة@else Premium cloud models@endif</td>
-                            <td><span class="mult-pill mult-35">3× – 3.5×</span></td>
+                            <td>@if(app()->getLocale() === 'ar')متقدم — كبير@else Frontier Large@endif</td>
+                            <td><span class="mult-pill mult-35">3.0× – 3.5×</span></td>
                             <td>GPT-4o, Claude 3.5 Sonnet, Gemini Pro</td>
                             <td>@if(app()->getLocale() === 'ar')أصعب المهام، الاستدلال المتعدد@else Hardest tasks, multi-step reasoning@endif</td>
                         </tr>
