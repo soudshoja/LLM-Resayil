@@ -321,6 +321,8 @@
             .hero-cta-group .btn { justify-content: center; }
         }
     </style>
+    <!-- Hreflang Tags for Multilingual SEO -->
+    <x-hreflang :currentPath="''" :isXDefault="true" />
 </head>
 <body>
 
