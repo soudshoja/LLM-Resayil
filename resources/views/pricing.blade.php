@@ -737,6 +737,25 @@
 [dir="rtl"] .pack-name { flex-direction: row-reverse; justify-content: flex-end; }
 [dir="rtl"] .pack-badge { flex-direction: row-reverse; }
 [dir="rtl"] .pack-bonus-pill { flex-direction: row-reverse; }
+
+/* ═══════════════════════════════════════
+   SUBSCRIPTION PLANS GRID
+═══════════════════════════════════════ */
+.subs-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+    align-items: stretch;
+    margin-bottom: 2rem;
+}
+@media (max-width: 860px) {
+    .subs-grid {
+        grid-template-columns: 1fr;
+        max-width: 420px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
 </style>
 @endpush
 
@@ -880,6 +899,241 @@
                 @endauth
             </div>
         </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════
+         SUBSCRIPTION PLANS
+    ═══════════════════════════════════════ -->
+    <section class="pr-section" style="padding-top:4rem;">
+        <div class="pr-center" style="margin-bottom:3rem;">
+            @if(app()->getLocale() === 'ar')
+                <div class="pr-label" dir="rtl" style="font-family:'Tajawal',sans-serif; justify-content:center;">اشتراكات شهرية</div>
+                <h2 class="pr-h2" dir="rtl" style="font-family:'Tajawal',sans-serif;">خطط الاشتراك</h2>
+                <p class="pr-sub" dir="rtl" style="font-family:'Tajawal',sans-serif; margin:0 auto;">رصيد شهري، دعم أولوية، وحدود طلب أعلى. إلغاء في أي وقت.</p>
+            @else
+                <div class="pr-label fu" style="justify-content:center;">Monthly Plans</div>
+                <h2 class="pr-h2 fu d1">Subscription Plans</h2>
+                <p class="pr-sub fu d2" style="margin:0 auto;">Monthly credits, priority support, and higher rate limits. Cancel anytime.</p>
+            @endif
+        </div>
+
+        <div class="subs-grid">
+
+            {{-- ══════════════════════════════
+                 PLAN 1 — STARTER
+            ══════════════════════════════ --}}
+            <div class="pack-card fu d1">
+                <div class="pack-header">
+                    @if(app()->getLocale() === 'ar')
+                        <div class="pack-name" dir="rtl" style="font-family:'Tajawal',sans-serif;">
+                            <x-tier-icon tier="starter" :size="28" />
+                            المبتدئ
+                        </div>
+                    @else
+                        <div class="pack-name">
+                            <x-tier-icon tier="starter" :size="28" />
+                            Starter
+                        </div>
+                    @endif
+                </div>
+                <div class="pack-body">
+                    <div class="pack-credits-row">
+                        <span class="pack-credits">15</span><span class="pack-credits-unit">KWD</span>
+                    </div>
+                    <div class="pack-credits-label">
+                        @if(app()->getLocale() === 'ar')
+                            <span dir="rtl" style="font-family:'Tajawal',sans-serif;">شهرياً · يشمل 1,000 رصيد/شهر</span>
+                        @else
+                            per month · includes 1,000 credits/mo
+                        @endif
+                    </div>
+                    <ul class="pack-features">
+                        @if(app()->getLocale() === 'ar')
+                            <li dir="rtl" style="font-family:'Tajawal',sans-serif;"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg></span>1,000 رصيد/شهر</li>
+                            <li dir="rtl" style="font-family:'Tajawal',sans-serif;"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg></span>10 طلبات/دقيقة</li>
+                            <li dir="rtl" style="font-family:'Tajawal',sans-serif;"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg></span>مفتاح API مجاني واحد</li>
+                            <li dir="rtl" style="font-family:'Tajawal',sans-serif;"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg></span>النماذج الصغيرة (3–14B)</li>
+                            <li dir="rtl" style="font-family:'Tajawal',sans-serif;"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg></span>الرصيد لا ينتهي</li>
+                            <li dir="rtl" style="font-family:'Tajawal',sans-serif;"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg></span>الدفع بالدينار عبر MyFatoorah</li>
+                        @else
+                            <li><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg></span>1,000 credits/month</li>
+                            <li><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg></span>10 requests/minute</li>
+                            <li><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg></span>1 free API key</li>
+                            <li><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg></span>Small models (3–14B)</li>
+                            <li><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg></span>Credits never expire</li>
+                            <li><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg></span>KWD payment via MyFatoorah</li>
+                        @endif
+                    </ul>
+                    @auth
+                        <a href="{{ route('billing.plans') }}" class="pack-cta-ghost">
+                            @if(app()->getLocale() === 'ar')
+                                <span dir="rtl" style="font-family:'Tajawal',sans-serif;">اشترك الآن</span>
+                            @else
+                                Subscribe Now
+                            @endif
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+                        </a>
+                    @else
+                        <a href="/register" class="pack-cta-ghost">
+                            @if(app()->getLocale() === 'ar')
+                                <span dir="rtl" style="font-family:'Tajawal',sans-serif;">اشترك الآن</span>
+                            @else
+                                Subscribe Now
+                            @endif
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+                        </a>
+                    @endauth
+                </div>
+            </div>
+
+            {{-- ══════════════════════════════
+                 PLAN 2 — BASIC (FEATURED)
+            ══════════════════════════════ --}}
+            <div class="pack-card featured fu d2">
+                <div class="pack-header">
+                    <span class="pack-badge badge-value">
+                        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                        Best Value
+                    </span>
+                    @if(app()->getLocale() === 'ar')
+                        <div class="pack-name" dir="rtl" style="font-family:'Tajawal',sans-serif;">
+                            <x-tier-icon tier="basic" :size="28" />
+                            الأساسي
+                        </div>
+                    @else
+                        <div class="pack-name">
+                            <x-tier-icon tier="basic" :size="28" />
+                            Basic
+                        </div>
+                    @endif
+                </div>
+                <div class="pack-body">
+                    <div class="pack-credits-row">
+                        <span class="pack-credits">25</span><span class="pack-credits-unit">KWD</span>
+                    </div>
+                    <div class="pack-credits-label">
+                        @if(app()->getLocale() === 'ar')
+                            <span dir="rtl" style="font-family:'Tajawal',sans-serif;">شهرياً · يشمل 3,000 رصيد/شهر</span>
+                        @else
+                            per month · includes 3,000 credits/mo
+                        @endif
+                    </div>
+                    <ul class="pack-features">
+                        @if(app()->getLocale() === 'ar')
+                            <li dir="rtl" style="font-family:'Tajawal',sans-serif;"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg></span>3,000 رصيد/شهر</li>
+                            <li dir="rtl" style="font-family:'Tajawal',sans-serif;"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg></span>30 طلباً/دقيقة</li>
+                            <li dir="rtl" style="font-family:'Tajawal',sans-serif;"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg></span>مفتاح API مجاني واحد</li>
+                            <li dir="rtl" style="font-family:'Tajawal',sans-serif;"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg></span>جميع أحجام النماذج (3B–671B)</li>
+                            <li dir="rtl" style="font-family:'Tajawal',sans-serif;"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg></span>الرصيد لا ينتهي</li>
+                            <li dir="rtl" style="font-family:'Tajawal',sans-serif;"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg></span>الدفع بالدينار عبر MyFatoorah</li>
+                        @else
+                            <li><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg></span>3,000 credits/month</li>
+                            <li><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg></span>30 requests/minute</li>
+                            <li><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg></span>1 free API key</li>
+                            <li><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg></span>All model sizes (3B–671B)</li>
+                            <li><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg></span>Credits never expire</li>
+                            <li><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg></span>KWD payment via MyFatoorah</li>
+                        @endif
+                    </ul>
+                    @auth
+                        <a href="{{ route('billing.plans') }}" class="pack-cta">
+                            @if(app()->getLocale() === 'ar')
+                                <span dir="rtl" style="font-family:'Tajawal',sans-serif;">اشترك الآن</span>
+                            @else
+                                Subscribe Now
+                            @endif
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+                        </a>
+                    @else
+                        <a href="/register" class="pack-cta">
+                            @if(app()->getLocale() === 'ar')
+                                <span dir="rtl" style="font-family:'Tajawal',sans-serif;">اشترك الآن</span>
+                            @else
+                                Subscribe Now
+                            @endif
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+                        </a>
+                    @endauth
+                </div>
+            </div>
+
+            {{-- ══════════════════════════════
+                 PLAN 3 — PRO
+            ══════════════════════════════ --}}
+            <div class="pack-card fu d3">
+                <div class="pack-header">
+                    <span class="pack-badge badge-popular">
+                        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                        Most Popular
+                    </span>
+                    @if(app()->getLocale() === 'ar')
+                        <div class="pack-name" dir="rtl" style="font-family:'Tajawal',sans-serif;">
+                            <x-tier-icon tier="pro" :size="28" />
+                            الاحترافي
+                        </div>
+                    @else
+                        <div class="pack-name">
+                            <x-tier-icon tier="pro" :size="28" />
+                            Pro
+                        </div>
+                    @endif
+                </div>
+                <div class="pack-body">
+                    <div class="pack-credits-row">
+                        <span class="pack-credits">45</span><span class="pack-credits-unit">KWD</span>
+                    </div>
+                    <div class="pack-credits-label">
+                        @if(app()->getLocale() === 'ar')
+                            <span dir="rtl" style="font-family:'Tajawal',sans-serif;">شهرياً · يشمل 10,000 رصيد/شهر</span>
+                        @else
+                            per month · includes 10,000 credits/mo
+                        @endif
+                    </div>
+                    <ul class="pack-features">
+                        @if(app()->getLocale() === 'ar')
+                            <li dir="rtl" style="font-family:'Tajawal',sans-serif;"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg></span>10,000 رصيد/شهر</li>
+                            <li dir="rtl" style="font-family:'Tajawal',sans-serif;"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg></span>60 طلباً/دقيقة</li>
+                            <li dir="rtl" style="font-family:'Tajawal',sans-serif;"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg></span>مفتاحا API مجانيان</li>
+                            <li dir="rtl" style="font-family:'Tajawal',sans-serif;"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg></span>جميع النماذج + أولوية التحويل</li>
+                            <li dir="rtl" style="font-family:'Tajawal',sans-serif;"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg></span>الرصيد لا ينتهي</li>
+                            <li dir="rtl" style="font-family:'Tajawal',sans-serif;"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg></span>الدفع بالدينار عبر MyFatoorah</li>
+                        @else
+                            <li><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg></span>10,000 credits/month</li>
+                            <li><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg></span>60 requests/minute</li>
+                            <li><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg></span>2 free API keys</li>
+                            <li><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg></span>All models + priority failover</li>
+                            <li><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg></span>Credits never expire</li>
+                            <li><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg></span>KWD payment via MyFatoorah</li>
+                        @endif
+                    </ul>
+                    @auth
+                        <a href="{{ route('billing.plans') }}" class="pack-cta-ghost">
+                            @if(app()->getLocale() === 'ar')
+                                <span dir="rtl" style="font-family:'Tajawal',sans-serif;">اشترك الآن</span>
+                            @else
+                                Subscribe Now
+                            @endif
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+                        </a>
+                    @else
+                        <a href="/register" class="pack-cta-ghost">
+                            @if(app()->getLocale() === 'ar')
+                                <span dir="rtl" style="font-family:'Tajawal',sans-serif;">اشترك الآن</span>
+                            @else
+                                Subscribe Now
+                            @endif
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+                        </a>
+                    @endauth
+                </div>
+            </div>
+
+        </div>{{-- /subs-grid --}}
+    </section>
+
+    {{-- Section divider --}}
+    <div style="max-width:1100px; margin:0 auto; padding:0 1.5rem;">
+        <div style="height:1px; background:linear-gradient(90deg, transparent, var(--border), transparent);"></div>
     </div>
 
     <!-- ═══════════════════════════════════════
