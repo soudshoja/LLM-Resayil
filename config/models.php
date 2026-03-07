@@ -7,7 +7,7 @@ return [
     |--------------------------------------------------------------------------
     |
     | This file contains the complete registry of all models available in the
-    | LLM Resayil platform. All 45 models (15 local + 30 cloud proxies) are
+    | LLM Resayil platform. All 46 models (15 local + 31 cloud proxies) are
     | listed with their metadata, pricing, and Ollama name mappings.
     |
     | Cloud models use the `:cloud` suffix internally for the Ollama proxy
@@ -328,6 +328,22 @@ return [
             'params' => '32B',
             'quantization' => 'FP16',
             'ollama_name' => 'qwen3-vl:32b-cloud',
+            'credit_multiplier' => 3.5,
+            'is_active' => true,
+        ],
+
+        'qwen3-vl:235b-instruct' => [
+            'name' => 'Qwen3-VL 235B Instruct',
+            'family' => 'Qwen',
+            'type' => 'cloud',
+            'category' => 'vision',
+            'size' => 'large',
+            'context_window' => 128000,
+            'description' => 'Qwen3 Vision-Language 235B flagship multimodal model',
+            'license' => 'apache-2.0',
+            'params' => '235B',
+            'quantization' => 'FP16',
+            'ollama_name' => 'qwen3-vl:235b-instruct-cloud',
             'credit_multiplier' => 3.5,
             'is_active' => true,
         ],
