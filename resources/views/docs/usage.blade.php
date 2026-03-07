@@ -937,6 +937,26 @@ Authorization: Bearer YOUR_API_KEY</code>
             </div>
         </section>
 
+        <!-- Dashboard Usage History CTA -->
+        @auth
+        <div class="docs-box docs-box-tip" style="margin-bottom: 2rem;">
+            <div class="docs-box-icon">
+                <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            </div>
+            <p>
+                @if(app()->getLocale() === 'ar')
+                    <strong>سجل استخدامك الكامل متاح في لوحة التحكم.</strong>
+                    يمكنك مشاهدة جميع طلبات API الأخيرة — مع تفاصيل الرموز والرصيد المخصوم والنموذج المستخدَم — في
+                    <a href="{{ url('/dashboard#usage') }}" class="docs-link">لوحة التحكم ← قسم سجل الاستخدام</a>.
+                @else
+                    <strong>Your full usage history is available on the dashboard.</strong>
+                    View all recent API calls — with token breakdown, credits deducted, and model used — in the
+                    <a href="{{ url('/dashboard#usage') }}" class="docs-link">Dashboard &rarr; Usage History</a> section.
+                @endif
+            </p>
+        </div>
+        @endauth
+
         <!-- Next Section Link -->
         <div class="docs-next-section">
             @if(app()->getLocale() === 'ar')

@@ -70,12 +70,32 @@ Route::group([], function () {
     // Dashboard (protected)
     Route::get('/dashboard', function () {
         $meta = \App\Helpers\SeoHelper::getPageMeta('dashboard');
+        $userId = auth()->id();
+
+        $usageLogs = \App\Models\UsageLog::where('user_id', $userId)
+            ->latest()
+            ->take(20)
+            ->get();
+
+        $totalCalls = \App\Models\UsageLog::where('user_id', $userId)->count();
+
+        $totalTokens = \App\Models\UsageLog::where('user_id', $userId)
+            ->selectRaw('SUM(tokens_used) as total')
+            ->value('total') ?? 0;
+
+        $totalCreditsSpent = \App\Models\UsageLog::where('user_id', $userId)
+            ->sum('credits_deducted') ?? 0;
+
         return view('dashboard', [
-            'pageTitle' => $meta['title'],
-            'pageDescription' => $meta['description'],
-            'pageKeywords' => $meta['keywords'],
-            'ogImage' => $meta['ogImage'],
-            'ogType' => $meta['ogType'],
+            'pageTitle'         => $meta['title'],
+            'pageDescription'   => $meta['description'],
+            'pageKeywords'      => $meta['keywords'],
+            'ogImage'           => $meta['ogImage'],
+            'ogType'            => $meta['ogType'],
+            'usageLogs'         => $usageLogs,
+            'totalCalls'        => $totalCalls,
+            'totalTokens'       => $totalTokens,
+            'totalCreditsSpent' => $totalCreditsSpent,
         ]);
     })->middleware('auth');
 
