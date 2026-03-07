@@ -231,6 +231,17 @@ Route::group([], function () {
         ]);
     })->name('features');
 
+    Route::get('/faq', function () {
+        $meta = \App\Helpers\SeoHelper::getPageMeta('faq');
+        return view('faq', [
+            'pageTitle' => $meta['title'],
+            'pageDescription' => $meta['description'],
+            'pageKeywords' => $meta['keywords'],
+            'ogImage' => $meta['ogImage'],
+            'ogType' => $meta['ogType'],
+        ]);
+    })->name('faq');
+
     // Sitemap
     Route::get('/sitemap.xml', function () {
         $routes = [

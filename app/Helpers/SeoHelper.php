@@ -173,6 +173,13 @@ class SeoHelper
             'ogImage' => 'https://llm.resayil.io/og-images/og-features.png',
             'ogType' => 'website',
         ],
+        'faq' => [
+            'title' => 'FAQ — LLM Resayil | Questions About API, Billing & Models',
+            'description' => 'Frequently Asked Questions about LLM Resayil: How to get started, authentication, available models, rate limits, billing, troubleshooting, and more.',
+            'keywords' => 'faq, frequently asked questions, support, help, troubleshooting',
+            'ogImage' => 'https://llm.resayil.io/og-images/og-faq.png',
+            'ogType' => 'website',
+        ],
     ];
 
     /**
