@@ -114,7 +114,7 @@
     <div class="dash-header">
         <h1>{{ __('dashboard.welcome_back', ['name' => auth()->user()->name ?: auth()->user()->email]) }}</h1>
         <div class="text-secondary text-sm">
-            {{ __('dashboard.plan') }}: <span class="badge badge-gold">{{ ucfirst(auth()->user()->subscription_tier) }}</span>
+            {{ __('dashboard.plan') }}: <span class="badge badge-gold" style="display:inline-flex;align-items:center;gap:0.4rem;vertical-align:middle;"><x-tier-icon :tier="auth()->user()->subscription_tier ?? 'free'" :size="16" />{{ ucfirst(auth()->user()->subscription_tier) }}</span>
             @if(auth()->user()->subscription_expiry)
             &nbsp;· {{ __('dashboard.expires') }}: {{ auth()->user()->subscription_expiry->format('d M Y') }}
             @endif

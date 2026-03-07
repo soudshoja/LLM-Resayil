@@ -136,7 +136,9 @@
 .pack-name {
     font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em;
     text-transform: uppercase; color: var(--text-muted); margin-bottom: 1.25rem;
+    display: flex; align-items: center; justify-content: center; gap: 0.45rem;
 }
+.tier-svg-icon { flex-shrink: 0; vertical-align: middle; }
 .pack-credits {
     font-size: 3rem; font-weight: 900; color: var(--gold);
     line-height: 1; margin-bottom: 0.2rem;
@@ -195,7 +197,7 @@
     background: rgba(5,150,105,0.12); border: 1px solid rgba(5,150,105,0.25);
     display: flex; align-items: center; justify-content: center;
 }
-.free-tier-icon svg { width: 22px; height: 22px; color: #6ee7b7; }
+.free-tier-icon .tier-svg-icon { width: 32px; height: 32px; }
 .free-tier-body { flex: 1; }
 .free-tier-body h3 { font-size: 1.2rem; font-weight: 700; margin-bottom: 0.5rem; }
 .free-tier-body p { color: var(--text-secondary); font-size: 0.9rem; line-height: 1.65; max-width: 520px; }
@@ -433,7 +435,7 @@
                         <li><span class="chk">✓</span> الرصيد لا تنتهي صلاحيته</li>
                     </ul>
                 @else
-                    <div class="pack-name">Starter</div>
+                    <div class="pack-name"><x-tier-icon tier="starter" :size="18" />Starter</div>
                     <div class="pack-credits">5,000</div>
                     <div class="pack-credits-label">Credits</div>
                     <div class="pack-price">2 <span>KWD</span></div>
@@ -465,7 +467,7 @@
                     </ul>
                 @else
                     <div class="pack-ribbon">Best Value</div>
-                    <div class="pack-name" style="margin-top:0.75rem;">Growth</div>
+                    <div class="pack-name" style="margin-top:0.75rem;"><x-tier-icon tier="basic" :size="18" />Growth</div>
                     <div class="pack-credits">15,000</div>
                     <div class="pack-credits-label">Credits</div>
                     <div class="pack-price">5 <span>KWD</span></div>
@@ -496,7 +498,7 @@
                         <li><span class="chk">✓</span> أرخص 25% لكل رصيد</li>
                     </ul>
                 @else
-                    <div class="pack-name">Pro</div>
+                    <div class="pack-name"><x-tier-icon tier="pro" :size="18" />Pro</div>
                     <div class="pack-credits">50,000</div>
                     <div class="pack-credits-label">Credits</div>
                     <div class="pack-price">15 <span>KWD</span></div>
@@ -514,8 +516,8 @@
 
         <!-- Free Tier -->
         <div class="free-tier-card fu">
-            <div class="free-tier-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+            <div class="free-tier-icon">
+                <x-tier-icon tier="free" :size="32" />
             </div>
             <div class="free-tier-body">
                 @if(app()->getLocale() === 'ar')

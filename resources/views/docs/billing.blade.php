@@ -432,10 +432,14 @@
         white-space: nowrap;
     }
 
+    .tier-svg-icon { flex-shrink: 0; vertical-align: middle; }
     .tier-card-name {
         font-size: 1.05rem;
         font-weight: 700;
         color: var(--text-primary);
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
     }
 
     .tier-card.recommended .tier-card-name {
@@ -1097,7 +1101,7 @@ Authorization: Bearer YOUR_API_KEY</code></pre>
             <div class="tier-cards-grid">
                 <!-- Free -->
                 <div class="tier-card">
-                    <div class="tier-card-name">Free</div>
+                    <div class="tier-card-name"><x-tier-icon tier="free" :size="20" />Free</div>
                     <div class="tier-card-divider"></div>
                     <div class="tier-card-row">
                         <span class="tier-card-label">
@@ -1125,7 +1129,7 @@ Authorization: Bearer YOUR_API_KEY</code></pre>
 
                 <!-- Starter -->
                 <div class="tier-card">
-                    <div class="tier-card-name">Starter</div>
+                    <div class="tier-card-name"><x-tier-icon tier="starter" :size="20" />Starter</div>
                     <div class="tier-card-divider"></div>
                     <div class="tier-card-row">
                         <span class="tier-card-label">
@@ -1155,7 +1159,7 @@ Authorization: Bearer YOUR_API_KEY</code></pre>
 
                 <!-- Basic -->
                 <div class="tier-card">
-                    <div class="tier-card-name">Basic</div>
+                    <div class="tier-card-name"><x-tier-icon tier="basic" :size="20" />Basic</div>
                     <div class="tier-card-divider"></div>
                     <div class="tier-card-row">
                         <span class="tier-card-label">
@@ -1180,7 +1184,7 @@ Authorization: Bearer YOUR_API_KEY</code></pre>
                     <div class="tier-card-badge">
                         @if(app()->getLocale() === 'ar') موصى به @else Recommended @endif
                     </div>
-                    <div class="tier-card-name">Pro</div>
+                    <div class="tier-card-name"><x-tier-icon tier="pro" :size="20" />Pro</div>
                     <div class="tier-card-divider"></div>
                     <div class="tier-card-row">
                         <span class="tier-card-label">
@@ -1202,7 +1206,7 @@ Authorization: Bearer YOUR_API_KEY</code></pre>
 
                 <!-- Enterprise -->
                 <div class="tier-card">
-                    <div class="tier-card-name">Enterprise</div>
+                    <div class="tier-card-name"><x-tier-icon tier="enterprise" :size="20" />Enterprise</div>
                     <div class="tier-card-divider"></div>
                     <div class="tier-card-row">
                         <span class="tier-card-label">
