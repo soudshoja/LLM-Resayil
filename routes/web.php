@@ -133,17 +133,84 @@ Route::group([], function () {
         ]);
     })->name('credits');
 
-    // Documentation page
+    // Documentation landing page
     Route::get('/docs', function () {
         $meta = \App\Helpers\SeoHelper::getPageMeta('docs');
-        return view('docs', [
+        return view('docs.index', [
             'pageTitle' => $meta['title'],
             'pageDescription' => $meta['description'],
             'pageKeywords' => $meta['keywords'],
             'ogImage' => $meta['ogImage'],
             'ogType' => $meta['ogType'],
         ]);
-    })->name('docs');
+    })->name('docs.index');
+
+    // Documentation subsections
+    Route::get('/docs/getting-started', function () {
+        $meta = \App\Helpers\SeoHelper::getPageMeta('docs.getting-started');
+        return view('docs.getting-started', [
+            'pageTitle' => $meta['title'],
+            'pageDescription' => $meta['description'],
+            'pageKeywords' => $meta['keywords'],
+            'ogImage' => $meta['ogImage'],
+            'ogType' => $meta['ogType'],
+        ]);
+    })->name('docs.getting-started');
+
+    Route::get('/docs/authentication', function () {
+        $meta = \App\Helpers\SeoHelper::getPageMeta('docs.authentication');
+        return view('docs.authentication', [
+            'pageTitle' => $meta['title'],
+            'pageDescription' => $meta['description'],
+            'pageKeywords' => $meta['keywords'],
+            'ogImage' => $meta['ogImage'],
+            'ogType' => $meta['ogType'],
+        ]);
+    })->name('docs.authentication');
+
+    Route::get('/docs/models', function () {
+        $meta = \App\Helpers\SeoHelper::getPageMeta('docs.models');
+        return view('docs.models', [
+            'pageTitle' => $meta['title'],
+            'pageDescription' => $meta['description'],
+            'pageKeywords' => $meta['keywords'],
+            'ogImage' => $meta['ogImage'],
+            'ogType' => $meta['ogType'],
+        ]);
+    })->name('docs.models');
+
+    Route::get('/docs/billing', function () {
+        $meta = \App\Helpers\SeoHelper::getPageMeta('docs.billing');
+        return view('docs.billing', [
+            'pageTitle' => $meta['title'],
+            'pageDescription' => $meta['description'],
+            'pageKeywords' => $meta['keywords'],
+            'ogImage' => $meta['ogImage'],
+            'ogType' => $meta['ogType'],
+        ]);
+    })->name('docs.billing');
+
+    Route::get('/docs/rate-limits', function () {
+        $meta = \App\Helpers\SeoHelper::getPageMeta('docs.rate-limits');
+        return view('docs.rate-limits', [
+            'pageTitle' => $meta['title'],
+            'pageDescription' => $meta['description'],
+            'pageKeywords' => $meta['keywords'],
+            'ogImage' => $meta['ogImage'],
+            'ogType' => $meta['ogType'],
+        ]);
+    })->name('docs.rate-limits');
+
+    Route::get('/docs/error-codes', function () {
+        $meta = \App\Helpers\SeoHelper::getPageMeta('docs.error-codes');
+        return view('docs.error-codes', [
+            'pageTitle' => $meta['title'],
+            'pageDescription' => $meta['description'],
+            'pageKeywords' => $meta['keywords'],
+            'ogImage' => $meta['ogImage'],
+            'ogType' => $meta['ogType'],
+        ]);
+    })->name('docs.error-codes');
 
     // Contact page (public, no auth required)
     Route::get('/contact', function () {
@@ -252,6 +319,7 @@ Route::group([], function () {
             ['url' => '/dedicated-server', 'changefreq' => 'monthly', 'priority' => '0.8'],
             ['url' => '/pricing', 'changefreq' => 'monthly', 'priority' => '0.8'],
             ['url' => '/features', 'changefreq' => 'monthly', 'priority' => '0.8'],
+            ['url' => '/faq', 'changefreq' => 'monthly', 'priority' => '0.8'],
             ['url' => '/docs', 'changefreq' => 'monthly', 'priority' => '0.7'],
             ['url' => '/credits', 'changefreq' => 'monthly', 'priority' => '0.7'],
             ['url' => '/contact', 'changefreq' => 'yearly', 'priority' => '0.6'],
