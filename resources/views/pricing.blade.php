@@ -99,9 +99,9 @@
 /* Grid */
 .packs-grid {
     display: grid;
-    grid-template-columns: 1fr 1.06fr 1fr;
+    grid-template-columns: repeat(3, 1fr);
     gap: 1.25rem;
-    align-items: start;
+    align-items: stretch;
     margin-bottom: 2rem;
 }
 @media (max-width: 860px) {
@@ -311,6 +311,7 @@
     border: none;
     cursor: pointer;
     margin-bottom: 0;
+    margin-top: auto;
 }
 .pack-cta svg { width: 14px; height: 14px; flex-shrink: 0; }
 .pack-cta:hover { opacity: 0.88; transform: translateY(-1px); color: #0f1115; }
@@ -332,6 +333,7 @@
     transition: background 0.2s ease, border-color 0.2s ease;
     cursor: pointer;
     margin-bottom: 0;
+    margin-top: auto;
 }
 .pack-cta-ghost svg { width: 14px; height: 14px; flex-shrink: 0; }
 .pack-cta-ghost:hover { background: rgba(212,175,55,0.08); border-color: var(--gold); color: var(--gold); }
@@ -454,6 +456,112 @@
 }
 .tier-badge.standard { background: rgba(99,102,241,0.14); color: #818cf8; }
 .tier-badge.premium  { background: rgba(212,175,55,0.12); color: var(--gold); }
+
+/* ═══════════════════════════════════════
+   CREDIT MULTIPLIER SYSTEM
+═══════════════════════════════════════ */
+.multiplier-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-top: 2.5rem;
+}
+@media (max-width: 640px) {
+    .multiplier-grid { grid-template-columns: 1fr; }
+}
+.multiplier-card {
+    background: #13161d;
+    border: 1px solid #1e2230;
+    border-radius: 16px;
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+}
+.multiplier-card.frontier {
+    border-color: rgba(212,175,55,0.3);
+}
+.multiplier-card.frontier::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, rgba(212,175,55,0.6), rgba(212,175,55,0.2));
+    border-radius: 16px 16px 0 0;
+}
+.multiplier-card-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.5rem;
+}
+.multiplier-card-label {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+.multiplier-card-desc {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    margin-bottom: 1.5rem;
+    line-height: 1.5;
+}
+.multiplier-size-rows {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+.multiplier-size-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.85rem 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+.multiplier-size-row:last-child {
+    border-bottom: none;
+}
+.multiplier-size-left {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+.multiplier-size-icon { display:flex; align-items:center; flex-shrink:0; }
+.mult-badge {
+    display: inline-block;
+    padding: 0.18rem 0.6rem;
+    border-radius: 5px;
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+.mult-badge.standard { background: rgba(96,165,250,0.12); color: #60a5fa; }
+.mult-badge.frontier { background: rgba(212,175,55,0.12); color: #d4af37; }
+.multiplier-size-name {
+    font-size: 0.88rem;
+    color: var(--text-secondary);
+}
+.multiplier-size-params {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+.multiplier-cost {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    white-space: nowrap;
+}
+.multiplier-cost span {
+    font-size: 0.78rem;
+    font-weight: 400;
+    color: var(--text-muted);
+}
+.multiplier-note {
+    text-align: center;
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    margin-top: 1.5rem;
+}
 
 /* ═══════════════════════════════════════
    FAQ ACCORDION
@@ -1252,69 +1360,125 @@
     <section class="pr-section" style="padding-top:1rem;">
         <div class="pr-center fu">
             @if(app()->getLocale() === 'ar')
-                <div class="pr-label" dir="rtl" style="font-family:'Tajawal',sans-serif; justify-content:center;">فئات النماذج</div>
-                <h2 class="pr-h2" dir="rtl" style="font-family:'Tajawal',sans-serif;">معدلات الرصيد حسب النموذج</h2>
-                <p class="pr-sub" dir="rtl" style="font-family:'Tajawal',sans-serif; margin:0 auto;">النماذج القياسية تكلّف رصيداً واحداً لكل رمز ناتج. نماذج الاستدلال المتقدمة تكلّف رصيدين.</p>
+                <div class="pr-label" dir="rtl" style="font-family:'Tajawal',sans-serif; justify-content:center;">التسعير حسب النموذج</div>
+                <h2 class="pr-h2" dir="rtl" style="font-family:'Tajawal',sans-serif;">نظام ضرب الرصيد</h2>
+                <p class="pr-sub" dir="rtl" style="font-family:'Tajawal',sans-serif; margin:0 auto;">الرصيد المحسوب لكل رمز ناتج. رموز الإدخال مجانية دائماً.</p>
             @else
-                <div class="pr-label" style="justify-content:center;">Model Tiers</div>
-                <h2 class="pr-h2">Credit Rates by Model</h2>
-                <p class="pr-sub" style="margin:0 auto;">Standard models cost 1 credit per output token. Premium reasoning models cost 2 credits.</p>
+                <div class="pr-label" style="justify-content:center;">Pricing by Model</div>
+                <h2 class="pr-h2">Credit Multiplier System</h2>
+                <p class="pr-sub" style="margin:0 auto;">Credits charged per output token. Input tokens are always free.</p>
             @endif
         </div>
 
-        <div class="tiers-table-wrap fu d1">
-            <table class="tiers-table">
-                <thead>
-                    <tr>
-                        @if(app()->getLocale() === 'ar')
-                            <th style="font-family:'Tajawal',sans-serif;">الفئة</th>
-                            <th style="font-family:'Tajawal',sans-serif;">الرصيد / الرمز</th>
-                            <th style="font-family:'Tajawal',sans-serif;">أمثلة على النماذج</th>
-                            <th style="font-family:'Tajawal',sans-serif;">الأنسب لـ</th>
-                        @else
-                            <th>Tier</th>
-                            <th>Credits / Token</th>
-                            <th>Example Models</th>
-                            <th>Best For</th>
-                        @endif
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>
-                            <span class="tier-badge standard">
-                                @if(app()->getLocale() === 'ar') قياسي @else Standard @endif
-                            </span>
-                        </td>
-                        @if(app()->getLocale() === 'ar')
-                            <td style="font-weight:700; color:var(--text-primary); font-family:'Tajawal',sans-serif;">رصيد واحد</td>
-                            <td>Llama, Qwen, Gemma, Mistral, Command R</td>
-                            <td style="font-family:'Tajawal',sans-serif;">المحادثة، البرمجة، التلخيص</td>
-                        @else
-                            <td style="font-weight:700; color:var(--text-primary);">1 credit</td>
-                            <td>Llama, Qwen, Gemma, Mistral, Command R</td>
-                            <td>Chat, coding, summarization</td>
-                        @endif
-                    </tr>
-                    <tr>
-                        <td>
-                            <span class="tier-badge premium">
-                                @if(app()->getLocale() === 'ar') متقدم @else Premium @endif
-                            </span>
-                        </td>
-                        @if(app()->getLocale() === 'ar')
-                            <td style="font-weight:700; color:var(--text-primary); font-family:'Tajawal',sans-serif;">رصيدان</td>
-                            <td>DeepSeek R1, DeepSeek V3, Qwen QwQ</td>
-                            <td style="font-family:'Tajawal',sans-serif;">الاستدلال المعقد، التحليل العميق</td>
-                        @else
-                            <td style="font-weight:700; color:var(--text-primary);">2 credits</td>
-                            <td>DeepSeek R1, DeepSeek V3, Qwen QwQ</td>
-                            <td>Complex reasoning, deep analysis</td>
-                        @endif
-                    </tr>
-                </tbody>
-            </table>
+        <div class="multiplier-grid">
+            {{-- Standard Models Card --}}
+            <div class="multiplier-card fu d1">
+                <div class="multiplier-card-header">
+                    <x-tier-icon tier="starter" :size="28" />
+                    @if(app()->getLocale() === 'ar')
+                        <div class="multiplier-card-label" dir="rtl" style="font-family:'Tajawal',sans-serif;">النماذج القياسية</div>
+                    @else
+                        <div class="multiplier-card-label">Standard Models</div>
+                    @endif
+                </div>
+                @if(app()->getLocale() === 'ar')
+                    <p class="multiplier-card-desc" dir="rtl" style="font-family:'Tajawal',sans-serif;">نماذج مفتوحة المصدر خفيفة وفعّالة</p>
+                @else
+                    <p class="multiplier-card-desc">Lightweight &amp; efficient open-source models</p>
+                @endif
+
+                <div class="multiplier-size-rows">
+                    <div class="multiplier-size-row">
+                        <div class="multiplier-size-left">
+                            <span class="multiplier-size-icon"><svg width="18" height="18" viewBox="0 0 32 32" fill="none" aria-hidden="true" style="flex-shrink:0;"><circle cx="16" cy="16" r="10" stroke="#6b7280" stroke-width="1.5" fill="rgba(107,114,128,0.07)"/><ellipse cx="16" cy="16" rx="10" ry="4.5" stroke="#6b7280" stroke-width="1" fill="none" opacity="0.5"/><circle cx="16" cy="16" r="2.5" fill="#6b7280" fill-opacity="0.9"/></svg></span>
+                            <div>
+                                @if(app()->getLocale() === 'ar')
+                                    <div class="multiplier-size-name" dir="rtl" style="font-family:'Tajawal',sans-serif;">صغير</div>
+                                    <div class="multiplier-size-params">3–14B</div>
+                                @else
+                                    <div class="multiplier-size-name">Small</div>
+                                    <div class="multiplier-size-params">3–14B</div>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="multiplier-cost">0.5 cr <span>/ token</span></div>
+                    </div>
+                    <div class="multiplier-size-row">
+                        <div class="multiplier-size-left">
+                            <span class="multiplier-size-icon"><svg width="18" height="18" viewBox="0 0 32 32" fill="none" aria-hidden="true" style="flex-shrink:0;"><path d="M16 6l7 7-7 13-7-13z" fill="rgba(129,140,248,0.12)" stroke="#818cf8" stroke-width="1.5" stroke-linejoin="round"/><path d="M9 13h14" stroke="#818cf8" stroke-width="1" opacity="0.45"/></svg></span>
+                            <div>
+                                @if(app()->getLocale() === 'ar')
+                                    <div class="multiplier-size-name" dir="rtl" style="font-family:'Tajawal',sans-serif;">متوسط</div>
+                                    <div class="multiplier-size-params">20–30B</div>
+                                @else
+                                    <div class="multiplier-size-name">Medium</div>
+                                    <div class="multiplier-size-params">20–30B</div>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="multiplier-cost">1.5 cr <span>/ token</span></div>
+                    </div>
+                </div>
+            </div>
+
+            {{-- Frontier Models Card --}}
+            <div class="multiplier-card frontier fu d2">
+                <div class="multiplier-card-header">
+                    <x-tier-icon tier="pro" :size="28" />
+                    @if(app()->getLocale() === 'ar')
+                        <div class="multiplier-card-label" dir="rtl" style="font-family:'Tajawal',sans-serif;">النماذج المتقدمة</div>
+                    @else
+                        <div class="multiplier-card-label">Frontier Models</div>
+                    @endif
+                </div>
+                @if(app()->getLocale() === 'ar')
+                    <p class="multiplier-card-desc" dir="rtl" style="font-family:'Tajawal',sans-serif;">نماذج الذكاء الاصطناعي الأحدث والأكثر قدرة</p>
+                @else
+                    <p class="multiplier-card-desc">State-of-the-art reasoning &amp; intelligence models</p>
+                @endif
+
+                <div class="multiplier-size-rows">
+                    <div class="multiplier-size-row">
+                        <div class="multiplier-size-left">
+                            <span class="multiplier-size-icon"><svg width="18" height="18" viewBox="0 0 32 32" fill="none" aria-hidden="true" style="flex-shrink:0;"><path d="M16 6l7 7-7 13-7-13z" fill="rgba(129,140,248,0.12)" stroke="#818cf8" stroke-width="1.5" stroke-linejoin="round"/><path d="M9 13h14" stroke="#818cf8" stroke-width="1" opacity="0.45"/></svg></span>
+                            <div>
+                                @if(app()->getLocale() === 'ar')
+                                    <div class="multiplier-size-name" dir="rtl" style="font-family:'Tajawal',sans-serif;">متوسط</div>
+                                    <div class="multiplier-size-params">12–30B &mdash; GLM-4، Qwen3-30B، Mistral-Large</div>
+                                @else
+                                    <div class="multiplier-size-name">Medium</div>
+                                    <div class="multiplier-size-params">12–30B &mdash; GLM-4, Qwen3-30B, Mistral-Large</div>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="multiplier-cost">2.5 cr <span>/ token</span></div>
+                    </div>
+                    <div class="multiplier-size-row">
+                        <div class="multiplier-size-left">
+                            <span class="multiplier-size-icon"><svg width="18" height="18" viewBox="0 0 32 32" fill="none" aria-hidden="true" style="flex-shrink:0;"><path d="M16 5l2.6 7.7H27l-6.7 4.9 2.6 7.7-6.9-5-6.9 5 2.6-7.7L5 12.7h8.4z" fill="rgba(212,175,55,0.15)" stroke="#d4af37" stroke-width="1.5" stroke-linejoin="round"/><circle cx="16" cy="16" r="2" fill="#d4af37" fill-opacity="0.8"/></svg></span>
+                            <div>
+                                @if(app()->getLocale() === 'ar')
+                                    <div class="multiplier-size-name" dir="rtl" style="font-family:'Tajawal',sans-serif;">كبير</div>
+                                    <div class="multiplier-size-params">70B–671B &mdash; DeepSeek-V3، Llama3.1:70B، Qwen3.5:397B</div>
+                                @else
+                                    <div class="multiplier-size-name">Large</div>
+                                    <div class="multiplier-size-params">70B–671B &mdash; DeepSeek-V3, Llama3.1:70B, Qwen3.5:397B</div>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="multiplier-cost">3.5 cr <span>/ token</span></div>
+                    </div>
+                </div>
+            </div>
         </div>
+
+        <p class="multiplier-note fu d3">
+            @if(app()->getLocale() === 'ar')
+                <span dir="rtl" style="font-family:'Tajawal',sans-serif;">&#x2713; رموز الإدخال مجانية دائمًا — تدفع فقط مقابل ما تُنتجه.</span>
+            @else
+                &#x2713; Input tokens are always free &mdash; you only pay for what you generate.
+            @endif
+        </p>
     </section>
 
     <!-- ═══════════════════════════════════════
