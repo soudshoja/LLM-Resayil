@@ -604,34 +604,22 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td><span class="tier-badge tier-free">Free</span></td>
-                            <td>5</td>
-                            <td>100</td>
-                            <td>100</td>
-                        </tr>
-                        <tr>
-                            <td><span class="tier-badge tier-starter">Starter</span></td>
-                            <td>10</td>
-                            <td>250</td>
-                            <td>250</td>
-                        </tr>
-                        <tr>
                             <td><span class="tier-badge tier-basic">Basic</span></td>
-                            <td>20</td>
-                            <td>500</td>
-                            <td>500</td>
+                            <td>10</td>
+                            <td>—</td>
+                            <td>—</td>
                         </tr>
                         <tr>
                             <td><span class="tier-badge tier-pro">Pro</span></td>
-                            <td>100</td>
-                            <td>5,000</td>
-                            <td>2,000</td>
+                            <td>30</td>
+                            <td>—</td>
+                            <td>—</td>
                         </tr>
                         <tr>
                             <td><span class="tier-badge tier-ent">Enterprise</span></td>
-                            <td>500</td>
-                            <td>50,000</td>
-                            <td>4,000</td>
+                            <td>60</td>
+                            <td>—</td>
+                            <td>—</td>
                         </tr>
                     </tbody>
                 </table>

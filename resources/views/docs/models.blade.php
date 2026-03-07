@@ -1,4 +1,4 @@
-@extends('layouts.app')
+﻿@extends('layouts.app')
 
 @section('title', 'Available Models — API Documentation')
 
@@ -736,107 +736,6 @@
                             <td>{{ $model['description'] ?? '' }}</td>
                         </tr>
                         @endforeach
-                        <tr data-category="____remove____" style="display:none">
-                            <td></td><td></td><td></td><td></td><td></td>
-                        </tr>
-                        <tr data-category="chat">
-                            <td><div class="model-id-cell"><code>smollm2:135m</code><button class="model-copy-btn" data-model="smollm2:135m" aria-label="Copy model ID">Copy</button></div></td>
-                            <td><span class="badge badge-chat">chat</span></td>
-                            <td>135M</td>
-                            <td><span class="multiplier mult-05">0.5×</span></td>
-                            <td>@if(app()->getLocale() === 'ar') فائق السرعة، المهام الخفيفة @else Ultra-fast, lightweight tasks @endif</td>
-                        </tr>
-                        <tr data-category="chat">
-                            <td><div class="model-id-cell"><code>phi3.5-mini:3.8b</code><button class="model-copy-btn" data-model="phi3.5-mini:3.8b" aria-label="Copy model ID">Copy</button></div></td>
-                            <td><span class="badge badge-chat">chat</span></td>
-                            <td>3.8B</td>
-                            <td><span class="multiplier mult-05">0.5×</span></td>
-                            <td>@if(app()->getLocale() === 'ar') سريع وكفؤ، نافذة سياق 128K @else Fast, efficient, 128K context @endif</td>
-                        </tr>
-                        <tr data-category="code">
-                            <td><div class="model-id-cell"><code>starcoder2:3b</code><button class="model-copy-btn" data-model="starcoder2:3b" aria-label="Copy model ID">Copy</button></div></td>
-                            <td><span class="badge badge-code">code</span></td>
-                            <td>3B</td>
-                            <td><span class="multiplier mult-05">0.5×</span></td>
-                            <td>@if(app()->getLocale() === 'ar') توليد الكود، سريع @else Code generation, fast @endif</td>
-                        </tr>
-                        <tr data-category="code">
-                            <td><div class="model-id-cell"><code>codellama:7b</code><button class="model-copy-btn" data-model="codellama:7b" aria-label="Copy model ID">Copy</button></div></td>
-                            <td><span class="badge badge-code">code</span></td>
-                            <td>7B</td>
-                            <td><span class="multiplier mult-05">0.5×</span></td>
-                            <td>@if(app()->getLocale() === 'ar') برمجة، شرح الكود @else Coding, code explanation @endif</td>
-                        </tr>
-                        <tr data-category="embedding">
-                            <td><div class="model-id-cell"><code>nomic-embed-text</code><button class="model-copy-btn" data-model="nomic-embed-text" aria-label="Copy model ID">Copy</button></div></td>
-                            <td><span class="badge badge-embedding">embedding</span></td>
-                            <td>110M</td>
-                            <td><span class="multiplier mult-05">0.5×</span></td>
-                            <td>@if(app()->getLocale() === 'ar') تضمين النصوص @else Text embeddings @endif</td>
-                        </tr>
-                        <tr data-category="embedding">
-                            <td><div class="model-id-cell"><code>all-minilm</code><button class="model-copy-btn" data-model="all-minilm" aria-label="Copy model ID">Copy</button></div></td>
-                            <td><span class="badge badge-embedding">embedding</span></td>
-                            <td>23M</td>
-                            <td><span class="multiplier mult-05">0.5×</span></td>
-                            <td>@if(app()->getLocale() === 'ar') تضمين خفيف الوزن @else Lightweight embeddings @endif</td>
-                        </tr>
-                        <tr data-category="code">
-                            <td><div class="model-id-cell"><code>qwen2.5-coder:14b</code><button class="model-copy-btn" data-model="qwen2.5-coder:14b" aria-label="Copy model ID">Copy</button></div></td>
-                            <td><span class="badge badge-code">code</span></td>
-                            <td>14B</td>
-                            <td><span class="multiplier mult-15">1.5×</span></td>
-                            <td>@if(app()->getLocale() === 'ar') توليد الكود المتقدم @else Advanced code generation @endif</td>
-                        </tr>
-                        <tr data-category="chat">
-                            <td><div class="model-id-cell"><code>mistral-small3.2:24b</code><button class="model-copy-btn" data-model="mistral-small3.2:24b" aria-label="Copy model ID">Copy</button></div></td>
-                            <td><span class="badge badge-chat">chat</span></td>
-                            <td>24B</td>
-                            <td><span class="multiplier mult-15">1.5×</span></td>
-                            <td>@if(app()->getLocale() === 'ar') محادثة متوازنة، أداء عالٍ @else Balanced chat, high performance @endif</td>
-                        </tr>
-                        <tr data-category="chat">
-                            <td><div class="model-id-cell"><code>gemma2:9b</code><button class="model-copy-btn" data-model="gemma2:9b" aria-label="Copy model ID">Copy</button></div></td>
-                            <td><span class="badge badge-chat">chat</span></td>
-                            <td>9B</td>
-                            <td><span class="multiplier mult-15">1.5×</span></td>
-                            <td>@if(app()->getLocale() === 'ar') محادثة عامة @else General chat @endif</td>
-                        </tr>
-                        <tr data-category="code">
-                            <td><div class="model-id-cell"><code>deepseek-coder:6.7b</code><button class="model-copy-btn" data-model="deepseek-coder:6.7b" aria-label="Copy model ID">Copy</button></div></td>
-                            <td><span class="badge badge-code">code</span></td>
-                            <td>6.7B</td>
-                            <td><span class="multiplier mult-15">1.5×</span></td>
-                            <td>@if(app()->getLocale() === 'ar') برمجة ومهام تقنية @else Coding and technical tasks @endif</td>
-                        </tr>
-                        <tr data-category="chat">
-                            <td><div class="model-id-cell"><code>llama3.1:8b</code><button class="model-copy-btn" data-model="llama3.1:8b" aria-label="Copy model ID">Copy</button></div></td>
-                            <td><span class="badge badge-chat">chat</span></td>
-                            <td>8B</td>
-                            <td><span class="multiplier mult-15">1.5×</span></td>
-                            <td>@if(app()->getLocale() === 'ar') محادثة متعددة الأغراض @else Versatile general chat @endif</td>
-                        </tr>
-                        <tr data-category="chat">
-                            <td><div class="model-id-cell"><code>mistral-7b</code><button class="model-copy-btn" data-model="mistral-7b" aria-label="Copy model ID">Copy</button></div></td>
-                            <td><span class="badge badge-chat">chat</span></td>
-                            <td>7B</td>
-                            <td><span class="multiplier mult-15">1.5×</span></td>
-                            <td>@if(app()->getLocale() === 'ar') محادثة عامة @else General chat @endif</td>
-                        </tr>
-                        <tr data-category="embedding">
-                            <td><div class="model-id-cell"><code>bge-m3</code><button class="model-copy-btn" data-model="bge-m3" aria-label="Copy model ID">Copy</button></div></td>
-                            <td><span class="badge badge-embedding">embedding</span></td>
-                            <td>580M</td>
-                            <td><span class="multiplier mult-15">1.5×</span></td>
-                            <td>@if(app()->getLocale() === 'ar') تضمين متعدد التمثيلات @else Multi-representation embeddings @endif</td>
-                        </tr>
-                        <tr data-category="embedding">
-                            <td><div class="model-id-cell"><code>snowflake-arctic-embed</code><button class="model-copy-btn" data-model="snowflake-arctic-embed" aria-label="Copy model ID">Copy</button></div></td>
-                            <td><span class="badge badge-embedding">embedding</span></td>
-                            <td>137M</td>
-                            <td><span class="multiplier mult-15">1.5×</span></td>
-                            <td>@if(app()->getLocale() === 'ar') تضمين عالي الجودة @else High-quality embeddings @endif</td>
-                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -845,7 +744,7 @@
         <!-- Section 3: Cloud Models -->
         <section class="docs-section" id="section-cloud">
             <h2>
-                @if(app()->getLocale() === 'ar') النماذج المتقدمة (31 نموذجاً) @else Frontier Models (31) @endif
+                @if(app()->getLocale() === 'ar') النماذج السحابية ({{ $cloudModels->count() }} نموذجاً) @else Cloud Models ({{ $cloudModels->count() }}) @endif
             </h2>
             <p>
                 @if(app()->getLocale() === 'ar')
@@ -855,9 +754,8 @@
                 @endif
             </p>
 
-            <h3>@if(app()->getLocale() === 'ar') نماذج المحادثة والتفكير @else Chat &amp; Thinking Models @endif</h3>
             <div class="docs-table-wrap">
-                <table class="docs-table model-table" id="cloudChatTable">
+                <table class="docs-table model-table" id="cloudModelsTable">
                     <thead>
                         <tr>
                             <th>@if(app()->getLocale() === 'ar') معرّف النموذج @else Model ID @endif</th>
@@ -868,330 +766,20 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr data-category="chat">
-                            <td><div class="model-id-cell"><code>gpt-oss:20b</code><button class="model-copy-btn" data-model="gpt-oss:20b" aria-label="Copy model ID">Copy</button></div></td>
-                            <td><span class="badge badge-chat">chat</span></td>
-                            <td>20B</td>
-                            <td><span class="multiplier mult-25">2.5×</span></td>
-                            <td>@if(app()->getLocale() === 'ar') محادثة عامة @else General purpose @endif</td>
+                        @foreach($cloudModels as $modelId => $model)
+                        @php
+                            $cat = $model['category'] ?? 'chat';
+                            $mult = number_format($model['credit_multiplier'] ?? 2.0, 1);
+                            $multClass = 'mult-' . str_replace('.', '', $mult);
+                        @endphp
+                        <tr data-category="{{ $cat }}">
+                            <td><div class="model-id-cell"><code>{{ $modelId }}</code><button class="model-copy-btn" data-model="{{ $modelId }}" aria-label="Copy model ID">Copy</button></div></td>
+                            <td><span class="badge badge-{{ $cat }}">{{ $cat }}</span></td>
+                            <td>{{ $model['params'] ?? '—' }}</td>
+                            <td><span class="multiplier {{ $multClass }}">{{ $mult }}×</span></td>
+                            <td>{{ $model['description'] ?? '' }}</td>
                         </tr>
-                        <tr data-category="chat">
-                            <td><div class="model-id-cell"><code>mistral-large:24b</code><button class="model-copy-btn" data-model="mistral-large:24b" aria-label="Copy model ID">Copy</button></div></td>
-                            <td><span class="badge badge-chat">chat</span></td>
-                            <td>24B</td>
-                            <td><span class="multiplier mult-25">2.5×</span></td>
-                            <td>@if(app()->getLocale() === 'ar') محادثة عالية الجودة @else High-quality chat @endif</td>
-                        </tr>
-                        <tr data-category="chat">
-                            <td><div class="model-id-cell"><code>mistral-nemo:12b</code><button class="model-copy-btn" data-model="mistral-nemo:12b" aria-label="Copy model ID">Copy</button></div></td>
-                            <td><span class="badge badge-chat">chat</span></td>
-                            <td>12B</td>
-                            <td><span class="multiplier mult-25">2.5×</span></td>
-                            <td>@if(app()->getLocale() === 'ar') محادثة متوازنة @else Balanced chat @endif</td>
-                        </tr>
-                        <tr data-category="thinking">
-                            <td><div class="model-id-cell"><code>qwen3-30b</code><button class="model-copy-btn" data-model="qwen3-30b" aria-label="Copy model ID">Copy</button></div></td>
-                            <td><span class="badge badge-thinking">thinking</span></td>
-                            <td>30B</td>
-                            <td><span class="multiplier mult-25">2.5×</span></td>
-                            <td>@if(app()->getLocale() === 'ar') تفكير واستدلال @else Reasoning and thinking @endif</td>
-                        </tr>
-                        <tr data-category="chat">
-                            <td><div class="model-id-cell"><code>llama3.2:70b</code><button class="model-copy-btn" data-model="llama3.2:70b" aria-label="Copy model ID">Copy</button></div></td>
-                            <td><span class="badge badge-chat">chat</span></td>
-                            <td>70B</td>
-                            <td><span class="multiplier mult-35">3.5×</span></td>
-                            <td>@if(app()->getLocale() === 'ar') محادثة عالية الأداء @else High-performance chat @endif</td>
-                        </tr>
-                        <tr data-category="chat">
-                            <td><div class="model-id-cell"><code>llama3.1:70b</code><button class="model-copy-btn" data-model="llama3.1:70b" aria-label="Copy model ID">Copy</button></div></td>
-                            <td><span class="badge badge-chat">chat</span></td>
-                            <td>70B</td>
-                            <td><span class="multiplier mult-35">3.5×</span></td>
-                            <td>@if(app()->getLocale() === 'ar') محادثة عامة متقدمة @else Advanced general chat @endif</td>
-                        </tr>
-                        <tr data-category="chat">
-                            <td><div class="model-id-cell"><code>llama3.1:405b</code><button class="model-copy-btn" data-model="llama3.1:405b" aria-label="Copy model ID">Copy</button></div></td>
-                            <td><span class="badge badge-chat">chat</span></td>
-                            <td>405B</td>
-                            <td><span class="multiplier mult-35">3.5×</span></td>
-                            <td>@if(app()->getLocale() === 'ar') أكبر نماذج Llama @else Largest Llama model @endif</td>
-                        </tr>
-                        <tr data-category="chat">
-                            <td><div class="model-id-cell"><code>llama3-gradient:70b</code><button class="model-copy-btn" data-model="llama3-gradient:70b" aria-label="Copy model ID">Copy</button></div></td>
-                            <td><span class="badge badge-chat">chat</span></td>
-                            <td>70B</td>
-                            <td><span class="multiplier mult-35">3.5×</span></td>
-                            <td>@if(app()->getLocale() === 'ar') سياق ممتد (262K رمز) @else Extended context (262K tokens) @endif</td>
-                        </tr>
-                        <tr data-category="chat">
-                            <td><div class="model-id-cell"><code>gemma2:27b</code><button class="model-copy-btn" data-model="gemma2:27b" aria-label="Copy model ID">Copy</button></div></td>
-                            <td><span class="badge badge-chat">chat</span></td>
-                            <td>27B</td>
-                            <td><span class="multiplier mult-35">3.5×</span></td>
-                            <td>@if(app()->getLocale() === 'ar') محادثة عامة @else General chat @endif</td>
-                        </tr>
-                        <tr data-category="chat">
-                            <td><div class="model-id-cell"><code>mixtral:8x7b</code><button class="model-copy-btn" data-model="mixtral:8x7b" aria-label="Copy model ID">Copy</button></div></td>
-                            <td><span class="badge badge-chat">chat</span></td>
-                            <td>8×7B</td>
-                            <td><span class="multiplier mult-35">3.5×</span></td>
-                            <td>@if(app()->getLocale() === 'ar') بنية MoE متوازنة @else Balanced MoE architecture @endif</td>
-                        </tr>
-                        <tr data-category="chat">
-                            <td><div class="model-id-cell"><code>mixtral:8x22b</code><button class="model-copy-btn" data-model="mixtral:8x22b" aria-label="Copy model ID">Copy</button></div></td>
-                            <td><span class="badge badge-chat">chat</span></td>
-                            <td>8×22B</td>
-                            <td><span class="multiplier mult-35">3.5×</span></td>
-                            <td>@if(app()->getLocale() === 'ar') MoE الأداء العالي @else High-performance MoE @endif</td>
-                        </tr>
-                        <tr data-category="chat">
-                            <td><div class="model-id-cell"><code>qwen2:72b</code><button class="model-copy-btn" data-model="qwen2:72b" aria-label="Copy model ID">Copy</button></div></td>
-                            <td><span class="badge badge-chat">chat</span></td>
-                            <td>72B</td>
-                            <td><span class="multiplier mult-35">3.5×</span></td>
-                            <td>@if(app()->getLocale() === 'ar') محادثة متعددة اللغات @else Multilingual chat @endif</td>
-                        </tr>
-                        <tr data-category="chat">
-                            <td><div class="model-id-cell"><code>qwen2.5:32b</code><button class="model-copy-btn" data-model="qwen2.5:32b" aria-label="Copy model ID">Copy</button></div></td>
-                            <td><span class="badge badge-chat">chat</span></td>
-                            <td>32B</td>
-                            <td><span class="multiplier mult-35">3.5×</span></td>
-                            <td>@if(app()->getLocale() === 'ar') محادثة عامة @else General chat @endif</td>
-                        </tr>
-                        <tr data-category="chat">
-                            <td><div class="model-id-cell"><code>yi:34b</code><button class="model-copy-btn" data-model="yi:34b" aria-label="Copy model ID">Copy</button></div></td>
-                            <td><span class="badge badge-chat">chat</span></td>
-                            <td>34B</td>
-                            <td><span class="multiplier mult-35">3.5×</span></td>
-                            <td>@if(app()->getLocale() === 'ar') محادثة متعددة اللغات @else Multilingual chat @endif</td>
-                        </tr>
-                        <tr data-category="thinking">
-                            <td><div class="model-id-cell"><code>qwen3.5:397b</code><button class="model-copy-btn" data-model="qwen3.5:397b" aria-label="Copy model ID">Copy</button></div></td>
-                            <td><span class="badge badge-thinking">thinking</span></td>
-                            <td>397B</td>
-                            <td><span class="multiplier mult-35">3.5×</span></td>
-                            <td>@if(app()->getLocale() === 'ar') تفكير، الأكبر حجماً @else Thinking, largest model @endif</td>
-                        </tr>
-                        <tr data-category="thinking">
-                            <td><div class="model-id-cell"><code>deepseek-v3.1:671b</code><button class="model-copy-btn" data-model="deepseek-v3.1:671b" aria-label="Copy model ID">Copy</button></div></td>
-                            <td><span class="badge badge-thinking">thinking</span></td>
-                            <td>671B</td>
-                            <td><span class="multiplier mult-35">3.5×</span></td>
-                            <td>@if(app()->getLocale() === 'ar') تفكير عميق واستدلال @else Deep thinking and reasoning @endif</td>
-                        </tr>
-                        <tr data-category="thinking">
-                            <td><div class="model-id-cell"><code>deepseek-v3.2</code><button class="model-copy-btn" data-model="deepseek-v3.2" aria-label="Copy model ID">Copy</button></div></td>
-                            <td><span class="badge badge-thinking">thinking</span></td>
-                            <td>671B</td>
-                            <td><span class="multiplier mult-35">3.5×</span></td>
-                            <td>@if(app()->getLocale() === 'ar') أحدث إصدار DeepSeek @else Latest DeepSeek release @endif</td>
-                        </tr>
-                        <tr data-category="thinking">
-                            <td><div class="model-id-cell"><code>deepseek-v2.5</code><button class="model-copy-btn" data-model="deepseek-v2.5" aria-label="Copy model ID">Copy</button></div></td>
-                            <td><span class="badge badge-thinking">thinking</span></td>
-                            <td>236B</td>
-                            <td><span class="multiplier mult-35">3.5×</span></td>
-                            <td>@if(app()->getLocale() === 'ar') تفكير واستدلال MoE @else MoE thinking and reasoning @endif</td>
-                        </tr>
-                        <tr data-category="thinking">
-                            <td><div class="model-id-cell"><code>deepseek-chat:671b</code><button class="model-copy-btn" data-model="deepseek-chat:671b" aria-label="Copy model ID">Copy</button></div></td>
-                            <td><span class="badge badge-thinking">thinking</span></td>
-                            <td>671B</td>
-                            <td><span class="multiplier mult-35">3.5×</span></td>
-                            <td>@if(app()->getLocale() === 'ar') محادثة وتفكير متقدم @else Advanced chat and reasoning @endif</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <h3>@if(app()->getLocale() === 'ar') نماذج الرؤية @else Vision Models @endif</h3>
-            <div class="docs-table-wrap">
-                <table class="docs-table model-table" id="cloudVisionTable">
-                    <thead>
-                        <tr>
-                            <th>@if(app()->getLocale() === 'ar') معرّف النموذج @else Model ID @endif</th>
-                            <th>@if(app()->getLocale() === 'ar') الفئة @else Category @endif</th>
-                            <th>@if(app()->getLocale() === 'ar') الحجم @else Size @endif</th>
-                            <th>@if(app()->getLocale() === 'ar') المعامل @else Multiplier @endif</th>
-                            <th>@if(app()->getLocale() === 'ar') الاستخدام الأمثل @else Best For @endif</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr data-category="vision">
-                            <td><div class="model-id-cell"><code>glm-4.7-flash</code><button class="model-copy-btn" data-model="glm-4.7-flash" aria-label="Copy model ID">Copy</button></div></td>
-                            <td><span class="badge badge-vision">vision</span></td>
-                            <td>12B</td>
-                            <td><span class="multiplier mult-25">2.5×</span></td>
-                            <td>@if(app()->getLocale() === 'ar') رؤية متعددة الوسائط @else Multimodal vision @endif</td>
-                        </tr>
-                        <tr data-category="vision">
-                            <td><div class="model-id-cell"><code>llama3.2:11b</code><button class="model-copy-btn" data-model="llama3.2:11b" aria-label="Copy model ID">Copy</button></div></td>
-                            <td><span class="badge badge-vision">vision</span></td>
-                            <td>11B</td>
-                            <td><span class="multiplier mult-25">2.5×</span></td>
-                            <td>@if(app()->getLocale() === 'ar') رؤية ومحادثة @else Vision and chat @endif</td>
-                        </tr>
-                        <tr data-category="vision">
-                            <td><div class="model-id-cell"><code>Qwen3-VL-32B</code><button class="model-copy-btn" data-model="Qwen3-VL-32B" aria-label="Copy model ID">Copy</button></div></td>
-                            <td><span class="badge badge-vision">vision</span></td>
-                            <td>32B</td>
-                            <td><span class="multiplier mult-35">3.5×</span></td>
-                            <td>@if(app()->getLocale() === 'ar') رؤية متقدمة @else Advanced vision-language @endif</td>
-                        </tr>
-                        <tr data-category="vision">
-                            <td><div class="model-id-cell"><code>qwen3-vl:235b-instruct</code><button class="model-copy-btn" data-model="qwen3-vl:235b-instruct" aria-label="Copy model ID">Copy</button></div></td>
-                            <td><span class="badge badge-vision">vision</span></td>
-                            <td>235B</td>
-                            <td><span class="multiplier mult-35">3.5×</span></td>
-                            <td>@if(app()->getLocale() === 'ar') رؤية، النموذج الرائد @else Vision, flagship model @endif</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <h3>@if(app()->getLocale() === 'ar') نماذج البرمجة @else Code Models @endif</h3>
-            <div class="docs-table-wrap">
-                <table class="docs-table model-table" id="cloudCodeTable">
-                    <thead>
-                        <tr>
-                            <th>@if(app()->getLocale() === 'ar') معرّف النموذج @else Model ID @endif</th>
-                            <th>@if(app()->getLocale() === 'ar') الفئة @else Category @endif</th>
-                            <th>@if(app()->getLocale() === 'ar') الحجم @else Size @endif</th>
-                            <th>@if(app()->getLocale() === 'ar') المعامل @else Multiplier @endif</th>
-                            <th>@if(app()->getLocale() === 'ar') الاستخدام الأمثل @else Best For @endif</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr data-category="code">
-                            <td><div class="model-id-cell"><code>codestral:22b</code><button class="model-copy-btn" data-model="codestral:22b" aria-label="Copy model ID">Copy</button></div></td>
-                            <td><span class="badge badge-code">code</span></td>
-                            <td>22B</td>
-                            <td><span class="multiplier mult-25">2.5×</span></td>
-                            <td>@if(app()->getLocale() === 'ar') توليد الكود @else Code generation @endif</td>
-                        </tr>
-                        <tr data-category="code">
-                            <td><div class="model-id-cell"><code>deepseek-coder:33b</code><button class="model-copy-btn" data-model="deepseek-coder:33b" aria-label="Copy model ID">Copy</button></div></td>
-                            <td><span class="badge badge-code">code</span></td>
-                            <td>33B</td>
-                            <td><span class="multiplier mult-35">3.5×</span></td>
-                            <td>@if(app()->getLocale() === 'ar') برمجة متقدمة @else Advanced coding @endif</td>
-                        </tr>
-                        <tr data-category="code">
-                            <td><div class="model-id-cell"><code>devstral-2:123b</code><button class="model-copy-btn" data-model="devstral-2:123b" aria-label="Copy model ID">Copy</button></div></td>
-                            <td><span class="badge badge-code">code</span></td>
-                            <td>123B</td>
-                            <td><span class="multiplier mult-35">3.5×</span></td>
-                            <td>@if(app()->getLocale() === 'ar') برمجة، نموذج كبير @else Coding, large model @endif</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <h3>@if(app()->getLocale() === 'ar') نماذج الأدوات والتضمين السحابي @else Tools &amp; Cloud Embedding Models @endif</h3>
-            <div class="docs-table-wrap">
-                <table class="docs-table model-table" id="cloudToolsTable">
-                    <thead>
-                        <tr>
-                            <th>@if(app()->getLocale() === 'ar') معرّف النموذج @else Model ID @endif</th>
-                            <th>@if(app()->getLocale() === 'ar') الفئة @else Category @endif</th>
-                            <th>@if(app()->getLocale() === 'ar') الحجم @else Size @endif</th>
-                            <th>@if(app()->getLocale() === 'ar') المعامل @else Multiplier @endif</th>
-                            <th>@if(app()->getLocale() === 'ar') الاستخدام الأمثل @else Best For @endif</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr data-category="tools">
-                            <td><div class="model-id-cell"><code>firefunction-v2:18b</code><button class="model-copy-btn" data-model="firefunction-v2:18b" aria-label="Copy model ID">Copy</button></div></td>
-                            <td><span class="badge badge-tools">tools</span></td>
-                            <td>18B</td>
-                            <td><span class="multiplier mult-25">2.5×</span></td>
-                            <td>@if(app()->getLocale() === 'ar') استدعاء الدوال @else Function calling @endif</td>
-                        </tr>
-                        <tr data-category="tools">
-                            <td><div class="model-id-cell"><code>command-r:35b</code><button class="model-copy-btn" data-model="command-r:35b" aria-label="Copy model ID">Copy</button></div></td>
-                            <td><span class="badge badge-tools">tools</span></td>
-                            <td>35B</td>
-                            <td><span class="multiplier mult-35">3.5×</span></td>
-                            <td>@if(app()->getLocale() === 'ar') RAG والأدوات @else RAG and tool use @endif</td>
-                        </tr>
-                        <tr data-category="tools">
-                            <td><div class="model-id-cell"><code>command-r-plus:104b</code><button class="model-copy-btn" data-model="command-r-plus:104b" aria-label="Copy model ID">Copy</button></div></td>
-                            <td><span class="badge badge-tools">tools</span></td>
-                            <td>104B</td>
-                            <td><span class="multiplier mult-35">3.5×</span></td>
-                            <td>@if(app()->getLocale() === 'ar') RAG المتقدم @else Advanced RAG @endif</td>
-                        </tr>
-                        <tr data-category="embedding">
-                            <td><div class="model-id-cell"><code>nomic-embed:27m</code><button class="model-copy-btn" data-model="nomic-embed:27m" aria-label="Copy model ID">Copy</button></div></td>
-                            <td><span class="badge badge-embedding">embedding</span></td>
-                            <td>27M</td>
-                            <td><span class="multiplier mult-10">1.0×</span></td>
-                            <td>@if(app()->getLocale() === 'ar') تضمين النصوص @else Text embeddings @endif</td>
-                        </tr>
-                        <tr data-category="embedding">
-                            <td><div class="model-id-cell"><code>gte-qwen:7m</code><button class="model-copy-btn" data-model="gte-qwen:7m" aria-label="Copy model ID">Copy</button></div></td>
-                            <td><span class="badge badge-embedding">embedding</span></td>
-                            <td>7M</td>
-                            <td><span class="multiplier mult-10">1.0×</span></td>
-                            <td>@if(app()->getLocale() === 'ar') تضمين سريع @else Fast embeddings @endif</td>
-                        </tr>
-                        <tr data-category="embedding">
-                            <td><div class="model-id-cell"><code>nvidia-embed:1b</code><button class="model-copy-btn" data-model="nvidia-embed:1b" aria-label="Copy model ID">Copy</button></div></td>
-                            <td><span class="badge badge-embedding">embedding</span></td>
-                            <td>1B</td>
-                            <td><span class="multiplier mult-10">1.0×</span></td>
-                            <td>@if(app()->getLocale() === 'ar') تضمين NeMo @else NeMo embeddings @endif</td>
-                        </tr>
-                        <tr data-category="embedding">
-                            <td><div class="model-id-cell"><code>all-minilm-l6:22m</code><button class="model-copy-btn" data-model="all-minilm-l6:22m" aria-label="Copy model ID">Copy</button></div></td>
-                            <td><span class="badge badge-embedding">embedding</span></td>
-                            <td>22M</td>
-                            <td><span class="multiplier mult-10">1.0×</span></td>
-                            <td>@if(app()->getLocale() === 'ar') تضمين خفيف @else Lightweight embeddings @endif</td>
-                        </tr>
-                        <tr data-category="embedding">
-                            <td><div class="model-id-cell"><code>gte-base:110m</code><button class="model-copy-btn" data-model="gte-base:110m" aria-label="Copy model ID">Copy</button></div></td>
-                            <td><span class="badge badge-embedding">embedding</span></td>
-                            <td>110M</td>
-                            <td><span class="multiplier mult-10">1.0×</span></td>
-                            <td>@if(app()->getLocale() === 'ar') تضمين قياسي @else Standard embeddings @endif</td>
-                        </tr>
-                        <tr data-category="embedding">
-                            <td><div class="model-id-cell"><code>bge-small:8m</code><button class="model-copy-btn" data-model="bge-small:8m" aria-label="Copy model ID">Copy</button></div></td>
-                            <td><span class="badge badge-embedding">embedding</span></td>
-                            <td>8M</td>
-                            <td><span class="multiplier mult-10">1.0×</span></td>
-                            <td>@if(app()->getLocale() === 'ar') تضمين صغير @else Small embeddings @endif</td>
-                        </tr>
-                        <tr data-category="embedding">
-                            <td><div class="model-id-cell"><code>minilm-l12:39m</code><button class="model-copy-btn" data-model="minilm-l12:39m" aria-label="Copy model ID">Copy</button></div></td>
-                            <td><span class="badge badge-embedding">embedding</span></td>
-                            <td>39M</td>
-                            <td><span class="multiplier mult-10">1.0×</span></td>
-                            <td>@if(app()->getLocale() === 'ar') تضمين MiniLM @else MiniLM embeddings @endif</td>
-                        </tr>
-                        <tr data-category="embedding">
-                            <td><div class="model-id-cell"><code>bge-large:335m</code><button class="model-copy-btn" data-model="bge-large:335m" aria-label="Copy model ID">Copy</button></div></td>
-                            <td><span class="badge badge-embedding">embedding</span></td>
-                            <td>335M</td>
-                            <td><span class="multiplier mult-25">2.5×</span></td>
-                            <td>@if(app()->getLocale() === 'ar') تضمين عالي الجودة @else High-quality embeddings @endif</td>
-                        </tr>
-                        <tr data-category="embedding">
-                            <td><div class="model-id-cell"><code>e5-mistral:7b</code><button class="model-copy-btn" data-model="e5-mistral:7b" aria-label="Copy model ID">Copy</button></div></td>
-                            <td><span class="badge badge-embedding">embedding</span></td>
-                            <td>7B</td>
-                            <td><span class="multiplier mult-25">2.5×</span></td>
-                            <td>@if(app()->getLocale() === 'ar') تضمين متقدم @else Advanced embeddings @endif</td>
-                        </tr>
-                        <tr data-category="embedding">
-                            <td><div class="model-id-cell"><code>snowflake-arctic-embed-l:335m</code><button class="model-copy-btn" data-model="snowflake-arctic-embed-l:335m" aria-label="Copy model ID">Copy</button></div></td>
-                            <td><span class="badge badge-embedding">embedding</span></td>
-                            <td>335M</td>
-                            <td><span class="multiplier mult-25">2.5×</span></td>
-                            <td>@if(app()->getLocale() === 'ar') تضمين Snowflake الكبير @else Snowflake large embeddings @endif</td>
-                        </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>
@@ -1350,9 +938,9 @@
             <h3>@if(app()->getLocale() === 'ar') الوصول الكامل لجميع المستويات @else Full Access Across All Tiers @endif</h3>
             <p>
                 @if(app()->getLocale() === 'ar')
-                    جميع المستويات يمكنها الوصول إلى جميع النماذج الـ 46 فوراً دون أي قيود. الفارق الوحيد هو رصيدك المتاح.
+                    جميع المستويات يمكنها الوصول إلى جميع النماذج الـ {{ $models->count() }} فوراً دون أي قيود. الفارق الوحيد هو رصيدك المتاح.
                 @else
-                    All subscription tiers have immediate access to all 46 models with no restrictions. The only differentiator is your available credit balance.
+                    All subscription tiers have immediate access to all {{ $models->count() }} models with no restrictions. The only differentiator is your available credit balance.
                 @endif
             </p>
 
