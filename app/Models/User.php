@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Ramsey\Uuid\Uuid;
+use App\Models\UsageLog;
 
 class User extends Authenticatable
 {
@@ -76,6 +77,14 @@ class User extends Authenticatable
     public function apiKeys()
     {
         return $this->hasMany(ApiKeys::class);
+    }
+
+    /**
+     * Get the usage logs for the user.
+     */
+    public function usageLogs()
+    {
+        return $this->hasMany(UsageLog::class);
     }
 
     /**

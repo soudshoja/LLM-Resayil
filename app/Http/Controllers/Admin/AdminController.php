@@ -5,11 +5,41 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\ApiKeys;
+use App\Models\UsageLog;
 use App\Models\Subscriptions;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
+    /**
+     * List all users with aggregated usage stats.
+     */
+    public function users()
+    {
+        $users = User::withCount('apiKeys')
+            ->withSum('usageLogs', 'tokens_used')
+            ->withSum('usageLogs', 'credits_deducted')
+            ->latest()
+            ->paginate(25);
+        return view('admin.users', compact('users'));
+    }
+
+    /**
+     * Show full usage detail for a single user.
+     */
+    public function userDetail(User $user)
+    {
+        $usageLogs = UsageLog::where('user_id', $user->id)
+            ->latest()
+            ->paginate(50);
+        $totalCalls   = UsageLog::where('user_id', $user->id)->count();
+        $totalTokens  = UsageLog::where('user_id', $user->id)->sum('tokens_used');
+        $totalCredits = UsageLog::where('user_id', $user->id)->sum('credits_deducted');
+        $apiKeys      = $user->apiKeys;
+        return view('admin.user-detail', compact('user', 'usageLogs', 'totalCalls', 'totalTokens', 'totalCredits', 'apiKeys'));
+    }
+
+
     /**
      * Create an API key for a user via POST endpoint.
      *

@@ -423,6 +423,8 @@ Route::group([], function () {
         Route::post('/models/update', [AdminModelController::class, 'update'])->name('admin.models.update');
 
         // User management routes
+        Route::get('/users', [AdminController::class, 'users'])->name('admin.users');
+        Route::get('/users/{user}', [AdminController::class, 'userDetail'])->name('admin.users.detail');
         Route::post('/users/{user}/keys', [AdminController::class, 'createApiKeyForUser'])->name('admin.users.keys.create');
         Route::post('/users/{user}/credits', [AdminController::class, 'setUserCredits'])->name('admin.users.credits.set');
         Route::post('/users/{user}/tier', [AdminController::class, 'setUserTier'])->name('admin.users.tier.set');
